@@ -207,6 +207,24 @@ exports.createReservation = async (req, res) => {
 
         await conn.commit();
 
+        // ── 예약 확인 이메일 자동 발송 (실패해도 예약은 유지) ──
+        if (finalEmail) {
+            const reservationData = {
+                res_id: result.insertId,
+                visitor_name: finalVisitorName,
+                visit_date: visit_date,
+                visit_time: visitTimeFull,
+                people_count: count,
+                phone: finalPhone,
+                email: finalEmail
+            };
+
+            // 비동기로 발송 (응답 지연 방지)
+            sendReservationEmail(finalEmail, reservationData)
+                .then(() => console.log('✅ 예약 확인 메일 자동 발송 완료:', finalEmail))
+                .catch(err => console.error('❌ 예약 확인 메일 자동 발송 실패:', err.message));
+        }
+
         return res.json({
             success: true,
             res_id: result.insertId,
