@@ -63,10 +63,16 @@ app.use('/api/user', userRoutes);
 app.use('/api/designs', designsRoutes);
 app.use('/api/reservation', reservationRoutes);
 
+
+app.set('trust proxy', 1);  
+sameSite: 'lax',            
+
 // 루트 경로는 로그인 페이지로
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
+
+
 
 // 404 에러 처리
 app.use((req, res) => {
