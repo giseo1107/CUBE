@@ -1,0 +1,546 @@
+/* ============================================================
+   pay.css  —  주문/결제 페이지
+   (피그마 고정 px / absolute 레이아웃 → 반응형으로 재작성)
+   ============================================================ */
+
+/* ── 페이지 배경 ── */
+.pay {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+/* ── 상단 헤더 ── */
+.pay .page-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 32px;
+  background: var(--white);
+  border-bottom: 1px solid var(--mercury);
+}
+
+.pay .back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--chathams-blue);
+  font-family: var(--font-noto);
+  font-size: var(--fs-l);
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.pay .back-btn:hover { background: #f0f1f3; }
+.pay .back-btn svg   { width: 20px; height: 20px; flex-shrink: 0; }
+
+.pay .header-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-arial-bold);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--mirage);
+  white-space: nowrap;
+}
+
+/* ── 알림 ── */
+.pay .alert {
+  display: none;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  font-size: var(--fs-s);
+  font-weight: 500;
+  font-family: var(--font-noto);
+}
+.pay .alert.show        { display: block; }
+.pay .alert-success     { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.pay .alert-error       { background: #fdecea; color: #c62828; border: 1px solid #ef9a9a; }
+.pay .alert-info        { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+.pay .alert-warning     { background: #fff8e1; color: #f57f17; border: 1px solid #ffe082; }
+
+/* ── 2단 레이아웃 ── */
+.pay .p-k {
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── 카드 공통 ── */
+.pay .card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.pay .card-title {
+  font-family: var(--font-arial-bold);
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  color: var(--mirage);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mercury);
+}
+
+/* ── 폼 그룹 ── */
+.pay .form-group { margin-bottom: 16px; }
+.pay .form-group:last-child { margin-bottom: 0; }
+
+.pay .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pay label.field-label {
+  display: block;
+  font-family: var(--font-noto);
+  font-size: var(--fs-s);
+  font-weight: 500;
+  color: var(--bright-gray);
+  margin-bottom: 6px;
+}
+.pay label.field-label .required { color: var(--salmon-pearl); margin-left: 2px; }
+
+.pay input[type="text"],
+.pay input[type="email"],
+.pay input[type="tel"],
+.pay textarea {
+  display: block;
+  width: 100%;
+  padding: 0 16px;
+  height: 48px;
+  border: 1px solid var(--mischka);
+  border-radius: var(--radius-md);
+  font-family: var(--font-noto);
+  font-size: var(--fs-m);
+  color: var(--mirage);
+  background: var(--white);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.pay textarea {
+  height: 96px;
+  padding: 12px 16px;
+  resize: vertical;
+}
+.pay input:focus, .pay textarea:focus {
+  border-color: var(--chathams-blue);
+  box-shadow: 0 0 0 3px rgba(26,79,133,0.12);
+}
+.pay input::placeholder, .pay textarea::placeholder { color: var(--cod-gray); }
+
+/* 우편번호 행 */
+.pay .postal-row { display: flex; gap: 8px; }
+.pay .postal-row input { flex: 1; }
+
+.pay .search-btn {
+  flex-shrink: 0;
+  padding: 0 20px;
+  height: 48px;
+  background: #f3f4f6;
+  border: 1px solid var(--mischka);
+  border-radius: var(--radius-md);
+  font-family: var(--font-noto);
+  font-size: var(--fs-s);
+  font-weight: 500;
+  color: var(--bright-gray);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.pay .search-btn:hover { background: #e5e7eb; }
+
+/* 주문자와 동일 */
+.pay .same-as-orderer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-noto);
+  font-size: var(--fs-s);
+  color: var(--pale-sky);
+}
+.pay .same-as-orderer input[type="checkbox"] {
+  width: 18px; height: 18px;
+  border: 1px solid var(--black);
+  accent-color: var(--chathams-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── 결제 방법 ── */
+.pay .payment-methods { display: flex; flex-direction: column; gap: 12px; }
+
+.pay .payment-radio { display: none; }
+
+.pay .payment-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 84px;
+  border: 2px solid var(--mischka);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.pay .payment-label:hover { border-color: var(--chathams-blue); background: #f0f7ff; }
+
+.pay .payment-radio:checked + .payment-label {
+  border-color: var(--chathams-blue);
+  background: #f0f7ff;
+}
+
+/* 라디오 커스텀 도트 */
+.pay .radio-dot {
+  width: 20px; height: 20px;
+  border: 2px solid var(--mischka);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.15s;
+}
+.pay .payment-radio:checked + .payment-label .radio-dot { border-color: var(--chathams-blue); }
+.pay .payment-radio:checked + .payment-label .radio-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  background: #a6cfff;
+  border-radius: var(--radius-full);
+}
+
+.pay .payment-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.pay .payment-name {
+  font-family: var(--font-noto);
+  font-size: var(--fs-l);
+  font-weight: 700;
+  color: var(--mirage);
+}
+.pay .payment-desc {
+  font-family: var(--font-noto);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--pale-sky);
+}
+
+/* ── 약관 동의 ── */
+.pay .term-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.pay .term-item:last-child { border-bottom: none; }
+
+.pay .term-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pay .term-left input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--chathams-blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.pay .term-text {
+  font-family: var(--font-noto);
+  font-size: var(--fs-m);
+  font-weight: 500;
+  color: var(--mirage);
+}
+.pay .term-text .required { color: var(--salmon-pearl); }
+
+.pay .term-view-btn {
+  font-family: var(--font-arial-bold);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--pale-sky);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.pay .term-view-btn:hover { background: #f0f1f3; }
+
+/* ── 우측 주문 요약 ── */
+.pay .summary-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  position: sticky;
+  top: 80px;
+}
+
+.pay .summary-title {
+  font-family: var(--font-arial-bold);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--mirage);
+  margin-bottom: 24px;
+}
+
+/* 상품 */
+.pay .product-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--mercury);
+}
+.pay .product-img {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-sm);
+  background: center/cover no-repeat url("../img/image-----------@2x.png"),
+              linear-gradient(135deg, #e8eaff, #d4d8ff);
+  flex-shrink: 0;
+}
+.pay .product-name {
+  font-family: var(--font-noto);
+  font-size: var(--fs-m);
+  font-weight: 700;
+  color: var(--mirage);
+  margin-bottom: 4px;
+  line-height: 22.5px;
+}
+.pay .product-qty {
+  font-family: var(--font-noto);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--pale-sky);
+}
+
+/* 가격 행 */
+.pay .price-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--mercury); }
+
+.pay .price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+}
+.pay .price-label {
+  font-family: var(--font-noto);
+  font-size: var(--fs-m);
+  font-weight: 400;
+  color: var(--pale-sky);
+}
+.pay .price-value {
+  font-family: var(--font-arial-bold);
+  font-size: var(--fs-l);
+  font-weight: 400;
+  color: var(--mirage);
+}
+.pay .price-free    { color: #22c55e; font-family: var(--font-arial-bold); font-size: var(--fs-l); }
+.pay .price-discount { color: var(--salmon-pearl); font-family: var(--font-arial-bold); font-size: var(--fs-l); }
+
+/* 최종 금액 */
+.pay .total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.pay .total-label {
+  font-family: var(--font-arial-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+}
+.pay .total-amount {
+  font-family: var(--font-arial-bold);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--chathams-blue);
+  line-height: 48px;
+}
+
+/* 결제 버튼 */
+.pay .pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  background: var(--chathams-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-arial-bold);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.pay .pay-btn:hover   { opacity: 0.9; }
+.pay .pay-btn:active  { transform: scale(0.985); }
+.pay .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pay .pay-notice {
+  margin-top: 12px;
+  text-align: center;
+  font-family: var(--font-noto);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+/* 스피너 */
+.pay .spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: var(--white);
+  border-radius: var(--radius-full);
+  animation: pay-spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes pay-spin { to { transform: rotate(360deg); } }
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  .pay .p-k {
+    grid-template-columns: 1fr;
+  }
+  .pay .summary-card { position: static; }
+}
+@media (max-width: 600px) {
+  .pay .card         { padding: 20px; }
+  .pay .summary-card { padding: 20px; }
+  .pay .form-row     { grid-template-columns: 1fr; }
+  .pay .page-header  { padding: 0 16px; }
+  .pay .header-title { font-size: 18px; }
+}
+
+/* ============================================================
+   styleguide.css  —  디자인 토큰 & 유틸리티 클래스
+   ============================================================ */
+
+:root {
+  /* ── 색상 ── */
+  --black:          #000000;
+  --white:          #ffffff;
+  --mirage:         #101828;
+  --bright-gray:    #374151;
+  --pale-sky:       #6b7280;
+  --cod-gray:       rgba(10, 10, 10, 0.5);
+  --mercury:        #e5e7eb;
+  --mischka:        #d1d5db;
+  --salmon-pearl:   #ef4444;
+  --chathams-blue:  #1a4f85;
+  --korma:          #92400e;
+  --peanut:         #78350f;
+
+  /* ── 폰트 패밀리 ── */
+  --font-noto:      "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
+  --font-arial-bold: "Arial-Bold", Arial, Helvetica, sans-serif;
+
+  /* ── 폰트 사이즈 ── */
+  --fs-xs:  13px;
+  --fs-s:   14px;
+  --fs-m:   15px;
+  --fs-l:   16px;
+  --fs-xl:  18px;
+  --fs-2xl: 20px;
+  --fs-3xl: 22px;
+
+  /* ── 그림자 ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
+
+  /* ── 반경 ── */
+  --radius-sm:  8px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-full: 9999px;
+
+  /* ── 간격 ── */
+  --gap-xs:  8px;
+  --gap-sm:  12px;
+  --gap-md:  16px;
+  --gap-lg:  24px;
+  --gap-xl:  32px;
+  --gap-2xl: 48px;
+  --gap-3xl: 64px;
+}
+
+/* ============================================================
+   유틸리티 텍스트 클래스 (HTML에서 직접 쓸 경우 호환용)
+   ============================================================ */
+
+.noto-medium-bright-gray-14   { color: var(--bright-gray); font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 500; }
+.noto-medium-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 500; }
+.noto-normal-mirage-15        { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 400; }
+.noto-normal-pale-sky-14      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 400; }
+.noto-normal-pale-sky-15      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-cod-gray-15      { color: var(--cod-gray);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-peanut-15        { color: var(--peanut);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-bold-mirage-16          { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-l);  font-weight: 700; }
+.arial-bold-mirage-20         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-2xl); font-weight: 700; }
+.arial-bold-mirage-22         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-3xl); font-weight: 700; }
+.arial-bold-white-12          { color: var(--white);       font-family: var(--font-arial-bold); font-size: 12px;           font-weight: 700; }
+
+/* ============================================================
+   globals.css  —  기본 리셋 & 폰트
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+/* Arial Bold 로컬 폰트 (fonts/ 폴더에 파일이 있을 경우) */
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* ── 리셋 ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
+  color: #101828;
+  background: #fafafa;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+img, svg { display: block; max-width: 100%; }

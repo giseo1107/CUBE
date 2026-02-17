@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문 완료</title>
+  <link rel="stylesheet" href="css/payresult.css">
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- 상단 헤더 -->
+  <header class="page-header">
+    <span class="page-title">주문 완료</span>
+  </header>
+
+  <div class="wrapper">
+
+    <!-- 완료 배너 -->
+    <div class="success-banner">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="success-title">주문이 완료되었습니다!</div>
+      <div class="success-desc">
+        <p>고객님의 주문을 성공적으로 접수했습니다.</p>
+        <p>상세 견적서가 이메일로 발송되었습니다.</p>
+      </div>
+      <div class="order-number-badge">
+        <span class="order-number-label">주문번호</span>
+        <span class="order-number-value" id="orderNumberDisplay">로딩 중...</span>
+      </div>
+    </div>
+
+    <!-- 주문 정보 -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        주문 정보
+      </div>
+      <div class="info-row">
+        <span class="info-label">주문일시</span>
+        <span class="info-value" id="orderDate">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">결제수단</span>
+        <span class="info-value" id="payMethod">-</span>
+      </div>
+    </div>
+
+    <!-- 주문 상품 -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        주문 상품
+      </div>
+      <div class="product-item">
+        <div class="product-img">🏠</div>
+        <div>
+          <div class="product-name" id="productName">프리미엄 주거형</div>
+          <div class="product-qty" id="productQty">수량: 1개</div>
+        </div>
+        <div class="product-price" id="productPrice">45,000,000원</div>
+      </div>
+      <div class="total-row">
+        <span class="total-label">이 결제 금액</span>
+        <span class="total-amount" id="totalAmount">45,000,000원</span>
+      </div>
+    </div>
+
+    <!-- 설치 장소 / 주문자 정보 -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        설치 장소
+      </div>
+      <div class="info-row">
+        <span class="info-label">받는 사람</span>
+        <span class="info-value" id="receiverName">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">연락처</span>
+        <span class="info-value" id="receiverPhone">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">주소</span>
+        <span class="info-value" id="receiverAddress">-</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        주문자 정보
+      </div>
+      <div class="info-row">
+        <span class="info-label">이름</span>
+        <span class="info-value" id="ordererName">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">연락처</span>
+        <span class="info-value" id="ordererPhone">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">이메일</span>
+        <span class="info-value" id="ordererEmail">-</span>
+      </div>
+    </div>
+
+    <!-- 다음 단계 안내 -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        다음 단계 안내
+      </div>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">영업일 기준 1-2일 내로 담당자가 유선 연락을 드립니다.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">설치 장소 현장 답사 일정을 조율합니다.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">현장 답사 후 최종 견적을 확정하고 제작에 착수합니다.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-text">제작 완료 후 운송 및 설치가 진행됩니다. (약 4-6주 소요)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="btn-row">
+      <a class="btn btn-secondary" href="/index.html">홈으로 돌아가기</a>
+      <a class="btn btn-primary" href="/orders.html" id="checkOrderBtn">주문 내역 확인</a>
+    </div>
+
+    <!-- 문의 -->
+    <div class="contact-card" style="margin-top: 20px;">
+      <p class="contact-label">문의사항이 있으신가요?</p>
+      <div class="contact-links">
+        <a href="tel:1588-0000" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          1588-0000
+        </a>
+        <a href="mailto:support@example.com" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+          support@example.com
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ── URL 파라미터에서 orderId 추출 ── */
+    function getParam(key) {
+      return new URLSearchParams(window.location.search).get(key);
+    }
+
+    /* ── 날짜 포맷 ── */
+    function formatDate(dateStr) {
+      const d = dateStr ? new Date(dateStr) : new Date();
+      return d.toLocaleString('ko-KR', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+    }
+
+    /* ── 결제수단 한글 변환 ── */
+    function payMethodLabel(method) {
+      return { card: '신용카드', transfer: '실시간 계좌이체', deposit: '무통장 입금' }[method] || method || '-';
+    }
+
+    /* ── 금액 포맷 ── */
+    function formatMoney(n) {
+      return Number(n).toLocaleString('ko-KR') + '원';
+    }
+
+    /* ── UI 렌더링 ── */
+    function render(data) {
+      document.getElementById('orderNumberDisplay').textContent = data.orderId || '-';
+      document.getElementById('orderDate').textContent    = formatDate(data.createdAt);
+      document.getElementById('payMethod').textContent    = payMethodLabel(data.payMethod);
+
+      // 상품
+      if (data.items && data.items[0]) {
+        const item = data.items[0];
+        document.getElementById('productName').textContent = item.name  || '-';
+        document.getElementById('productQty').textContent  = `수량: ${item.qty || 1}개`;
+        document.getElementById('productPrice').textContent = formatMoney(item.price || 0);
+      }
+      document.getElementById('totalAmount').textContent = formatMoney(data.totalAmount || 0);
+
+      // 설치 장소
+      const s = data.shipping || {};
+      document.getElementById('receiverName').textContent  = s.name  || '-';
+      document.getElementById('receiverPhone').textContent = s.phone || '-';
+      const addr = [s.addressBase, s.addressDetail].filter(Boolean).join(' ');
+      document.getElementById('receiverAddress').textContent = addr || '-';
+
+      // 주문자
+      const o = data.orderer || {};
+      document.getElementById('ordererName').textContent  = o.name  || '-';
+      document.getElementById('ordererPhone').textContent = o.phone || '-';
+      document.getElementById('ordererEmail').textContent = o.email || '-';
+    }
+
+    /* ── 주문 정보 조회 ── */
+    async function loadOrderData() {
+      const orderId = getParam('orderId');
+      if (!orderId) {
+        // orderId 없으면 기본값 표시
+        render({ orderId: 'ORD-00000000-SAMPLE' });
+        return;
+      }
+
+      document.getElementById('loadingOverlay').classList.add('show');
+
+      try {
+        const res  = await fetch(`/api/order/${orderId}`);
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch { throw new Error('응답 파싱 실패'); }
+
+        if (data.success && data.order) {
+          render(data.order);
+        } else {
+          throw new Error(data.message || '주문 정보를 불러올 수 없습니다.');
+        }
+      } catch (err) {
+        console.error('주문 조회 오류:', err);
+        // fallback: URL 파라미터에서 최소 정보만 표시
+        render({ orderId });
+      } finally {
+        document.getElementById('loadingOverlay').classList.remove('show');
+      }
+    }
+
+    loadOrderData();
+  </script>
+</body>
+</html>

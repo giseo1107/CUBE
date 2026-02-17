@@ -1,0 +1,1670 @@
+/* ===================================
+   Used Cube Market - Product Detail
+   =================================== */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+/* ===== FONTS ===== */
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  /* Colors */
+  --black: #000000;
+  --white: #ffffff;
+  --white-2: #ffffff80;
+  --mirage: #1a1f2e;
+  --mirage-2: #101828;
+  --ebony-clay: #252b3d;
+  --ebony-clay-2: #1e2939;
+  --oxford-blue: #364153;
+  --pale-sky: #6a7282;
+  --santas-gray: #99a1af;
+  --science-blue: #0066cc;
+  --ice-cold: #aff9f5;
+  --chathams-blue: #1a4f85;
+
+  /* Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 36px;
+  --font-size-xxxl: 48px;
+
+  /* Font Families */
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-inter: "Inter", Helvetica;
+}
+
+/* ===== GLOBAL BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+.text {
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* ===== TYPOGRAPHY UTILITY CLASSES ===== */
+
+/* Arial Regular */
+.arial-regular-normal-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+}
+
+.arial-regular-normal-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-white-16px-2 {
+  color: var(--white-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-white-20px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+}
+
+.arial-regular-normal-santas-gray-14px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+}
+
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-pale-sky-14px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+}
+
+/* Arial Bold */
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+}
+
+/* Baloo Da 2 */
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-s);
+  font-weight: 700;
+}
+
+/* Inter */
+.inter-normal-ice-cold-48px {
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xxxl);
+  font-weight: 400;
+}
+
+.inter-normal-ice-cold-12px {
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.inter-normal-chathams-blue-48px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xxxl);
+  font-weight: 400;
+}
+
+.inter-normal-chathams-blue-12px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+/* =========================================================
+   LAYOUT - SCREEN
+   ========================================================= */
+.used-cube-marketu952 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 1920px;
+  height: 2499px;
+  padding: 0 -259px 0 0;
+  background-color: var(--white);
+  position: relative;
+}
+
+.used-cube-marketu952 .p-k {
+  position: relative;
+  width: 1920px;
+  height: 2499px;
+  background-color: var(--mirage);
+}
+
+/* =========================================================
+   HEADER / NAVIGATION
+   ========================================================= */
+.used-cube-marketu952 .container-32 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 80px;
+  padding: 0 194px 0 193px;
+  background-color: #ffffff00;
+  box-shadow: 0px 1px 2px #0000001a, 0px 1px 3px #0000001a;
+}
+
+.used-cube-marketu952 .container-33 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 80px;
+}
+
+/* Logo Area */
+.used-cube-marketu952 .container-34 {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: -48px;
+  width: 495px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+.used-cube-marketu952 .container-35 {
+  display: flex;
+  gap: 7px;
+  width: 495px;
+  height: 80px;
+}
+
+.used-cube-marketu952 .image-1 {
+  width: 71px;
+  height: 64px;
+  margin-top: 8px;
+}
+
+.used-cube-marketu952 .image-3 {
+  background-image: url(../img/image--c-c-c-logo-@2x.png);
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.used-cube-marketu952 .container-36 {
+  display: flex;
+  flex-direction: column;
+  width: 134.59px;
+  height: 74px;
+  margin-top: 3px;
+}
+
+.used-cube-marketu952 .container {
+  display: flex;
+  width: 134.59px;
+}
+
+.used-cube-marketu952 .paragraph-13 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 131.19px;
+  height: 59px;
+}
+
+.used-cube-marketu952 .title {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  margin-right: -0.81px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.used-cube-marketu952 .paragraph-14 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 134.61px;
+  height: 15px;
+}
+
+.used-cube-marketu952 .custom-cube-company {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  margin-right: -0.39px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+/* Auth Buttons */
+.used-cube-marketu952 .container-37 {
+  display: flex;
+  gap: 26px;
+  width: 156px;
+  height: 64px;
+  margin-top: 8px;
+}
+
+.used-cube-marketu952 .paragraph-15 {
+  display: flex;
+  width: 38.64px;
+  margin-top: 21.5px;
+  margin-left: 31.9px;
+}
+
+.used-cube-marketu952 .text-133 {
+  width: 39px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.used-cube-marketu952 .paragraph-16 {
+  display: flex;
+  width: 51.52px;
+  margin-top: 21.5px;
+}
+
+.used-cube-marketu952 .text-134 {
+  width: 52px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* Navigation Links */
+.used-cube-marketu952 .container-38 {
+  display: flex;
+  position: absolute;
+  top: 30px;
+  left: 982px;
+  width: 685px;
+  height: 20px;
+}
+
+.used-cube-marketu952 .paragraph-17 {
+  display: flex;
+  width: 67.2px;
+}
+
+.used-cube-marketu952 .text-13 {
+  width: 68px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.used-cube-marketu952 .paragraph-4 {
+  display: flex;
+  width: 67.2px;
+  margin-left: 55.1px;
+}
+
+.used-cube-marketu952 .paragraph-18 {
+  display: flex;
+  width: 80.09px;
+  margin-left: 55.1px;
+}
+
+.used-cube-marketu952 .text-137 {
+  width: 81px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.used-cube-marketu952 .paragraph-19 {
+  display: flex;
+  width: 70.77px;
+  margin-left: 55.1px;
+}
+
+.used-cube-marketu952 .qn-a {
+  width: 71px;
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .paragraph-20 {
+  display: flex;
+  width: 54.33px;
+  margin-left: 56.9px;
+}
+
+.used-cube-marketu952 .text-139 {
+  width: 55px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* =========================================================
+   IMAGE GALLERY SECTION
+   ========================================================= */
+.used-cube-marketu952 .container-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  position: absolute;
+  top: 134px;
+  left: 0;
+  width: 1920px;
+  height: 820px;
+  padding: 48px 228px 0;
+  background-color: var(--ebony-clay);
+}
+
+/* Main Image */
+.used-cube-marketu952 .container-4 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--mirage);
+}
+
+.used-cube-marketu952 .image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1464px;
+  height: 600px;
+  background-image: url(../img/image-----------.png);
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+/* Gallery Buttons */
+.used-cube-marketu952 .button,
+.used-cube-marketu952 .button-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 276px;
+  width: 48px;
+  height: 48px;
+  border-radius: 33554400px;
+  background-color: #00000080;
+  cursor: pointer;
+}
+
+.used-cube-marketu952 .button {
+  left: 24px;
+}
+
+.used-cube-marketu952 .button-1 {
+  left: 1392px;
+}
+
+.used-cube-marketu952 .icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.used-cube-marketu952 .vector {
+  position: absolute;
+  top: 20.83%;
+  left: 33.33%;
+  width: 33.33%;
+  height: 58.33%;
+}
+
+/* Image Counter */
+.used-cube-marketu952 .container-5 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 539px;
+  left: 1381px;
+  width: 59px;
+  height: 37px;
+  padding: 8px 16px 0;
+  border-radius: 8px;
+  background-color: #00000099;
+}
+
+.used-cube-marketu952 .paragraph {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-105 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+/* Thumbnail Strip */
+.used-cube-marketu952 .container-6 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 104px;
+  margin-left: -2px;
+}
+
+/* =========================================================
+   PRODUCT INFO SECTION
+   ========================================================= */
+.used-cube-marketu952 .container-7 {
+  display: grid;
+  grid-template-columns: minmax(0, 1016fr);
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 48px;
+  position: absolute;
+  top: 962px;
+  left: 0;
+  width: 1920px;
+  height: 1156px;
+  padding: 48px 228px;
+  background-color: var(--mirage);
+}
+
+.used-cube-marketu952 .container-8 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Breadcrumb --- */
+.used-cube-marketu952 .container-9 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 1016px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .paragraph-8 {
+  position: relative;
+  width: 12.89px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-106 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+.used-cube-marketu952 .icon-1 {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.used-cube-marketu952 .vector-1 {
+  position: absolute;
+  top: 20.31%;
+  left: 32.81%;
+  width: 34.38%;
+  height: 59.38%;
+}
+
+.used-cube-marketu952 .paragraph-9 {
+  position: relative;
+  width: 81.17px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-107 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+.used-cube-marketu952 .paragraph-10 {
+  position: relative;
+  width: 168.92px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-108 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+/* --- Title & Meta --- */
+.used-cube-marketu952 .container-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  width: 1016px;
+  height: 81px;
+}
+
+.used-cube-marketu952 .heading-1 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 1016px;
+}
+
+.used-cube-marketu952 .text-109 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xxl);
+  font-weight: 400;
+  line-height: 44px;
+}
+
+/* Meta Info (location, likes, views) */
+.used-cube-marketu952 .container-11 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  width: 1016px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .container-12 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 143.81px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .vector-2 {
+  position: absolute;
+  top: 58.33%;
+  left: 16.67%;
+  width: 66.67%;
+  height: 33.35%;
+}
+
+.used-cube-marketu952 .vector-3 {
+  position: absolute;
+  top: 8.33%;
+  left: 29.17%;
+  width: 41.67%;
+  height: 41.67%;
+}
+
+.used-cube-marketu952 .paragraph-1 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-110 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+.used-cube-marketu952 .container-13 {
+  position: relative;
+  width: 1px;
+  height: 12px;
+  background-color: var(--oxford-blue);
+}
+
+/* Likes */
+.used-cube-marketu952 .container-14 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 41.58px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .icon-2 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  height: 18px;
+}
+
+.used-cube-marketu952 .vector-4 {
+  position: absolute;
+  top: 12.43%;
+  left: 4.17%;
+  width: 91.67%;
+  height: 79.23%;
+}
+
+.used-cube-marketu952 .paragraph-11 {
+  position: relative;
+  width: 15.58px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+/* Views */
+.used-cube-marketu952 .container-15 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 49.36px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .icon-3 {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+.used-cube-marketu952 .vector-5 {
+  position: absolute;
+  top: 16.67%;
+  left: 4.17%;
+  width: 91.67%;
+  height: 66.67%;
+}
+
+.used-cube-marketu952 .vector-6 {
+  position: absolute;
+  top: 33.33%;
+  left: 33.33%;
+  width: 33.33%;
+  height: 33.33%;
+}
+
+.used-cube-marketu952 .number-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PRODUCT SPECS
+   ========================================================= */
+.used-cube-marketu952 .container-16 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: relative;
+  width: 1016px;
+  height: 325px;
+  padding: 32px 32px 0;
+  border-radius: 12px;
+  background-color: var(--ebony-clay);
+}
+
+.used-cube-marketu952 .heading-2 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 30px;
+}
+
+.used-cube-marketu952 .text-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 30px;
+}
+
+/* Specs Grid */
+.used-cube-marketu952 .container-17 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  position: absolute;
+  top: 86px;
+  left: 32px;
+  width: 952px;
+  height: 207px;
+}
+
+/* Spec Items */
+.used-cube-marketu952 .container-18,
+.used-cube-marketu952 .container-19,
+.used-cube-marketu952 .container-20,
+.used-cube-marketu952 .container-21,
+.used-cube-marketu952 .container-22,
+.used-cube-marketu952 .container-23 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.used-cube-marketu952 .container-18 { grid-column: 1 / 2; grid-row: 1 / 2; }
+.used-cube-marketu952 .container-19 { grid-column: 2 / 3; grid-row: 1 / 2; }
+.used-cube-marketu952 .container-20 { grid-column: 1 / 2; grid-row: 2 / 3; }
+.used-cube-marketu952 .container-21 { grid-column: 2 / 3; grid-row: 2 / 3; }
+.used-cube-marketu952 .container-22 { grid-column: 1 / 2; grid-row: 3 / 4; }
+.used-cube-marketu952 .container-23 { grid-column: 2 / 3; grid-row: 3 / 4; }
+
+/* Spec Labels */
+.used-cube-marketu952 .paragraph-2 {
+  position: relative;
+  width: 464px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-112,
+.used-cube-marketu952 .text-114,
+.used-cube-marketu952 .text-116,
+.used-cube-marketu952 .text-118,
+.used-cube-marketu952 .text-119,
+.used-cube-marketu952 .text-121 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+/* Spec Values */
+.used-cube-marketu952 .paragraph-3 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 464px;
+}
+
+.used-cube-marketu952 .text-113,
+.used-cube-marketu952 .text-115,
+.used-cube-marketu952 .text-117,
+.used-cube-marketu952 .text-120 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 24px;
+}
+
+.used-cube-marketu952 .a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .x100mm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PRODUCT DESCRIPTION
+   ========================================================= */
+.used-cube-marketu952 .container-24 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 1016px;
+}
+
+.used-cube-marketu952 .heading-2-1 {
+  position: relative;
+  width: 1016px;
+  height: 30px;
+}
+
+.used-cube-marketu952 .container-25 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  width: 1016px;
+  padding: 32px 32px 0;
+  border-radius: 12px;
+  background-color: var(--ebony-clay);
+}
+
+.used-cube-marketu952 .paragraph-12 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 420px;
+  margin-bottom: -30px;
+}
+
+/* Description Text Lines */
+.used-cube-marketu952 .x20 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .x2023 {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 943px;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .text-123 {
+  position: absolute;
+  top: 140px;
+  left: 0;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .x100mm-1 {
+  position: absolute;
+  top: 168px;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .led {
+  position: absolute;
+  top: 196px;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .text-124 {
+  position: absolute;
+  top: 224px;
+  left: 0;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .text-125 {
+  position: absolute;
+  top: 252px;
+  left: 0;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .text-126 {
+  position: absolute;
+  top: 280px;
+  left: 0;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .x {
+  position: absolute;
+  top: 336px;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .text-127 {
+  position: absolute;
+  top: 392px;
+  left: 0;
+  line-height: 28px;
+}
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+.used-cube-marketu952 .container-26 {
+  position: relative;
+  width: 1016px;
+  height: 37px;
+}
+
+.used-cube-marketu952 .container-27,
+.used-cube-marketu952 .container-28,
+.used-cube-marketu952 .container-29,
+.used-cube-marketu952 .container-30,
+.used-cube-marketu952 .container-31 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 0;
+  height: 37px;
+  padding: 8px 16px 0;
+  border-radius: 20px;
+  background-color: var(--ebony-clay);
+  cursor: pointer;
+}
+
+.used-cube-marketu952 .container-27 { left: 0;    width: 130px; }
+.used-cube-marketu952 .container-28 { left: 142px; width: 81px; }
+.used-cube-marketu952 .container-29 { left: 235px; width: 66px; }
+.used-cube-marketu952 .container-30 { left: 313px; width: 78px; }
+.used-cube-marketu952 .container-31 { left: 403px; width: 91px; }
+
+.used-cube-marketu952 .text-128,
+.used-cube-marketu952 .text-129,
+.used-cube-marketu952 .text-130,
+.used-cube-marketu952 .text-131,
+.used-cube-marketu952 .text-132 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+/* =========================================================
+   SIDEBAR - PRICE & SELLER & ACTIONS
+   ========================================================= */
+.used-cube-marketu952 .container-39 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 1008px;
+  left: 1292px;
+  width: 400px;
+  height: 560px;
+  padding: 32px 32px 0;
+  border-radius: 12px;
+  background-color: var(--ebony-clay);
+}
+
+.used-cube-marketu952 .container-40 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 24px;
+  position: relative;
+  width: 100%;
+  height: 526px;
+}
+
+/* Price */
+.used-cube-marketu952 .container-41 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  width: 336px;
+  height: 77px;
+}
+
+.used-cube-marketu952 .paragraph-21 {
+  position: relative;
+  width: 336px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-140 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+.used-cube-marketu952 .paragraph-22 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 336px;
+}
+
+.used-cube-marketu952 .text-141 {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 48px;
+}
+
+/* Divider */
+.used-cube-marketu952 .container-1 {
+  position: relative;
+  width: 336px;
+  height: 1px;
+  background-color: var(--oxford-blue);
+}
+
+/* Seller Info */
+.used-cube-marketu952 .container-42 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  width: 336px;
+  height: 89px;
+}
+
+.used-cube-marketu952 .paragraph-23 {
+  position: relative;
+  width: 336px;
+  height: 24px;
+}
+
+.used-cube-marketu952 .text-142 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 24px;
+}
+
+.used-cube-marketu952 .container-43 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  width: 336px;
+}
+
+/* Seller Avatar */
+.used-cube-marketu952 .container-44 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 33554400px;
+  background-color: var(--oxford-blue);
+}
+
+.used-cube-marketu952 .vector-7 {
+  position: absolute;
+  top: 37.50%;
+  left: 9.72%;
+  width: 47.23%;
+  height: 25.00%;
+}
+
+.used-cube-marketu952 .vector-8 {
+  position: absolute;
+  top: 4.17%;
+  left: 18.05%;
+  width: 30.57%;
+  height: 30.55%;
+}
+
+/* Seller Details */
+.used-cube-marketu952 .container-45 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  position: relative;
+  width: 116.5px;
+  height: 49px;
+}
+
+.used-cube-marketu952 .paragraph-24 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 116.5px;
+}
+
+.used-cube-marketu952 .text-143 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 24px;
+}
+
+.used-cube-marketu952 .paragraph-25 {
+  position: relative;
+  width: 116.5px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .phone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+/* Action Buttons */
+.used-cube-marketu952 .container-46 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  width: 336px;
+}
+
+/* Primary Button - 문의하기 */
+.used-cube-marketu952 .button-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 336px;
+  height: 56px;
+  padding: 16px 0 0;
+  border-radius: 10px;
+  background-color: var(--science-blue);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.used-cube-marketu952 .button-2:hover {
+  opacity: 0.9;
+}
+
+.used-cube-marketu952 .paragraph-5 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 24px;
+}
+
+.used-cube-marketu952 .text-144 {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* Secondary Button - 전화 연결 */
+.used-cube-marketu952 .button-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 336px;
+  height: 56px;
+  padding: 16px 0 0;
+  border-radius: 10px;
+  background-color: var(--oxford-blue);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.used-cube-marketu952 .button-3:hover {
+  opacity: 0.9;
+}
+
+.used-cube-marketu952 .text-145 {
+  position: absolute;
+  top: 0;
+  left: 122px;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* Outline Button - 관심 등록 */
+.used-cube-marketu952 .button-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  width: 336px;
+  padding: 17px 1px 1px;
+  border: 1px solid var(--oxford-blue);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.used-cube-marketu952 .button-4:hover {
+  border-color: var(--santas-gray);
+}
+
+.used-cube-marketu952 .container-47 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+  height: 24px;
+  padding: 0 0.02px 0 0;
+}
+
+.used-cube-marketu952 .icon-4 {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.used-cube-marketu952 .vector-9 {
+  position: absolute;
+  top: 11.19%;
+  left: 3.75%;
+  width: 82.50%;
+  height: 71.31%;
+}
+
+.used-cube-marketu952 .paragraph-26 {
+  position: relative;
+  width: 63.33px;
+  height: 24px;
+}
+
+.used-cube-marketu952 .text-146 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* Share */
+.used-cube-marketu952 .container-48 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  width: 336px;
+  height: 44px;
+}
+
+.used-cube-marketu952 .paragraph-27 {
+  position: relative;
+  width: 51.53px;
+  height: 21px;
+}
+
+.used-cube-marketu952 .text-147 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 21px;
+}
+
+.used-cube-marketu952 .container-49 {
+  position: relative;
+  width: 112px;
+  height: 32px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.used-cube-marketu952 .footer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: absolute;
+  top: 2118px;
+  left: 0;
+  width: 1920px;
+  height: 381px;
+  background-color: var(--mirage-2);
+}
+
+.used-cube-marketu952 .footer-content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 48px;
+  position: relative;
+  width: 1749px;
+  height: 164px;
+  margin-top: 58px;
+  margin-left: 167px;
+}
+
+/* Footer Column - 고객 지원 */
+.used-cube-marketu952 .footer-column {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.used-cube-marketu952 .paragraph-28 {
+  display: flex;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 71px;
+  height: 28px;
+}
+
+.used-cube-marketu952 .text-148 {
+  width: 72px;
+  height: 28px;
+  margin-top: 1px;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .container-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  top: 44px;
+  left: 0;
+  width: 347px;
+  height: 120px;
+}
+
+.used-cube-marketu952 .paragraph-6 {
+  display: flex;
+  width: 347.25px;
+  margin-top: 1px;
+}
+
+.used-cube-marketu952 .faq {
+  width: 33px;
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .paragraph-7 {
+  display: flex;
+  width: 347.25px;
+}
+
+.used-cube-marketu952 .text-149 { width: 30px;  height: 24px; line-height: 24px; }
+.used-cube-marketu952 .text-150 { width: 112px; height: 24px; line-height: 24px; }
+.used-cube-marketu952 .text-151 { width: 64px;  height: 24px; line-height: 24px; }
+
+/* Footer Column - 제품 */
+.used-cube-marketu952 .footer-column-1 {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.used-cube-marketu952 .paragraph-29 {
+  display: flex;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 33px;
+  height: 28px;
+}
+
+.used-cube-marketu952 .text-152 {
+  width: 34px;
+  height: 28px;
+  margin-top: 1px;
+  line-height: 28px;
+}
+
+.used-cube-marketu952 .text-15 {
+  width: 79px;
+  height: 24px;
+  line-height: 24px;
+}
+
+.used-cube-marketu952 .text-156 {
+  width: 79px;
+  height: 24px;
+  margin-left: 0.2px;
+  line-height: 24px;
+}
+
+.used-cube-marketu952 .paragraph-30 {
+  display: flex;
+  width: 347.25px;
+  margin-left: 0.2px;
+}
+
+.used-cube-marketu952 .text-155 {
+  width: 93px;
+  height: 24px;
+  line-height: 24px;
+}
+
+/* Footer Brand Area */
+.used-cube-marketu952 .container-50 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.used-cube-marketu952 .container-51 {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 76px;
+  left: 0;
+  width: 347px;
+  height: 52px;
+}
+
+.used-cube-marketu952 .paragraph-31 {
+  display: flex;
+  width: 185.53px;
+  margin-top: -2px;
+}
+
+.used-cube-marketu952 .text-157 {
+  width: 186px;
+  height: 26px;
+  line-height: 26px;
+}
+
+.used-cube-marketu952 .paragraph-32 {
+  display: flex;
+  width: 219.42px;
+}
+
+.used-cube-marketu952 .text-158 {
+  width: 220px;
+  height: 26px;
+  line-height: 26px;
+}
+
+.used-cube-marketu952 .container-52 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: -5px;
+  left: 78px;
+  width: 135px;
+  height: 74px;
+}
+
+.used-cube-marketu952 .paragraph-33 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 59px;
+}
+
+.used-cube-marketu952 .ccc {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.used-cube-marketu952 .paragraph-34 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 15px;
+}
+
+.used-cube-marketu952 .image-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 69px;
+  height: 63px;
+}
+
+/* Footer Bottom */
+.used-cube-marketu952 .footer-bottom {
+  position: relative;
+  width: 1749px;
+  height: 73px;
+  margin-left: 167px;
+}
+
+.used-cube-marketu952 .container-53 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1533px;
+  height: 73px;
+  border-top: 1px solid var(--ebony-clay-2);
+}
+
+.used-cube-marketu952 .container-54 {
+  display: flex;
+  gap: 1094.1px;
+  position: absolute;
+  top: 33px;
+  left: 0;
+  width: 1533px;
+  height: 40px;
+}
+
+.used-cube-marketu952 .container-55 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 286.88px;
+  height: 20px;
+  margin-top: 10px;
+  padding: -1px -0.12px 0 0;
+}
+
+.used-cube-marketu952 .paragraph-35 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 20px;
+}
+
+.used-cube-marketu952 .x2026-container-hou {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.used-cube-marketu952 .container-56 {
+  width: 152px;
+  height: 40px;
+}

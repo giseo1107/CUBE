@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문/결제</title>
+ <link rel="stylesheet" href="css/pay.css">
+</head>
+<body>
+
+  <!-- 상단 헤더 -->
+  <header class="page-header">
+    <button class="back-btn" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      장바구니로 돌아가기
+    </button>
+    <span class="page-title">주문/결제</span>
+  </header>
+
+  <div class="layout">
+    <!-- ─────────────── 왼쪽 폼 영역 ─────────────── -->
+    <div class="left-col">
+
+      <div id="alertBox" class="alert"></div>
+
+      <!-- 주문자 정보 -->
+      <div class="card">
+        <div class="card-title">주문자 정보</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>이름 <span class="required">*</span></label>
+            <input type="text" id="ordererName" placeholder="이름을 입력하세요">
+          </div>
+          <div class="form-group">
+            <label>연락처 <span class="required">*</span></label>
+            <input type="tel" id="ordererPhone" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>이메일 <span class="required">*</span></label>
+          <input type="email" id="ordererEmail" placeholder="example@email.com">
+        </div>
+      </div>
+
+      <!-- 설치 장소 정보 -->
+      <div class="card">
+        <div class="card-title">설치 장소 정보</div>
+        <label class="same-as-orderer">
+          <input type="checkbox" id="sameAsOrderer">
+          주문자와 동일
+        </label>
+        <div class="form-row">
+          <div class="form-group">
+            <label>받는 사람 <span class="required">*</span></label>
+            <input type="text" id="receiverName" placeholder="받는 사람 이름">
+          </div>
+          <div class="form-group">
+            <label>연락처 <span class="required">*</span></label>
+            <input type="tel" id="receiverPhone" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>우편번호 <span class="required">*</span></label>
+          <div class="postal-row">
+            <input type="text" id="postalCode" placeholder="우편번호" readonly>
+            <button class="search-btn" type="button" onclick="searchAddress()">주소 검색</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>주소 <span class="required">*</span></label>
+          <input type="text" id="addressBase" placeholder="기본 주소" readonly>
+        </div>
+        <div class="form-group">
+          <label>상세 주소</label>
+          <input type="text" id="addressDetail" placeholder="상세 주소를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label>배송 메시지</label>
+          <textarea id="deliveryMessage" placeholder="배송 시 요청사항을 입력하세요"></textarea>
+        </div>
+      </div>
+
+      <!-- 결제 방법 -->
+      <div class="card">
+        <div class="card-title">결제 방법</div>
+        <div class="payment-methods">
+          <input type="radio" name="payMethod" id="pm-card" class="payment-option" value="card" checked>
+          <label class="payment-label" for="pm-card">
+            <span class="payment-radio-dot"></span>
+            <span class="payment-info">
+              <span class="payment-name">신용카드</span>
+              <span class="payment-desc">모든 카드사 무이자 할부 가능</span>
+            </span>
+          </label>
+
+          <input type="radio" name="payMethod" id="pm-transfer" class="payment-option" value="transfer">
+          <label class="payment-label" for="pm-transfer">
+            <span class="payment-radio-dot"></span>
+            <span class="payment-info">
+              <span class="payment-name">실시간 계좌이체</span>
+              <span class="payment-desc">은행 계좌를 통한 즉시 이체</span>
+            </span>
+          </label>
+
+          <input type="radio" name="payMethod" id="pm-deposit" class="payment-option" value="deposit">
+          <label class="payment-label" for="pm-deposit">
+            <span class="payment-radio-dot"></span>
+            <span class="payment-info">
+              <span class="payment-name">무통장 입금</span>
+              <span class="payment-desc">가상계좌 발급 후 입금</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 약관 동의 -->
+      <div class="card">
+        <div class="card-title">약관 동의</div>
+        <div class="term-item">
+          <label class="term-left">
+            <input type="checkbox" id="termPayment">
+            <span class="term-label">구매 조건 및 결제 대행 서비스 약관 동의 <span class="required">*</span></span>
+          </label>
+          <button class="term-view-btn" onclick="openTermModal('payment')">보기</button>
+        </div>
+        <div class="term-item">
+          <label class="term-left">
+            <input type="checkbox" id="termPrivacy">
+            <span class="term-label">개인정보 수집 및 이용 동의 <span class="required">*</span></span>
+          </label>
+          <button class="term-view-btn" onclick="openTermModal('privacy')">보기</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─────────────── 오른쪽 주문 요약 ─────────────── -->
+    <div class="right-col">
+      <div class="card summary-card">
+        <div class="card-title">주문 상품</div>
+
+        <div class="product-item">
+          <div class="product-img">🏠</div>
+          <div>
+            <div class="product-name">프리미엄 주거형</div>
+            <div class="product-qty">수량: 1개</div>
+          </div>
+        </div>
+
+        <div class="price-row">
+          <span>상품 금액</span>
+          <span class="price-value">45,000,000원</span>
+        </div>
+        <div class="price-row">
+          <span>배송비</span>
+          <span class="price-free">무료</span>
+        </div>
+        <div class="price-row">
+          <span>할인</span>
+          <span class="price-discount">-0원</span>
+        </div>
+
+        <div class="total-row">
+          <span class="total-label">최종 결제 금액</span>
+          <span class="total-amount">45,000,000원</span>
+        </div>
+
+        <button class="pay-btn" id="payBtn" onclick="submitOrder()">
+          45,000,000원 결제하기
+        </button>
+
+        <p class="pay-notice">결제 후 견적서가 이메일로 발송됩니다</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ── 알림 ── */
+    function showAlert(message, type) {
+      const box = document.getElementById('alertBox');
+      box.textContent = message;
+      box.className = `alert alert-${type} show`;
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => box.classList.remove('show'), 5000);
+    }
+
+    /* ── 주문자와 동일 ── */
+    document.getElementById('sameAsOrderer').addEventListener('change', function () {
+      if (this.checked) {
+        document.getElementById('receiverName').value  = document.getElementById('ordererName').value;
+        document.getElementById('receiverPhone').value = document.getElementById('ordererPhone').value;
+      } else {
+        document.getElementById('receiverName').value  = '';
+        document.getElementById('receiverPhone').value = '';
+      }
+    });
+
+    /* ── 주소 검색 (카카오 우편번호) ── */
+    function searchAddress() {
+      if (!window.daum || !window.daum.Postcode) {
+        showAlert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'info');
+        const script = document.createElement('script');
+        script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+        document.head.appendChild(script);
+        return;
+      }
+      new window.daum.Postcode({
+        oncomplete: function (data) {
+          document.getElementById('postalCode').value  = data.zonecode;
+          document.getElementById('addressBase').value = data.roadAddress || data.jibunAddress;
+          document.getElementById('addressDetail').focus();
+        }
+      }).open();
+    }
+
+    /* ── 약관 보기 ── */
+    function openTermModal(type) {
+      const msg = type === 'payment'
+        ? '구매 조건 및 결제 대행 서비스 약관 내용입니다.'
+        : '개인정보 수집 및 이용 약관 내용입니다.';
+      alert(msg); // 실제 서비스에서는 모달 팝업으로 교체하세요
+    }
+
+    /* ── 유효성 검사 ── */
+    function validate() {
+      const fields = [
+        ['ordererName',   '주문자 이름을 입력해주세요.'],
+        ['ordererPhone',  '주문자 연락처를 입력해주세요.'],
+        ['ordererEmail',  '주문자 이메일을 입력해주세요.'],
+        ['receiverName',  '받는 사람 이름을 입력해주세요.'],
+        ['receiverPhone', '받는 사람 연락처를 입력해주세요.'],
+        ['postalCode',    '우편번호를 입력해주세요.'],
+        ['addressBase',   '주소를 입력해주세요.'],
+      ];
+      for (const [id, msg] of fields) {
+        if (!document.getElementById(id).value.trim()) {
+          showAlert(msg, 'error');
+          document.getElementById(id).focus();
+          return false;
+        }
+      }
+      if (!document.getElementById('termPayment').checked) {
+        showAlert('구매 조건 및 결제 대행 서비스 약관에 동의해주세요.', 'error');
+        return false;
+      }
+      if (!document.getElementById('termPrivacy').checked) {
+        showAlert('개인정보 수집 및 이용에 동의해주세요.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    /* ── 주문 제출 ── */
+    async function submitOrder() {
+      if (!validate()) return;
+
+      const btn = document.getElementById('payBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>결제 처리 중...';
+
+      const payload = {
+        orderer: {
+          name:  document.getElementById('ordererName').value.trim(),
+          phone: document.getElementById('ordererPhone').value.trim(),
+          email: document.getElementById('ordererEmail').value.trim(),
+        },
+        shipping: {
+          name:          document.getElementById('receiverName').value.trim(),
+          phone:         document.getElementById('receiverPhone').value.trim(),
+          postalCode:    document.getElementById('postalCode').value.trim(),
+          addressBase:   document.getElementById('addressBase').value.trim(),
+          addressDetail: document.getElementById('addressDetail').value.trim(),
+          message:       document.getElementById('deliveryMessage').value.trim(),
+        },
+        payMethod: document.querySelector('input[name="payMethod"]:checked').value,
+        items: [{ id: 'premium-residential', name: '프리미엄 주거형', qty: 1, price: 45000000 }],
+        totalAmount: 45000000,
+      };
+
+      try {
+        const response = await fetch('/api/order/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const responseText = await response.text();
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          throw new Error('서버 응답을 처리할 수 없습니다.');
+        }
+
+        if (data.success) {
+          showAlert('주문이 완료되었습니다. 결제 완료 페이지로 이동합니다...', 'success');
+          setTimeout(() => {
+            window.location.href = `/pay-result.html?orderId=${data.orderId}`;
+          }, 1000);
+        } else {
+          throw new Error(data.message || data.error || '주문 처리에 실패했습니다.');
+        }
+      } catch (err) {
+        console.error('주문 오류:', err);
+        showAlert(err.message || '주문 처리 중 오류가 발생했습니다.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '45,000,000원 결제하기';
+      }
+    }
+  </script>
+
+  <!-- 카카오 우편번호 (필요 시 로드) -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
+</body>
+</html>
