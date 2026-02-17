@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 가구 쇼룸 뷰어</title>
+    <link rel="stylesheet" href="css/viewer.css">
+    </head>
+<body>
+
+    <div class="user-header">
+    <div class="user-header-left">
+        <h1 class="app-title">큐브 뷰어 3D</h1>
+    </div>
+    
+    <div class="user-header-right">
+        <!-- 비로그인 상태 -->
+        <div id="userLoggedOut" class="user-section">
+            <button onclick="location.href='login.html'" class="btn-login">로그인</button>
+            <button onclick="location.href='register.html'" class="btn-register">회원가입</button>
+        </div>
+        
+        <!-- 로그인 상태 -->
+        <div id="userLoggedIn" class="user-section" style="display: none;">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">
+                    <img id="userProfileImage" src="" alt="프로필" style="display: none;">
+                    <span id="userProfilePlaceholder">👤</span>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">사용자</span>
+                    <span class="user-email" id="userEmail">user@example.com</span>
+                </div>
+            </div>
+            <button onclick="location.href='mypage.html'" class="btn-mypage">마이페이지</button>
+            <button onclick="logoutUser()" class="btn-logout">로그아웃</button>
+        </div>
+    </div>
+</div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">3D 씬 준비중...</div>
+    </div>
+
+    <div class="top-bar">
+        <div class="logo">
+            🏠 3D 가구 쇼룸
+            <span class="furniture-count" id="furnitureCount">0개 가구</span>
+        </div>
+        <div class="top-actions">
+            <button class="action-btn secondary" onclick="resetCamera()">🔄 시점 리셋</button>
+            <button class="action-btn secondary" onclick="captureScene()">📸 캡처</button>
+            <button class="action-btn secondary" onclick="saveChanges()">💾 저장</button>
+            <button class="action-btn primary" onclick="goToEditor()">✏️ 편집기로</button>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <div class="panel-header">
+            <h2>🪑 배치된 가구</h2>
+            <p>클릭하여 선택 및 수정</p>
+        </div>
+        <div class="furniture-list" id="furnitureList">
+            <!-- 동적 생성 -->
+        </div>
+    </div>
+
+    <div class="properties-panel" id="propertiesPanel">
+        <div class="prop-header">
+            <h3 id="selectedName">침대</h3>
+            <button class="close-btn" onclick="closeProperties()">×</button>
+        </div>
+        
+        <div class="prop-section">
+            <h4>🎨 모델 스타일</h4>
+            <div class="style-options" id="styleOptions">
+                <!-- 동적 생성 -->
+            </div>
+        </div>
+        
+        <div class="prop-section">
+            <h4>📷 사진 텍스처</h4>
+            <div class="image-upload" id="imageUpload" onclick="document.getElementById('imageInput').click()">
+                <div class="icon">📤</div>
+                <div class="text">이미지 업로드</div>
+                <div class="hint">클릭 또는 드래그</div>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+        </div>
+        
+        <div class="prop-section">
+            <h4>🎨 색상</h4>
+            <div class="color-grid" id="colorGrid"></div>
+            <div style="margin-top: 12px; display: flex; gap: 8px;">
+                <input type="color" id="customColor" style="width: 50px; height: 35px; border: none; border-radius: 6px; cursor: pointer;">
+                <button onclick="applyCustomColor()" style="flex:1; padding: 8px; border: none; border-radius: 6px; background: #667eea; color: white; cursor: pointer; font-weight: 600;">적용</button>
+            </div>
+        </div>
+        
+        <div class="prop-section">
+            <h4>✨ 재질</h4>
+            <div class="material-grid" id="materialGrid"></div>
+        </div>
+        
+        <div class="prop-section">
+            <h4>📏 크기 조절</h4>
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>스케일</span>
+                    <span class="slider-value" id="scaleValue">100%</span>
+                </div>
+                <input type="range" id="scaleSlider" min="50" max="200" value="100" oninput="updateScale()">
+            </div>
+        </div>
+        
+        <div class="prop-section">
+            <button onclick="deleteSelected()" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: #e74c3c; color: white; cursor: pointer; font-weight: 600;">🗑️ 삭제</button>
+        </div>
+    </div>
+
+    <div class="view-modes">
+        <button class="view-btn active" onclick="setView('perspective')">🎨 원근</button>
+        <button class="view-btn" onclick="setView('top')">📐 평면</button>
+        <button class="view-btn" onclick="setView('front')">📏 정면</button>
+        <button class="view-btn" onclick="setView('auto')">🔄 자동회전</button>
+    </div>
+
+    <div class="bottom-info">
+        🖱️ 드래그: 회전 | 휠: 확대/축소 | 클릭: 선택
+    </div>
+
+    <div class="no-data" id="noData" style="display: none;">
+        <h2>📦 가구 데이터가 없습니다</h2>
+        <p>편집기에서 가구를 배치한 후 3D 보기를 클릭하세요</p>
+        <button onclick="goToEditor()">편집기로 이동</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <div id="toast" class="toast"></div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ============ 가구 타입 정의 ============
+        const FURNITURE_TYPES = {
+            'Bed': { icon: '🛏️', name: '침대', styles: ['모던', '클래식', '미니멀'] },
+            'Table': { icon: '🪑', name: '테이블', styles: ['다이닝', '커피', '책상'] },
+            'Sofa': { icon: '🛋️', name: '소파', styles: ['모던', 'L자형', '클래식'] },
+            'Chair': { icon: '🪑', name: '의자', styles: ['다이닝', '오피스', '라운지'] },
+            'Door': { icon: '🚪', name: '문', styles: ['싱글', '더블', '슬라이딩'] },
+            'Window': { icon: '🪟', name: '창문', styles: ['단창', '이중창', '베이'] },
+            'Wall': { icon: '🧱', name: '벽', styles: ['일반', '유리', '파티션'] },
+            'Lamp': { icon: '💡', name: '조명', styles: ['플로어', '테이블', '펜던트'] },
+            'Cabinet': { icon: '🗄️', name: '수납장', styles: ['옷장', '책장', 'TV장'] }
+        };
+
+        const COLORS = [
+            '#ffffff', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71', '#f1c40f',
+            '#9b59b6', '#1abc9c', '#e67e22', '#34495e', '#8B4513', '#ecf0f1'
+        ];
+
+        const MATERIALS = [
+            { id: 'color', icon: '🎨', name: '단색' },
+            { id: 'wood', icon: '🪵', name: '나무' },
+            { id: 'fabric', icon: '🧵', name: '천' },
+            { id: 'metal', icon: '⚙️', name: '금속' },
+            { id: 'marble', icon: '🗿', name: '대리석' },
+            { id: 'glass', icon: '💎', name: '유리' }
+        ];
+
+        // ============ Three.js 변수 ============
+        let scene, camera, renderer, controls;
+        let raycaster, mouse;
+        let furnitureObjects = [];
+        let selectedFurniture = null;
+        let originalData = [];
+
+        // ============ 초기화 ============
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color('#e8e8e8');
+            scene.fog = new THREE.Fog('#e8e8e8', 800, 2000);
+
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('canvas'),
+                antialias: true,
+                preserveDrawingBuffer: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
+            camera.position.set(500, 400, 500);
+
+            
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 - 0.1;
+            controls.minDistance = 100;
+            controls.maxDistance = 1500;
+            controls.target.set(0, 50, 0);
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            setupLighting();
+            createRoom();
+            initUI();
+            setupEventListeners();
+            loadFurnitureData();
+            animate();
+        }
+
+        function setupLighting() {
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+            const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            mainLight.position.set(200, 400, 200);
+            mainLight.castShadow = true;
+            mainLight.shadow.mapSize.width = 2048;
+            mainLight.shadow.mapSize.height = 2048;
+            mainLight.shadow.camera.left = -500;
+            mainLight.shadow.camera.right = 500;
+            mainLight.shadow.camera.top = 500;
+            mainLight.shadow.camera.bottom = -500;
+            scene.add(mainLight);
+
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+            fillLight.position.set(-200, 200, -200);
+            scene.add(fillLight);
+
+            const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.3);
+            hemiLight.position.set(0, 500, 0);
+            scene.add(hemiLight);
+        }
+
+        function createRoom() {
+            // 바닥
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0xf5f0e8,
+                roughness: 0.8,
+                metalness: 0.1
+            });
+            
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            floor.receiveShadow = true;
+            floor.userData.isFloor = true;
+            scene.add(floor);
+
+            // 벽
+            const wallMat = new THREE.MeshStandardMaterial({
+                color: 0xfafafa,
+                roughness: 0.9
+            });
+
+            const backWall = new THREE.Mesh(new THREE.PlaneGeometry(2000, 400), wallMat);
+            backWall.position.set(0, 200, -500);
+            backWall.receiveShadow = true;
+            scene.add(backWall);
+
+            const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(2000, 400), wallMat.clone());
+            leftWall.rotation.y = Math.PI / 2;
+            leftWall.position.set(-500, 200, 0);
+            leftWall.receiveShadow = true;
+            scene.add(leftWall);
+
+            // 그리드
+            const grid = new THREE.GridHelper(1000, 50, 0xcccccc, 0xe0e0e0);
+            grid.position.y = 0.5;
+            scene.add(grid);
+        }
+
+        // ============ 가구 생성 함수들 ============
+        function createFurniture(data) {
+            const type = data.type;
+            const position = new THREE.Vector3(data.position.x, data.position.y, data.position.z);
+            const scale = data.scale;
+            const color = data.color;
+            const rotation = data.rotation || 0;
+
+            let furniture;
+
+            switch(type) {
+                case 'Bed': furniture = createBed(scale, color); break;
+                case 'Sofa': furniture = createSofa(scale, color); break;
+                case 'Table': furniture = createTable(scale, color); break;
+                case 'Chair': furniture = createChair(scale, color); break;
+                case 'Door': furniture = createDoor(scale, color); break;
+                case 'Window': furniture = createWindow(scale, color); break;
+                case 'Wall': furniture = createWall(scale, color); break;
+                default: furniture = createGeneric(scale, color);
+            }
+
+            furniture.position.copy(position);
+            furniture.rotation.y = rotation;
+            
+            furniture.userData = {
+                ...data,
+                originalColor: color,
+                material: data.texture || 'color',
+                styleIndex: 0
+            };
+
+            scene.add(furniture);
+            furnitureObjects.push(furniture);
+
+            return furniture;
+        }
+
+        function createBed(size, color) {
+            const group = new THREE.Group();
+            
+            const frameMat = new THREE.MeshStandardMaterial({ color, roughness: 0.7, metalness: 0.1 });
+            const mattressMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+
+            // 프레임
+            const frame = new THREE.Mesh(
+                new THREE.BoxGeometry(size.w, 25, size.d),
+                frameMat
+            );
+            frame.position.y = -size.h/2 + 12.5;
+            frame.castShadow = true;
+            frame.receiveShadow = true;
+            group.add(frame);
+
+            // 헤드보드
+            const headboard = new THREE.Mesh(
+                new THREE.BoxGeometry(size.w, size.h * 0.7, 10),
+                frameMat
+            );
+            headboard.position.set(0, 0, -size.d/2 + 5);
+            headboard.castShadow = true;
+            group.add(headboard);
+
+            // 매트리스
+            const mattress = new THREE.Mesh(
+                new THREE.BoxGeometry(size.w - 10, 20, size.d - 20),
+                mattressMat
+            );
+            mattress.position.y = -size.h/2 + 35;
+            mattress.castShadow = true;
+            group.add(mattress);
+
+            // 베개
+            for (let i = -1; i <= 1; i += 2) {
+                const pillow = new THREE.Mesh(
+                    new THREE.BoxGeometry(50, 12, 35),
+                    new THREE.MeshStandardMaterial({ color: 0xf8f8f8, roughness: 0.95 })
+                );
+                pillow.position.set(i * 50, -size.h/2 + 50, -size.d/2 + 40);
+                pillow.castShadow = true;
+                group.add(pillow);
+            }
+
+            group.userData.mainMesh = frame;
+            return group;
+        }
+
+        function createSofa(size, color) {
+            const group = new THREE.Group();
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.9 });
+
+            // 베이스
+            const base = new THREE.Mesh(new THREE.BoxGeometry(size.w, 35, size.d), mat);
+            base.position.y = -size.h/2 + 17.5;
+            base.castShadow = true;
+            group.add(base);
+
+            // 등받이
+            const back = new THREE.Mesh(new THREE.BoxGeometry(size.w, size.h * 0.6, 20), mat);
+            back.position.set(0, 0, -size.d/2 + 10);
+            back.castShadow = true;
+            group.add(back);
+
+            // 팔걸이
+            [-1, 1].forEach(side => {
+                const arm = new THREE.Mesh(new THREE.BoxGeometry(15, size.h * 0.5, size.d), mat);
+                arm.position.set(side * (size.w/2 - 7.5), -size.h/4, 0);
+                arm.castShadow = true;
+                group.add(arm);
+            });
+
+            // 쿠션
+            const cushionMat = new THREE.MeshStandardMaterial({ 
+                color: new THREE.Color(color).multiplyScalar(1.1), 
+                roughness: 0.95 
+            });
+            for (let i = 0; i < 3; i++) {
+                const cushion = new THREE.Mesh(
+                    new THREE.BoxGeometry((size.w - 40) / 3 - 5, 15, size.d - 30),
+                    cushionMat
+                );
+                cushion.position.set(-size.w/2 + 20 + (size.w - 40)/6 + i * (size.w - 40)/3, -size.h/2 + 42, 5);
+                cushion.castShadow = true;
+                group.add(cushion);
+            }
+
+            group.userData.mainMesh = base;
+            return group;
+        }
+
+        function createTable(size, color) {
+            const group = new THREE.Group();
+            
+            const topMat = new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0.1 });
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x3c3c3c, roughness: 0.4, metalness: 0.6 });
+
+            // 상판
+            const top = new THREE.Mesh(new THREE.BoxGeometry(size.w, 5, size.d), topMat);
+            top.position.y = size.h/2 - 2.5;
+            top.castShadow = true;
+            group.add(top);
+
+            // 다리
+            const legPositions = [
+                [-size.w/2 + 10, -size.d/2 + 10],
+                [size.w/2 - 10, -size.d/2 + 10],
+                [-size.w/2 + 10, size.d/2 - 10],
+                [size.w/2 - 10, size.d/2 - 10]
+            ];
+
+            legPositions.forEach(([x, z]) => {
+                const leg = new THREE.Mesh(new THREE.CylinderGeometry(3, 3, size.h - 5, 12), legMat);
+                leg.position.set(x, 0, z);
+                leg.castShadow = true;
+                group.add(leg);
+            });
+
+            group.userData.mainMesh = top;
+            return group;
+        }
+
+        function createChair(size, color) {
+            const group = new THREE.Group();
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.7, metalness: 0.1 });
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x2c2c2c, metalness: 0.4, roughness: 0.5 });
+
+            // 좌석
+            const seat = new THREE.Mesh(new THREE.BoxGeometry(size.w, 5, size.d), mat);
+            seat.position.y = 0;
+            seat.castShadow = true;
+            group.add(seat);
+
+            // 등받이
+            const back = new THREE.Mesh(new THREE.BoxGeometry(size.w, size.h * 0.5, 5), mat);
+            back.position.set(0, size.h * 0.25, -size.d/2 + 2.5);
+            back.castShadow = true;
+            group.add(back);
+
+            // 다리
+            const legPositions = [
+                [-size.w/2 + 5, -size.d/2 + 5],
+                [size.w/2 - 5, -size.d/2 + 5],
+                [-size.w/2 + 5, size.d/2 - 5],
+                [size.w/2 - 5, size.d/2 - 5]
+            ];
+
+            legPositions.forEach(([x, z]) => {
+                const leg = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, size.h * 0.5, 8), legMat);
+                leg.position.set(x, -size.h * 0.25, z);
+                leg.castShadow = true;
+                group.add(leg);
+            });
+
+            group.userData.mainMesh = seat;
+            return group;
+        }
+
+        function createDoor(size, color) {
+            const group = new THREE.Group();
+            
+            const doorMat = new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0.1 });
+
+            // 문 패널
+            const door = new THREE.Mesh(new THREE.BoxGeometry(size.w, size.h, size.d), doorMat);
+            door.castShadow = true;
+            group.add(door);
+
+            // 패널 디테일
+            const panelMat = new THREE.MeshStandardMaterial({ 
+                color: new THREE.Color(color).multiplyScalar(0.9), 
+                roughness: 0.5 
+            });
+
+            [0.25, 0.75].forEach(ratio => {
+                const panel = new THREE.Mesh(
+                    new THREE.BoxGeometry(size.w - 20, size.h/3 - 20, 3),
+                    panelMat
+                );
+                panel.position.set(0, size.h * (ratio - 0.5), size.d/2 + 1);
+                group.add(panel);
+            });
+
+            // 손잡이
+            const handle = new THREE.Mesh(
+                new THREE.CylinderGeometry(3, 3, 15, 12),
+                new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3 })
+            );
+            handle.rotation.x = Math.PI / 2;
+            handle.position.set(size.w/2 - 15, 0, size.d/2 + 8);
+            handle.castShadow = true;
+            group.add(handle);
+
+            group.userData.mainMesh = door;
+            return group;
+        }
+
+        function createWindow(size, color) {
+            const group = new THREE.Group();
+            
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5, metalness: 0.1 });
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.4,
+                roughness: 0.05,
+                metalness: 0.1,
+                transmission: 0.9
+            });
+
+            // 프레임
+            const frameThickness = 8;
+            
+            ['top', 'bottom', 'left', 'right', 'center'].forEach(pos => {
+                let geom, position;
+                switch(pos) {
+                    case 'top':
+                        geom = new THREE.BoxGeometry(size.w, frameThickness, size.d);
+                        position = [0, size.h/2 - frameThickness/2, 0];
+                        break;
+                    case 'bottom':
+                        geom = new THREE.BoxGeometry(size.w, frameThickness, size.d);
+                        position = [0, -size.h/2 + frameThickness/2, 0];
+                        break;
+                    case 'left':
+                        geom = new THREE.BoxGeometry(frameThickness, size.h - frameThickness*2, size.d);
+                        position = [-size.w/2 + frameThickness/2, 0, 0];
+                        break;
+                    case 'right':
+                        geom = new THREE.BoxGeometry(frameThickness, size.h - frameThickness*2, size.d);
+                        position = [size.w/2 - frameThickness/2, 0, 0];
+                        break;
+                    case 'center':
+                        geom = new THREE.BoxGeometry(frameThickness/2, size.h - frameThickness*2, size.d);
+                        position = [0, 0, 0];
+                        break;
+                }
+                const frame = new THREE.Mesh(geom, frameMat);
+                frame.position.set(...position);
+                group.add(frame);
+            });
+
+            // 유리
+            const glass = new THREE.Mesh(
+                new THREE.BoxGeometry(size.w - frameThickness*2, size.h - frameThickness*2, 3),
+                glassMat
+            );
+            group.add(glass);
+
+            group.userData.mainMesh = glass;
+            return group;
+        }
+
+        function createWall(size, color) {
+            const group = new THREE.Group();
+            
+            const wallMat = new THREE.MeshStandardMaterial({ 
+                color: color, 
+                roughness: 0.9, 
+                metalness: 0 
+            });
+
+            const wall = new THREE.Mesh(
+                new THREE.BoxGeometry(size.w, size.h, size.d),
+                wallMat
+            );
+            wall.castShadow = true;
+            wall.receiveShadow = true;
+            group.add(wall);
+
+            group.userData.mainMesh = wall;
+            return group;
+        }
+
+        function createGeneric(size, color) {
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.5, metalness: 0.1 });
+            const mesh = new THREE.Mesh(new THREE.BoxGeometry(size.w, size.h, size.d), mat);
+            mesh.castShadow = true;
+            
+            const group = new THREE.Group();
+            group.add(mesh);
+            group.userData.mainMesh = mesh;
+            return group;
+        }
+
+        // ============ 데이터 로드 ============
+        function loadFurnitureData() {
+            const furnitureData = localStorage.getItem('furniture_data');
+            
+            if (!furnitureData) {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                document.getElementById('noData').style.display = 'block';
+                return;
+            }
+
+            try {
+                originalData = JSON.parse(furnitureData);
+                
+                if (originalData.length === 0) {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                    document.getElementById('noData').style.display = 'block';
+                    return;
+                }
+
+                originalData.forEach((item, index) => {
+                    setTimeout(() => {
+                        createFurniture(item);
+                        document.getElementById('loadingText').textContent = 
+                            `가구 로딩중... (${index + 1}/${originalData.length})`;
+                        
+                        if (index === originalData.length - 1) {
+                            finishLoading();
+                        }
+                    }, index * 100);
+                });
+
+            } catch (e) {
+                console.error('데이터 파싱 오류:', e);
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                showToast('데이터 로드 실패', 3000);
+            }
+        }
+
+        function finishLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            updateFurnitureList();
+            document.getElementById('furnitureCount').textContent = `${furnitureObjects.length}개 가구`;
+            showToast(`✅ ${furnitureObjects.length}개 가구 로드 완료`);
+        }
+
+        // ============ UI 초기화 ============
+        function initUI() {
+            // 색상 그리드
+            const colorGrid = document.getElementById('colorGrid');
+            COLORS.forEach(color => {
+                const item = document.createElement('div');
+                item.className = 'color-item';
+                item.style.background = color;
+                if (color === '#ffffff') item.style.border = '2px solid #ddd';
+                item.onclick = () => applyColor(color);
+                colorGrid.appendChild(item);
+            });
+
+            // 재질 그리드
+            const materialGrid = document.getElementById('materialGrid');
+            MATERIALS.forEach(mat => {
+                const item = document.createElement('div');
+                item.className = 'material-item';
+                item.dataset.id = mat.id;
+                item.innerHTML = `<div class="icon">${mat.icon}</div><div class="label">${mat.name}</div>`;
+                item.onclick = () => applyMaterial(mat.id);
+                materialGrid.appendChild(item);
+            });
+        }
+
+        function updateFurnitureList() {
+            const list = document.getElementById('furnitureList');
+            list.innerHTML = '';
+
+            furnitureObjects.forEach((obj, index) => {
+                const data = obj.userData;
+                const typeInfo = FURNITURE_TYPES[data.type] || { icon: '📦', name: data.type };
+                
+                const item = document.createElement('div');
+                item.className = 'furniture-item' + (obj === selectedFurniture ? ' selected' : '');
+                item.innerHTML = `
+                    <div class="furniture-icon" style="background: ${data.color}">${typeInfo.icon}</div>
+                    <div class="furniture-info">
+                        <h4>${data.name}</h4>
+                        <span>${Math.round(data.scale.w)}×${Math.round(data.scale.d)}×${Math.round(data.scale.h)}cm</span>
+                    </div>
+                `;
+                item.onclick = () => selectFurniture(obj);
+                list.appendChild(item);
+            });
+        }
+
+        // ============ 이벤트 처리 ============
+        function setupEventListeners() {
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            renderer.domElement.addEventListener('click', onCanvasClick);
+
+            // 이미지 드래그 앤 드롭
+            const uploadArea = document.getElementById('imageUpload');
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#667eea';
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#ddd';
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ddd';
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    processImage(file);
+                }
+            });
+        }
+
+        function onCanvasClick(event) {
+            if (event.target.closest('.info-panel') || 
+                event.target.closest('.properties-panel') ||
+                event.target.closest('.top-bar') ||
+                event.target.closest('.view-modes')) {
+                return;
+            }
+
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(furnitureObjects, true);
+
+            if (intersects.length > 0) {
+                let obj = intersects[0].object;
+                while (obj.parent && !furnitureObjects.includes(obj)) {
+                    obj = obj.parent;
+                }
+                if (furnitureObjects.includes(obj)) {
+                    selectFurniture(obj);
+                }
+            } else {
+                deselectFurniture();
+            }
+        }
+
+        function selectFurniture(obj) {
+            selectedFurniture = obj;
+            const data = obj.userData;
+            const typeInfo = FURNITURE_TYPES[data.type] || { name: data.type, styles: ['기본'] };
+
+            document.getElementById('selectedName').textContent = `${typeInfo.name} - ${data.name}`;
+            document.getElementById('propertiesPanel').classList.add('active');
+            document.getElementById('customColor').value = data.color;
+            document.getElementById('scaleSlider').value = 100;
+            document.getElementById('scaleValue').textContent = '100%';
+
+            // 스타일 옵션 생성
+            const styleOptions = document.getElementById('styleOptions');
+            styleOptions.innerHTML = typeInfo.styles.map((style, i) => `
+                <div class="style-option ${i === data.styleIndex ? 'selected' : ''}" onclick="changeStyle(${i})">
+                    <div class="icon">${typeInfo.icon || '📦'}</div>
+                    <div class="label">${style}</div>
+                </div>
+            `).join('');
+
+            // 재질 선택 표시
+            document.querySelectorAll('.material-item').forEach(item => {
+                item.classList.toggle('selected', item.dataset.id === data.material);
+            });
+
+            updateFurnitureList();
+        }
+
+        window.deselectFurniture = function() {
+            selectedFurniture = null;
+            document.getElementById('propertiesPanel').classList.remove('active');
+            updateFurnitureList();
+        };
+
+        window.closeProperties = deselectFurniture;
+
+        // ============ 속성 변경 함수들 ============
+        window.changeStyle = function(index) {
+            if (!selectedFurniture) return;
+            selectedFurniture.userData.styleIndex = index;
+            document.querySelectorAll('.style-option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+            showToast('스타일 변경됨');
+        };
+
+        window.applyColor = function(color) {
+            if (!selectedFurniture) return;
+            
+            selectedFurniture.traverse(child => {
+                if (child.isMesh && child.material) {
+                    const newMat = child.material.clone();
+                    newMat.color.set(color);
+                    child.material = newMat;
+                }
+            });
+            
+            selectedFurniture.userData.color = color;
+            document.getElementById('customColor').value = color;
+            
+            document.querySelectorAll('.color-item').forEach(item => {
+                item.classList.toggle('selected', item.style.background === color);
+            });
+            
+            updateFurnitureList();
+            showToast(`색상: ${color}`);
+        };
+
+        window.applyCustomColor = function() {
+            applyColor(document.getElementById('customColor').value);
+        };
+
+        window.applyMaterial = function(materialId) {
+            if (!selectedFurniture) return;
+
+            const materialProps = {
+                color: { roughness: 0.5, metalness: 0.1 },
+                wood: { roughness: 0.8, metalness: 0.1 },
+                fabric: { roughness: 1.0, metalness: 0 },
+                metal: { roughness: 0.3, metalness: 0.9 },
+                marble: { roughness: 0.4, metalness: 0.2 },
+                glass: { roughness: 0.1, metalness: 0.1, transparent: true, opacity: 0.6 }
+            };
+
+            const props = materialProps[materialId] || materialProps.color;
+
+            selectedFurniture.traverse(child => {
+                if (child.isMesh && child.material) {
+                    Object.assign(child.material, props);
+                    child.material.needsUpdate = true;
+                }
+            });
+
+            selectedFurniture.userData.material = materialId;
+            
+            document.querySelectorAll('.material-item').forEach(item => {
+                item.classList.toggle('selected', item.dataset.id === materialId);
+            });
+            
+            showToast(`재질: ${MATERIALS.find(m => m.id === materialId)?.name || materialId}`);
+        };
+
+        window.updateScale = function() {
+            if (!selectedFurniture) return;
+            const scale = document.getElementById('scaleSlider').value / 100;
+            selectedFurniture.scale.set(scale, scale, scale);
+            document.getElementById('scaleValue').textContent = Math.round(scale * 100) + '%';
+        };
+
+        window.deleteSelected = function() {
+            if (!selectedFurniture) return;
+            scene.remove(selectedFurniture);
+            furnitureObjects = furnitureObjects.filter(f => f !== selectedFurniture);
+            deselectFurniture();
+            updateFurnitureList();
+            document.getElementById('furnitureCount').textContent = `${furnitureObjects.length}개 가구`;
+            showToast('가구 삭제됨');
+        };
+
+        // ============ 이미지 텍스처 ============
+        window.handleImageUpload = function(event) {
+            const file = event.target.files[0];
+            if (file) processImage(file);
+        };
+
+        function processImage(file) {
+            if (!selectedFurniture) {
+                showToast('먼저 가구를 선택하세요');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const texture = new THREE.Texture(img);
+                    texture.needsUpdate = true;
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+
+                    selectedFurniture.traverse(child => {
+                        if (child.isMesh && child.material) {
+                            child.material.map = texture;
+                            child.material.needsUpdate = true;
+                        }
+                    });
+
+                    const uploadArea = document.getElementById('imageUpload');
+                    uploadArea.classList.add('has-image');
+                    uploadArea.innerHTML = `<img src="${e.target.result}" class="uploaded-preview"><div class="text" style="margin-top:8px;">텍스처 적용됨</div>`;
+                    
+                    showToast('텍스처 적용됨');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============ 뷰 모드 ============
+        window.setView = function(mode) {
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            controls.autoRotate = false;
+
+            switch(mode) {
+                case 'top':
+                    camera.position.set(0, 800, 0);
+                    controls.target.set(0, 0, 0);
+                    break;
+                case 'front':
+                    camera.position.set(0, 200, 600);
+                    controls.target.set(0, 100, 0);
+                    break;
+                case 'auto':
+                    controls.autoRotate = true;
+                    controls.autoRotateSpeed = 2;
+                    break;
+                default:
+                    camera.position.set(500, 400, 500);
+                    controls.target.set(0, 50, 0);
+            }
+            controls.update();
+        };
+
+        window.resetCamera = function() {
+            camera.position.set(500, 400, 500);
+            controls.target.set(0, 50, 0);
+            controls.update();
+            showToast('시점 리셋');
+        };
+
+        // ============ 저장/캡처 ============
+        window.captureScene = function() {
+            renderer.render(scene, camera);
+            const link = document.createElement('a');
+            link.download = `room-3d-${Date.now()}.png`;
+            link.href = renderer.domElement.toDataURL('image/png');
+            link.click();
+            showToast('📸 스크린샷 저장됨');
+        };
+
+        window.saveChanges = function() {
+            const updatedData = furnitureObjects.map(obj => ({
+                ...obj.userData,
+                position: { x: obj.position.x, y: obj.position.y, z: obj.position.z },
+                rotation: obj.rotation.y,
+                scale: obj.userData.scale
+            }));
+
+            localStorage.setItem('furniture_data', JSON.stringify(updatedData));
+            
+            // editor_2d_state도 업데이트
+            const editorState = localStorage.getItem('editor_2d_state');
+            if (editorState) {
+                try {
+                    const state = JSON.parse(editorState);
+                    state.objects.forEach(canvasObj => {
+                        if (canvasObj.userData?.name) {
+                            const updated = updatedData.find(f => f.name === canvasObj.userData.name);
+                            if (updated) {
+                                canvasObj.fill = updated.color;
+                                canvasObj.userData.texture = updated.material;
+                            }
+                        }
+                    });
+                    localStorage.setItem('editor_2d_state', JSON.stringify(state));
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+
+            showToast('✅ 변경사항 저장됨');
+        };
+
+        window.goToEditor = function() {
+            window.location.href = 'editor.html';
+        };
+
+        // ============ 유틸리티 ============
+        function showToast(message, duration = 2500) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, duration);
+        }
+
+        // ============ 애니메이션 ============
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // 시작
+        init();
+        console.log('🏠 3D 뷰어 로드 완료 - Editor.html과 완벽 호환');
+
+        let currentUser = null;
+
+// 페이지 로드 시 유저 정보 확인
+async function checkUserLogin() {
+    try {
+        const response = await fetch('/api/user/info');
+        const data = await response.json();
+        
+        if (data.success && data.user) {
+            currentUser = data.user;
+            showUserInfo(data.user);
+        } else {
+            showLoggedOutState();
+        }
+    } catch (error) {
+        console.error('유저 정보 로드 실패:', error);
+        showLoggedOutState();
+    }
+}
+
+function showUserInfo(user) {
+    document.getElementById('userLoggedOut').style.display = 'none';
+    document.getElementById('userLoggedIn').style.display = 'flex';
+    document.getElementById('userName').textContent = user.nickname || '사용자';
+    document.getElementById('userEmail').textContent = user.email || '';
+    
+    // 프로필 이미지
+    if (user.profile_image) {
+        document.getElementById('userProfileImage').src = user.profile_image;
+        document.getElementById('userProfileImage').style.display = 'block';
+        document.getElementById('userProfilePlaceholder').style.display = 'none';
+    } else {
+        document.getElementById('userProfileImage').style.display = 'none';
+        document.getElementById('userProfilePlaceholder').style.display = 'block';
+    }
+}
+
+function showLoggedOutState() {
+    currentUser = null;
+    document.getElementById('userLoggedOut').style.display = 'flex';
+    document.getElementById('userLoggedIn').style.display = 'none';
+}
+
+async function logoutUser() {
+    if (!confirm('로그아웃 하시겠습니까?')) return;
+    
+    try {
+        const response = await fetch('/api/auth/logout', { method: 'POST' });
+        const data = await response.json();
+        
+        if (data.success) {
+            showLoggedOutState();
+            showToast('로그아웃 되었습니다');
+        }
+    } catch (error) {
+        console.error('로그아웃 실패:', error);
+    }
+}
+
+
+checkUserLogin();
+
+</script>
+</body>
+</html>

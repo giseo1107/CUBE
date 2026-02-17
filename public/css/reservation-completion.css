@@ -1,0 +1,1132 @@
+/* ==========================================================
+   C.C.C - Custom Cube Company
+   Reservation Completion Page
+   통합 스타일시트 (globals + styleguide + reservation-completion)
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   1. IMPORTS & FONTS
+   ---------------------------------------------------------- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Abhaya Libre SemiBold-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
+}
+
+/* ----------------------------------------------------------
+   2. CSS VARIABLES (원본 styleguide 값 그대로)
+   ---------------------------------------------------------- */
+:root {
+  /* ---- Colors (원본 정확히 유지) ---- */
+  --black: #000000;
+  --white: #ffffff;
+  --white-2: #ffffff1a;          /* rgba(255,255,255,0.1) */
+  --white-3: #ffffffe6;          /* rgba(255,255,255,0.9) */
+  --mirage: #101828;
+  --chathams-blue: #1a4f85;
+  --chathams-blue-dark: #15436f;
+  --scarpa-flow: #4a5565;
+  --oxford-blue: #364153;
+  --santas-gray: #99a1af;
+  --cod-gray: #0a0a0a;
+  --pink-swan: #bbbbbb;
+  --ice-cold: #aff9f5;
+  --ebony-clay: #1e2939;
+  --cyber-grape: #54537b;
+  --cyber-grape-2: #52537a33;    /* rgba(82,83,122,0.2) */
+  --curious-blue: #358de6;
+  --curious-blue-2: #358de61a;
+
+  /* Backgrounds */
+  --bg-site: #f7f5fa;
+
+  /* ---- Font Sizes (원본 정확히 유지) ---- */
+  --fs-xs: 12px;     /* --font-size-s */
+  --fs-sm: 14px;     /* --font-size-m */
+  --fs-md: 16px;     /* --font-size-l */
+  --fs-lg: 18px;     /* --font-size-xl */
+  --fs-xl: 20px;     /* --font-size-xxl */
+  --fs-2xl: 24px;    /* --font-size-xxxl */
+  --fs-3xl: 32px;
+  --fs-4xl: 48px;    /* --font-size-xxxxl */
+
+  /* ---- Font Families (원본 정확히 유지) ---- */
+  --ff-bold: "Arial-Bold", Helvetica, sans-serif;
+  --ff-regular: "Arial-Regular", Helvetica, sans-serif;
+  --ff-abhaya: "Abhaya Libre SemiBold-Regular", Helvetica, serif;
+  --ff-baloo: "Baloo Da 2", Helvetica, sans-serif;
+  --ff-inter: "Inter", Helvetica, sans-serif;
+
+  /* ---- Layout ---- */
+  --max-width: 800px;
+  --header-height: 80px;
+  --container-px: 32px;
+
+  /* ---- Effects ---- */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-header: 0 1px 2px -1px rgba(0, 0, 0, 0.1),
+                   0 1px 3px rgba(0, 0, 0, 0.1);
+  --radius: 16px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --transition: 0.3s ease;
+}
+
+/* ----------------------------------------------------------
+   3. BASE / RESET
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ff-regular);
+  color: var(--scarpa-flow);
+  background: var(--bg-site);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+/* ----------------------------------------------------------
+   4. LAYOUT
+   ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+}
+
+/* ----------------------------------------------------------
+   5. BUTTONS
+   ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 36px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-bold);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  line-height: 24px;
+}
+
+.btn-primary {
+  background: var(--chathams-blue);
+}
+
+.btn-primary:hover {
+  background: var(--chathams-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 79, 133, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cyber-grape);
+  border: 2px solid var(--cyber-grape-2);
+}
+
+.btn-outline:hover {
+  background: rgba(84, 83, 123, 0.08);
+  border-color: var(--cyber-grape);
+  transform: translateY(-2px);
+}
+
+/* ----------------------------------------------------------
+   6. HEADER
+   ---------------------------------------------------------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 1000;
+  background: var(--chathams-blue);
+  box-shadow: var(--shadow-header);
+  transition: var(--transition);
+}
+
+.header.is-scrolled {
+  background: rgba(26, 79, 133, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 64px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 71px;
+  height: 64px;
+  background: url('../img/logo@2x.png') center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-title {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-4xl);
+  font-weight: 400;
+  color: var(--ice-cold);
+  line-height: 1.2;
+}
+
+.logo-sub {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--ice-cold);
+}
+
+/* Auth */
+.auth-links {
+  display: flex;
+  gap: 24px;
+  margin-left: 16px;
+}
+
+.auth-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.auth-link:hover {
+  opacity: 0.75;
+}
+
+/* User Section (로그인/비로그인 상태 전환) */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-info-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-avatar-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-avatar-sm span {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.user-name-header {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 로그아웃 버튼 */
+.btn-logout {
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ff4d4d !important;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  border-radius: 8px;
+  font-family: var(--ff-baloo);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 77, 77, 0.15) !important;
+  border-color: rgba(255, 77, 77, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  padding: 8px 0;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--white);
+  transition: width var(--transition);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  width: 100%;
+}
+
+/* Mobile Toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  z-index: 10;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* ----------------------------------------------------------
+   7. MAIN CONTENT
+   ---------------------------------------------------------- */
+.main-content {
+  padding: calc(var(--header-height) + 60px) 0 80px;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.main-content > .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+/* ----------------------------------------------------------
+   8. SUCCESS SECTION
+   ---------------------------------------------------------- */
+.success-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Success Icon */
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--curious-blue), var(--chathams-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconPop 0.6s ease;
+}
+
+.success-icon-inner {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+@keyframes iconPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Success Title */
+.success-title {
+  font-family: var(--ff-bold);
+  font-size: clamp(28px, 4vw, var(--fs-3xl));
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 1.3;
+}
+
+/* Success Description */
+.success-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  color: var(--cyber-grape);
+  line-height: 1.6;
+}
+
+/* Checkmark draw animation */
+@keyframes checkDraw {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.success-icon svg path {
+  stroke-dasharray: 24;
+  animation: checkDraw 0.8s ease 0.3s forwards;
+}
+
+/* ----------------------------------------------------------
+   9. RESERVATION DETAILS CARD
+   ---------------------------------------------------------- */
+.reservation-details {
+  width: 100%;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Reservation Number Header */
+.reservation-number {
+  background: linear-gradient(135deg, var(--chathams-blue), #2a6ab0);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.reservation-number-label {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 24px;
+}
+
+.reservation-number-value {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  color: var(--white);
+  line-height: 32px;
+  letter-spacing: 1px;
+}
+
+/* Details Grid (2열) */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 32px;
+  border-bottom: 1px solid #f0f0f5;
+  transition: background var(--transition);
+}
+
+.detail-item:hover {
+  background: rgba(84, 83, 123, 0.03);
+}
+
+.detail-item:nth-child(odd) {
+  border-right: 1px solid #f0f0f5;
+}
+
+/* 홀수 개 항목일 때 마지막 아이템이 단독 행이면 border-right 제거 */
+.detail-item:last-child:nth-child(odd) {
+  border-right: none;
+}
+
+/* 방문 인원 강조 (아이콘 배경 색상 변경) */
+.detail-item--people .detail-icon {
+  background: rgba(26, 79, 133, 0.1);
+}
+
+.detail-item--people .detail-value {
+  font-weight: 700;
+}
+
+/* Detail Icon */
+.detail-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: rgba(84, 83, 123, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 2px;
+}
+
+.detail-icon img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+
+.detail-icon img:first-child {
+  position: relative;
+}
+
+/* Detail Content */
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.detail-label {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 20px;
+}
+
+.detail-value {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  color: var(--chathams-blue);
+  line-height: 26px;
+  word-break: break-all;
+}
+
+.detail-address {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--scarpa-flow);
+  line-height: 20px;
+  margin-top: 2px;
+}
+
+/* Detail Location (full-width row) */
+.detail-location {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 32px;
+  background: rgba(84, 83, 123, 0.03);
+}
+
+/* ----------------------------------------------------------
+   10. NEXT STEPS
+   ---------------------------------------------------------- */
+.next-steps {
+  width: 100%;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 36px 32px;
+}
+
+.next-steps-title {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 36px;
+  margin-bottom: 28px;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  background: var(--chathams-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.step-number span {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+
+.step-text {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--ebony-clay);
+  line-height: 24px;
+  padding-top: 4px;
+}
+
+/* ----------------------------------------------------------
+   11. ACTION BUTTONS
+   ---------------------------------------------------------- */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons .btn {
+  flex: 1;
+  max-width: 280px;
+  min-width: 200px;
+  padding: 18px 32px;
+  font-size: var(--fs-md);
+}
+
+/* 이메일 전송 상태 메시지 */
+.email-status {
+  text-align: center;
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  min-height: 24px;
+  margin-top: 8px;
+  transition: var(--transition);
+}
+
+.email-status.is-success {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.email-status.is-error {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* 이메일 버튼 비활성화 */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ----------------------------------------------------------
+   12. FOOTER
+   ---------------------------------------------------------- */
+.footer {
+  background: var(--mirage);
+  padding: 48px 0 0;
+  margin-top: 40px;
+}
+
+.footer > .container {
+  max-width: 1200px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+
+/* Footer Brand */
+.footer-brand-name {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.brand-title {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-4xl);
+  font-weight: 400;
+  color: var(--chathams-blue);
+  line-height: 1.2;
+}
+
+.brand-sub {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-xs);
+  color: var(--chathams-blue);
+}
+
+.footer-brand-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--santas-gray);
+  line-height: 24px;
+}
+
+/* Footer Links */
+.footer-links h4 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 28px;
+  margin-bottom: 16px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--santas-gray);
+  line-height: 24px;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid var(--ebony-clay);
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--santas-gray);
+  line-height: 20px;
+}
+
+.footer-social {
+  height: 40px;
+  width: auto;
+}
+
+/* ----------------------------------------------------------
+   13. ENTRANCE ANIMATIONS
+   ---------------------------------------------------------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 순차적 등장 애니메이션 */
+.success-section {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.reservation-details {
+  animation: fadeUp 0.6s ease 0.15s forwards;
+  opacity: 0;
+}
+
+.next-steps {
+  animation: fadeUp 0.6s ease 0.3s forwards;
+  opacity: 0;
+}
+
+.action-buttons {
+  animation: fadeUp 0.6s ease 0.45s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   14. RESPONSIVE — ≤ 1024px
+   ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .nav,
+  .auth-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Mobile Nav Overlay */
+  .nav.is-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 79, 133, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 48px 32px;
+    gap: 24px;
+    z-index: 999;
+    animation: navSlide 0.3s ease;
+  }
+
+  .nav.is-open .nav-link {
+    font-size: 22px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @keyframes navSlide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ----------------------------------------------------------
+   15. RESPONSIVE — ≤ 768px
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --container-px: 20px;
+    --header-height: 70px;
+  }
+
+  .header-inner {
+    padding: 0 20px;
+  }
+
+  .logo-title {
+    font-size: 28px;
+  }
+
+  .logo-icon {
+    width: 48px;
+    height: 44px;
+  }
+
+  .main-content {
+    padding: calc(var(--header-height) + 40px) 0 60px;
+  }
+
+  .main-content > .container {
+    gap: 32px;
+  }
+
+  /* Details → 1열 */
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item:nth-child(odd) {
+    border-right: none;
+  }
+
+  .detail-item:last-child:nth-child(odd) {
+    border-right: none;
+  }
+
+  .detail-item {
+    padding: 20px 24px;
+  }
+
+  .reservation-number {
+    padding: 20px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-location {
+    padding: 20px 24px;
+  }
+
+  .next-steps {
+    padding: 28px 24px;
+  }
+
+  /* Buttons → 세로 */
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    max-width: none;
+    width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .success-title {
+    font-size: 24px;
+  }
+
+  .success-desc p {
+    font-size: var(--fs-lg);
+  }
+}
+
+/* ----------------------------------------------------------
+   16. RESPONSIVE — ≤ 480px
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .logo-sub {
+    display: none;
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .success-icon-inner {
+    width: 48px;
+    height: 48px;
+  }
+
+  .success-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .reservation-number-value {
+    font-size: var(--fs-xl);
+  }
+
+  .detail-value {
+    font-size: var(--fs-md);
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+
+  .step-number span {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* ----------------------------------------------------------
+   17. PRINT STYLES (예약 확인서 인쇄)
+   ---------------------------------------------------------- */
+@media print {
+  .header,
+  .footer,
+  .action-buttons,
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .main-content {
+    padding-top: 20px;
+  }
+
+  .reservation-details,
+  .next-steps {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+
+  .reservation-number {
+    background: var(--chathams-blue) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .step-number {
+    background: var(--chathams-blue) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .detail-item--people .detail-icon {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    background: white;
+  }
+
+  /* 인쇄 시 애니메이션 제거 */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   18. REDUCED MOTION (접근성)
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

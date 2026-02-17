@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 가구 디자이너 - 실시간 견적</title>
+    <link rel="stylesheet" href="css/editor.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+</head>
+<body>
+
+<!-- ============ 성향 분석 결과 배너 ============ -->
+<div class="propensity-banner" id="propensityBanner" style="display: none;">
+    <div class="banner-content">
+        <span class="banner-icon">✨</span>
+        <span class="banner-text">
+            <strong id="bannerType">단기투자형</strong> 맞춤 템플릿이 적용되었습니다
+        </span>
+        <button class="banner-close" onclick="closePropensityBanner()">✕</button>
+    </div>
+    <div class="banner-actions">
+        <button onclick="location.href='propensity.html'" class="btn-sm">다시 분석하기</button>
+        <button onclick="showTemplateInfo()" class="btn-sm btn-outline">템플릿 설명 보기</button>
+    </div>
+</div>
+
+<div class="user-header">
+    <div class="user-header-left">
+        <h1 class="app-title">큐브 에디터</h1>
+    </div>
+    
+    <div class="user-header-right">
+        <!-- 비로그인 상태 -->
+        <div id="userLoggedOut" class="user-section">
+            <button onclick="location.href='login.html'" class="btn-login">로그인</button>
+            <button onclick="location.href='register.html'" class="btn-register">회원가입</button>
+        </div>
+        
+        <!-- 로그인 상태 -->
+        <div id="userLoggedIn" class="user-section" style="display: none;">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">
+                    <img id="userProfileImage" src="" alt="프로필" style="display: none;">
+                    <span id="userProfilePlaceholder">👤</span>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">사용자</span>
+                    <span class="user-email" id="userEmail">user@example.com</span>
+                </div>
+            </div>
+            <button onclick="location.href='mypage.html'" class="btn-mypage">마이페이지</button>
+            <button onclick="logoutUser()" class="btn-logout">로그아웃</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 툴바 ============ -->
+<div class="toolbar">
+    <div class="toolbar-group furniture-buttons">
+        <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)">🛏️ 침대</button>
+        <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)">🪑 테이블</button>
+        <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)">🛋️ 소파</button>
+        <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)">🪑 의자</button>
+        <button onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
+        <button onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
+        <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)">🗄️ 수납장</button>
+        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)">💡 조명</button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="toolbar-group">
+        <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon">↩️</button>
+        <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon">↪️</button>
+        <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
+        <button onclick="groupObjects()">🔗 그룹</button>
+        <button onclick="ungroupObjects()">💔 해제</button>
+        <button onclick="toggleGrid()" id="gridBtn">📐 격자 ON</button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="toolbar-group">
+        <select id="templateSelect" onchange="loadTemplate(this.value)">
+            <option value="">📁 템플릿...</option>
+            <optgroup label="성향별 추천">
+                <option value="shortterm">1️⃣ 단기 투자형</option>
+                <option value="longterm">2️⃣ 장기 투자형</option>
+                <option value="residential">3️⃣ 실거주형</option>
+                <option value="newlywed">4️⃣ 신혼부부형</option>
+                <option value="officetel">5️⃣ 오피스텔형</option>
+            </optgroup>
+            <optgroup label="기본 템플릿">
+                <option value="empty_small">빈 공간 (소형)</option>
+                <option value="empty_medium">빈 공간 (중형)</option>
+                <option value="empty_large">빈 공간 (대형)</option>
+            </optgroup>
+        </select>
+    </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="toolbar-group">
+        <button class="btn-warning" onclick="clearCanvas()">캔버스 초기화</button>
+        <input type="text" id="design-title" placeholder="디자인 제목" value="나의 디자인" maxlength="50" style="width: 140px;">
+        <button class="btn-success" onclick="saveDesign()">💾 저장</button>
+        <button class="btn-warning" onclick="showMyDesigns()">📂 불러오기</button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="toolbar-group">
+        <button onclick="showPriceTable()">💵 가격표</button>
+        <button onclick="exportEstimate()" class="btn-warning">📄 견적서</button>
+        <button class="btn-primary" onclick="sendToViewer()">✨ 3D 보기</button>
+    </div>
+</div>
+
+<!-- ============ 메인 컨테이너 ============ -->
+<div class="main-container">
+    <!-- 캔버스 영역 -->
+    <div class="canvas-area">
+        <div class="canvas-wrapper">
+            <canvas id="editorCanvas" width="600" height="600"></canvas>
+            <div id="dim-display">W: 0 × D: 0</div>
+            <div class="zoom-indicator" id="zoom-indicator">100%</div>
+        </div>
+    </div>
+
+    <!-- 사이드 패널 -->
+    <div class="side-panel">
+        <!-- 견적 패널 -->
+        <div class="estimate-panel">
+            <div class="estimate-header">
+                <h3>💰 실시간 견적</h3>
+                <button class="btn-sm" onclick="showPriceTable()">가격표</button>
+            </div>
+            
+            <div class="estimate-total" id="totalEstimate">₩0</div>
+            
+            <div class="estimate-breakdown">
+                <div class="estimate-row">
+                    <span class="label">📐 방 시공비</span>
+                    <span class="value" id="roomCost">₩0</span>
+                </div>
+                <div class="estimate-row">
+                    <span class="label">🪑 가구 총액</span>
+                    <span class="value" id="furnitureCost">₩0</span>
+                </div>
+                <div class="estimate-row">
+                    <span class="label">📦 가구 수</span>
+                    <span class="value" id="furnitureCountDisplay">0개</span>
+                </div>
+                <div class="estimate-row">
+                    <span class="label">📏 방 크기</span>
+                    <span class="value" id="roomSize">0평</span>
+                </div>
+            </div>
+            
+            <div class="estimate-discount">
+                <label>🎁 할인 코드</label>
+                <input type="text" id="discountCode" placeholder="예: WELCOME10" oninput="applyDiscount()">
+                <div id="discountMessage"></div>
+            </div>
+        </div>
+
+        <!-- 속성 편집 -->
+        <div class="panel-section">
+            <h3><span class="icon">⚙️</span> 속성 편집</h3>
+            
+            <div class="prop-group">
+                <label>이름</label>
+                <input type="text" id="objName" maxlength="30" oninput="updateProperties()" style="width: 100%;">
+            </div>
+            
+            <div class="prop-group">
+                <label>색상 & 재질</label>
+                <div class="row">
+                    <input type="color" id="objColor" onchange="updateProperties()">
+                    <select id="objTexture" onchange="updateProperties()" style="flex: 1;">
+                        <option value="color">단색 (×1.0)</option>
+                        <option value="wood">나무 (×1.3)</option>
+                        <option value="fabric">천 (×1.2)</option>
+                        <option value="marble">대리석 (×2.5)</option>
+                        <option value="metal">금속 (×1.8)</option>
+                        <option value="glass">유리 (×1.5)</option>
+                        <option value="leather">가죽 (×2.0)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="prop-group">
+                <label>크기 (cm)</label>
+                <div class="row">
+                    <input type="number" id="objW" min="5" max="1000" placeholder="가로" oninput="updateProperties()">
+                    <span>×</span>
+                    <input type="number" id="objD" min="5" max="1000" placeholder="세로" oninput="updateProperties()">
+                    <span>×</span>
+                    <input type="number" id="objH" min="5" max="500" placeholder="높이" oninput="updateProperties()">
+                </div>
+            </div>
+
+            <div class="prop-group">
+                <label>회전 & 잠금</label>
+                <div class="row">
+                    <button onclick="rotateObject(-45)" style="flex:1;">↺ 45°</button>
+                    <button onclick="rotateObject(45)" style="flex:1;">↻ 45°</button>
+                    <button onclick="toggleLock()" id="lockBtn" style="flex:1;">🔓</button>
+                </div>
+            </div>
+
+            <div class="prop-group elevation-box">
+                <label>🎈 공중 부양 (cm)</label>
+                <input type="number" id="objElev" min="0" max="500" step="5" oninput="updateProperties()" style="width: 100%;">
+                <span class="hint">블록 쌓기: 아래 블록 높이만큼 입력</span>
+            </div>
+        </div>
+        
+        <!-- 캔버스 설정 -->
+        <div class="panel-section">
+            <h3><span class="icon">📏</span> 방 크기 설정</h3>
+            
+            <div class="prop-group">
+                <label>캔버스 크기 (1px = 1cm)</label>
+                <div class="row">
+                    <input type="number" id="canvasW" value="600" min="200" max="2000" step="50">
+                    <span>×</span>
+                    <input type="number" id="canvasH" value="600" min="200" max="2000" step="50">
+                    <button onclick="applyCanvasSettings()" class="btn-primary">적용</button>
+                </div>
+                <span class="hint">예: 600×500 = 6m × 5m (약 9평)</span>
+            </div>
+
+            <div class="prop-group">
+                <label>격자 간격 (px)</label>
+                <input type="number" id="gridSizeInput" value="20" min="5" max="100" step="5" onchange="applyCanvasSettings()" style="width: 100%;">
+            </div>
+        </div>
+
+        <!-- 레이어 목록 -->
+        <div class="panel-section">
+            <h3><span class="icon">📑</span> 레이어 (<span id="layerCount">0</span>개)</h3>
+            <div id="layerList" class="layer-box"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 디자인 목록 모달 ============ -->
+<div id="designModal" class="modal">
+    <div class="modal-content">
+        <h2>💾 내 디자인 목록</h2>
+        <div id="designList"></div>
+        <button onclick="closeDesignModal()" style="margin-top: 20px; width: 100%;" class="btn-primary">닫기</button>
+    </div>
+</div>
+
+<!-- ============ 가격표 모달 ============ -->
+<div id="priceModal" class="modal">
+    <div class="modal-content">
+        <h2>💵 가격표</h2>
+        
+        <h4>📐 시공비 (평당)</h4>
+        <table class="price-table">
+            <tr><th>항목</th><th>단가</th><th>비고</th></tr>
+            <tr><td>기본 시공</td><td>₩500,000/평</td><td>바닥, 벽, 천장 포함</td></tr>
+            <tr><td>프리미엄 시공</td><td>₩800,000/평</td><td>고급 마감재</td></tr>
+        </table>
+        
+        <h4>🪑 가구 기본가</h4>
+        <table class="price-table">
+            <tr><th>가구</th><th>���본가</th><th>기준 크기 (cm)</th></tr>
+            <tr><td>🛏️ 침대</td><td>₩800,000</td><td>200×180×60</td></tr>
+            <tr><td>🛋️ 소파</td><td>₩1,200,000</td><td>180×90×80</td></tr>
+            <tr><td>🪑 테이블</td><td>₩400,000</td><td>120×80×75</td></tr>
+            <tr><td>🪑 의자</td><td>₩150,000</td><td>50×50×90</td></tr>
+            <tr><td>🗄️ 수납장</td><td>₩600,000</td><td>120×60×200</td></tr>
+            <tr><td>💡 조명</td><td>₩200,000</td><td>30×30×150</td></tr>
+            <tr><td>🚪 문</td><td>₩350,000</td><td>10×80×200</td></tr>
+            <tr><td>🪟 창문</td><td>₩450,000</td><td>10×100×120</td></tr>
+            <tr><td>🧱 벽</td><td>₩100,000/m</td><td>높이 240cm 기준</td></tr>
+        </table>
+        
+        <h4>✨ 재질 배율</h4>
+        <table class="price-table">
+            <tr><th>재질</th><th>배율</th><th>예시 (침대)</th></tr>
+            <tr><td>단색</td><td>×1.0</td><td>₩800,000</td></tr>
+            <tr><td>🪵 나무</td><td>×1.3</td><td>₩1,040,000</td></tr>
+            <tr><td>🧵 천</td><td>×1.2</td><td>₩960,000</td></tr>
+            <tr><td>🗿 대리석</td><td>×2.5</td><td>₩2,000,000</td></tr>
+            <tr><td>⚙️ 금속</td><td>×1.8</td><td>₩1,440,000</td></tr>
+            <tr><td>💎 유리</td><td>×1.5</td><td>₩1,200,000</td></tr>
+            <tr><td>🐄 가죽</td><td>×2.0</td><td>₩1,600,000</td></tr>
+        </table>
+        
+        <h4>🎁 할인 코드</h4>
+        <table class="price-table">
+            <tr><th>코드</th><th>할인</th><th>조건</th></tr>
+            <tr><td>WELCOME10</td><td>10%</td><td>신규 고객</td></tr>
+            <tr><td>PREMIUM20</td><td>20%</td><td>가구 5개 이상</td></tr>
+            <tr><td>VIP30</td><td>30%</td><td>1000만원 이상</td></tr>
+        </table>
+        
+        <button onclick="closePriceModal()" style="margin-top: 20px; width: 100%;" class="btn-primary">닫기</button>
+    </div>
+</div>
+
+<!-- ============ 템플릿 설명 모달 ============ -->
+<div id="templateInfoModal" class="modal">
+    <div class="modal-content">
+        <h2 id="templateInfoTitle">📋 템플릿 설명</h2>
+        <div id="templateInfoContent"></div>
+        <button onclick="closeTemplateInfoModal()" style="margin-top: 20px; width: 100%;" class="btn-primary">닫기</button>
+    </div>
+</div>
+
+<!-- 토스트 알림 -->
+<div id="toast" class="toast"></div>
+
+<!-- ============ JavaScript ============ -->
+<script>
+
+let currentUser = null;
+const tags = [];
+
+// 페이지 로드 시 유저 정보 확인
+async function checkUserLogin() {
+      try {
+          const response = await fetch('/api/user/info');
+          const data = await response.json();
+          
+          if (data.success && data.user) {
+              currentUser = data.user;
+              showUserInfo(data.user);
+          } else {
+              showLoggedOutState();
+          }
+      } catch (error) {
+          console.error('유저 정보 로드 실패:', error);
+          showLoggedOutState();
+      }
+  }
+
+  function showUserInfo(user) {
+    currentUser = user;
+    document.getElementById('userLoggedOut').style.display = 'none';   // ✅ 올바른 ID
+    document.getElementById('userLoggedIn').style.display = 'flex';    // ✅ 올바른 ID
+    document.getElementById('userName').textContent = user.nickname || '사용자';
+    document.getElementById('userEmail').textContent = user.email || '';  // ✅ 이메일 추가
+    
+    if (user.profile_image) {
+        document.getElementById('userProfileImage').src = user.profile_image;
+        document.getElementById('userProfileImage').style.display = 'block';
+        document.getElementById('userProfilePlaceholder').style.display = 'none';
+    } else {
+        document.getElementById('userProfileImage').style.display = 'none';
+        document.getElementById('userProfilePlaceholder').style.display = 'block';
+    }
+}
+
+  function showLoggedOutState() {
+    currentUser = null;
+    document.getElementById('userLoggedOut').style.display = 'flex';   
+    document.getElementById('userLoggedIn').style.display = 'none';    
+}
+
+  async function logoutUser() {
+      if (!confirm('로그아웃 하시겠습니까?')) return;
+      
+      try {
+          const response = await fetch('/api/auth/logout', { method: 'POST' });
+          const data = await response.json();
+          
+          if (data.success) {
+              showLoggedOutState();
+              alert('로그아웃 되었습니다');
+          }
+      } catch (error) {
+          console.error('로그아웃 실패:', error);
+      }
+  }
+
+  checkUserLogin();
+
+    
+// ============ 설정 ============
+const CONFIG = {
+    API_URL: 'http://localhost:3000/api',
+    MAX_HISTORY: 20,
+    AUTOSAVE_DELAY: 3000,
+    ZOOM_MIN: 0.5,
+    ZOOM_MAX: 5,
+    GRID_DEFAULT: 20
+};
+
+// ============ 가격 정책 ============
+const PRICING = {
+    roomCostPerPyeong: 500000,
+    furniture: {
+        Bed: { base: 800000, refVolume: 200 * 180 * 60 },
+        Sofa: { base: 1200000, refVolume: 180 * 90 * 80 },
+        Table: { base: 400000, refVolume: 120 * 80 * 75 },
+        Chair: { base: 150000, refVolume: 50 * 50 * 90 },
+        Cabinet: { base: 600000, refVolume: 120 * 60 * 200 },
+        Lamp: { base: 200000, refVolume: 30 * 30 * 150 },
+        Door: { base: 350000, refVolume: 10 * 80 * 200 },
+        Window: { base: 450000, refVolume: 10 * 100 * 120 },
+        Wall: { base: 100000, perMeter: true },
+        Desk: { base: 450000, refVolume: 140 * 70 * 75 },
+        Bookshelf: { base: 500000, refVolume: 100 * 40 * 180 },
+        Kitchen: { base: 2000000, refVolume: 200 * 60 * 90 },
+        Bathroom: { base: 1500000, refVolume: 150 * 150 * 100 }
+    },
+    materials: {
+        color: 1.0, wood: 1.3, fabric: 1.2, marble: 2.5,
+        metal: 1.8, glass: 1.5, leather: 2.0, concrete: 0.8
+    },
+    discounts: {
+        'WELCOME10': { rate: 0.10, condition: () => true, message: '🎉 신규 고객 10% 할인!' },
+        'PREMIUM20': { rate: 0.20, condition: () => getFurnitureCount() >= 5, message: '✨ 가구 5개 이상 20% 할인!' },
+        'VIP30': { rate: 0.30, condition: () => getSubtotal() >= 10000000, message: '👑 VIP 30% 할인!' },
+        'SHORTTERM': { rate: 0.15, condition: () => true, message: '⚡ 단기투자형 특별 할인!' },
+        'LONGTERM': { rate: 0.20, condition: () => true, message: '🏆 장기투자형 프리미엄 할인!' },
+        'NEWLYWED': { rate: 0.25, condition: () => true, message: '💕 신혼부부 축하 할인!' }
+    }
+};
+
+// ============ 템플릿 데이터 (성향별 최적화) ============
+const TEMPLATES = {
+    // ========== 단기 투자형 ==========
+    // 특징: 소형, 미니멀, 저비용, 빠른 설치/철거, 팝업스토어/프로모션 적합
+    shortterm: {
+        name: "단기 투자형",
+        description: "팝업스토어, 브랜드 프로모션에 최적화된 컴팩트한 공간입니다. 빠른 설치와 철거가 가능하며, 최소한의 가구로 효율적인 공간 활용이 가능합니다.",
+        features: ["⚡ 빠른 설치/철거", "💰 저비용 운영", "🎯 브랜딩 집중", "📦 이동 용이"],
+        targetPyeong: "3~5평",
+        estimatedCost: "1,000만원 ~ 2,000만원",
+        roomSize: { width: 350, height: 300 },
+        furniture: [
+            // 벽면 (최소화)
+            { left: 0, top: 0, width: 350, height: 12, fill: '#b0bec5', name: 'Wall_뒤벽', h: 240, texture: 'color' },
+            { left: 0, top: 12, width: 12, height: 288, fill: '#b0bec5', name: 'Wall_왼벽', h: 240, texture: 'color' },
+            { left: 338, top: 12, width: 12, height: 200, fill: '#b0bec5', name: 'Wall_오른벽', h: 240, texture: 'color' },
+            { left: 12, top: 288, width: 326, height: 12, fill: '#b0bec5', name: 'Wall_아래벽', h: 240, texture: 'color' },
+            // 창문 & 출입구
+            { left: 100, top: 0, width: 150, height: 10, fill: '#81ecec', name: 'Window_전시창', h: 180, elevation: 30, texture: 'glass' },
+            { left: 338, top: 212, width: 10, height: 76, fill: '#a0522d', name: 'Door_출입구', h: 210, texture: 'wood' },
+            // 전시/프로모션 가구
+            { left: 30, top: 30, width: 120, height: 60, fill: '#ffffff', name: 'Table_전시대1', h: 90, texture: 'color' },
+            { left: 200, top: 30, width: 120, height: 60, fill: '#ffffff', name: 'Table_전시대2', h: 90, texture: 'color' },
+            { left: 80, top: 150, width: 180, height: 80, fill: '#f5f5f5', name: 'Table_메인전시', h: 75, texture: 'color' },
+            { left: 160, top: 100, width: 25, height: 25, fill: '#ffd700', name: 'Lamp_스팟조명', h: 200, texture: 'metal' }
+        ]
+    },
+
+    // ========== 장기 투자형 ==========
+    // 특징: 중대형, 고급 마감재, 카페/상업시설, 지속적 수익 창출
+    longterm: {
+        name: "장기 투자형",
+        description: "카페, 사무실 등 장기 운영에 최적화된 프리미엄 공간입니다. 고급 마감재와 내구성 있는 가구로 구성되어 지속적인 수익 창출이 가능합니다.",
+        features: ["🏆 프리미엄 마감", "💎 고급 인테리어", "📈 수익성 극대화", "🔧 낮은 유지비"],
+        targetPyeong: "10~15평",
+        estimatedCost: "5,000만원 ~ 8,000만원",
+        roomSize: { width: 700, height: 600 },
+        furniture: [
+            // 프리미엄 벽면
+            { left: 0, top: 0, width: 700, height: 20, fill: '#eceff1', name: 'Wall_뒤벽', h: 300, texture: 'marble' },
+            { left: 0, top: 20, width: 20, height: 580, fill: '#eceff1', name: 'Wall_왼벽', h: 300, texture: 'marble' },
+            { left: 680, top: 20, width: 20, height: 450, fill: '#eceff1', name: 'Wall_오른벽', h: 300, texture: 'marble' },
+            { left: 20, top: 580, width: 660, height: 20, fill: '#eceff1', name: 'Wall_아래벽', h: 300, texture: 'marble' },
+            // 대형 창문
+            { left: 80, top: 0, width: 250, height: 15, fill: '#81ecec', name: 'Window_메인창1', h: 200, elevation: 50, texture: 'glass' },
+            { left: 400, top: 0, width: 200, height: 15, fill: '#81ecec', name: 'Window_메인창2', h: 180, elevation: 70, texture: 'glass' },
+            { left: 680, top: 470, width: 15, height: 100, fill: '#5d4037', name: 'Door_현관', h: 240, texture: 'wood' },
+            // 카페/상업 공간 구성
+            { left: 40, top: 40, width: 200, height: 80, fill: '#4e342e', name: 'Cabinet_카운터', h: 110, texture: 'wood' },
+            { left: 40, top: 140, width: 100, height: 60, fill: '#5d4037', name: 'Cabinet_진열장', h: 200, texture: 'glass' },
+            // 좌석 구역
+            { left: 300, top: 50, width: 120, height: 70, fill: '#fafafa', name: 'Table_테이블1', h: 75, texture: 'marble' },
+            { left: 300, top: 130, width: 50, height: 50, fill: '#37474f', name: 'Chair_의자1', h: 85, texture: 'leather' },
+            { left: 370, top: 130, width: 50, height: 50, fill: '#37474f', name: 'Chair_의자2', h: 85, texture: 'leather' },
+            { left: 500, top: 50, width: 120, height: 70, fill: '#fafafa', name: 'Table_테이블2', h: 75, texture: 'marble' },
+            { left: 500, top: 130, width: 50, height: 50, fill: '#37474f', name: 'Chair_의자3', h: 85, texture: 'leather' },
+            { left: 570, top: 130, width: 50, height: 50, fill: '#37474f', name: 'Chair_의자4', h: 85, texture: 'leather' },
+            // 라운지 구역
+            { left: 300, top: 300, width: 250, height: 120, fill: '#455a64', name: 'Sofa_라운지소파', h: 80, texture: 'leather' },
+            { left: 350, top: 440, width: 150, height: 90, fill: '#263238', name: 'Table_라운지테이블', h: 45, texture: 'marble' },
+            // 조명
+            { left: 350, top: 200, width: 40, height: 40, fill: '#ffd700', name: 'Lamp_샹들리에', h: 250, texture: 'metal' }
+        ]
+    },
+
+    // ========== 실거주형 ==========
+    // 특징: 1인 또는 커플용, 편안함, 생활 편의시설 완비, 워케이션 적합
+    residential: {
+        name: "실거주형",
+        description: "실제 생활이 가능한 주거 공간입니다. 침실, 거실, 주방, 욕실 등 생활에 필요한 모든 시설이 갖춰져 있으며, 워케이션이나 세컨하우스로 활용하기 좋습니다.",
+        features: ["🏠 완전한 주거 기능", "🛁 욕실/주방 포함", "🌿 편안한 휴식", "💼 워케이션 가능"],
+        targetPyeong: "7~10평",
+        estimatedCost: "3,000만원 ~ 5,000만원",
+        roomSize: { width: 550, height: 500 },
+        furniture: [
+            // 벽면
+            { left: 0, top: 0, width: 550, height: 15, fill: '#e8e8e8', name: 'Wall_뒤벽', h: 260, texture: 'color' },
+            { left: 0, top: 15, width: 15, height: 485, fill: '#e8e8e8', name: 'Wall_왼벽', h: 260, texture: 'color' },
+            { left: 535, top: 15, width: 15, height: 380, fill: '#e8e8e8', name: 'Wall_오른벽', h: 260, texture: 'color' },
+            { left: 15, top: 485, width: 520, height: 15, fill: '#e8e8e8', name: 'Wall_아래벽', h: 260, texture: 'color' },
+            // 내부 파티션 (욕실 구분)
+            { left: 380, top: 15, width: 12, height: 180, fill: '#d0d0d0', name: 'Wall_욕실파티션', h: 260, texture: 'color' },
+            { left: 380, top: 183, width: 155, height: 12, fill: '#d0d0d0', name: 'Wall_욕실파티션2', h: 260, texture: 'color' },
+            // 창문 & 문
+            { left: 100, top: 0, width: 150, height: 12, fill: '#81ecec', name: 'Window_거실창', h: 160, elevation: 60, texture: 'glass' },
+            { left: 535, top: 395, width: 12, height: 80, fill: '#8d6e63', name: 'Door_현관', h: 210, texture: 'wood' },
+            { left: 380, top: 15, width: 70, height: 10, fill: '#a0522d', name: 'Door_욕실문', h: 200, texture: 'wood' },
+            // 침실 영역
+            { left: 30, top: 30, width: 180, height: 200, fill: '#8B4513', name: 'Bed_퀸침대', h: 55, texture: 'wood' },
+            { left: 220, top: 30, width: 60, height: 50, fill: '#a1887f', name: 'Table_협탁', h: 55, texture: 'wood' },
+            { left: 220, top: 100, width: 130, height: 60, fill: '#bcaaa4', name: 'Cabinet_옷장', h: 200, texture: 'wood' },
+            // 거실 영역
+            { left: 30, top: 280, width: 180, height: 90, fill: '#78909c', name: 'Sofa_3인소파', h: 80, texture: 'fabric' },
+            { left: 60, top: 380, width: 120, height: 70, fill: '#bcaaa4', name: 'Table_거실테이블', h: 45, texture: 'wood' },
+            { left: 230, top: 280, width: 120, height: 50, fill: '#37474f', name: 'Cabinet_TV장', h: 50, texture: 'wood' },
+            // 주방 영역
+            { left: 230, top: 380, width: 120, height: 80, fill: '#546e7a', name: 'Kitchen_미니주방', h: 90, texture: 'metal' },
+            // 욕실 영역
+            { left: 400, top: 30, width: 120, height: 140, fill: '#b3e5fc', name: 'Bathroom_욕실', h: 100, texture: 'marble' },
+            // 조명
+            { left: 150, top: 250, width: 30, height: 30, fill: '#ffd700', name: 'Lamp_거실조명', h: 220, texture: 'metal' }
+        ]
+    },
+
+    // ========== 신혼부부형 ==========
+    // 특징: 로맨틱, 따뜻한 분위기, 2인 생활 최적화, 다이닝 공간
+    newlywed: {
+        name: "신혼부부형",
+        description: "새로운 시작을 준비하는 커플을 위한 로맨틱하고 아늑한 공간입니다. 우드톤 중심의 따뜻한 인테리어와 2인 생활에 최적화된 동선이 특징입니다.",
+        features: ["💕 로맨틱 분위기", "🪵 우드톤 인테리어", "🍽️ 다이닝 공간", "👫 2인 최적화"],
+        targetPyeong: "8~12평",
+        estimatedCost: "4,000만원 ~ 6,000만원",
+        roomSize: { width: 650, height: 580 },
+        furniture: [
+            // 따뜻한 톤 벽면
+            { left: 0, top: 0, width: 650, height: 18, fill: '#fff8e1', name: 'Wall_뒤벽', h: 270, texture: 'color' },
+            { left: 0, top: 18, width: 18, height: 562, fill: '#fff8e1', name: 'Wall_왼벽', h: 270, texture: 'color' },
+            { left: 632, top: 18, width: 18, height: 450, fill: '#fff8e1', name: 'Wall_오른벽', h: 270, texture: 'color' },
+            { left: 18, top: 562, width: 614, height: 18, fill: '#fff8e1', name: 'Wall_아래벽', h: 270, texture: 'color' },
+            // 내부 파티션
+            { left: 400, top: 18, width: 12, height: 200, fill: '#ffe0b2', name: 'Wall_침실파티션', h: 270, texture: 'wood' },
+            // 창문 & 문
+            { left: 80, top: 0, width: 180, height: 14, fill: '#81ecec', name: 'Window_거실창', h: 180, elevation: 50, texture: 'glass' },
+            { left: 450, top: 0, width: 140, height: 14, fill: '#81ecec', name: 'Window_침실창', h: 160, elevation: 70, texture: 'glass' },
+            { left: 632, top: 468, width: 14, height: 90, fill: '#8d6e63', name: 'Door_현관', h: 220, texture: 'wood' },
+            // 침실 영역 (킹사이즈)
+            { left: 420, top: 40, width: 190, height: 220, fill: '#d4a373', name: 'Bed_킹침대', h: 60, texture: 'fabric' },
+            { left: 420, top: 280, width: 80, height: 50, fill: '#e6ccb2', name: 'Table_화장대', h: 75, texture: 'wood' },
+            { left: 520, top: 280, width: 90, height: 70, fill: '#c8b6a6', name: 'Cabinet_옷장', h: 220, texture: 'wood' },
+            // 거실 영역
+            { left: 40, top: 200, width: 220, height: 100, fill: '#faedcd', name: 'Sofa_커플소파', h: 85, texture: 'fabric' },
+            { left: 90, top: 320, width: 130, height: 80, fill: '#d4a373', name: 'Table_거실테이블', h: 45, texture: 'wood' },
+            { left: 40, top: 40, width: 220, height: 60, fill: '#c8b6a6', name: 'Cabinet_TV장', h: 55, texture: 'wood' },
+            // 다이닝 영역
+            { left: 40, top: 420, width: 140, height: 100, fill: '#e6ccb2', name: 'Table_다이닝테이블', h: 78, texture: 'wood' },
+            { left: 60, top: 530, width: 45, height: 45, fill: '#a98467', name: 'Chair_다이닝1', h: 88, texture: 'wood' },
+            { left: 115, top: 530, width: 45, height: 45, fill: '#a98467', name: 'Chair_다이닝2', h: 88, texture: 'wood' },
+            // 미니 주방
+            { left: 220, top: 420, width: 140, height: 100, fill: '#bcaaa4', name: 'Kitchen_주방', h: 90, texture: 'wood' },
+            // 조명
+            { left: 150, top: 130, width: 35, height: 35, fill: '#ffd54f', name: 'Lamp_거실조명', h: 230, texture: 'metal' },
+            { left: 500, top: 150, width: 30, height: 30, fill: '#ffd54f', name: 'Lamp_침실조명', h: 230, texture: 'metal' }
+        ]
+    },
+
+    // ========== 오피스텔형 ==========
+    // 특징: 업무+생활 복합, 효율적 공간 활용, 모던 스타일, 홈오피스
+    officetel: {
+        name: "오피스텔형",
+        description: "업무와 생활이 조화를 이루는 스마트한 복합 공간입니다. 모던한 디자인과 효율적인 동선으로 재택근무나 1인 사업에 최적화되어 있습니다.",
+        features: ["💼 업무 공간 분리", "🖥️ 홈오피스 최적화", "⚡ 효율적 동선", "🔌 스마트 설비"],
+        targetPyeong: "6~9평",
+        estimatedCost: "3,500만원 ~ 5,500만원",
+        roomSize: { width: 580, height: 520 },
+        furniture: [
+            // 모던 벽면
+            { left: 0, top: 0, width: 580, height: 16, fill: '#f5f5f5', name: 'Wall_뒤벽', h: 260, texture: 'color' },
+            { left: 0, top: 16, width: 16, height: 504, fill: '#f5f5f5', name: 'Wall_왼벽', h: 260, texture: 'color' },
+            { left: 564, top: 16, width: 16, height: 400, fill: '#f5f5f5', name: 'Wall_오른벽', h: 260, texture: 'color' },
+            { left: 16, top: 504, width: 548, height: 16, fill: '#f5f5f5', name: 'Wall_아래벽', h: 260, texture: 'color' },
+            // 업무 공간 파티션 (유리)
+            { left: 280, top: 16, width: 10, height: 220, fill: '#b0bec5', name: 'Wall_파티션', h: 180, texture: 'glass' },
+            // 창문 & 문
+            { left: 60, top: 0, width: 200, height: 14, fill: '#81ecec', name: 'Window_업무창', h: 180, elevation: 50, texture: 'glass' },
+            { left: 350, top: 0, width: 150, height: 14, fill: '#81ecec', name: 'Window_생활창', h: 160, elevation: 70, texture: 'glass' },
+            { left: 564, top: 416, width: 14, height: 80, fill: '#795548', name: 'Door_현관', h: 220, texture: 'wood' },
+            // 업무 영역 (왼쪽)
+            { left: 30, top: 30, width: 220, height: 90, fill: '#37474f', name: 'Desk_메인책상', h: 75, texture: 'wood' },
+            { left: 30, top: 130, width: 80, height: 100, fill: '#455a64', name: 'Desk_보조책상', h: 75, texture: 'wood' },
+            { left: 130, top: 140, width: 60, height: 60, fill: '#263238', name: 'Chair_오피스의자', h: 115, texture: 'leather' },
+            { left: 30, top: 250, width: 120, height: 50, fill: '#546e7a', name: 'Bookshelf_책장', h: 200, texture: 'wood' },
+            { left: 180, top: 250, width: 80, height: 50, fill: '#607d8b', name: 'Cabinet_서류장', h: 120, texture: 'metal' },
+            // 생활 영역 (오른쪽)
+            { left: 310, top: 30, width: 230, height: 180, fill: '#8d6e63', name: 'Bed_침대', h: 50, texture: 'fabric' },
+            { left: 310, top: 230, width: 100, height: 50, fill: '#a1887f', name: 'Cabinet_미니옷장', h: 180, texture: 'wood' },
+            // 공용 영역
+            { left: 30, top: 340, width: 150, height: 80, fill: '#78909c', name: 'Sofa_소파', h: 75, texture: 'fabric' },
+            { left: 200, top: 360, width: 100, height: 60, fill: '#90a4ae', name: 'Table_테이블', h: 45, texture: 'wood' },
+            { left: 350, top: 320, width: 180, height: 80, fill: '#607d8b', name: 'Kitchen_주방', h: 90, texture: 'metal' },
+            { left: 350, top: 420, width: 180, height: 70, fill: '#b3e5fc', name: 'Bathroom_미니욕실', h: 100, texture: 'marble' },
+            // 조명
+            { left: 130, top: 70, width: 25, height: 25, fill: '#ffffff', name: 'Lamp_데스크램프', h: 50, texture: 'metal' },
+            { left: 400, top: 270, width: 30, height: 30, fill: '#ffd700', name: 'Lamp_생활조명', h: 220, texture: 'metal' }
+        ]
+    },
+
+    // ========== 빈 공간 템플릿 ==========
+    empty_small: {
+        name: "빈 공간 (소형)",
+        description: "3~4평 규모의 빈 공간입니다. 자유롭게 가구를 배치해보세요.",
+        features: ["📐 소형 공간", "✨ 자유 배치"],
+        targetPyeong: "3~4평",
+        estimatedCost: "시공비만",
+        roomSize: { width: 350, height: 320 },
+        furniture: [
+            { left: 0, top: 0, width: 350, height: 12, fill: '#e0e0e0', name: 'Wall_뒤벽', h: 240, texture: 'color' },
+            { left: 0, top: 12, width: 12, height: 308, fill: '#e0e0e0', name: 'Wall_왼벽', h: 240, texture: 'color' },
+            { left: 338, top: 12, width: 12, height: 220, fill: '#e0e0e0', name: 'Wall_오른벽', h: 240, texture: 'color' },
+            { left: 12, top: 308, width: 326, height: 12, fill: '#e0e0e0', name: 'Wall_아래벽', h: 240, texture: 'color' },
+            { left: 338, top: 232, width: 10, height: 76, fill: '#a0522d', name: 'Door_출입구', h: 210, texture: 'wood' }
+        ]
+    },
+    empty_medium: {
+        name: "빈 공간 (중형)",
+        description: "6~8평 규모의 빈 공간입니다.",
+        features: ["📐 중형 공간", "✨ 자유 배치"],
+        targetPyeong: "6~8평",
+        estimatedCost: "시공비만",
+        roomSize: { width: 500, height: 450 },
+        furniture: [
+            { left: 0, top: 0, width: 500, height: 15, fill: '#e0e0e0', name: 'Wall_뒤벽', h: 250, texture: 'color' },
+            { left: 0, top: 15, width: 15, height: 435, fill: '#e0e0e0', name: 'Wall_왼벽', h: 250, texture: 'color' },
+            { left: 485, top: 15, width: 15, height: 350, fill: '#e0e0e0', name: 'Wall_오른벽', h: 250, texture: 'color' },
+            { left: 15, top: 435, width: 470, height: 15, fill: '#e0e0e0', name: 'Wall_아래벽', h: 250, texture: 'color' },
+            { left: 485, top: 365, width: 12, height: 70, fill: '#a0522d', name: 'Door_출입구', h: 210, texture: 'wood' }
+        ]
+    },
+    empty_large: {
+        name: "빈 공간 (대형)",
+        description: "12~15평 규모의 넓은 공간입니다.",
+        features: ["📐 대형 공간", "✨ 자유 배치"],
+        targetPyeong: "12~15평",
+        estimatedCost: "시공비만",
+        roomSize: { width: 700, height: 650 },
+        furniture: [
+            { left: 0, top: 0, width: 700, height: 18, fill: '#e0e0e0', name: 'Wall_뒤벽', h: 280, texture: 'color' },
+            { left: 0, top: 18, width: 18, height: 632, fill: '#e0e0e0', name: 'Wall_왼벽', h: 280, texture: 'color' },
+            { left: 682, top: 18, width: 18, height: 520, fill: '#e0e0e0', name: 'Wall_오른벽', h: 280, texture: 'color' },
+            { left: 18, top: 632, width: 664, height: 18, fill: '#e0e0e0', name: 'Wall_아래벽', h: 280, texture: 'color' },
+            { left: 682, top: 538, width: 15, height: 94, fill: '#a0522d', name: 'Door_출입구', h: 220, texture: 'wood' }
+        ]
+    }
+};
+
+// 성향 분석 결과와 템플릿 매핑
+const PROPENSITY_TO_TEMPLATE = {
+    '단기투자형': 'shortterm',
+    '장기투자형': 'longterm',
+    '실 거주형': 'residential',
+    '신혼부부형': 'newlywed',
+    '오피스텔형': 'officetel'
+};
+
+// ============ 상태 관리 ============
+let state = {
+    currentDesignId: null,
+    gridSize: CONFIG.GRID_DEFAULT,
+    gridVisible: true,
+    isWallMode: false,
+    isDrawing: false,
+    isDragging: false,
+    hasUnsavedChanges: false,
+    history: [],
+    historyIndex: -1,
+    historyProcessing: false,
+    wallRect: null,
+    startX: 0,
+    startY: 0,
+    lastPosX: 0,
+    lastPosY: 0,
+    autoSaveTimer: null,
+    currentDiscount: 0,
+    loadedFromPropensity: false,
+    currentTemplateKey: null
+};
+
+// ============ 캔버스 초기화 ============
+const canvas = new fabric.Canvas('editorCanvas', {
+    stopContextMenu: true,
+    fireRightClick: true,
+    preserveObjectStacking: true
+});
+
+// ============ 유틸리티 함수 ============
+function showToast(message, duration = 2500) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+function sanitizeInput(input) {
+    return String(input || '').replace(/[<>]/g, '').trim();
+}
+
+function formatPrice(price) {
+    return '₩' + Math.round(price).toLocaleString();
+}
+
+// ============ 성향 분석 연동 ============
+function checkPropensityResult() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const templateKey = urlParams.get('template');
+    const fromPropensity = urlParams.get('from') === 'propensity';
+    
+    if (templateKey && fromPropensity && TEMPLATES[templateKey]) {
+        state.loadedFromPropensity = true;
+        state.currentTemplateKey = templateKey;
+        
+        // 약간의 딜레이 후 템플릿 로드 (캔버스 초기화 대기)
+        setTimeout(() => {
+            loadTemplateDirectly(templateKey, true);
+        }, 300);
+        
+        return true;
+    }
+    
+    // localStorage에서 성향 분석 결과 확인
+    const propensityResult = localStorage.getItem('propensity_result');
+    if (propensityResult) {
+        try {
+            const result = JSON.parse(propensityResult);
+            // 10분 이내의 결과만 사용
+            if (Date.now() - result.timestamp < 600000) {
+                state.loadedFromPropensity = true;
+                state.currentTemplateKey = result.templateKey;
+                
+                setTimeout(() => {
+                    loadTemplateDirectly(result.templateKey, true);
+                }, 300);
+                
+                // 사용 후 삭제
+                localStorage.removeItem('propensity_result');
+                return true;
+            }
+        } catch (e) {
+            console.error('성향 분석 결과 파싱 오류:', e);
+        }
+    }
+    
+    return false;
+}
+
+function loadTemplateDirectly(key, showBanner = false) {
+    const template = TEMPLATES[key];
+    if (!template) return;
+    
+    canvas.clear();
+    canvas.setWidth(template.roomSize.width);
+    canvas.setHeight(template.roomSize.height);
+    document.getElementById('canvasW').value = template.roomSize.width;
+    document.getElementById('canvasH').value = template.roomSize.height;
+    
+    template.furniture.forEach(item => {
+        const rect = new fabric.Rect({
+            left: item.left, top: item.top, width: item.width, height: item.height,
+            fill: item.fill, stroke: '#2d3436', strokeWidth: 2
+        });
+        rect.set('userData', { 
+            name: item.name, 
+            h: item.h || 50, 
+            elevation: item.elevation || 0, 
+            texture: item.texture || 'color' 
+        });
+        canvas.add(rect);
+    });
+    
+    if (state.gridVisible) createGrid();
+    canvas.renderAll();
+    updateLayerList();
+    updateEstimate();
+    document.getElementById('design-title').value = template.name;
+    document.getElementById('templateSelect').value = key;
+    
+    setTimeout(saveHistory, 500);
+    
+    if (showBanner) {
+        showPropensityBanner(template.name);
+    }
+    
+    showToast(`✅ "${template.name}" 템플릿이 적용되었습니다!`, 3000);
+}
+
+function showPropensityBanner(typeName) {
+    const banner = document.getElementById('propensityBanner');
+    const bannerType = document.getElementById('bannerType');
+    
+    bannerType.textContent = typeName;
+    banner.style.display = 'block';
+    
+    // 스크롤 위치 조정
+    document.body.style.paddingTop = '80px';
+}
+
+function showPropensityBanner(templateName) {
+    const banner = document.createElement('div');
+    banner.id = 'propensity-banner';
+    banner.innerHTML = `
+        <div class="propensity-banner">
+            <div class="banner-content">
+                <span class="banner-icon">✨</span>
+                <span class="banner-text">
+                    <strong>성향 분석 결과</strong>가 적용되었습니다: 
+                    <em>${templateName}</em>
+                </span>
+            </div>
+            <button onclick="closePropensityBanner()" class="banner-close">✕</button>
+        </div>
+    `;
+    document.body.insertBefore(banner, document.body.firstChild);
+    
+    // 5초 후 자동 닫기
+    setTimeout(() => closePropensityBanner(), 5000);
+}
+
+
+function closePropensityBanner() {
+    const banner = document.getElementById('propensity-banner');
+    if (banner) {
+        banner.classList.add('fade-out');
+        setTimeout(() => banner.remove(), 300);
+    }
+}
+
+function handleURLParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const templateKey = urlParams.get('template');
+    const fromPropensity = urlParams.get('from') === 'propensity';
+    
+    if (templateKey && TEMPLATES[templateKey]) {
+        // 성향 분석에서 온 경우 자동 로드
+        if (fromPropensity) {
+            loadTemplateDirectly(templateKey);
+            
+            // 성향 분석 결과 정보 가져오기
+            const propensityResult = localStorage.getItem('propensity_result');
+            if (propensityResult) {
+                const result = JSON.parse(propensityResult);
+                showPropensityBanner(result.type);
+                document.getElementById('design-title').value = `${result.type} - 맞춤 디자인`;
+            }
+        }
+        
+        // URL 파라미터 제거 (깔끔한 URL 유지)
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+}
+
+function showTemplateInfo() {
+    const key = state.currentTemplateKey;
+    const template = TEMPLATES[key];
+    
+    if (!template) {
+        showToast('템플릿 정보를 찾을 수 없습니다');
+        return;
+    }
+    
+    const modal = document.getElementById('templateInfoModal');
+    const title = document.getElementById('templateInfoTitle');
+    const content = document.getElementById('templateInfoContent');
+    
+    title.textContent = `📋 ${template.name}`;
+    content.innerHTML = `
+        <div class="template-info-card">
+            <p class="description">${template.description}</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">권장 평수</span>
+                    <span class="info-value">${template.targetPyeong}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">예상 비용</span>
+                    <span class="info-value">${template.estimatedCost}</span>
+                </div>
+            </div>
+            
+            <div class="features">
+                <h4>주요 특징</h4>
+                <ul>
+                    ${template.features.map(f => `<li>${f}</li>`).join('')}
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                💡 <strong>Tip:</strong> 가구를 클릭하여 색상, 재질, 크기를 자유롭게 변경할 수 있습니다!
+            </div>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+}
+
+function closeTemplateInfoModal() {
+    document.getElementById('templateInfoModal').classList.remove('active');
+}
+
+// ============ 가격 계산 ============
+function calculateRoomCost() {
+    const widthCm = canvas.getWidth();
+    const heightCm = canvas.getHeight();
+    const sqMeters = (widthCm * heightCm) / 10000;
+    const pyeong = sqMeters / 3.3;
+    return Math.round(pyeong * PRICING.roomCostPerPyeong);
+}
+
+function calculateFurnitureCost(obj) {
+    if (!obj || !obj.userData) return 0;
+    
+    const typeName = (obj.userData.name || '').split('_')[0];
+    const priceInfo = PRICING.furniture[typeName];
+    if (!priceInfo) return 0;
+    
+    const w = obj.width * obj.scaleX;
+    const d = obj.height * obj.scaleY;
+    const h = obj.userData.h || 50;
+    const texture = obj.userData.texture || 'color';
+    
+    if (typeName === 'Wall' && priceInfo.perMeter) {
+        const lengthM = Math.max(w, d) / 100;
+        const heightM = h / 100;
+        return Math.round(priceInfo.base * lengthM * (heightM / 2.4) * (PRICING.materials[texture] || 1));
+    }
+    
+    const volume = w * d * h;
+    const volumeRatio = priceInfo.refVolume ? volume / priceInfo.refVolume : 1;
+    const sizeMultiplier = Math.max(0.5, Math.min(3, Math.pow(volumeRatio, 0.5)));
+    const materialMultiplier = PRICING.materials[texture] || 1.0;
+    
+    return Math.round(priceInfo.base * sizeMultiplier * materialMultiplier);
+}
+
+function getTotalFurnitureCost() {
+    let total = 0;
+    canvas.getObjects().forEach(obj => {
+        if (obj.type === 'rect' && obj.userData) {
+            total += calculateFurnitureCost(obj);
+        }
+    });
+    return total;
+}
+
+function getFurnitureCount() {
+    return canvas.getObjects().filter(obj => obj.type === 'rect' && obj.userData).length;
+}
+
+function getSubtotal() {
+    return calculateRoomCost() + getTotalFurnitureCost();
+}
+
+function applyDiscount() {
+    const code = document.getElementById('discountCode').value.toUpperCase().trim();
+    const discountInfo = PRICING.discounts[code];
+    const msgEl = document.getElementById('discountMessage');
+    
+    if (!code) {
+        state.currentDiscount = 0;
+        msgEl.innerHTML = '';
+        updateEstimate();
+        return;
+    }
+    
+    if (discountInfo && discountInfo.condition()) {
+        state.currentDiscount = discountInfo.rate;
+        msgEl.innerHTML = `<span style="color:#2ecc71;">${discountInfo.message}</span>`;
+    } else if (discountInfo) {
+        state.currentDiscount = 0;
+        msgEl.innerHTML = `<span style="color:#e74c3c;">❌ 조건 미충족</span>`;
+    } else {
+        state.currentDiscount = 0;
+        msgEl.innerHTML = `<span style="color:#e74c3c;">❌ 유효하지 않은 코드</span>`;
+    }
+    
+    updateEstimate();
+}
+
+function updateEstimate() {
+    const roomCost = calculateRoomCost();
+    const furnitureCost = getTotalFurnitureCost();
+    const subtotal = roomCost + furnitureCost;
+    const discount = Math.round(subtotal * state.currentDiscount);
+    const total = subtotal - discount;
+    
+    const pyeong = ((canvas.getWidth() * canvas.getHeight()) / 10000 / 3.3).toFixed(1);
+    
+    document.getElementById('roomCost').textContent = formatPrice(roomCost);
+    document.getElementById('furnitureCost').textContent = formatPrice(furnitureCost);
+    document.getElementById('furnitureCountDisplay').textContent = getFurnitureCount() + '개';
+    document.getElementById('roomSize').textContent = pyeong + '평';
+    
+    let totalHtml = formatPrice(total);
+    if (state.currentDiscount > 0) {
+        totalHtml = `<span style="text-decoration:line-through; font-size:14px; opacity:0.6;">${formatPrice(subtotal)}</span><br>${formatPrice(total)}`;
+    }
+    document.getElementById('totalEstimate').innerHTML = totalHtml;
+}
+
+// ============ 히스토리 (Undo/Redo) ============
+function saveHistory() {
+    if (state.historyProcessing) return;
+    
+    if (state.historyIndex < state.history.length - 1) {
+        state.history = state.history.slice(0, state.historyIndex + 1);
+    }
+    
+    state.history.push(JSON.stringify(canvas.toJSON(['userData'])));
+    state.historyIndex++;
+    
+    if (state.history.length > CONFIG.MAX_HISTORY) {
+        state.history.shift();
+        state.historyIndex--;
+    }
+}
+
+function undo() {
+    if (state.historyIndex <= 0) {
+        showToast('더 이상 되돌릴 수 없습니다');
+        return;
+    }
+    
+    state.historyProcessing = true;
+    state.historyIndex--;
+    canvas.loadFromJSON(state.history[state.historyIndex], () => {
+        canvas.renderAll();
+        updateLayerList();
+        updateEstimate();
+        state.historyProcessing = false;
+        showToast('↩️ 실행 취소');
+    });
+}
+
+function redo() {
+    if (state.historyIndex >= state.history.length - 1) {
+        showToast('더 이상 다시 실행할 수 없습니다');
+        return;
+    }
+    
+    state.historyProcessing = true;
+    state.historyIndex++;
+    canvas.loadFromJSON(state.history[state.historyIndex], () => {
+        canvas.renderAll();
+        updateLayerList();
+        updateEstimate();
+        state.historyProcessing = false;
+        showToast('↪️ 다시 실행');
+    });
+}
+
+// ============ 격자 ============
+function createGrid() {
+    const width = canvas.getWidth();
+    const height = canvas.getHeight();
+    
+    canvas.getObjects().filter(o => o.isGrid).forEach(line => canvas.remove(line));
+
+    const lineOptions = { 
+        stroke: '#e0e0e0', strokeWidth: 1,
+        selectable: false, evented: false, isGrid: true
+    };
+
+    for (let i = 0; i <= Math.ceil(width / state.gridSize); i++) {
+        canvas.add(new fabric.Line([i * state.gridSize, 0, i * state.gridSize, height], lineOptions));
+    }
+    for (let i = 0; i <= Math.ceil(height / state.gridSize); i++) {
+        canvas.add(new fabric.Line([0, i * state.gridSize, width, i * state.gridSize], lineOptions));
+    }
+    
+    canvas.getObjects().filter(o => o.isGrid).forEach(o => canvas.sendToBack(o));
+    canvas.requestRenderAll();
+}
+
+function toggleGrid() {
+    state.gridVisible = !state.gridVisible;
+    const btn = document.getElementById('gridBtn');
+    
+    if (state.gridVisible) {
+        createGrid();
+        btn.textContent = '📐 격자 ON';
+    } else {
+        canvas.getObjects().filter(o => o.isGrid).forEach(line => canvas.remove(line));
+        canvas.renderAll();
+        btn.textContent = '📐 격자 OFF';
+    }
+}
+
+function applyCanvasSettings() {
+    const newW = parseInt(document.getElementById('canvasW').value) || 600;
+    const newH = parseInt(document.getElementById('canvasH').value) || 600;
+    const newGrid = parseInt(document.getElementById('gridSizeInput').value) || 20;
+
+    canvas.setWidth(newW);
+    canvas.setHeight(newH);
+    state.gridSize = newGrid;
+    
+    if (state.gridVisible) createGrid();
+    updateEstimate();
+    showToast('설정 적용됨');
+}
+
+// ============ 벽 그리기 ============
+function toggleWallMode() {
+    state.isWallMode = !state.isWallMode;
+    const btn = document.getElementById('btnWall');
+    
+    if (state.isWallMode) {
+        btn.textContent = "🧱 벽(ON)";
+        btn.classList.add('btn-wall-active');
+        canvas.selection = false;
+        canvas.defaultCursor = 'crosshair';
+        showToast('벽 그리기 모드 활성화');
+    } else {
+        btn.textContent = "🧱 벽(OFF)";
+        btn.classList.remove('btn-wall-active');
+        canvas.selection = true;
+        canvas.defaultCursor = 'default';
+    }
+}
+
+// ============ 캔버스 이벤트 ============
+canvas.on('mouse:down', function(o) {
+    const evt = o.e;
+    
+    if (evt.altKey) {
+        state.isDragging = true;
+        canvas.selection = false;
+        state.lastPosX = evt.clientX;
+        state.lastPosY = evt.clientY;
+        canvas.defaultCursor = 'grab';
+        return;
+    }
+    
+    if (!state.isWallMode) return;
+    
+    state.isDrawing = true;
+    const pointer = canvas.getPointer(o.e);
+    state.startX = Math.round(pointer.x / state.gridSize) * state.gridSize;
+    state.startY = Math.round(pointer.y / state.gridSize) * state.gridSize;
+
+    state.wallRect = new fabric.Rect({
+        left: state.startX, top: state.startY,
+        width: 0, height: 0,
+        fill: '#95a5a6', stroke: '#636e72', strokeWidth: 3, selectable: true 
+    });
+    
+    state.wallRect.set('userData', { 
+        name: 'Wall_' + Date.now(), h: 240, elevation: 0, texture: 'concrete'
+    });
+
+    canvas.add(state.wallRect);
+});
+
+canvas.on('mouse:move', function(o) {
+    const e = o.e;
+    
+    if (state.isDragging) {
+        const vpt = canvas.viewportTransform;
+        vpt[4] += e.clientX - state.lastPosX;
+        vpt[5] += e.clientY - state.lastPosY;
+        canvas.requestRenderAll();
+        state.lastPosX = e.clientX;
+        state.lastPosY = e.clientY;
+        return;
+    }
+    
+    if (!state.isDrawing) return;
+    
+    const pointer = canvas.getPointer(o.e);
+    const currX = Math.round(pointer.x / state.gridSize) * state.gridSize;
+    const currY = Math.round(pointer.y / state.gridSize) * state.gridSize;
+
+    if (state.startX > currX) state.wallRect.set({ left: currX });
+    if (state.startY > currY) state.wallRect.set({ top: currY });
+
+    state.wallRect.set({ 
+        width: Math.abs(currX - state.startX), 
+        height: Math.abs(currY - state.startY) 
+    });
+    canvas.renderAll();
+    updateDimDisplay(state.wallRect);
+});
+
+canvas.on('mouse:up', function() {
+    if (state.isDragging) {
+        state.isDragging = false;
+        canvas.selection = true;
+        canvas.defaultCursor = 'default';
+        return;
+    }
+    
+    if (state.isDrawing) {
+        state.isDrawing = false;
+        if (state.wallRect && state.wallRect.width > 5 && state.wallRect.height > 5) {
+            updateLayerList();
+            updateEstimate();
+            showToast('벽 추가됨');
+        } else if (state.wallRect) {
+            canvas.remove(state.wallRect);
+        }
+        state.wallRect = null;
+    }
+});
+
+canvas.on('mouse:wheel', function(opt) {
+    const delta = opt.e.deltaY;
+    let zoom = canvas.getZoom();
+    zoom *= 0.999 ** delta;
+    zoom = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, zoom));
+    
+    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+    document.getElementById('zoom-indicator').textContent = Math.round(zoom * 100) + '%';
+    
+    opt.e.preventDefault();
+    opt.e.stopPropagation();
+});
+
+canvas.on('object:moving', function(options) { 
+    if (options.target.isGrid) return;
+    options.target.set({
+        left: Math.round(options.target.left / state.gridSize) * state.gridSize,
+        top: Math.round(options.target.top / state.gridSize) * state.gridSize
+    });
+    updateDimDisplay(options.target);
+});
+
+canvas.on('object:scaling', e => updateDimDisplay(e.target));
+canvas.on('selection:cleared', () => document.getElementById('dim-display').style.display = 'none');
+
+function updateDimDisplay(target) {
+    const dimDisplay = document.getElementById('dim-display');
+    if (!target || target.isGrid) {
+        dimDisplay.style.display = 'none';
+        return;
+    }
+
+    const w = Math.round(target.width * target.scaleX);
+    const h = Math.round(target.height * target.scaleY);
+    const price = calculateFurnitureCost(target);
+    
+    dimDisplay.innerHTML = `${w} × ${h} cm | ${formatPrice(price)}`;
+    dimDisplay.style.display = 'block';
+    dimDisplay.style.left = (target.left + w/2 - 70) + 'px';
+    dimDisplay.style.top = (target.top - 40) + 'px';
+}
+
+// ============ 가구 관리 ============
+function addBlock(color, name, width = 100, depth = 100, height = 50) {
+    const rect = new fabric.Rect({
+        left: 100, top: 100, width, height: depth, fill: color,
+        stroke: '#2d3436', strokeWidth: 2,
+        originX: 'left', originY: 'top',
+        cornerColor: '#4a90e2', cornerSize: 10, cornerStyle: 'circle', transparentCorners: false
+    });
+    
+    rect.set('userData', { 
+        name: name + "_" + Math.floor(Math.random()*1000),
+        h: height, elevation: 0, texture: 'color'
+    });
+    
+    canvas.add(rect);
+    canvas.setActiveObject(rect);
+    syncPanel(rect);
+    updateLayerList();
+    updateEstimate();
+    showToast(`${name} 추가됨 (${formatPrice(calculateFurnitureCost(rect))})`);
+}
+
+function duplicateObject() {
+    const obj = canvas.getActiveObject();
+    if (!obj) { showToast('복사할 객체를 선택하세요'); return; }
+    
+    obj.clone(function(cloned) {
+        cloned.set({ left: obj.left + 20, top: obj.top + 20 });
+        canvas.add(cloned);
+        canvas.setActiveObject(cloned);
+        updateLayerList();
+        updateEstimate();
+        showToast('객체 복사됨');
+    }, ['userData']);
+}
+
+function deleteObject() {
+    const obj = canvas.getActiveObject();
+    if (obj) {
+        const name = obj.userData ? obj.userData.name : '객체';
+        canvas.remove(obj);
+        updateLayerList();
+        updateEstimate();
+        showToast(`${name} 삭제됨`);
+    } else {
+        showToast('삭제할 객체를 선택하세요');
+    }
+}
+
+function clearCanvas() {
+    if (!confirm("모든 객체를 삭제하시겠습니까?")) return;
+    
+    canvas.clear();
+    if (state.gridVisible) createGrid();
+    state.currentDesignId = null;
+    state.currentTemplateKey = null;
+    localStorage.removeItem('editor_2d_state');
+    localStorage.removeItem('furniture_data');
+    state.history = [];
+    state.historyIndex = -1;
+    setTimeout(saveHistory, 100);
+    updateLayerList();
+    updateEstimate();
+    closePropensityBanner();
+    showToast('캔버스 초기화됨');
+}
+
+// ============ 속성 패널 ============
+const handleSelect = (e) => {
+    if (e.selected && e.selected[0]) {
+        syncPanel(e.selected[0]);
+        updateLayerList();
+    }
+};
+
+canvas.on('selection:created', handleSelect);
+canvas.on('selection:updated', handleSelect);
+canvas.on('object:modified', (e) => {
+    syncPanel(e.target);
+    updateLayerList();
+    updateEstimate();
+    state.hasUnsavedChanges = true;
+    saveHistory();
+});
+canvas.on('object:added', () => { if (!state.historyProcessing) { saveHistory(); state.hasUnsavedChanges = true; } });
+canvas.on('object:removed', () => { if (!state.historyProcessing) { saveHistory(); state.hasUnsavedChanges = true; } });
+
+function syncPanel(obj) {
+    if (!obj || !obj.userData) return;
+    
+    document.getElementById('objName').value = sanitizeInput(obj.userData.name || '');
+    document.getElementById('objW').value = Math.round(obj.width * obj.scaleX);
+    document.getElementById('objD').value = Math.round(obj.height * obj.scaleY);
+    document.getElementById('objH').value = obj.userData.h || 0;
+    document.getElementById('objElev').value = obj.userData.elevation || 0;
+    document.getElementById('objColor').value = obj.fill || '#000000';
+    document.getElementById('objTexture').value = obj.userData.texture || 'color';
+    document.getElementById('lockBtn').textContent = obj.lockMovementX ? "🔒" : "🔓";
+}
+
+function updateProperties() {
+    const obj = canvas.getActiveObject();
+    if (!obj) return;
+
+    obj.set({
+        width: Math.max(5, parseFloat(document.getElementById('objW').value) || 100),
+        height: Math.max(5, parseFloat(document.getElementById('objD').value) || 100),
+        scaleX: 1, scaleY: 1,
+        fill: document.getElementById('objColor').value
+    });
+
+    obj.set('userData', {
+        name: sanitizeInput(document.getElementById('objName').value) || 'Object',
+        h: Math.max(5, parseFloat(document.getElementById('objH').value) || 50),
+        elevation: Math.max(0, parseFloat(document.getElementById('objElev').value) || 0),
+        texture: document.getElementById('objTexture').value
+    });
+
+    obj.setCoords();
+    canvas.renderAll();
+    updateLayerList();
+    updateEstimate();
+}
+
+function rotateObject(angle) {
+    const obj = canvas.getActiveObject();
+    if (!obj) { showToast('회전할 객체를 선택하세요'); return; }
+    obj.rotate(Math.round(((obj.angle || 0) + angle) / 45) * 45 % 360);
+    obj.setCoords();
+    canvas.renderAll();
+}
+
+function toggleLock() {
+    const obj = canvas.getActiveObject();
+    if (!obj) { showToast('잠글 객체를 선택하세요'); return; }
+    
+    const isLocked = !obj.lockMovementX;
+    obj.set({
+        lockMovementX: isLocked, lockMovementY: isLocked,
+        lockRotation: isLocked, lockScalingX: isLocked, lockScalingY: isLocked,
+        stroke: isLocked ? '#ff0000' : '#2d3436'
+    });
+    document.getElementById('lockBtn').textContent = isLocked ? "🔒" : "🔓";
+    canvas.renderAll();
+    showToast(isLocked ? "객체 잠김" : "잠금 해제");
+}
+
+function groupObjects() {
+    const active = canvas.getActiveObject();
+    if (!active || active.type !== 'activeSelection') {
+        showToast('여러 개를 선택하세요 (Shift + 클릭)');
+        return;
+    }
+    active.toGroup();
+    canvas.requestRenderAll();
+    updateLayerList();
+    showToast('그룹 생성됨');
+}
+
+function ungroupObjects() {
+    const active = canvas.getActiveObject();
+    if (!active || active.type !== 'group') {
+        showToast('그룹을 선택하세요');
+        return;
+    }
+    active.toActiveSelection();
+    canvas.requestRenderAll();
+    updateLayerList();
+    showToast('그룹 해제됨');
+}
+
+// ============ 레이어 리스트 ============
+function updateLayerList() {
+    const listDiv = document.getElementById('layerList');
+    listDiv.innerHTML = '';
+    
+    const objects = canvas.getObjects().filter(o => o.type === 'rect' && o.userData);
+    const activeObj = canvas.getActiveObject();
+    
+    document.getElementById('layerCount').textContent = objects.length;
+
+    [...objects].reverse().forEach(obj => {
+        const item = document.createElement('div');
+        item.className = 'layer-item' + (obj === activeObj ? ' active' : '');
+        item.innerHTML = `
+            <div class="info">
+                <div class="layer-color" style="background:${obj.fill || '#ccc'}"></div>
+                <span class="layer-name">${sanitizeInput(obj.userData?.name || 'Unknown')}</span>
+            </div>
+            <span class="layer-price">${formatPrice(calculateFurnitureCost(obj))}</span>
+        `;
+        item.onclick = () => {
+            canvas.setActiveObject(obj);
+            canvas.renderAll();
+            syncPanel(obj);
+            updateLayerList();
+        };
+        listDiv.appendChild(item);
+    });
+}
+
+// ============ 저장/불러오기 ============
+async function saveDesign() {
+    const title = document.getElementById('design-title').value.trim() || '나의 디자인';
+    const designData = {
+        canvas: canvas.toJSON(['userData']),
+        settings: { 
+            canvasWidth: canvas.getWidth(), 
+            canvasHeight: canvas.getHeight(), 
+            gridSize: state.gridSize 
+        },
+        templateKey: state.currentTemplateKey,
+        savedAt: new Date().toISOString()
+    };
+    
+    // 로컬 저장 (항상)
+    localStorage.setItem('editor_2d_state', JSON.stringify(designData));
+    state.hasUnsavedChanges = false;
+    
+    if (!currentUser) {
+        showToast('✅ 로컬에 저장됨');
+        return;
+    }
+
+    // 서버 API로 저장
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/designs/save`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                user_id: currentUser.id || currentUser.email,
+                title: sanitizeInput(title),
+                design_data: JSON.stringify(designData),
+                is_public: 1,
+                custom_id: state.currentDesignId || null
+            })
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            state.currentDesignId = result.custom_id;
+            showToast('✅ 클라우드에 저장됨');
+        } else {
+            showToast('⚠️ 서버 저장 실패, 로컬에만 저장됨');
+        }
+    } catch (err) {
+        console.error('서버 저장 실패:', err);
+        showToast('⚠️ 서버 연결 실패, 로컬에만 저장됨');
+    }
+}
+
+async function showMyDesigns() {
+    const listDiv = document.getElementById('designList');
+    listDiv.innerHTML = '';
+    
+    document.getElementById('designModal').classList.add('active');
+    
+    let designsHtml = '';
+    
+    // 로컬 저장 데이터
+    const savedState = localStorage.getItem('editor_2d_state');
+    if (savedState) {
+        designsHtml += `
+            <div class="design-list-item" style="background:#e8f5e9;" onclick="loadLocalDesign()">
+                <div><h4>💾 로컬 저장 데이터</h4><small>브라우저에 저장됨</small></div>
+                <button class="btn-success btn-sm">불러오기</button>
+            </div>
+        `;
+    }
+    
+    if (!currentUser) {
+        listDiv.innerHTML = designsHtml || '<div style="padding:20px; text-align:center; color:#888;">저장된 디자인이 없습니다.<br>로그인하면 클라우드 저장을 이용할 수 있습니다.</div>';
+        return;
+    }
+
+    // 서버에서 디자인 목록 가져오기
+    try {
+        const userId = currentUser.id || currentUser.email;
+        const response = await fetch(`${CONFIG.API_URL}/designs/my/${userId}`, {
+            credentials: 'include'
+        });
+        
+        if (response.ok) {
+            const designs = await response.json();
+            
+            if (designs && designs.length > 0) {
+                designsHtml += '<h4 style="margin:15px 0 10px;">☁️ 서버 저장 목록</h4>';
+                
+                designs.forEach(d => {
+                    const createdDate = new Date(d.created_at).toLocaleString('ko-KR');
+                    designsHtml += `
+                        <div class="design-list-item">
+                            <div>
+                                <h4>${sanitizeInput(d.title)}</h4>
+                                <small>${createdDate}</small>
+                            </div>
+                            <div class="actions">
+                                <button class="btn-warning btn-sm" onclick="loadDesign('${d.custom_id}')">불러오기</button>
+                                <button class="btn-danger btn-sm" onclick="deleteDesign('${d.custom_id}')">삭제</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        listDiv.innerHTML = designsHtml || '<div style="padding:20px; text-align:center; color:#888;">저장된 디자인이 없습니다.</div>';
+    } catch (err) {
+        console.error('서버 목록 로드 실패:', err);
+        listDiv.innerHTML = designsHtml || '<div style="padding:20px; text-align:center; color:#888;">디자인 목록을 불러올 수 없습니다.</div>';
+    }
+}
+
+async function loadDesignFromStorage(key) {
+    if (!confirm("현재 작업이 사라집니다. 불러오시겠습니까?")) return;
+    
+    try {
+        const result = await window.storage.get(key, false);
+        if (!result || !result.value) {
+            showToast('❌ 디자인을 찾을 수 없습니다');
+            return;
+        }
+        
+        const data = JSON.parse(result.value);
+        const designData = data.designData;
+        
+        canvas.loadFromJSON(designData.canvas, () => {
+            if (designData.settings) {
+                canvas.setWidth(designData.settings.canvasWidth);
+                canvas.setHeight(designData.settings.canvasHeight);
+                state.gridSize = designData.settings.gridSize;
+                document.getElementById('canvasW').value = designData.settings.canvasWidth;
+                document.getElementById('canvasH').value = designData.settings.canvasHeight;
+                document.getElementById('gridSizeInput').value = state.gridSize;
+            }
+            if (designData.templateKey) {
+                state.currentTemplateKey = designData.templateKey;
+            }
+            if (state.gridVisible) createGrid();
+            canvas.renderAll();
+            updateLayerList();
+            updateEstimate();
+            state.currentDesignId = key;
+            document.getElementById('design-title').value = sanitizeInput(data.title);
+            closeDesignModal();
+            showToast('✅ 불러오기 완료!');
+        });
+    } catch (err) {
+        console.error('불러오기 실패:', err);
+        showToast('❌ 불러오기 실패');
+    }
+}
+
+function loadLocalDesign() {
+    const saved = localStorage.getItem('editor_2d_state');
+    if (!saved) return;
+    
+    const data = JSON.parse(saved);
+    canvas.loadFromJSON(data.canvas || data, () => {
+        if (data.settings) {
+            canvas.setWidth(data.settings.canvasWidth || 600);
+            canvas.setHeight(data.settings.canvasHeight || 600);
+            state.gridSize = data.settings.gridSize || 20;
+            document.getElementById('canvasW').value = canvas.getWidth();
+            document.getElementById('canvasH').value = canvas.getHeight();
+            document.getElementById('gridSizeInput').value = state.gridSize;
+        }
+        if (data.templateKey) {
+            state.currentTemplateKey = data.templateKey;
+        }
+        if (state.gridVisible) createGrid();
+        canvas.renderAll();
+        updateLayerList();
+        updateEstimate();
+        closeDesignModal();
+        showToast('✅ 로컬 데이터 불러옴');
+    });
+}
+
+async function loadDesign(customId) {
+    if (!confirm("현재 작업이 사라집니다. 불러오시겠습니까?")) return;
+    
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/designs/${customId}`);
+        const data = await response.json();
+        const designData = JSON.parse(data.design_data);
+        
+        canvas.loadFromJSON(designData.canvas, () => {
+            if (designData.settings) {
+                canvas.setWidth(designData.settings.canvasWidth);
+                canvas.setHeight(designData.settings.canvasHeight);
+                state.gridSize = designData.settings.gridSize;
+                document.getElementById('canvasW').value = designData.settings.canvasWidth;
+                document.getElementById('canvasH').value = designData.settings.canvasHeight;
+            }
+            if (designData.templateKey) {
+                state.currentTemplateKey = designData.templateKey;
+            }
+            if (state.gridVisible) createGrid();
+            canvas.renderAll();
+            updateLayerList();
+            updateEstimate();
+            state.currentDesignId = customId;
+            document.getElementById('design-title').value = sanitizeInput(data.title);
+            closeDesignModal();
+            showToast('✅ 불러오기 완료!');
+        });
+    } catch (e) {
+        showToast('❌ 불러오기 실패');
+    }
+}
+
+
+
+async function deleteDesignFromStorage(key) {
+    if (!confirm('삭제하시겠습니까?')) return;
+    
+    try {
+        await window.storage.delete(key, false);
+        showToast('✅ 삭제됨');
+        showMyDesigns();
+    } catch (err) {
+        console.error('삭제 실패:', err);
+        showToast('❌ 삭제 실패');
+    }
+}
+
+function closeDesignModal() { document.getElementById('designModal').classList.remove('active'); }
+function showPriceTable() { document.getElementById('priceModal').classList.add('active'); }
+function closePriceModal() { document.getElementById('priceModal').classList.remove('active'); }
+
+
+function loadTemplate(key) {
+    if (!key) return;
+    if (!confirm("현재 작업이 사라집니다. 템플릿을 불러오시겠습니까?")) return;
+    
+    loadTemplateDirectly(key, false);
+    showToast(`✅ "${TEMPLATES[key]?.name || '템플릿'}" 로드 완료!`);
+}
+
+// ============ 견적서 내보내기 ============
+function exportEstimate() {
+    const roomCost = calculateRoomCost();
+    let furnitureTotal = 0;
+    const items = [];
+    
+    canvas.getObjects().forEach(obj => {
+        if (obj.type === 'rect' && obj.userData) {
+            const cost = calculateFurnitureCost(obj);
+            furnitureTotal += cost;
+            items.push({
+                name: obj.userData.name,
+                texture: { color:'단색', wood:'나무', fabric:'천', marble:'대리석', metal:'금속', glass:'유리', leather:'가죽' }[obj.userData.texture] || '단색',
+                size: `${Math.round(obj.width * obj.scaleX)}×${Math.round(obj.height * obj.scaleY)}×${obj.userData.h}`,
+                cost
+            });
+        }
+    });
+    
+    const subtotal = roomCost + furnitureTotal;
+    const discount = Math.round(subtotal * state.currentDiscount);
+    const total = subtotal - discount;
+    const pyeong = ((canvas.getWidth() * canvas.getHeight()) / 10000 / 3.3).toFixed(1);
+    const title = sanitizeInput(document.getElementById('design-title').value) || '나의 디자인';
+    const templateInfo = state.currentTemplateKey && TEMPLATES[state.currentTemplateKey] 
+        ? TEMPLATES[state.currentTemplateKey].name 
+        : '커스텀';
+    
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>견적서</title>
+<style>body{font-family:'Malgun Gothic',sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{text-align:center;border-bottom:3px solid #333;padding-bottom:20px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{padding:12px;border:1px solid #ddd;text-align:left}th{background:#f5f5f5}.total{font-weight:bold;font-size:18px;background:#667eea;color:white}.right{text-align:right}.template-badge{display:inline-block;background:#667eea;color:white;padding:5px 12px;border-radius:20px;font-size:12px;margin-left:10px}</style></head>
+<body><h1>🏠 인테리어 견적서 <span class="template-badge">${templateInfo}</span></h1>
+<p><strong>디자인:</strong> ${title} | <strong>발행일:</strong> ${new Date().toLocaleDateString('ko-KR')}</p>
+<h3>📐 시공</h3><table><tr><th>항목</th><th>내용</th><th class="right">금액</th></tr>
+<tr><td>방 크기</td><td>${canvas.getWidth()}×${canvas.getHeight()}cm (${pyeong}평)</td><td class="right">${formatPrice(roomCost)}</td></tr></table>
+<h3>🪑 가구 (${items.length}개)</h3><table><tr><th>품목</th><th>재질</th><th>크기</th><th class="right">금액</th></tr>
+${items.map(i=>`<tr><td>${i.name}</td><td>${i.texture}</td><td>${i.size}</td><td class="right">${formatPrice(i.cost)}</td></tr>`).join('')}
+<tr><td colspan="3"><strong>소계</strong></td><td class="right"><strong>${formatPrice(furnitureTotal)}</strong></td></tr></table>
+<h3>💰 총 견적</h3><table><tr><td>시공비</td><td class="right">${formatPrice(roomCost)}</td></tr>
+<tr><td>가구</td><td class="right">${formatPrice(furnitureTotal)}</td></tr>
+${discount?`<tr style="color:#e74c3c"><td>할인</td><td class="right">-${formatPrice(discount)}</td></tr>`:''}
+<tr class="total"><td>최종</td><td class="right">${formatPrice(total)}</td></tr></table>
+<p style="text-align:center;color:#888;margin-top:40px">유효기간: 발행일로부터 30일</p>
+
+<div class="modal" id="galleryShareModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>🌟 큐브 갤러리에 공유하기</h3>
+            <button class="close-btn" onclick="closeGalleryShareModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="share-preview">
+                <canvas id="sharePreviewCanvas" width="400" height="300"></canvas>
+            </div>
+            
+            <div class="form-group">
+                <label for="shareTitle">작품 제목 *</label>
+                <input type="text" id="shareTitle" class="form-input" placeholder="나의 큐브 디자인" maxlength="100" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="shareDescription">작품 설명</label>
+                <textarea id="shareDescription" class="form-textarea" rows="4" placeholder="디자인에 대한 설명을 입력하세요 (선택)" maxlength="500"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>태그 (최대 5개)</label>
+                <div class="tag-input-wrapper">
+                    <div class="tag-list" id="tagList"></div>
+                    <input type="text" id="tagInput" class="form-input" placeholder="태그 입력 후 Enter" maxlength="20">
+                </div>
+                <small class="form-hint">예: 미니멀, 모던, 단기투자형 등</small>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="sharePublic" checked>
+                <label for="sharePublic">
+                    <strong>공개 설정</strong> - 다른 사용자가 내 디자인을 볼 수 있습니다
+                </label>
+            </div>
+            
+            <div class="share-stats">
+                <div class="stat-item">
+                    <span class="stat-label">가구 개수</span>
+                    <span class="stat-value" id="shareFurnitureCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">예상 견적</span>
+                    <span class="stat-value" id="shareEstimatePrice">₩0</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeGalleryShareModal()">취소</button>
+            <button class="btn-primary" onclick="confirmShareToGallery()">갤러리에 공유하기</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 갤러리 보기 모달 ============ -->
+<div class="modal" id="galleryViewModal">
+    <div class="modal-content" style="max-width: 1000px;">
+        <div class="modal-header">
+            <h3>🌟 큐브 갤러리</h3>
+            <button class="close-btn" onclick="closeGalleryViewModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="gallery-filters">
+                <button class="filter-btn active" onclick="filterGallery('all')">전체</button>
+                <button class="filter-btn" onclick="filterGallery('popular')">인기순</button>
+                <button class="filter-btn" onclick="filterGallery('recent')">최신순</button>
+                <button class="filter-btn" onclick="filterGallery('my')">내 작품</button>
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- 갤러리 아이템들이 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>`;
+    
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = `견적서_${title}_${new Date().toISOString().slice(0,10)}.html`;
+    a.click();
+    showToast('📄 견적서 다운로드됨');
+}
+
+// ============ 3D 뷰어 전송 ============
+function sendToViewer() {
+    const designData = {
+        canvas: canvas.toJSON(['userData']),
+        settings: { canvasWidth: canvas.getWidth(), canvasHeight: canvas.getHeight(), gridSize: state.gridSize },
+        templateKey: state.currentTemplateKey
+    };
+    localStorage.setItem('editor_2d_state', JSON.stringify(designData));
+
+    const furnitureData = [];
+    canvas.getObjects().forEach(obj => {
+        if (obj.type === 'rect' && obj.userData) {
+            const ud = obj.userData;
+            const w = obj.width * obj.scaleX;
+            const d = obj.height * obj.scaleY;
+            furnitureData.push({
+                type: ud.name.split('_')[0],
+                name: ud.name,
+                position: { x: (obj.left + w/2) - canvas.getWidth()/2, y: ud.elevation + ud.h/2, z: (obj.top + d/2) - canvas.getHeight()/2 },
+                rotation: -(obj.angle || 0) * Math.PI / 180,
+                scale: { w, h: ud.h, d },
+                color: obj.fill,
+                texture: ud.texture,
+                price: calculateFurnitureCost(obj)
+            });
+        }
+    });
+
+    localStorage.setItem('furniture_data', JSON.stringify(furnitureData));
+    localStorage.setItem('estimate_data', JSON.stringify({
+        roomCost: calculateRoomCost(), furnitureCost: getTotalFurnitureCost(),
+        discount: state.currentDiscount, total: getSubtotal() * (1 - state.currentDiscount),
+        roomSize: { width: canvas.getWidth(), height: canvas.getHeight() },
+        templateKey: state.currentTemplateKey
+    }));
+    
+    window.location.href = 'viewer.html';
+}
+
+// ============ 단축키 ============
+window.addEventListener('load', () => {
+    // URL 파라미터 먼저 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasTemplate = urlParams.get('template');
+    
+    if (hasTemplate) {
+        // 템플릿 파라미터가 있으면 먼저 처리
+        handleURLParameters();
+    } else {
+        // 기존 저장 데이터 로드
+        const saved = localStorage.getItem('editor_2d_state');
+        if (saved) {
+            try {
+                const data = JSON.parse(saved);
+                canvas.loadFromJSON(data.canvas || data, () => {
+                    if (data.settings) {
+                        canvas.setWidth(data.settings.canvasWidth || 600);
+                        canvas.setHeight(data.settings.canvasHeight || 600);
+                        state.gridSize = data.settings.gridSize || 20;
+                        document.getElementById('canvasW').value = canvas.getWidth();
+                        document.getElementById('canvasH').value = canvas.getHeight();
+                        document.getElementById('gridSizeInput').value = state.gridSize;
+                    }
+                    if (state.gridVisible) createGrid();
+                    canvas.renderAll();
+                    updateLayerList();
+                    updateEstimate();
+                    setTimeout(saveHistory, 500);
+                });
+            } catch (e) {
+                createGrid();
+                updateEstimate();
+                setTimeout(saveHistory, 500);
+            }
+        } else {
+            createGrid();
+            updateEstimate();
+            setTimeout(saveHistory, 500);
+        }
+    }
+});
+
+// ============ 자동저장 ============
+canvas.on('object:modified', () => {
+    state.hasUnsavedChanges = true;
+    clearTimeout(state.autoSaveTimer);
+    state.autoSaveTimer = setTimeout(() => {
+        localStorage.setItem('editor_2d_state', JSON.stringify({
+            canvas: canvas.toJSON(['userData']),
+            settings: { canvasWidth: canvas.getWidth(), canvasHeight: canvas.getHeight(), gridSize: state.gridSize },
+            templateKey: state.currentTemplateKey
+        }));
+    }, CONFIG.AUTOSAVE_DELAY);
+});
+
+window.addEventListener('beforeunload', (e) => {
+    if (state.hasUnsavedChanges) {
+        e.preventDefault();
+        return e.returnValue = '저장하지 않은 변경사항이 있습니다.';
+    }
+});
+
+// ============ 초기화 ============
+window.addEventListener('load', () => {
+    // 성향 분석에서 온 경우 먼저 처리
+    if (checkPropensityResult()) {
+        return; // 템플릿이 로드되므로 기존 저장 데이터는 무시
+    }
+    
+    // 기존 저장 데이터 확인
+    const saved = localStorage.getItem('editor_2d_state');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            canvas.loadFromJSON(data.canvas || data, () => {
+                if (data.settings) {
+                    canvas.setWidth(data.settings.canvasWidth || 600);
+                    canvas.setHeight(data.settings.canvasHeight || 600);
+                    state.gridSize = data.settings.gridSize || 20;
+                    document.getElementById('canvasW').value = canvas.getWidth();
+                    document.getElementById('canvasH').value = canvas.getHeight();
+                    document.getElementById('gridSizeInput').value = state.gridSize;
+                }
+                if (data.templateKey) {
+                    state.currentTemplateKey = data.templateKey;
+                    document.getElementById('templateSelect').value = data.templateKey;
+                }
+                if (state.gridVisible) createGrid();
+                canvas.renderAll();
+                updateLayerList();
+                updateEstimate();
+                setTimeout(saveHistory, 500);
+            });
+        } catch (e) {
+            createGrid();
+            updateEstimate();
+            setTimeout(saveHistory, 500);
+        }
+    } else {
+        createGrid();
+        updateEstimate();
+        setTimeout(saveHistory, 500);
+    }
+});
+
+function shareToGallery() {
+    if (!currentUser) {
+        alert('갤러리 공유는 로그인 후 이용 가능합니다.');
+        location.href = 'login.html';
+        return;
+    }
+    
+    // 미리보기 생성
+    const previewCanvas = document.getElementById('sharePreviewCanvas');
+    const ctx = previewCanvas.getContext('2d');
+    const scale = Math.min(400 / canvas.getWidth(), 300 / canvas.getHeight());
+    
+    ctx.clearRect(0, 0, 400, 300);
+    ctx.fillStyle = '#f8f9fa';
+    ctx.fillRect(0, 0, 400, 300);
+    
+    const offsetX = (400 - canvas.getWidth() * scale) / 2;
+    const offsetY = (300 - canvas.getHeight() * scale) / 2;
+    
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(scale, scale);
+    
+    canvas.getObjects().forEach(obj => {
+        ctx.save();
+        ctx.translate(obj.left, obj.top);
+        ctx.rotate((obj.angle || 0) * Math.PI / 180);
+        ctx.fillStyle = obj.fill;
+        ctx.strokeStyle = obj.stroke || '#000';
+        ctx.lineWidth = obj.strokeWidth || 1;
+        ctx.fillRect(-obj.width / 2, -obj.height / 2, obj.width, obj.height);
+        ctx.strokeRect(-obj.width / 2, -obj.height / 2, obj.width, obj.height);
+        ctx.restore();
+    });
+    
+    ctx.restore();
+    
+    // 정보 채우기
+    document.getElementById('shareTitle').value = document.getElementById('design-title').value || '나의 큐브 디자인';
+    document.getElementById('shareDescription').value = '';
+    document.getElementById('shareFurnitureCount').textContent = canvas.getObjects().filter(obj => obj.userData?.name).length;
+    document.getElementById('shareEstimatePrice').textContent = '₩' + calculateTotalPrice().toLocaleString();
+    
+    // 태그 초기화
+    tags.length = 0;
+    document.getElementById('tagList').innerHTML = '';
+    document.getElementById('tagInput').value = '';
+    
+    document.getElementById('galleryShareModal').classList.add('active');
+}
+
+function closeGalleryShareModal() {
+    document.getElementById('galleryShareModal').classList.remove('active');
+}
+
+// 태그 입력
+document.addEventListener('DOMContentLoaded', () => {
+    const tagInput = document.getElementById('tagInput');
+    if (tagInput) {
+        tagInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tag = tagInput.value.trim();
+                if (tag && tags.length < 5 && !tags.includes(tag)) {
+                    tags.push(tag);
+                    updateTagList();
+                    tagInput.value = '';
+                } else if (tags.length >= 5) {
+                    showToast('⚠️ 태그는 최대 5개까지 추가 가능합니다');
+                }
+            }
+        });
+    }
+});
+
+function updateTagList() {
+    const tagList = document.getElementById('tagList');
+    tagList.innerHTML = tags.map(tag => `
+        <span class="tag-item">
+            ${sanitizeInput(tag)}
+            <button class="tag-remove" onclick="removeTag('${tag}')">✕</button>
+        </span>
+    `).join('');
+}
+
+function removeTag(tag) {
+    const index = tags.indexOf(tag);
+    if (index > -1) {
+        tags.splice(index, 1);
+        updateTagList();
+    }
+}
+
+async function confirmShareToGallery() {
+    const title = document.getElementById('shareTitle').value.trim();
+    if (!title) {
+        alert('작품 제목을 입력해주세요.');
+        return;
+    }
+    
+    const description = document.getElementById('shareDescription').value.trim();
+    const isPublic = document.getElementById('sharePublic').checked;
+    
+    const designData = {
+        canvas: canvas.toJSON(['userData']),
+        settings: { 
+            canvasWidth: canvas.getWidth(), 
+            canvasHeight: canvas.getHeight(), 
+            gridSize: state.gridSize 
+        },
+        templateKey: state.currentTemplateKey
+    };
+    
+    // 썸네일 생성
+    const thumbnail = document.getElementById('sharePreviewCanvas').toDataURL('image/jpeg', 0.8);
+    
+    const galleryData = {
+        title: title,
+        description: description,
+        tags: tags,
+        designData: designData,
+        thumbnail: thumbnail,
+        furnitureCount: canvas.getObjects().filter(obj => obj.userData?.name).length,
+        estimatePrice: calculateTotalPrice(),
+        author: currentUser.nickname || currentUser.email,
+        authorId: currentUser.email,
+        isPublic: isPublic,
+        createdAt: new Date().toISOString(),
+        likes: 0,
+        views: 0
+    };
+    
+    try {
+        // Storage API 사용 (공유 데이터)
+        const galleryKey = `gallery:${Date.now()}:${currentUser.email.replace('@', '_')}`;
+        await window.storage.set(galleryKey, JSON.stringify(galleryData), true); // shared=true (공개)
+        
+        closeGalleryShareModal();
+        showToast('✅ 갤러리에 공유되었습니다!');
+        
+        // 갤러리 보기 열기
+        setTimeout(() => viewGallery(), 500);
+    } catch (err) {
+        console.error('갤러리 공유 실패:', err);
+        showToast('❌ 공유 실패');
+    }
+}
+
+async function viewGallery() {
+    document.getElementById('galleryViewModal').classList.add('active');
+    await loadGalleryItems('all');
+}
+
+function closeGalleryViewModal() {
+    document.getElementById('galleryViewModal').classList.remove('active');
+}
+
+async function filterGallery(filter) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    await loadGalleryItems(filter);
+}
+
+async function loadGalleryItems(filter) {
+    const gridDiv = document.getElementById('galleryGrid');
+    gridDiv.innerHTML = '<div style="padding:40px; text-align:center; color:#888;">로딩 중...</div>';
+    
+    try {
+        // Storage API에서 갤러리 목록 가져오기
+        const keys = await window.storage.list('gallery:', true); // shared=true (공개)
+        
+        if (!keys || !keys.keys || keys.keys.length === 0) {
+            gridDiv.innerHTML = '<div style="padding:40px; text-align:center; color:#888;">아직 공유된 작품이 없습니다.</div>';
+            return;
+        }
+        
+        let items = [];
+        for (const key of keys.keys) {
+            try {
+                const result = await window.storage.get(key, true);
+                if (result && result.value) {
+                    const data = JSON.parse(result.value);
+                    data._key = key;
+                    items.push(data);
+                }
+            } catch (err) {
+                console.error('아이템 로드 실패:', key, err);
+            }
+        }
+        
+        // 필터링
+        if (filter === 'my' && currentUser) {
+            items = items.filter(item => item.authorId === currentUser.email);
+        } else if (filter === 'popular') {
+            items.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        } else if (filter === 'recent') {
+            items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+        
+        if (items.length === 0) {
+            gridDiv.innerHTML = '<div style="padding:40px; text-align:center; color:#888;">작품이 없습니다.</div>';
+            return;
+        }
+        
+        // 렌더링
+        gridDiv.innerHTML = items.map(item => `
+            <div class="gallery-item" onclick="viewGalleryDetail('${item._key}')">
+                <div class="gallery-thumbnail">
+                    <img src="${item.thumbnail}" alt="${sanitizeInput(item.title)}">
+                </div>
+                <div class="gallery-info">
+                    <h4>${sanitizeInput(item.title)}</h4>
+                    <p class="gallery-author">by ${sanitizeInput(item.author)}</p>
+                    <div class="gallery-tags">
+                        ${(item.tags || []).map(tag => `<span class="tag">${sanitizeInput(tag)}</span>`).join('')}
+                    </div>
+                    <div class="gallery-stats">
+                        <span>❤️ ${item.likes || 0}</span>
+                        <span>👁️ ${item.views || 0}</span>
+                        <span>🪑 ${item.furnitureCount || 0}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error('갤러리 로드 실패:', err);
+        gridDiv.innerHTML = '<div style="padding:40px; text-align:center; color:#ff6b6b;">갤러리를 불러올 수 없습니다.</div>';
+    }
+}
+
+async function viewGalleryDetail(key) {
+    // 상세 보기 구현 (선택사항)
+    try {
+        const result = await window.storage.get(key, true);
+        if (result && result.value) {
+            const data = JSON.parse(result.value);
+            
+            // 조회수 증가
+            data.views = (data.views || 0) + 1;
+            await window.storage.set(key, JSON.stringify(data), true);
+            
+            alert(`${data.title}\n\n${data.description || '설명 없음'}\n\n작성자: ${data.author}`);
+        }
+    } catch (err) {
+        console.error('상세 보기 실패:', err);
+    }
+}
+
+function calculateTotalPrice() {
+    // 기존 견적 계산 로직 사용
+    return canvas.getObjects()
+        .filter(obj => obj.userData?.name)
+        .reduce((sum, obj) => sum + (getFurniturePrice(obj.userData.name) || 0), 0);
+}
+
+function getFurniturePrice(name) {
+    const prices = {
+        'Bed': 500000, 'Table': 200000, 'Sofa': 400000, 'Chair': 80000,
+        'Door': 150000, 'Window': 120000, 'Cabinet': 250000, 'Lamp': 60000
+    };
+    return prices[name] || 0;
+}
+
+
+
+
+
+
+console.log('🏠 Editor 로드 완료 | 단축키: Ctrl+Z/Y/D/S, Delete, Alt+드래그, 휠 줌');
+</script>
+</body>
+</html>

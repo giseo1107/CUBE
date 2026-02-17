@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>큐브 - 마이페이지</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/mypage.css">
+  <!-- Cropper.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+</head>
+<body>
+    <a href="editor.html">큐브 커스텀 하러가기</a>
+  <div class="container mypage-container">
+    <div class="profile-section">
+      <div class="profile-image-wrapper">
+        <div class="profile-image" id="profileImageContainer" title="클릭하여 프로필 이미지 변경">
+          <span id="profileImagePlaceholder">👤</span>
+        </div>
+        <!-- 이미지가 있을 때만 표시되는 버튼들 -->
+        <div class="profile-image-actions" id="profileImageActions" style="display: none;">
+          <button type="button" class="profile-btn edit-btn" id="editImageBtn" title="이미지 수정">✏️</button>
+          <button type="button" class="profile-btn delete-btn" id="deleteImageBtn" title="이미지 삭제">🗑️</button>
+        </div>
+      </div>
+      <input type="file" id="profileImageInput" accept="image/*">
+      <h2 id="userName">로딩중...</h2>
+      <p id="userEmail">-</p>
+    </div>
+    
+    <div class="form-container">
+      <div id="alertBox" class="alert"></div>
+      
+      <!-- 회원정보 섹션 -->
+      <div class="section">
+        <h3>회원정보</h3>
+        <div class="info-row">
+          <span class="info-label">이메일</span>
+          <span class="info-value" id="displayEmail">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">닉네임</span>
+          <span class="info-value" id="displayNickname">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">전화번호</span>
+          <span class="info-value" id="displayPhone">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">주소</span>
+          <span class="info-value" id="displayAddress">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">마케팅 수신</span>
+          <span class="info-value" id="displayMarketing">-</span>
+        </div>
+      </div>
+
+      <!-- 정보 수정 폼 -->
+      <div class="section">
+        <h3>정보 수정</h3>
+        <form id="updateForm">
+          <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" name="nickname" maxlength="20">
+          </div>
+          
+          <div class="form-group">
+            <label for="tel_number">전화번호</label>
+            <input type="tel" id="tel_number" name="tel_number" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}">
+          </div>
+          
+          <div class="form-group">
+            <label for="address">기본 주소</label>
+            <input type="text" id="address" name="address">
+          </div>
+          
+          <div class="form-group">
+            <label for="address_detail">상세 주소</label>
+            <input type="text" id="address_detail" name="address_detail">
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="marketing_agree" name="marketing_agree">
+            <label for="marketing_agree">마케팅 수신 동의</label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">정보 수정</button>
+        </form>
+      </div>
+
+      <!-- 비밀번호 변경 -->
+      <div class="section">
+        <h3>비밀번호 변경</h3>
+        <form id="passwordForm">
+          <div class="form-group">
+            <label for="currentPassword">현재 비밀번호</label>
+            <input type="password" id="currentPassword" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="newPassword">새 비밀번호</label>
+            <input type="password" id="newPassword" required minlength="8">
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmNewPassword">새 비밀번호 확인</label>
+            <input type="password" id="confirmNewPassword" required minlength="8">
+          </div>
+          
+          <button type="submit" class="btn btn-primary">비밀번호 변경</button>
+        </form>
+      </div>
+
+      <!-- 로그아웃 & 회원탈퇴 -->
+      <button id="logoutBtn" class="btn btn-secondary">로그아웃</button>
+      <button id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴</button>
+    </div>
+  </div>
+
+  <!-- 이미지 크롭 모달 -->
+  <div class="crop-modal" id="cropModal">
+    <div class="crop-container">
+      <h3>프로필 이미지 편집</h3>
+      <p style="text-align: center; color: #666; font-size: 14px; margin: -10px 0 10px 0;">
+        원하는 영역을 선택하세요
+      </p>
+      <div class="crop-area">
+        <img id="cropImage" src="" alt="Crop">
+      </div>
+      <div class="crop-buttons">
+        <button id="cancelCrop" class="btn btn-secondary">취소</button>
+        <button id="confirmCrop" class="btn btn-primary">적용</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cropper.js 라이브러리 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+  <script>
+    const alertBox = document.getElementById('alertBox');
+    const profileImageContainer = document.getElementById('profileImageContainer');
+    const profileImageInput = document.getElementById('profileImageInput');
+    const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+    const profileImageActions = document.getElementById('profileImageActions');
+    const editImageBtn = document.getElementById('editImageBtn');
+    const deleteImageBtn = document.getElementById('deleteImageBtn');
+    const cropModal = document.getElementById('cropModal');
+    const cropImage = document.getElementById('cropImage');
+    const cancelCrop = document.getElementById('cancelCrop');
+    const confirmCrop = document.getElementById('confirmCrop');
+
+    let cropper = null;
+    let hasProfileImage = false;
+
+    function showAlert(message, type) {
+      alertBox.textContent = message;
+      alertBox.className = `alert alert-${type} show`;
+      setTimeout(() => {
+        alertBox.classList.remove('show');
+      }, 5000);
+    }
+
+    // 프로필 이미지 표시
+    function displayProfileImage(imageData) {
+      if (imageData) {
+        const existingImg = profileImageContainer.querySelector('img');
+        if (existingImg) {
+          existingImg.remove();
+        }
+        
+        const img = document.createElement('img');
+        img.src = imageData;
+        img.alt = 'Profile Image';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        profileImageContainer.appendChild(img);
+        profileImagePlaceholder.style.display = 'none';
+        
+        // 이미지가 있으면 수정/삭제 버튼 표시
+        hasProfileImage = true;
+        profileImageActions.style.display = 'flex';
+        profileImageContainer.style.cursor = 'default';
+      } else {
+        const existingImg = profileImageContainer.querySelector('img');
+        if (existingImg) {
+          existingImg.remove();
+        }
+        profileImagePlaceholder.style.display = 'block';
+        
+        // 이미지가 없으면 수정/삭제 버튼 숨김
+        hasProfileImage = false;
+        profileImageActions.style.display = 'none';
+        profileImageContainer.style.cursor = 'pointer';
+      }
+    }
+
+    // 프로필 이미지 클릭 시 파일 선택 (이미지가 없을 때만)
+    profileImageContainer.addEventListener('click', () => {
+      if (!hasProfileImage) {
+        profileImageInput.click();
+      }
+    });
+
+    // 이미지 수정 버튼
+    editImageBtn.addEventListener('click', () => {
+      profileImageInput.click();
+    });
+
+    // 이미지 삭제 버튼
+    // 이미지 삭제 버튼
+deleteImageBtn.addEventListener('click', async () => {
+  console.log('삭제 버튼 클릭됨');
+  
+  if (!confirm('프로필 이미지를 삭제하시겠습니까?')) {
+    console.log('삭제 취소됨');
+    return;
+  }
+
+  try {
+    console.log('DELETE 요청 전송 중...');
+    
+    const response = await fetch('/api/user/profile-image', {
+      method: 'DELETE'
+    });
+
+    console.log('응답 상태:', response.status);
+    console.log('응답 OK:', response.ok);
+
+    const data = await response.json();
+    console.log('응답 데이터:', data);
+
+    if (data.success) {
+      displayProfileImage(null);
+      showAlert('프로필 이미지가 삭제되었습니다.', 'success');
+      console.log('✅ 삭제 완료');
+    } else {
+      showAlert(data.message || '이미지 삭제에 실패했습니다.', 'error');
+      console.log('❌ 삭제 실패:', data.message);
+    }
+  } catch (error) {
+    console.error('❌❌❌ 이미지 삭제 오류 ❌❌❌');
+    console.error(error);
+    showAlert('이미지 삭제 중 오류가 발생했습니다.', 'error');
+  }
+});
+
+    // 이미지 선택 시 크롭 모달 열기
+    profileImageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      
+      if (!file) return;
+
+      console.log('파일 선택:', file.name, file.size, 'bytes');
+
+      // 파일 타입 검증
+      if (!file.type.startsWith('image/')) {
+        showAlert('이미지 파일만 업로드 가능합니다.', 'error');
+        return;
+      }
+
+      // 파일 크기 검증 (10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        showAlert('이미지 크기는 10MB 이하여야 합니다.', 'error');
+        return;
+      }
+
+      // 이미지 미리보기
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        cropImage.src = event.target.result;
+        cropModal.classList.add('show');
+
+        // 기존 cropper 제거
+        if (cropper) {
+          cropper.destroy();
+        }
+
+        // 새로운 cropper 생성 (원형으로 표시)
+        cropper = new Cropper(cropImage, {
+          aspectRatio: 1, // 1:1 비율 (정사각형)
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 0.8,
+          restore: false,
+          guides: true,
+          center: true,
+          highlight: false,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: false,
+          ready() {
+            // 크롭 박스를 원형으로 표시
+            const cropBox = document.querySelector('.cropper-crop-box');
+            if (cropBox) {
+              cropBox.style.borderRadius = '50%';
+            }
+            const face = document.querySelector('.cropper-face');
+            if (face) {
+              face.style.borderRadius = '50%';
+            }
+          }
+        });
+      };
+
+      reader.readAsDataURL(file);
+      e.target.value = ''; // input 초기화
+    });
+
+    // 크롭 취소
+    cancelCrop.addEventListener('click', () => {
+      cropModal.classList.remove('show');
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
+      }
+    });
+
+    // 크롭 확인 및 업로드
+    confirmCrop.addEventListener('click', async () => {
+      if (!cropper) return;
+
+      try {
+        // 크롭된 이미지를 캔버스로 가져오기 (100x100 크기에 맞춤)
+        const canvas = cropper.getCroppedCanvas({
+          width: 100,
+          height: 100,
+          imageSmoothingEnabled: true,
+          imageSmoothingQuality: 'high',
+        });
+
+        // 캔버스를 Base64로 변환
+        const base64Image = canvas.toDataURL('image/jpeg', 0.9);
+
+        console.log('크롭된 이미지 크기:', base64Image.length);
+
+        // 모달 닫기
+        cropModal.classList.remove('show');
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+
+        // 서버로 업로드
+        const response = await fetch('/api/user/profile-image', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ profileImage: base64Image })
+        });
+
+        const data = await response.json();
+        console.log('서버 응답:', data);
+
+        if (data.success) {
+          displayProfileImage(base64Image);
+          showAlert('프로필 이미지가 변경되었습니다.', 'success');
+        } else {
+          showAlert(data.message || '이미지 업로드에 실패했습니다.', 'error');
+        }
+
+      } catch (error) {
+        console.error('이미지 업로드 오류:', error);
+        showAlert('이미지 업로드 중 오류가 발생했습니다.', 'error');
+      }
+    });
+
+    // 사용자 정보 로드
+    async function loadUserInfo() {
+      try {
+        const response = await fetch('/api/user/info');
+        const data = await response.json();
+
+        if (!data.success) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        const user = data.user;
+        
+        // 프로필 이미지 표시
+        displayProfileImage(user.profile_image);
+        
+        // 프로필 정보
+        document.getElementById('userName').textContent = user.nickname;
+        document.getElementById('userEmail').textContent = user.email;
+        
+        // 상세 정보
+        document.getElementById('displayEmail').textContent = user.email;
+        document.getElementById('displayNickname').textContent = user.nickname;
+        document.getElementById('displayPhone').textContent = user.tel_number;
+        document.getElementById('displayAddress').textContent = 
+          user.address + (user.address_detail ? ' ' + user.address_detail : '');
+        document.getElementById('displayMarketing').textContent = 
+          user.marketing_agree ? '동의' : '비동의';
+        
+        // 폼에 현재 정보 입력
+        document.getElementById('nickname').value = user.nickname;
+        document.getElementById('tel_number').value = user.tel_number;
+        document.getElementById('address').value = user.address;
+        document.getElementById('address_detail').value = user.address_detail || '';
+        document.getElementById('marketing_agree').checked = user.marketing_agree == 1;
+
+      } catch (error) {
+        console.error('사용자 정보 로드 오류:', error);
+        window.location.href = '/login.html';
+      }
+    }
+
+    // 정보 수정
+    document.getElementById('updateForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = {
+        nickname: document.getElementById('nickname').value,
+        tel_number: document.getElementById('tel_number').value,
+        address: document.getElementById('address').value,
+        address_detail: document.getElementById('address_detail').value || null,
+        marketing_agree: document.getElementById('marketing_agree').checked ? 1 : 0
+      };
+
+      try {
+        const response = await fetch('/api/user/info', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showAlert('회원정보가 수정되었습니다.', 'success');
+          loadUserInfo();
+        } else {
+          showAlert(data.message, 'error');
+        }
+      } catch (error) {
+        console.error('정보 수정 오류:', error);
+        showAlert('정보 수정 중 오류가 발생했습니다.', 'error');
+      }
+    });
+
+    // 비밀번호 변경
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+      
+      if (newPassword !== confirmNewPassword) {
+        showAlert('새 비밀번호가 일치하지 않습니다.', 'error');
+        return;
+      }
+
+      const formData = {
+        currentPassword: document.getElementById('currentPassword').value,
+        newPassword: newPassword
+      };
+
+      try {
+        const response = await fetch('/api/user/password', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showAlert('비밀번호가 변경되었습니다.', 'success');
+          document.getElementById('passwordForm').reset();
+        } else {
+          showAlert(data.message, 'error');
+        }
+      } catch (error) {
+        console.error('비밀번호 변경 오류:', error);
+        showAlert('비밀번호 변경 중 오류가 발생했습니다.', 'error');
+      }
+    });
+
+    // 로그아웃
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      if (!confirm('로그아웃 하시겠습니까?')) return;
+
+      try {
+        const response = await fetch('/api/auth/logout', { method: 'POST' });
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.href = '/login.html';
+        }
+      } catch (error) {
+        console.error('로그아웃 오류:', error);
+      }
+    });
+
+    // 회원 탈퇴
+    document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+      const password = prompt('회원 탈퇴를 위해 비밀번호를 입력하세요:');
+      
+      if (!password) return;
+      
+      if (!confirm('정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
+
+      try {
+        const response = await fetch('/api/user/account', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert('회원 탈퇴가 완료되었습니다.');
+          window.location.href = '/login.html';
+        } else {
+          showAlert(data.message, 'error');
+        }
+      } catch (error) {
+        console.error('회원 탈퇴 오류:', error);
+        showAlert('회원 탈퇴 처리 중 오류가 발생했습니다.', 'error');
+      }
+    });
+
+    // 전화번호 자동 포맷팅
+    document.getElementById('tel_number').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+      let formatted = '';
+      
+      if (value.length <= 3) {
+        formatted = value;
+      } else if (value.length <= 7) {
+        formatted = value.slice(0, 3) + '-' + value.slice(3);
+      } else if (value.length <= 11) {
+        formatted = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
+      } else {
+        formatted = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      }
+      
+      e.target.value = formatted;
+    });
+
+    // 페이지 로드 시 사용자 정보 로드
+    loadUserInfo();
+  </script>
+</body>
+</html>

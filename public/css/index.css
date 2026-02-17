@@ -1,0 +1,1245 @@
+/* ==========================================================
+   C.C.C - Custom Cube Company
+   통합 스타일시트 (globals + styleguide + index 병합)
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   1. IMPORTS & FONTS
+      (기존 globals.css 병합)
+   ---------------------------------------------------------- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Black";
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/Arial Black.ttf") format("truetype");
+}
+
+/* ----------------------------------------------------------
+   2. CSS VARIABLES
+      (기존 styleguide.css 병합)
+   ---------------------------------------------------------- */
+:root {
+  /* Colors - Original */
+  --black: #000000;
+  --chathams-blue: #1a4f85;
+  --mirage: #101828;
+  --oxford-blue: #364153;
+  --santas-gray: #99a1af;
+  --scarpa-flow: #4a5565;
+  --seashell: #f1f1f1;
+  --white: #ffffff;
+  --white-2: rgba(255, 255, 255, 0.1);
+  --white-3: rgba(255, 255, 255, 0.2);
+  --white-4: rgba(255, 255, 255, 0.8);
+
+  /* Section Backgrounds */
+  --bg-site: #f8f9fa;
+  --bg-custom: #eaeaea;
+  --bg-features: #f7f5fa;
+  --bg-cta: #263238;
+
+  /* Font Sizes - Original */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 48px;
+  --fs-4xl: 72px;
+
+  /* Font Families - Original */
+  --ff-bold: "Arial-Bold", Helvetica, sans-serif;
+  --ff-regular: "Arial-Regular", Helvetica, sans-serif;
+  --ff-black: "Arial-Black", Helvetica, sans-serif;
+  --ff-baloo: "Baloo Da 2", Helvetica, sans-serif;
+  --ff-inter: "Inter", Helvetica, sans-serif;
+
+  /* Spacing */
+  --section-py: 96px;
+  --container-px: 32px;
+  --max-width: 1200px;
+
+  /* Effects */
+  --shadow-card: 0 4px 6px -4px rgba(0,0,0,0.1),
+                 0 10px 15px -3px rgba(0,0,0,0.1);
+  --shadow-feature: 0 4px 4px rgba(0,0,0,0.25);
+  --shadow-survey: 0 25px 50px -12px rgba(0,0,0,0.25);
+  --shadow-header: 0 1px 2px -1px rgba(0,0,0,0.1),
+                   0 1px 3px rgba(0,0,0,0.1);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-icon: 14px;
+  --transition: 0.3s ease;
+}
+
+/* ----------------------------------------------------------
+   3. BASE / RESET ADDITIONS
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ff-regular);
+  color: var(--scarpa-flow);
+  background: var(--bg-site);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ----------------------------------------------------------
+   4. LAYOUT UTILITIES
+   ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-header h2 {
+  font-family: var(--ff-bold);
+  font-size: clamp(32px, 4vw, var(--fs-3xl));
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.section-header p {
+  font-family: var(--ff-regular);
+  font-size: clamp(16px, 1.5vw, var(--fs-xl));
+  color: var(--scarpa-flow);
+  line-height: 28px;
+}
+
+/* ----------------------------------------------------------
+   5. BUTTONS
+   ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 36px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  line-height: 28px;
+}
+
+.btn-primary {
+  background: var(--chathams-blue);
+}
+
+.btn-primary:hover {
+  background: #15436f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 79, 133, 0.35);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-with-arrow .btn-arrow {
+  transition: transform var(--transition);
+}
+
+.btn-with-arrow:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   6. HEADER
+   ---------------------------------------------------------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  transition: background var(--transition), box-shadow var(--transition);
+  box-shadow: var(--shadow-header);
+}
+
+.header.is-scrolled {
+  background: rgba(16, 24, 40, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 64px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo-img {
+  height: 74px;
+  width: auto;
+}
+
+.auth-links {
+  display: flex;
+  gap: 24px;
+}
+
+.auth-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.auth-link:hover {
+  opacity: 0.75;
+}
+
+/* User Info (로그인 상태) */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.btn-logout {
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .user-info {
+    gap: 8px;
+  }
+  
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .user-name {
+    font-size: 13px;
+  }
+  
+  .btn-logout {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Nav Menu */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  padding: 8px 0;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--white);
+  transition: width var(--transition);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile Toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* ----------------------------------------------------------
+   7. HERO
+   ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  height: 944px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  background: url('../img/imagewithfallback.png') center / cover no-repeat;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 192px;
+}
+
+.hero-text {
+  max-width: 768px;
+}
+
+.hero-title {
+  font-family: var(--ff-bold);
+  font-size: clamp(48px, 5.5vw, var(--fs-4xl));
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.hero-desc p {
+  font-family: var(--ff-regular);
+  font-size: clamp(18px, 2vw, var(--fs-2xl));
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------------------------------------
+   8. PRODUCTS
+   ---------------------------------------------------------- */
+.products {
+  padding: var(--section-py) 0;
+  background: var(--white);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.product-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--chathams-blue);
+  color: var(--white);
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  line-height: 20px;
+}
+
+.product-body {
+  padding: 32px;
+}
+
+.product-body h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 32px;
+  margin-bottom: 10px;
+}
+
+.product-body > p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--scarpa-flow);
+  line-height: 26px;
+  margin-bottom: 14px;
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.action-consult {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--chathams-blue);
+  line-height: 28px;
+}
+
+.action-consult:hover {
+  opacity: 0.7;
+}
+
+.action-detail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 34px;
+  background: var(--chathams-blue);
+  color: var(--white);
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  border-radius: var(--radius-sm);
+  line-height: 24px;
+  transition: var(--transition);
+}
+
+.action-detail:hover {
+  background: #15436f;
+  transform: translateY(-2px);
+}
+
+/* ----------------------------------------------------------
+   9. CUSTOM SECTION (Why Choose)
+   ---------------------------------------------------------- */
+.custom-section {
+  padding: var(--section-py) 0;
+  background: var(--bg-custom);
+}
+
+.custom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: center;
+}
+
+.custom-text h2 {
+  font-family: var(--ff-bold);
+  font-size: clamp(32px, 4vw, var(--fs-3xl));
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.custom-desc {
+  margin-bottom: 32px;
+}
+
+.custom-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  color: var(--scarpa-flow);
+  line-height: 1.6;
+}
+
+.custom-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.feature-check {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.feature-item span {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  color: var(--oxford-blue);
+  line-height: 28px;
+}
+
+.custom-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-image img {
+  max-width: 100%;
+  max-height: 531px;
+  height: auto;
+}
+
+/* ----------------------------------------------------------
+   10. FEATURES
+   ---------------------------------------------------------- */
+.features {
+  padding: var(--section-py) 0;
+  background: var(--bg-features);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.feature-card {
+  background: var(--seashell);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow-feature);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--chathams-blue);
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.feature-icon img {
+  width: 32px;
+  height: 32px;
+  /* 아이콘이 이미 흰색이면 filter 불필요 */
+  filter: brightness(0) invert(1);
+}
+
+.feature-card h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 32px;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--scarpa-flow);
+  line-height: 26px;
+}
+
+/* ----------------------------------------------------------
+   11. CTA SECTION
+   ---------------------------------------------------------- */
+.cta-section {
+  padding: var(--section-py) 0;
+  background: var(--bg-cta);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative blur effects */
+.cta-effect {
+  position: absolute;
+  width: 384px;
+  height: 384px;
+  border-radius: 50%;
+  background: var(--white);
+  opacity: 0.1;
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.cta-effect--left {
+  top: 0;
+  left: -100px;
+}
+
+.cta-effect--right {
+  bottom: 0;
+  right: -100px;
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.cta-header h2 {
+  font-family: var(--ff-bold);
+  font-size: clamp(32px, 4vw, var(--fs-3xl));
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.cta-header p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 28px;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Survey Card */
+.survey-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-survey);
+}
+
+.survey-card h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 32px;
+  text-align: center;
+  padding: 48px 48px 24px;
+}
+
+.survey-images {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  padding: 0 48px;
+  margin-bottom: 24px;
+}
+
+.survey-images img {
+  height: 160px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex: 1;
+  min-width: 0;
+}
+
+.survey-body {
+  padding: 24px 48px 48px;
+  text-align: center;
+}
+
+.survey-body p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  color: var(--scarpa-flow);
+  line-height: 28px;
+}
+
+.survey-body .btn {
+  margin-top: 24px;
+}
+
+/* Contact Cards */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.contact-card {
+  background: var(--white-2);
+  border: 1px solid var(--white-3);
+  border-radius: var(--radius);
+  padding: 33px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.contact-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
+
+.contact-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--white);
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.contact-icon img {
+  width: 28px;
+  height: 28px;
+}
+
+.contact-card h4 {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 28px;
+  margin-bottom: 7px;
+}
+
+.contact-card p {
+  font-family: var(--ff-black);
+  font-size: var(--fs-lg);
+  font-weight: 900;
+  color: var(--white-4);
+  line-height: 28px;
+}
+
+/* ----------------------------------------------------------
+   12. FOOTER
+   ---------------------------------------------------------- */
+.footer {
+  background: var(--mirage);
+  padding: 58px 0 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 28px;
+}
+
+/* Brand */
+.footer-brand-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.footer-logo-img {
+  width: 69px;
+  height: 63px;
+  object-fit: cover;
+}
+
+.brand-title {
+  display: block;
+  font-family: var(--ff-inter);
+  font-size: var(--fs-3xl);
+  font-weight: 400;
+  color: var(--chathams-blue);
+  line-height: 1.2;
+}
+
+.brand-sub {
+  display: block;
+  font-family: var(--ff-inter);
+  font-size: var(--fs-xs);
+  color: var(--chathams-blue);
+}
+
+.footer-brand-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--santas-gray);
+  line-height: 26px;
+}
+
+/* Links */
+.footer-links h4 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 28px;
+  margin-bottom: 16px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--santas-gray);
+  line-height: 24px;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid #1e2939;
+  padding: 33px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--santas-gray);
+  line-height: 20px;
+}
+
+.footer-social {
+  height: 40px;
+  width: auto;
+}
+
+/* ----------------------------------------------------------
+   13. SCROLL ANIMATION
+   ---------------------------------------------------------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----------------------------------------------------------
+   14. RESPONSIVE - Tablet (≤ 1200px)
+   ---------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .header-inner {
+    padding: 0 32px;
+  }
+
+  .hero-content {
+    padding: 0 64px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .survey-images {
+    gap: 16px;
+  }
+
+  .survey-images img {
+    height: 120px;
+  }
+}
+
+/* ----------------------------------------------------------
+   15. RESPONSIVE - Small Tablet (≤ 1024px)
+   ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .nav,
+  .auth-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .hero-content {
+    padding: 0 40px;
+  }
+
+  .custom-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .custom-image {
+    order: -1;
+  }
+
+  .cta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Mobile Nav Overlay */
+  .nav.is-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(16, 24, 40, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 48px 32px;
+    gap: 24px;
+    z-index: 999;
+    animation: navSlideDown 0.3s ease;
+  }
+
+  .nav.is-open .nav-link {
+    font-size: 22px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  @keyframes navSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   16. RESPONSIVE - Mobile (≤ 768px)
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --section-py: 64px;
+    --container-px: 20px;
+  }
+
+  .header-inner {
+    padding: 0 20px;
+  }
+
+  .logo-img {
+    height: 52px;
+  }
+
+  .hero {
+    height: auto;
+    min-height: auto;
+    padding: 120px 0 80px;
+  }
+
+  .hero-content {
+    padding: 0 20px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image {
+    height: 240px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .survey-images {
+    flex-direction: column;
+    padding: 0 24px;
+  }
+
+  .survey-images img {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+  }
+
+  .survey-card h3 {
+    padding: 32px 24px 16px;
+  }
+
+  .survey-body {
+    padding: 16px 24px 32px;
+  }
+
+  .contact-list {
+    gap: 16px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .custom-desc p {
+    font-size: var(--fs-lg);
+  }
+}
+
+/* ----------------------------------------------------------
+   17. RESPONSIVE - Small Mobile (≤ 480px)
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .logo-img {
+    height: 44px;
+  }
+
+  .feature-item span {
+    font-size: 15px;
+  }
+
+  .product-body {
+    padding: 24px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .action-consult {
+    text-align: center;
+  }
+
+  .action-detail {
+    text-align: center;
+  }
+}

@@ -1,0 +1,1651 @@
+/* ==========================================================
+   C.C.C - Custom Cube Company
+   Visit Reservation Page
+   통합 스타일시트 (globals + styleguide + visit-reservation)
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   1. IMPORTS & FONTS
+   ---------------------------------------------------------- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Abhaya Libre SemiBold-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
+}
+
+/* ----------------------------------------------------------
+   2. CSS VARIABLES (원본 styleguide 값 그대로)
+   ---------------------------------------------------------- */
+:root {
+  /* ---- Colors (원본 정확히 유지) ---- */
+  --black: #000000;
+  --white: #ffffff;
+  --white-2: #ffffff1a;        /* rgba(255,255,255,0.1) */
+  --white-3: #ffffffe6;        /* rgba(255,255,255,0.9) */
+  --mirage: #101828;
+  --chathams-blue: #1a4f85;
+  --chathams-blue-dark: #15436f;
+  --scarpa-flow: #4a5565;
+  --oxford-blue: #364153;
+  --santas-gray: #99a1af;
+  --cod-gray: #0a0a0a;
+  --pink-swan: #bbbbbb;
+  --ice-cold: #aff9f5;
+  --ebony-clay: #1e2939;
+  --cyber-grape: #54537b;
+  --cyber-grape-2: #52537a33;   /* rgba(82,83,122,0.2) */
+  --curious-blue: #358de6;
+  --curious-blue-2: #358de61a;
+
+  /* Section Backgrounds */
+  --bg-site: #f7f5fa;
+  --bg-hero-gradient: linear-gradient(180deg, #1a4f85 0%, #263238 100%);
+  --bg-info: #f1f1f1;
+
+  /* ---- Font Sizes (원본 정확히 유지) ---- */
+  --fs-xs: 12px;     /* --font-size-s */
+  --fs-sm: 14px;     /* --font-size-m */
+  --fs-md: 16px;     /* --font-size-l */
+  --fs-lg: 18px;     /* --font-size-xl */
+  --fs-xl: 20px;     /* --font-size-xxl */
+  --fs-2xl: 24px;    /* --font-size-xxxl */
+  --fs-3xl: 32px;
+  --fs-4xl: 48px;    /* --font-size-xxxxl */
+  --fs-5xl: 56px;
+  --fs-6xl: 72px;
+
+  /* ---- Font Families (원본 정확히 유지) ---- */
+  --ff-bold: "Arial-Bold", Helvetica, sans-serif;
+  --ff-regular: "Arial-Regular", Helvetica, sans-serif;
+  --ff-abhaya: "Abhaya Libre SemiBold-Regular", Helvetica, serif;
+  --ff-baloo: "Baloo Da 2", Helvetica, sans-serif;
+  --ff-inter: "Inter", Helvetica, sans-serif;
+
+  /* ---- Layout ---- */
+  --max-width: 1200px;
+  --header-height: 80px;
+  --section-py: 80px;
+  --container-px: 32px;
+
+  /* ---- Effects ---- */
+  --shadow-card: 0 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-form: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-header: 0 1px 2px -1px rgba(0, 0, 0, 0.1),
+                   0 1px 3px rgba(0, 0, 0, 0.1);
+  --radius: 16px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --transition: 0.3s ease;
+}
+
+/* ----------------------------------------------------------
+   3. BASE / RESET
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ff-regular);
+  color: var(--scarpa-flow);
+  background: var(--bg-site);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+/* ----------------------------------------------------------
+   4. LAYOUT UTILITIES
+   ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-family: var(--ff-bold);
+  font-size: clamp(var(--fs-3xl), 4vw, var(--fs-6xl));
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  font-family: var(--ff-regular);
+  font-size: clamp(var(--fs-md), 1.5vw, var(--fs-2xl));
+  color: var(--scarpa-flow);
+  line-height: 30px;
+}
+
+/* ----------------------------------------------------------
+   5. BUTTONS
+   ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 36px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--chathams-blue);
+}
+
+.btn-primary:hover {
+  background: var(--chathams-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 79, 133, 0.35);
+}
+
+/* ----------------------------------------------------------
+   6. HEADER
+   ---------------------------------------------------------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 1000;
+  background: var(--chathams-blue);
+  box-shadow: var(--shadow-header);
+  transition: var(--transition);
+}
+
+.header.is-scrolled {
+  background: rgba(26, 79, 133, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 64px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 71px;
+  height: 64px;
+  background: url('../img/logo@2x.png') center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-title {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-4xl);
+  font-weight: 400;
+  color: var(--ice-cold);
+  line-height: 1.2;
+}
+
+.logo-sub {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--ice-cold);
+}
+
+/* Auth Links */
+.auth-links {
+  display: flex;
+  gap: 24px;
+  margin-left: 16px;
+}
+
+.auth-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.auth-link:hover {
+  opacity: 0.75;
+}
+
+/* User Section (로그인/비로그인 상태 전환) */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 로그인 상태: 프로필 표시 */
+.user-info-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-avatar-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-avatar-sm span {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.user-name-header {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 로그아웃 버튼 */
+.btn-logout {
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-family: var(--ff-baloo);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-link {
+  font-family: var(--ff-baloo);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--white);
+  padding: 8px 0;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--white);
+  transition: width var(--transition);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  width: 100%;
+}
+
+/* Mobile Toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  z-index: 10;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* ----------------------------------------------------------
+   7. RESERVATION HERO
+   ---------------------------------------------------------- */
+.reservation-hero {
+  background: var(--bg-hero-gradient);
+  padding: calc(var(--header-height) + 80px) 0 80px;
+  min-height: 100vh;
+}
+
+.reservation-hero > .container {
+  max-width: 1760px;
+}
+
+.reservation-grid {
+  display: grid;
+  grid-template-columns: 1fr 600px;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ---- Left: Reservation Info ---- */
+.reservation-info {
+  padding-top: 53px;
+}
+
+.reservation-title {
+  font-family: var(--ff-bold);
+  font-size: clamp(36px, 4.5vw, var(--fs-5xl));
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.reservation-desc {
+  margin-bottom: 32px;
+}
+
+.reservation-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  color: var(--white-3);
+  line-height: 32px;
+}
+
+/* Check List */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.check-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background: var(--white-2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.check-item span {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-lg);
+  color: var(--white);
+  line-height: 27px;
+}
+
+/* Contact Row */
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-mini {
+  background: var(--white-2);
+  border: 1px solid rgba(255, 254, 254, 0.2);
+  border-radius: var(--radius-md);
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-mini-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.contact-mini-icon img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-mini-icon img:first-child {
+  position: relative;
+}
+
+.contact-mini-label {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: rgba(255, 254, 254, 0.7);
+  line-height: 21px;
+}
+
+.contact-mini-value {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-lg);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 28px;
+}
+
+/* ----------------------------------------------------------
+   8. RESERVATION FORM
+   ---------------------------------------------------------- */
+.reservation-form {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-form);
+  padding: 40px;
+}
+
+.form-title {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-3xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 48px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Form Section Header (공통) */
+.form-section {
+  margin-bottom: 32px;
+}
+
+.form-section:last-of-type {
+  margin-bottom: 40px;
+}
+
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-section-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.form-section-icon img {
+  position: absolute;
+  inset: 0;
+}
+
+.form-section-icon img:first-child {
+  position: relative;
+}
+
+.form-section-label {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 30px;
+}
+
+/* ----------------------------------------------------------
+   9. CALENDAR
+   ---------------------------------------------------------- */
+.calendar {
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+/* Calendar Header */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calendar-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.calendar-nav:hover {
+  background: rgba(84, 83, 123, 0.08);
+}
+
+.calendar-nav img {
+  width: 12px;
+  height: 12px;
+}
+
+.calendar-month {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 27px;
+}
+
+/* Calendar Weekdays */
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  text-align: center;
+  padding: 10px 0;
+  line-height: 21px;
+}
+
+/* Calendar Day Grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  max-width: 66px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cod-gray);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  cursor: pointer;
+  background: none;
+  border: none;
+  line-height: 21px;
+}
+
+.cal-day:hover:not(:disabled):not(.is-prev):not(.is-next) {
+  background: rgba(84, 83, 123, 0.08);
+}
+
+.cal-day.is-selected {
+  background: var(--cyber-grape);
+  color: var(--white);
+}
+
+.cal-day.is-prev,
+.cal-day.is-next {
+  color: var(--pink-swan);
+  cursor: default;
+}
+
+.cal-day:disabled {
+  cursor: default;
+}
+
+/* 오늘 날짜 강조 */
+.cal-day.is-today {
+  border: 2px solid var(--curious-blue);
+  font-weight: 700;
+  color: var(--curious-blue);
+}
+
+.cal-day.is-today.is-selected {
+  color: var(--white);
+}
+
+/* 지난 날짜 비활성화 */
+.cal-day.is-past {
+  color: #d1d5db;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 월요일(휴무) 비활성화 */
+.cal-day.is-closed {
+  color: #d1d5db;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 일요일 빨간색 */
+.calendar-weekdays span:first-child {
+  color: #e74c3c;
+}
+
+.calendar-grid .cal-day:nth-child(7n+1):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
+  color: #e74c3c;
+}
+
+.calendar-grid .cal-day:nth-child(7n+1).is-selected {
+  color: var(--white);
+}
+
+/* 토요일 파란색 */
+.calendar-weekdays span:last-child {
+  color: var(--curious-blue);
+}
+
+.calendar-grid .cal-day:nth-child(7n):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
+  color: var(--curious-blue);
+}
+
+.calendar-grid .cal-day:nth-child(7n).is-selected {
+  color: var(--white);
+}
+
+/* First 8 days use --black instead of --cod-gray (원본 반영) */
+.cal-day[data-date$="-01"],
+.cal-day[data-date$="-02"],
+.cal-day[data-date$="-03"],
+.cal-day[data-date$="-04"],
+.cal-day[data-date$="-05"],
+.cal-day[data-date$="-06"],
+.cal-day[data-date$="-07"],
+.cal-day[data-date$="-08"] {
+  color: var(--black);
+}
+
+.cal-day.is-selected[data-date] {
+  color: var(--white);
+}
+
+/* ----------------------------------------------------------
+   10. TIME SLOTS
+   ---------------------------------------------------------- */
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.time-slot {
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--cod-gray);
+  text-align: center;
+  line-height: 24px;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.time-slot:hover {
+  border-color: var(--cyber-grape);
+  background: rgba(84, 83, 123, 0.08);
+}
+
+.time-slot.is-selected {
+  background: var(--cyber-grape);
+  color: var(--white);
+  border-color: var(--cyber-grape);
+}
+
+/* 시간 슬롯 마감 표시 */
+.time-slot.is-full {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  position: relative;
+}
+
+.time-slot.is-full::after {
+  content: '마감';
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #e74c3c;
+  color: var(--white);
+  font-family: var(--ff-regular);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+/* 잔여석 표시 */
+.time-slot .slot-remain {
+  display: block;
+  font-family: var(--ff-regular);
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.time-slot.is-selected .slot-remain {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.time-slot.is-full .slot-remain {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------
+   11. PEOPLE COUNTER
+   ---------------------------------------------------------- */
+.people-counter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.counter-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-regular);
+  font-size: var(--fs-xl);
+  color: var(--cyber-grape);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.counter-btn:hover {
+  background: rgba(84, 83, 123, 0.08);
+  border-color: var(--cyber-grape);
+}
+
+.counter-btn:active {
+  transform: scale(0.95);
+}
+
+.counter-value {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  text-align: center;
+  min-width: 60px;
+  line-height: 30px;
+}
+
+/* 인원 제한/비활성 상태 */
+.counter-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.counter-btn:disabled:hover {
+  background: none;
+  border-color: var(--cyber-grape-2);
+  transform: none;
+}
+
+/* 인원 제한 안내 메시지 */
+.people-limit-info {
+  text-align: center;
+  margin-top: 10px;
+  font-family: var(--ff-regular);
+  font-size: 13px;
+  color: #888;
+  min-height: 20px;
+  line-height: 1.4;
+}
+
+.people-limit-info.is-warning {
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.people-limit-info.is-full {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+.people-limit-info.is-ok {
+  color: #27ae60;
+}
+
+/* ----------------------------------------------------------
+   12. RESERVE BUTTON
+   ---------------------------------------------------------- */
+.btn-reserve {
+  width: 100%;
+  padding: 16px;
+  background: rgba(89, 83, 123, 0.3);
+  border: none;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-reserve-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-reserve span {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-2xl);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 30px;
+}
+
+.btn-reserve:hover {
+  background: var(--cyber-grape);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(84, 83, 123, 0.35);
+}
+
+.btn-reserve.is-ready {
+  background: var(--cyber-grape);
+}
+
+/* ----------------------------------------------------------
+   13. CUBE SERIES SECTION
+   ---------------------------------------------------------- */
+.cube-series {
+  padding: var(--section-py) 0;
+  background: var(--bg-site);
+}
+
+.cube-series > .container {
+  max-width: 1760px;
+}
+
+.cube-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Cube Card */
+.cube-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.cube-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.cube-card-image {
+  height: 280px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.cube-card-image--modern {
+  background-image: url('../img/imagewithfallback.png');
+}
+
+.cube-card-image--luxury {
+  background-image: url('../img/imagewithfallback-1.png');
+}
+
+.cube-card-image--industrial {
+  background-image: url('../img/imagewithfallback-2.png');
+}
+
+.cube-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--chathams-blue);
+  color: var(--white);
+  font-family: var(--ff-bold);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  line-height: 21px;
+}
+
+.cube-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cube-card-body h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 36px;
+}
+
+.cube-card-body p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--scarpa-flow);
+  line-height: 24px;
+}
+
+.cube-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cube-location-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cube-location-icon img {
+  position: absolute;
+  inset: 0;
+}
+
+.cube-location-icon img:first-child {
+  position: relative;
+}
+
+.cube-location > span {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--scarpa-flow);
+  line-height: 21px;
+}
+
+/* ----------------------------------------------------------
+   14. VISIT INFO SECTION
+   ---------------------------------------------------------- */
+.visit-info {
+  padding: 0 0 var(--section-py);
+  background: var(--bg-site);
+}
+
+.visit-info > .container {
+  max-width: 1760px;
+  background: var(--bg-info);
+  border-radius: var(--radius);
+  padding: 48px;
+}
+
+.visit-info-title {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  color: var(--mirage);
+  line-height: 48px;
+  margin-bottom: 32px;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 32px;
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-card-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.info-card-icon img {
+  position: absolute;
+  inset: 0;
+}
+
+.info-card-icon img:first-child {
+  position: relative;
+}
+
+.info-card-header h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--chathams-blue);
+  line-height: 30px;
+}
+
+.info-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.info-card-body p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--scarpa-flow);
+  line-height: 24px;
+}
+
+.info-card-note {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: #6b7280;
+  line-height: 21px;
+  margin-top: 4px;
+}
+
+/* Notice Card */
+.notice-card {
+  border-top: 1px solid #d1d5db;
+  padding-top: 33px;
+}
+
+.notice-card h3 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--chathams-blue);
+  line-height: 30px;
+  margin-bottom: 16px;
+}
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.notice-bullet {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notice-list li span {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--scarpa-flow);
+  line-height: 24px;
+}
+
+/* ----------------------------------------------------------
+   15. FOOTER
+   ---------------------------------------------------------- */
+.footer {
+  background: var(--mirage);
+  padding: 48px 0 0;
+}
+
+.footer > .container {
+  max-width: 1600px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+
+/* Footer Brand */
+.footer-brand-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.footer-logo-icon {
+  width: 69px;
+  height: 63px;
+  background: url('../img/logo@2x.png') center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.footer-brand-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-4xl);
+  font-weight: 400;
+  color: var(--chathams-blue);
+  line-height: 1.2;
+}
+
+.brand-sub {
+  font-family: var(--ff-inter);
+  font-size: var(--fs-xs);
+  color: var(--chathams-blue);
+}
+
+.footer-brand-desc p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--santas-gray);
+  line-height: 26px;
+}
+
+/* Footer Links */
+.footer-links h4 {
+  font-family: var(--ff-bold);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 28px;
+  margin-bottom: 16px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-md);
+  color: var(--santas-gray);
+  line-height: 24px;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid var(--ebony-clay);
+  padding: 33px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  font-family: var(--ff-regular);
+  font-size: var(--fs-sm);
+  color: var(--santas-gray);
+  line-height: 20px;
+}
+
+.footer-social {
+  height: 40px;
+  width: auto;
+}
+
+/* ----------------------------------------------------------
+   16. LOADING OVERLAY
+   ---------------------------------------------------------- */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-overlay.is-active {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-top-color: var(--curious-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------------------------------------------------------
+   17. SCROLL ANIMATIONS
+   ---------------------------------------------------------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----------------------------------------------------------
+   18. RESPONSIVE — ≤ 1400px
+   ---------------------------------------------------------- */
+@media (max-width: 1400px) {
+  .reservation-grid {
+    grid-template-columns: 1fr 520px;
+    gap: 48px;
+  }
+
+  .cube-grid {
+    gap: 24px;
+  }
+}
+
+/* ----------------------------------------------------------
+   19. RESPONSIVE — ≤ 1200px
+   ---------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .header-inner {
+    padding: 0 32px;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .reservation-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .reservation-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cube-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ----------------------------------------------------------
+   20. RESPONSIVE — ≤ 1024px
+   ---------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .nav,
+  .auth-links {
+    display: none;
+  }
+
+  /* 모바일에서 auth-links는 숨기되, is-open 시 nav 내부에서 보이도록 */
+  .menu-toggle {
+    display: flex;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Mobile Nav Overlay */
+  .nav.is-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 79, 133, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 48px 32px;
+    gap: 24px;
+    z-index: 999;
+    animation: navSlide 0.3s ease;
+  }
+
+  .nav.is-open .nav-link {
+    font-size: 22px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @keyframes navSlide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ----------------------------------------------------------
+   21. RESPONSIVE — ≤ 768px
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --section-py: 56px;
+    --container-px: 20px;
+    --header-height: 70px;
+  }
+
+  .header-inner {
+    padding: 0 20px;
+  }
+
+  .logo-title {
+    font-size: 28px;
+  }
+
+  .logo-icon {
+    width: 48px;
+    height: 44px;
+  }
+
+  .reservation-hero {
+    padding-top: calc(var(--header-height) + 40px);
+    padding-bottom: 40px;
+  }
+
+  .reservation-info {
+    padding-top: 0;
+  }
+
+  .reservation-form {
+    padding: 24px;
+  }
+
+  .form-title {
+    font-size: var(--fs-2xl);
+    margin-bottom: 24px;
+  }
+
+  .contact-row {
+    grid-template-columns: 1fr;
+  }
+
+  .time-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 시간 슬롯 잔여석 텍스트 모바일 */
+  .time-slot .slot-remain {
+    font-size: 10px;
+  }
+
+  .time-slot.is-full::after {
+    font-size: 9px;
+    top: -5px;
+    right: -4px;
+    padding: 1px 4px;
+  }
+
+  /* 인원 제한 안내 모바일 */
+  .people-limit-info {
+    font-size: 12px;
+  }
+
+  .cube-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cube-card-image {
+    height: 220px;
+  }
+
+  .visit-info > .container {
+    padding: 32px 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .calendar-grid {
+    gap: 2px;
+  }
+
+  .cal-day {
+    font-size: 12px;
+  }
+
+  /* 오늘 날짜 테두리 모바일 */
+  .cal-day.is-today {
+    border-width: 1.5px;
+  }
+}
+
+/* ----------------------------------------------------------
+   22. RESPONSIVE — ≤ 480px
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .logo-sub {
+    display: none;
+  }
+
+  .reservation-title {
+    font-size: 28px;
+  }
+
+  .reservation-desc p {
+    font-size: var(--fs-md);
+  }
+
+  .check-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .check-icon img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .check-item span {
+    font-size: var(--fs-md);
+  }
+
+  .section-header h2 {
+    font-size: 28px;
+  }
+
+  .cube-card-body {
+    padding: 20px;
+  }
+
+  .calendar {
+    padding: 12px;
+  }
+
+  /* 캘린더 날짜 최소 터치 영역 확보 */
+  .cal-day {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 11px;
+  }
+
+  /* 시간 슬롯 모바일 최소 크기 */
+  .time-slot {
+    padding: 12px 8px;
+    font-size: var(--fs-sm);
+  }
+
+  /* 인원 카운터 모바일 */
+  .people-counter {
+    justify-content: center;
+  }
+
+  .people-limit-info {
+    font-size: 11px;
+  }
+}

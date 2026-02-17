@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>예약 완료 - C.C.C Custom Cube Company</title>
+  <meta name="description" content="큐브 시리즈 방문 예약이 성공적으로 완료되었습니다." />
+  <link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png" />
+  <link rel="stylesheet" href="css/reservation-completion.css" />
+</head>
+<body>
+
+  <!-- ======================== HEADER ======================== -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"></div>
+          <div class="logo-text">
+            <strong class="logo-title">C.C.C</strong>
+            <span class="logo-sub">Custom Cube Company</span>
+          </div>
+        </a>
+        <div class="auth-links">
+          <!-- 비로그인 상태 -->
+          <div id="userLoggedOut" class="user-section">
+            <a href="login.html" class="auth-link">로그인</a>
+            <a href="register.html" class="auth-link">회원가입</a>
+          </div>
+
+          <!-- 로그인 상태 -->
+          <div id="userLoggedIn" class="user-section" style="display: none;">
+            <div class="user-info-header">
+              <div class="user-avatar-sm" id="userAvatar">
+                <img id="userProfileImage" src="" alt="프로필" style="display: none;">
+                <span id="userProfilePlaceholder">👤</span>
+              </div>
+              <span class="user-name-header" id="userName">사용자</span>
+            </div>
+            <button onclick="logoutUser()" class="btn-logout">로그아웃</button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav" id="navMenu">
+        <a href="#" class="nav-link">커스텀 큐브</a>
+        <a href="#" class="nav-link">큐브 갤러리</a>
+        <a href="#" class="nav-link">중고 큐브마켓</a>
+        <a href="#" class="nav-link">큐레이션 샵</a>
+        <a href="#" class="nav-link">QnA 및 후기</a>
+        <a href="visit-reservation.html" class="nav-link">방문 예약</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================== MAIN ======================== -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- ======== SUCCESS MESSAGE ======== -->
+      <div class="success-section">
+        <div class="success-icon">
+          <div class="success-icon-inner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 12.5L11 15.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <h1 class="success-title">예약이 완료되었습니다!</h1>
+        <div class="success-desc">
+          <p>큐브 시리즈 방문 예약이 성공적으로 완료되었습니다.</p>
+          <p>곧 만나뵙게 되어 기쁩니다.</p>
+        </div>
+      </div>
+
+      <!-- ======== RESERVATION DETAILS ======== -->
+      <div class="reservation-details" id="reservationCard">
+        <!-- 예약 번호 -->
+        <div class="reservation-number">
+          <span class="reservation-number-label">예약 번호</span>
+          <strong class="reservation-number-value" id="resNumber">RES-0000</strong>
+        </div>
+
+        <!-- 상세 정보 그리드 -->
+        <div class="details-grid">
+          <!-- 방문 날짜 -->
+          <div class="detail-item">
+            <div class="detail-icon">
+              <img src="img/container.svg" alt="" />
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">방문 날짜</span>
+              <strong class="detail-value" id="detailDate">-</strong>
+            </div>
+          </div>
+
+          <!-- 방문 시간 -->
+          <div class="detail-item">
+            <div class="detail-icon">
+              <img src="img/vector-2.svg" alt="" />
+              <img src="img/vector-3.svg" alt="" />
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">방문 시간</span>
+              <strong class="detail-value" id="detailTime">-</strong>
+            </div>
+          </div>
+
+          <!-- 방문 인원 -->
+          <div class="detail-item detail-item--people">
+            <div class="detail-icon">
+              <img src="img/vector-24.svg" alt="" />
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">방문 인원</span>
+              <strong class="detail-value" id="detailPeople">-</strong>
+            </div>
+          </div>
+
+          <!-- 연락처 (DB에서 자동) -->
+          <div class="detail-item">
+            <div class="detail-icon">
+              <img src="img/vector-4.svg" alt="" />
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">연락처</span>
+              <strong class="detail-value" id="detailPhone">-</strong>
+            </div>
+          </div>
+
+          <!-- 이메일 (DB에서 자동) -->
+          <div class="detail-item">
+            <div class="detail-icon">
+              <img src="img/vector-5.svg" alt="" />
+              <img src="img/vector-6.svg" alt="" />
+            </div>
+            <div class="detail-content">
+              <span class="detail-label">이메일</span>
+              <strong class="detail-value" id="detailEmail">-</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 방문 장소 (별도 카드) -->
+        <div class="detail-location">
+          <div class="detail-icon">
+            <img src="img/vector-7.svg" alt="" />
+            <img src="img/vector-8.svg" alt="" />
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">방문 장소</span>
+            <strong class="detail-value">C.C.C 큐브 시리즈 전시관</strong>
+            <p class="detail-address">서울시 강남구 테헤란로 123 C.C.C 빌딩 1층</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== NEXT STEPS ======== -->
+      <div class="next-steps">
+        <h2 class="next-steps-title">다음 단계</h2>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-number">
+              <span>1</span>
+            </div>
+            <p class="step-text">예약 확인 메일이 등록하신 이메일로 발송됩니다.</p>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">
+              <span>2</span>
+            </div>
+            <p class="step-text">방문 1일 전, 담당자가 방문 확인 연락을 드립니다.</p>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">
+              <span>3</span>
+            </div>
+            <p class="step-text">예약 시간 10분 전까지 전시관에 도착해 주세요.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== ACTION BUTTONS ======== -->
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="btnSendEmail" onclick="sendConfirmationEmail()">
+          ✉️ 예약 확인 메일 보내기
+        </button>
+        <a href="visit-reservation.html" class="btn btn-outline">예약 페이지로 돌아가기</a>
+      </div>
+      <!-- 이메일 전송 상태 -->
+      <p class="email-status" id="emailStatus"></p>
+
+    </div>
+  </main>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">
+            <strong class="brand-title">C.C.C</strong>
+            <span class="brand-sub">Custom Cube Company</span>
+          </div>
+          <div class="footer-brand-desc">
+            <p>맞춤형 컨테이너 하우스로</p>
+            <p>새로운 공간을 만들어드립니다.</p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>메뉴</h4>
+          <ul>
+            <li><a href="#">커스텀 큐브</a></li>
+            <li><a href="#">큐브 갤러리</a></li>
+            <li><a href="#">중고 큐브마켓</a></li>
+            <li><a href="#">큐레이션 샵</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>고객 지원</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">후기</a></li>
+            <li><a href="#">고객 문의 상담</a></li>
+            <li><a href="visit-reservation.html">방문 예약</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Container House. All rights reserved.</p>
+        <img src="img/container-1.svg" alt="소셜 미디어" class="footer-social" />
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== JAVASCRIPT ======================== -->
+  <script>
+    // ========================================
+    // 로그인 상태 관리 (visit-reservation과 동일)
+    // ========================================
+    let currentUser = null;
+
+    async function checkUserLogin() {
+      try {
+        const response = await fetch('/api/user/info');
+        const data = await response.json();
+        if (data.success && data.user) {
+          currentUser = data.user;
+          showUserInfo(data.user);
+        } else {
+          showLoggedOutState();
+        }
+      } catch (error) {
+        console.error('유저 정보 로드 실패:', error);
+        showLoggedOutState();
+      }
+    }
+
+    function showUserInfo(user) {
+      currentUser = user;
+      document.getElementById('userLoggedOut').style.display = 'none';
+      document.getElementById('userLoggedIn').style.display = 'flex';
+      document.getElementById('userName').textContent = user.nickname || '사용자';
+
+      if (user.profile_image) {
+        document.getElementById('userProfileImage').src = user.profile_image;
+        document.getElementById('userProfileImage').style.display = 'block';
+        document.getElementById('userProfilePlaceholder').style.display = 'none';
+      } else {
+        document.getElementById('userProfileImage').style.display = 'none';
+        document.getElementById('userProfilePlaceholder').style.display = 'block';
+      }
+    }
+
+    function showLoggedOutState() {
+      currentUser = null;
+      document.getElementById('userLoggedOut').style.display = 'flex';
+      document.getElementById('userLoggedIn').style.display = 'none';
+    }
+
+    async function logoutUser() {
+      if (!confirm('로그아웃 하시겠습니까?')) return;
+      try {
+        const response = await fetch('/api/auth/logout', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+          showLoggedOutState();
+          alert('로그아웃 되었습니다.');
+        }
+      } catch (error) {
+        console.error('로그아웃 실패:', error);
+      }
+    }
+
+    // ========================================
+    // Header scroll & Mobile menu
+    // ========================================
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 60);
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      navMenu.classList.toggle('is-open', menuOpen);
+      menuToggle.classList.toggle('is-active', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    });
+
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('is-open');
+        menuToggle.classList.remove('is-active');
+        menuOpen = false;
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ========================================
+    // 예약 정보 표시 + DB에서 사용자 연락처/이메일 표시
+    // ========================================
+    const DAYS = ['일','월','화','수','목','금','토'];
+    const params = new URLSearchParams(window.location.search);
+    const paramDate = params.get('date');
+    const paramTime = params.get('time');
+    const paramPeople = params.get('people');
+    const paramResId = params.get('res_id');
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DAYS[d.getDay()]})`;
+    }
+
+    function formatTime(timeStr) {
+      const t = timeStr.substring(0, 5); // "HH:MM:SS" → "HH:MM"
+      const hour = parseInt(t.split(':')[0]);
+      const min = t.split(':')[1] || '00';
+      const period = hour >= 12 ? '오후' : '오전';
+      const displayHour = hour > 12 ? hour - 12 : hour;
+      return `${period} ${displayHour}시${min !== '00' ? ' ' + min + '분' : ''} (${t})`;
+    }
+
+    // URL 파라미터로 먼저 기본값 표시 (깜빡임 방지)
+    if (paramDate) document.getElementById('detailDate').textContent = formatDate(paramDate);
+    if (paramTime) document.getElementById('detailTime').textContent = formatTime(paramTime);
+    if (paramPeople) document.getElementById('detailPeople').textContent = `${paramPeople}명`;
+    if (paramResId) document.getElementById('resNumber').textContent = `RES-${paramResId}`;
+
+    /**
+     * 페이지 초기화: 로그인 확인 → 예약 상세 API 호출 → 연락처/이메일 표시
+     */
+    async function initPage() {
+      // 1) 로그인 상태 확인
+      await checkUserLogin();
+
+      // 2) 예약 상세 API에서 DB 저장된 연락처/이메일 가져오기
+      if (paramResId) {
+        try {
+          const response = await fetch(`/api/reservation/detail?res_id=${paramResId}`);
+          const data = await response.json();
+
+          if (data.success && data.reservation) {
+            const r = data.reservation;
+
+            // DB 데이터로 상세 정보 업데이트
+            if (r.visit_date) document.getElementById('detailDate').textContent = formatDate(String(r.visit_date).substring(0, 10));
+            if (r.visit_time) document.getElementById('detailTime').textContent = formatTime(String(r.visit_time));
+            if (r.people_count) document.getElementById('detailPeople').textContent = `${r.people_count}명`;
+            if (r.phone) document.getElementById('detailPhone').textContent = r.phone;
+            if (r.email) document.getElementById('detailEmail').textContent = r.email;
+
+            console.log('예약 상세 로드 완료:', r);
+            return;
+          }
+        } catch (err) {
+          console.error('예약 상세 조회 실패 (fallback 사용):', err);
+        }
+      }
+
+      // 3) API 실패 시 → 로그인 사용자 정보에서 가져오기 (fallback)
+      if (currentUser) {
+        const phoneEl = document.getElementById('detailPhone');
+        const emailEl = document.getElementById('detailEmail');
+        if (phoneEl.textContent === '-' && currentUser.tel_number) {
+          phoneEl.textContent = currentUser.tel_number;
+        }
+        if (emailEl.textContent === '-' && currentUser.email) {
+          emailEl.textContent = currentUser.email;
+        }
+      }
+    }
+
+    initPage();
+
+    // ========================================
+    // 예약 확인 이메일 발송
+    // ========================================
+    async function sendConfirmationEmail() {
+      const btn = document.getElementById('btnSendEmail');
+      const statusEl = document.getElementById('emailStatus');
+
+      if (!paramResId) {
+        statusEl.textContent = '예약 번호를 찾을 수 없습니다.';
+        statusEl.className = 'email-status is-error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '📧 전송 중...';
+      statusEl.textContent = '';
+      statusEl.className = 'email-status';
+
+      try {
+        const response = await fetch('/api/reservation/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ res_id: paramResId })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          statusEl.textContent = '✅ 예약 확인 메일이 발송되었습니다.';
+          statusEl.className = 'email-status is-success';
+          btn.textContent = '✅ 전송 완료';
+        } else {
+          statusEl.textContent = data.message || '메일 발송에 실패했습니다.';
+          statusEl.className = 'email-status is-error';
+          btn.disabled = false;
+          btn.textContent = '✉️ 예약 확인 메일 보내기';
+        }
+      } catch (err) {
+        console.error('이메일 발송 오류:', err);
+        statusEl.textContent = '서버 연결 실패. 잠시 후 다시 시도해주세요.';
+        statusEl.className = 'email-status is-error';
+        btn.disabled = false;
+        btn.textContent = '✉️ 예약 확인 메일 보내기';
+      }
+    }
+
+    // ========================================
+    // Smooth scroll
+    // ========================================
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - header.offsetHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

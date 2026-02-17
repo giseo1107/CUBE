@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>방문 예약 - C.C.C Custom Cube Company</title>
+  <meta name="description" content="큐브 시리즈 방문 예약. 실제 컨테이너 하우스를 직접 체험해보세요." />
+  <link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png" />
+  <link rel="stylesheet" href="css/visit-reservation.css" />
+</head>
+<body>
+
+  <!-- 로딩 오버레이 -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- ======================== HEADER ======================== -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"></div>
+          <div class="logo-text">
+            <strong class="logo-title">C.C.C</strong>
+            <span class="logo-sub">Custom Cube Company</span>
+          </div>
+        </a>
+        <div class="auth-links">
+          <!-- 비로그인 상태 -->
+          <div id="userLoggedOut" class="user-section">
+            <a href="login.html" class="auth-link">로그인</a>
+            <a href="register.html" class="auth-link">회원가입</a>
+          </div>
+
+          <!-- 로그인 상태 -->
+          <div id="userLoggedIn" class="user-section" style="display: none;">
+            <div class="user-info-header">
+              <div class="user-avatar-sm" id="userAvatar">
+                <img id="userProfileImage" src="" alt="프로필" style="display: none;">
+                <span id="userProfilePlaceholder">👤</span>
+              </div>
+              <span class="user-name-header" id="userName">사용자</span>
+            </div>
+            <button onclick="logoutUser()" class="btn-logout">로그아웃</button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav" id="navMenu">
+        <a href="#" class="nav-link">커스텀 큐브</a>
+        <a href="#" class="nav-link">큐브 갤러리</a>
+        <a href="#" class="nav-link">중고 큐브마켓</a>
+        <a href="#" class="nav-link">큐레이션 샵</a>
+        <a href="#" class="nav-link">QnA 및 후기</a>
+        <a href="visit-reservation.html" class="nav-link is-active">방문 예약</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================== MAIN ======================== -->
+  <main class="main-content">
+
+    <!-- ======== RESERVATION HERO ======== -->
+    <section class="reservation-hero">
+      <div class="container">
+        <div class="reservation-grid">
+
+          <!-- LEFT: 안내 -->
+          <div class="reservation-info">
+            <h1 class="reservation-title">큐브 시리즈 방문 예약</h1>
+            <div class="reservation-desc">
+              <p>실제 컨테이너 하우스를 직접 체험해보세요.</p>
+              <p>전문 상담사가 고객님의 라이프스타일에 맞는</p>
+              <p>최적의 공간 솔루션을 제안해드립니다.</p>
+            </div>
+
+            <!-- 체크리스트 -->
+            <ul class="check-list">
+              <li class="check-item">
+                <span class="check-icon">
+                  <img src="img/vector-9.svg" alt="" />
+                </span>
+                <span>다양한 큐브 시리즈 둘러보기</span>
+              </li>
+              <li class="check-item">
+                <span class="check-icon">
+                  <img src="img/vector-9.svg" alt="" />
+                </span>
+                <span>1:1 맞춤 상담 진행</span>
+              </li>
+              <li class="check-item">
+                <span class="check-icon">
+                  <img src="img/vector-9.svg" alt="" />
+                </span>
+                <span>실제 건축 사례 확인</span>
+              </li>
+              <li class="check-item">
+                <span class="check-icon">
+                  <img src="img/vector-9.svg" alt="" />
+                </span>
+                <span>견적 및 설계 상담</span>
+              </li>
+            </ul>
+
+            <!-- 연락처 -->
+            <div class="contact-row">
+              <div class="contact-mini">
+                <div class="contact-mini-icon">
+                  <img src="img/vector-13.svg" alt="" />
+                </div>
+                <span class="contact-mini-label">전화 문의</span>
+                <strong class="contact-mini-value">1588-0000</strong>
+              </div>
+              <div class="contact-mini">
+                <div class="contact-mini-icon">
+                  <img src="img/vector-14.svg" alt="" />
+                  <img src="img/vector-15.svg" alt="" />
+                </div>
+                <span class="contact-mini-label">이메일</span>
+                <strong class="contact-mini-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6dfd8d0d9f6d5c3d4d3ded9c3c5d398ddc4">[email&#160;protected]</a></strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: 예약 폼 -->
+          <div class="reservation-form">
+            <h2 class="form-title">예약하기</h2>
+
+            <!-- 날짜 선택 -->
+            <div class="form-section">
+              <div class="form-section-header">
+                <div class="form-section-icon">
+                  <img src="img/vector-16.svg" alt="" />
+                  <img src="img/vector-18.svg" alt="" />
+                  <img src="img/vector-19.svg" alt="" />
+                </div>
+                <label class="form-section-label">날짜 선택</label>
+              </div>
+
+              <!-- 캘린더 -->
+              <div class="calendar">
+                <div class="calendar-header">
+                  <button class="calendar-nav calendar-prev" id="calPrev" aria-label="이전 달">
+                    <img src="img/vector-20.svg" alt="" />
+                  </button>
+                  <span class="calendar-month" id="calendarMonth">2026년 2월</span>
+                  <button class="calendar-nav calendar-next" id="calNext" aria-label="다음 달">
+                    <img src="img/vector-21.svg" alt="" />
+                  </button>
+                </div>
+
+                <div class="calendar-weekdays">
+                  <span>일</span><span>월</span><span>화</span>
+                  <span>수</span><span>목</span><span>금</span><span>토</span>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid">
+                  <!-- JS가 동적으로 생성 -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 시간 선택 -->
+            <div class="form-section">
+              <div class="form-section-header">
+                <div class="form-section-icon">
+                  <img src="img/vector-22.svg" alt="" />
+                  <img src="img/vector-23.svg" alt="" />
+                </div>
+                <label class="form-section-label">시간 선택</label>
+              </div>
+
+              <div class="time-slots" id="timeSlots">
+                <button class="time-slot" data-time="10:00">
+                  <span class="slot-time">10:00</span>
+                </button>
+                <button class="time-slot" data-time="11:30">
+                  <span class="slot-time">11:30</span>
+                </button>
+                <button class="time-slot" data-time="13:00">
+                  <span class="slot-time">13:00</span>
+                </button>
+                <button class="time-slot" data-time="14:30">
+                  <span class="slot-time">14:30</span>
+                </button>
+                <button class="time-slot" data-time="16:00">
+                  <span class="slot-time">16:00</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 인원 선택 -->
+            <div class="form-section">
+              <div class="form-section-header">
+                <div class="form-section-icon">
+                  <img src="img/vector-24.svg" alt="" />
+                  <img src="img/vector-25.svg" alt="" />
+                  <img src="img/vector-26.svg" alt="" />
+                  <img src="img/vector-27.svg" alt="" />
+                </div>
+                <label class="form-section-label">인원 선택 <small style="font-weight:400; color:#888;">(시간대별 최대 4명)</small></label>
+              </div>
+
+              <div class="people-counter">
+                <button class="counter-btn counter-minus" id="counterMinus" aria-label="인원 감소">-</button>
+                <span class="counter-value" id="counterValue">1명</span>
+                <button class="counter-btn counter-plus" id="counterPlus" aria-label="인원 증가">+</button>
+              </div>
+              <div class="people-limit-info" id="peopleLimitInfo"></div>
+            </div>
+
+            <!-- 예약 버튼 -->
+            <button class="btn-reserve" id="btnReserve">
+              <img src="img/vector-28.svg" alt="" class="btn-reserve-icon" />
+              <span>예약하기</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== CUBE SERIES ======== -->
+    <section class="cube-series" id="cubes">
+      <div class="container">
+        <div class="section-header">
+          <h2>큐브 시리즈 둘러보기</h2>
+          <p>다양한 컨테이너 하우스 모델을 직접 확인해보세요</p>
+        </div>
+
+        <div class="cube-grid">
+          <!-- 모던 -->
+          <article class="cube-card">
+            <div class="cube-card-image cube-card-image--modern">
+              <span class="cube-badge">모던 스타일</span>
+            </div>
+            <div class="cube-card-body">
+              <h3>모던 컨테이너</h3>
+              <p>심플하고 세련된 디자인의 모던 스타일 컨테이너 하우스입니다.</p>
+              <div class="cube-location">
+                <span class="cube-location-icon">
+                  <img src="img/vector-29.svg" alt="" />
+                  <img src="img/vector-30.svg" alt="" />
+                </span>
+                <span>1층 전시장</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 럭셔리 -->
+          <article class="cube-card">
+            <div class="cube-card-image cube-card-image--luxury">
+              <span class="cube-badge">럭셔리</span>
+            </div>
+            <div class="cube-card-body">
+              <h3>럭셔리 타입</h3>
+              <p>고급스러운 인테리어와 넓은 공간의 프리미엄 모델입니다.</p>
+              <div class="cube-location">
+                <span class="cube-location-icon">
+                  <img src="img/vector-29.svg" alt="" />
+                  <img src="img/vector-30.svg" alt="" />
+                </span>
+                <span>2층 전시장</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 인더스트리얼 -->
+          <article class="cube-card">
+            <div class="cube-card-image cube-card-image--industrial">
+              <span class="cube-badge">인더스트리얼</span>
+            </div>
+            <div class="cube-card-body">
+              <h3>인더스트리얼</h3>
+              <p>컨테이너의 본질을 살린 산업적 감성의 디자인입니다.</p>
+              <div class="cube-location">
+                <span class="cube-location-icon">
+                  <img src="img/vector-29.svg" alt="" />
+                  <img src="img/vector-30.svg" alt="" />
+                </span>
+                <span>야외 전시장</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== VISIT INFO ======== -->
+    <section class="visit-info" id="info">
+      <div class="container">
+        <h2 class="visit-info-title">방문 안내</h2>
+
+        <!-- 오시는 길 & 운영시간 -->
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-header">
+              <span class="info-card-icon">
+                <img src="img/vector-35.svg" alt="" />
+                <img src="img/vector-36.svg" alt="" />
+              </span>
+              <h3>오시는 길</h3>
+            </div>
+            <div class="info-card-body">
+              <p>서울시 강남구 테헤란로 123</p>
+              <p>Container House 전시관</p>
+            </div>
+            <p class="info-card-note">지하철 2호선 강남역 3번 출구에서 도보 5분</p>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card-header">
+              <span class="info-card-icon">
+                <img src="img/vector-37.svg" alt="" />
+                <img src="img/vector-38.svg" alt="" />
+              </span>
+              <h3>운영 시간</h3>
+            </div>
+            <div class="info-card-body">
+              <p>평일: 오전 10시 - 오후 6시</p>
+              <p>주말: 오전 10시 - 오후 5시</p>
+            </div>
+            <p class="info-card-note">매주 월요일 휴무</p>
+          </div>
+        </div>
+
+        <!-- 유의사항 -->
+        <div class="notice-card">
+          <h3>방문 시 유의사항</h3>
+          <ul class="notice-list">
+            <li>
+              <img src="img/vector-39.svg" alt="" class="notice-bullet" />
+              <span>예약 시간 10분 전까지 도착해주시기 바랍니다.</span>
+            </li>
+            <li>
+              <img src="img/vector-39.svg" alt="" class="notice-bullet" />
+              <span>편한 복장과 신발을 착용해주세요.</span>
+            </li>
+            <li>
+              <img src="img/vector-39.svg" alt="" class="notice-bullet" />
+              <span>전시장 내 사진 촬영이 가능합니다.</span>
+            </li>
+            <li>
+              <img src="img/vector-39.svg" alt="" class="notice-bullet" />
+              <span>예약 취소는 방문 24시간 전까지 가능합니다.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="footer-brand-top">
+            <div class="footer-logo-icon"></div>
+            <div class="footer-brand-name">
+              <strong class="brand-title">C.C.C</strong>
+              <span class="brand-sub">Custom Cube Company</span>
+            </div>
+          </div>
+          <div class="footer-brand-desc">
+            <p>혁신적인 컨테이너 하우스로</p>
+            <p>새로운 주거 문화를 만들어갑니다</p>
+          </div>
+        </div>
+
+        <!-- 제품 -->
+        <div class="footer-links">
+          <h4>제품</h4>
+          <ul>
+            <li><a href="#">커스텀 큐브</a></li>
+            <li><a href="#">큐브 갤러리</a></li>
+            <li><a href="#">판매 페이지</a></li>
+            <li><a href="#">중고 큐브마켓</a></li>
+          </ul>
+        </div>
+
+        <!-- 고객 지원 -->
+        <div class="footer-links">
+          <h4>고객 지원</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">후기</a></li>
+            <li><a href="#">사용자 성향 파악</a></li>
+            <li><a href="visit-reservation.html">방문 예약</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Container House. All rights reserved.</p>
+        <img src="img/container-2.svg" alt="소셜 미디어" class="footer-social" />
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== JAVASCRIPT ======================== -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ========================================
+    // 상수 설정
+    // ========================================
+    const MAX_PEOPLE_PER_SLOT = 4;                     // 시간대별 최대 인원
+    const API_BASE = '/api/reservation';                // 백엔드 API 경로
+    const TIME_SLOTS_LIST = ['10:00','11:30','13:00','14:30','16:00'];
+
+    // ========================================
+    // 로그인 상태 관리 (editor.html과 동일)
+    // ========================================
+    let currentUser = null;
+
+    async function checkUserLogin() {
+      try {
+        const response = await fetch('/api/user/info');
+        const data = await response.json();
+
+        if (data.success && data.user) {
+          currentUser = data.user;
+          showUserInfo(data.user);
+        } else {
+          showLoggedOutState();
+        }
+      } catch (error) {
+        console.error('유저 정보 로드 실패:', error);
+        showLoggedOutState();
+      }
+    }
+
+    function showUserInfo(user) {
+      currentUser = user;
+      document.getElementById('userLoggedOut').style.display = 'none';
+      document.getElementById('userLoggedIn').style.display = 'flex';
+      document.getElementById('userName').textContent = user.nickname || '사용자';
+
+      if (user.profile_image) {
+        document.getElementById('userProfileImage').src = user.profile_image;
+        document.getElementById('userProfileImage').style.display = 'block';
+        document.getElementById('userProfilePlaceholder').style.display = 'none';
+      } else {
+        document.getElementById('userProfileImage').style.display = 'none';
+        document.getElementById('userProfilePlaceholder').style.display = 'block';
+      }
+    }
+
+    function showLoggedOutState() {
+      currentUser = null;
+      document.getElementById('userLoggedOut').style.display = 'flex';
+      document.getElementById('userLoggedIn').style.display = 'none';
+    }
+
+    async function logoutUser() {
+      if (!confirm('로그아웃 하시겠습니까?')) return;
+      try {
+        const response = await fetch('/api/auth/logout', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+          showLoggedOutState();
+          alert('로그아웃 되었습니다.');
+        }
+      } catch (error) {
+        console.error('로그아웃 실패:', error);
+      }
+    }
+
+    /**
+     * 로그인 여부 확인 — 미로그인 시 alert 후 login.html로 이동
+     * @returns {boolean} 로그인 상태이면 true
+     */
+    function requireLogin() {
+      if (!currentUser) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        location.href = 'login.html';
+        return false;
+      }
+      return true;
+    }
+
+    // 페이지 로드 시 로그인 상태 확인
+    checkUserLogin();
+
+    // ========================================
+    // Header scroll
+    // ========================================
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 60);
+    });
+
+    // ========================================
+    // Mobile menu
+    // ========================================
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      navMenu.classList.toggle('is-open', menuOpen);
+      menuToggle.classList.toggle('is-active', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    });
+
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('is-open');
+        menuToggle.classList.remove('is-active');
+        menuOpen = false;
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ========================================
+    // 캘린더 - 동적 날짜 생성
+    // ========================================
+    const calendarGrid = document.getElementById('calendarGrid');
+    const calendarMonthEl = document.getElementById('calendarMonth');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let currentYear = 2026;
+    let currentMonth = today.getMonth(); // 현재 월 기준 시작 (0-indexed)
+    if (today.getFullYear() === 2026) {
+      currentMonth = today.getMonth();
+    } else {
+      currentMonth = 0; // 2026년이 아니면 1월부터
+    }
+
+    let selectedDate = null;
+    let selectedTime = null;
+    let slotCapacityCache = {}; // { 'YYYY-MM-DD': { '10:00': 잔여인원, ... } }
+
+    const MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    const DAY_NAMES = ['일','월','화','수','목','금','토'];
+
+    /**
+     * 특정 월의 일수 반환
+     */
+    function getDaysInMonth(year, month) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+    /**
+     * 특정 월의 1일이 무슨 요일인지 (0=일, 1=월, ...)
+     */
+    function getFirstDayOfMonth(year, month) {
+      return new Date(year, month, 1).getDay();
+    }
+
+    /**
+     * 캘린더 렌더링
+     */
+    function renderCalendar(year, month) {
+      calendarGrid.innerHTML = '';
+      calendarMonthEl.textContent = `${year}년 ${MONTH_NAMES[month]}`;
+
+      const daysInMonth = getDaysInMonth(year, month);
+      const firstDay = getFirstDayOfMonth(year, month);
+
+      // 이전 달 빈 칸 채우기
+      const prevMonthDays = getDaysInMonth(year, month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1);
+      for (let i = firstDay - 1; i >= 0; i--) {
+        const btn = document.createElement('button');
+        btn.className = 'cal-day is-prev';
+        btn.disabled = true;
+        btn.textContent = prevMonthDays - i;
+        calendarGrid.appendChild(btn);
+      }
+
+      // 현재 달 날짜
+      for (let d = 1; d <= daysInMonth; d++) {
+        const btn = document.createElement('button');
+        btn.className = 'cal-day';
+        btn.textContent = d;
+
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        btn.dataset.date = dateStr;
+
+        const dateObj = new Date(year, month, d);
+
+        // 오늘 표시
+        if (dateObj.getTime() === today.getTime()) {
+          btn.classList.add('is-today');
+        }
+
+        // 지난 날짜 비활성화
+        if (dateObj < today) {
+          btn.classList.add('is-past');
+          btn.disabled = true;
+        }
+
+        // 월요일 휴무 비활성화
+        if (dateObj.getDay() === 1) {
+          btn.classList.add('is-closed');
+          btn.disabled = true;
+          btn.title = '월요일 휴무';
+        }
+
+        // 2026년 범위 제한
+        if (year < 2026 || year > 2026) {
+          btn.disabled = true;
+          btn.classList.add('is-past');
+        }
+
+        // 선택 상태 복원
+        if (selectedDate === dateStr) {
+          btn.classList.add('is-selected');
+        }
+
+        calendarGrid.appendChild(btn);
+      }
+
+      // 다음 달 빈 칸 채우기 (6줄 = 42칸)
+      const totalCells = firstDay + daysInMonth;
+      const remainingCells = (Math.ceil(totalCells / 7) * 7) - totalCells;
+      for (let i = 1; i <= remainingCells; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'cal-day is-next';
+        btn.disabled = true;
+        btn.textContent = i;
+        calendarGrid.appendChild(btn);
+      }
+    }
+
+    // 이전/다음 달 네비게이션
+    document.getElementById('calPrev').addEventListener('click', () => {
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      // 2026년 범위 제한
+      if (currentYear < 2026) { currentYear = 2026; currentMonth = 0; }
+      renderCalendar(currentYear, currentMonth);
+    });
+
+    document.getElementById('calNext').addEventListener('click', () => {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      // 2026년 범위 제한
+      if (currentYear > 2026) { currentYear = 2026; currentMonth = 11; }
+      renderCalendar(currentYear, currentMonth);
+    });
+
+    // 날짜 클릭 이벤트 (이벤트 위임)
+    calendarGrid.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.cal-day');
+      if (!btn || btn.disabled) return;
+
+      // 로그인 체크
+      if (!requireLogin()) return;
+
+      calendarGrid.querySelectorAll('.cal-day').forEach(d => d.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
+      selectedDate = btn.dataset.date;
+
+      // 시간 선택 초기화
+      selectedTime = null;
+      document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('is-selected'));
+
+      // 해당 날짜의 잔여석 조회
+      await loadSlotCapacity(selectedDate);
+      updatePeopleLimit();
+    });
+
+    // 초기 렌더링
+    renderCalendar(currentYear, currentMonth);
+
+    // ========================================
+    // 시간대별 잔여석 조회 (API 호출)
+    // ========================================
+    async function loadSlotCapacity(dateStr) {
+      const timeSlotsEl = document.getElementById('timeSlots');
+
+      try {
+        const response = await fetch(`${API_BASE}/capacity?date=${dateStr}`);
+        const data = await response.json();
+
+        if (data.success) {
+          slotCapacityCache[dateStr] = data.slots; // { '10:00': 2, '11:30': 0, ... }
+        } else {
+          // API 실패 시 기본값 (전체 사용 가능)
+          const defaultSlots = {};
+          TIME_SLOTS_LIST.forEach(t => defaultSlots[t] = MAX_PEOPLE_PER_SLOT);
+          slotCapacityCache[dateStr] = defaultSlots;
+        }
+      } catch (err) {
+        // 네트워크 오류 시 기본값
+        const defaultSlots = {};
+        TIME_SLOTS_LIST.forEach(t => defaultSlots[t] = MAX_PEOPLE_PER_SLOT);
+        slotCapacityCache[dateStr] = defaultSlots;
+      }
+
+      // 시간 슬롯 UI 업데이트
+      updateTimeSlotUI(dateStr);
+    }
+
+    /**
+     * 시간 슬롯 UI를 잔여석 기반으로 업데이트
+     */
+    function updateTimeSlotUI(dateStr) {
+      const capacity = slotCapacityCache[dateStr] || {};
+
+      document.querySelectorAll('.time-slot').forEach(slot => {
+        const time = slot.dataset.time;
+        const remain = capacity[time] !== undefined ? capacity[time] : MAX_PEOPLE_PER_SLOT;
+
+        // 잔여석 표시 추가/업데이트
+        let remainEl = slot.querySelector('.slot-remain');
+        if (!remainEl) {
+          remainEl = document.createElement('span');
+          remainEl.className = 'slot-remain';
+          slot.appendChild(remainEl);
+        }
+
+        if (remain <= 0) {
+          slot.classList.add('is-full');
+          slot.classList.remove('is-selected');
+          remainEl.textContent = '마감';
+          if (selectedTime === time) {
+            selectedTime = null;
+          }
+        } else {
+          slot.classList.remove('is-full');
+          remainEl.textContent = `잔여 ${remain}명`;
+        }
+      });
+    }
+
+    // ========================================
+    // 시간 선택
+    // ========================================
+    document.querySelectorAll('.time-slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        if (slot.classList.contains('is-full')) return;
+
+        // 로그인 체크
+        if (!requireLogin()) return;
+
+        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('is-selected'));
+        slot.classList.add('is-selected');
+        selectedTime = slot.dataset.time;
+
+        // 인원 카운터 리셋 및 제한 업데이트
+        peopleCount = 1;
+        counterValue.textContent = '1명';
+        updatePeopleLimit();
+      });
+    });
+
+    // ========================================
+    // 인원 카운터 (최대 4명 + 잔여석 반영)
+    // ========================================
+    let peopleCount = 1;
+    const counterValue = document.getElementById('counterValue');
+    const counterMinus = document.getElementById('counterMinus');
+    const counterPlus = document.getElementById('counterPlus');
+    const peopleLimitInfo = document.getElementById('peopleLimitInfo');
+
+    /**
+     * 현재 선택된 날짜+시간에 대한 최대 예약 가능 인원 반환
+     */
+    function getMaxAvailable() {
+      if (!selectedDate || !selectedTime) return MAX_PEOPLE_PER_SLOT;
+      const capacity = slotCapacityCache[selectedDate];
+      if (!capacity) return MAX_PEOPLE_PER_SLOT;
+      const remain = capacity[selectedTime];
+      return remain !== undefined ? remain : MAX_PEOPLE_PER_SLOT;
+    }
+
+    /**
+     * 인원 제한 UI 업데이트
+     */
+    function updatePeopleLimit() {
+      const maxAvail = getMaxAvailable();
+
+      // 버튼 활성/비활성
+      counterMinus.disabled = (peopleCount <= 1);
+      counterPlus.disabled = (peopleCount >= maxAvail);
+
+      // 현재 인원이 가용 인원 초과 시 조정
+      if (peopleCount > maxAvail) {
+        peopleCount = Math.max(1, maxAvail);
+        counterValue.textContent = `${peopleCount}명`;
+      }
+
+      // 안내 메시지
+      if (!selectedDate || !selectedTime) {
+        peopleLimitInfo.textContent = '날짜와 시간을 먼저 선택해주세요.';
+        peopleLimitInfo.className = 'people-limit-info';
+      } else if (maxAvail <= 0) {
+        peopleLimitInfo.textContent = '해당 시간대는 예약이 마감되었습니다.';
+        peopleLimitInfo.className = 'people-limit-info is-full';
+        counterPlus.disabled = true;
+        counterMinus.disabled = true;
+      } else if (maxAvail < MAX_PEOPLE_PER_SLOT) {
+        peopleLimitInfo.textContent = `잔여석 ${maxAvail}명 (기존 예약으로 인원이 제한됩니다)`;
+        peopleLimitInfo.className = 'people-limit-info is-warning';
+      } else {
+        peopleLimitInfo.textContent = `최대 ${MAX_PEOPLE_PER_SLOT}명까지 예약 가능합니다.`;
+        peopleLimitInfo.className = 'people-limit-info is-ok';
+      }
+    }
+
+    counterMinus.addEventListener('click', () => {
+      if (peopleCount > 1) {
+        peopleCount--;
+        counterValue.textContent = `${peopleCount}명`;
+        updatePeopleLimit();
+      }
+    });
+
+    counterPlus.addEventListener('click', () => {
+      const maxAvail = getMaxAvailable();
+      if (peopleCount >= maxAvail) {
+        // 최대 인원 초과 알림
+        if (maxAvail >= MAX_PEOPLE_PER_SLOT) {
+          alert(`최대 인원은 ${MAX_PEOPLE_PER_SLOT}명입니다.`);
+        } else {
+          alert(`해당 시간대의 잔여석이 ${maxAvail}명이므로 더 이상 추가할 수 없습니다.`);
+        }
+        return;
+      }
+      peopleCount++;
+      counterValue.textContent = `${peopleCount}명`;
+      updatePeopleLimit();
+    });
+
+    // 초기 상태
+    updatePeopleLimit();
+
+    // ========================================
+    // 예약하기 버튼 → 백엔드 API → 완료 페이지
+    // ========================================
+    document.getElementById('btnReserve').addEventListener('click', async () => {
+      // 로그인 체크
+      if (!requireLogin()) return;
+
+      // 유효성 검사
+      if (!selectedDate) {
+        alert('날짜를 선택해주세요.');
+        return;
+      }
+      if (!selectedTime) {
+        alert('시간을 선택해주세요.');
+        return;
+      }
+
+      const maxAvail = getMaxAvailable();
+      if (maxAvail <= 0) {
+        alert('해당 시간대는 예약이 마감되었습니다. 다른 시간을 선택해주세요.');
+        return;
+      }
+      if (peopleCount > maxAvail) {
+        alert(`최대 인원 초과입니다. 현재 잔여석: ${maxAvail}명`);
+        return;
+      }
+      if (peopleCount > MAX_PEOPLE_PER_SLOT) {
+        alert(`최대 인원은 ${MAX_PEOPLE_PER_SLOT}명입니다.`);
+        return;
+      }
+
+      // 로딩 표시
+      const loading = document.getElementById('loadingOverlay');
+      loading.classList.add('is-active');
+
+      try {
+        const response = await fetch(`${API_BASE}/create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            visit_date: selectedDate,
+            visit_time: selectedTime,
+            people_count: peopleCount
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // 예약 완료 페이지로 이동
+          const params = new URLSearchParams({
+            date: selectedDate,
+            time: selectedTime,
+            people: peopleCount,
+            res_id: data.res_id || ''
+          });
+          window.location.href = `reservation-completion.html?${params.toString()}`;
+        } else {
+          alert(data.message || '예약에 실패했습니다. 다시 시도해주세요.');
+        }
+      } catch (err) {
+        console.error('Reservation error:', err);
+        // API 연결 실패 시 → 클라이언트 전용 모드 (데모)
+        const params = new URLSearchParams({
+          date: selectedDate,
+          time: selectedTime,
+          people: peopleCount
+        });
+        window.location.href = `reservation-completion.html?${params.toString()}`;
+      } finally {
+        loading.classList.remove('is-active');
+      }
+    });
+
+    // ========================================
+    // Smooth scroll
+    // ========================================
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - header.offsetHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

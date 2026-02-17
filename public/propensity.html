@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>큐브 컨테이너 성향 분석</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/propensity.css">
+</head>
+<body>
+    <!-- 로딩 오버레이 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-cube">
+                <div class="cube-face front"></div>
+                <div class="cube-face back"></div>
+                <div class="cube-face right"></div>
+                <div class="cube-face left"></div>
+                <div class="cube-face top"></div>
+                <div class="cube-face bottom"></div>
+            </div>
+            <p class="loading-text" id="loadingText">분석 중입니다...</p>
+            <div class="loading-progress">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 복원 모달 -->
+    <div class="resume-modal" id="resumeModal">
+        <div class="resume-content">
+            <div class="resume-icon">🔄</div>
+            <h3>이전 진행 내역이 있습니다</h3>
+            <p id="resumeMessage">3단계까지 진행하셨습니다. 이어서 하시겠습니까?</p>
+            <div class="resume-buttons">
+                <button onclick="resumeProgress()">이어하기</button>
+                <button onclick="startFresh()" class="secondary">처음부터</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 플로팅 상담 버튼 -->
+    <div class="floating-buttons" id="floatingButtons">
+        <div class="float-menu" id="floatMenu">
+            <a href="tel:02-1234-5678" class="float-item">
+                <span class="float-icon">📞</span>
+                <span>전화상담</span>
+            </a>
+            <a href="https://pf.kakao.com/" target="_blank" class="float-item kakao">
+                <span class="float-icon">💬</span>
+                <span>카카오 상담</span>
+            </a>
+            <button class="float-item" onclick="openContactForm()">
+                <span class="float-icon">📝</span>
+                <span>문의하기</span>
+            </button>
+        </div>
+        <button class="float-btn main" onclick="toggleFloatMenu()" id="floatMainBtn">
+            <span class="float-btn-icon">💬</span>
+            <span class="float-btn-close">✕</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-decoration"></div>
+            <h1>큐브 컨테이너 성향 분석</h1>
+            <p>나에게 맞는 컨테이너 유형을 찾아보세요</p>
+            <div class="header-step-indicator">
+                <span id="currentStepText">1</span> / <span id="totalStepText">6</span>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div class="content">
+            <!-- Step 1: Q1 -->
+            <div class="step active" data-step="1">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q1</span>
+                        큐브(컨테이너)를 어떤 용도로 사용하려고 하나요?
+                    </h2>
+                    <p class="question-hint">복수 선택 가능합니다</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q1_1" name="q1" value="popup">
+                            <label for="q1_1">
+                                <span class="option-icon">🏪</span>
+                                <span class="option-text">팝업스토어 / 브랜드 프로모션</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1_2" name="q1" value="stay">
+                            <label for="q1_2">
+                                <span class="option-icon">🏠</span>
+                                <span class="option-text">체류형 쉼터 (휴식, 숙박, 워케이션 등)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1_3" name="q1" value="office">
+                            <label for="q1_3">
+                                <span class="option-icon">💼</span>
+                                <span class="option-text">사무실 / 작업실</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1_4" name="q1" value="cafe">
+                            <label for="q1_4">
+                                <span class="option-icon">☕</span>
+                                <span class="option-text">카페 / 상업시설</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1_5" name="q1" value="studio">
+                            <label for="q1_5">
+                                <span class="option-icon">📸</span>
+                                <span class="option-text">촬영 스튜디오 / 전시 공간</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1_6" name="q1" value="camping">
+                            <label for="q1_6">
+                                <span class="option-icon">⛺</span>
+                                <span class="option-text">캠핑·차박 대체용</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Q2, Q3 -->
+            <div class="step" data-step="2">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q2</span>
+                        큐브를 한 장소에만 두고 사용할 예정인가요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q2_1" name="q2" value="fixed">
+                            <label for="q2_1">
+                                <span class="option-icon">📍</span>
+                                <span class="option-text">한 장소에 고정 사용</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2_2" name="q2" value="mobile">
+                            <label for="q2_2">
+                                <span class="option-icon">🚚</span>
+                                <span class="option-text">일정 기간 사용 후 다른 지역으로 이동 예정</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q2_3" name="q2" value="undecided">
+                            <label for="q2_3">
+                                <span class="option-icon">🤔</span>
+                                <span class="option-text">아직 미정</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q3</span>
+                        이동이 필요하다면, 어느 정도 빈도로 이동을 고려하나요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q3_1" name="q3" value="once">
+                            <label for="q3_1">
+                                <span class="option-icon">1️⃣</span>
+                                <span class="option-text">1회성 이동 (처음 설치 후 1번 정도)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3_2" name="q3" value="yearly">
+                            <label for="q3_2">
+                                <span class="option-icon">📅</span>
+                                <span class="option-text">연 1~2회 이동</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q3_3" name="q3" value="regular">
+                            <label for="q3_3">
+                                <span class="option-icon">🔄</span>
+                                <span class="option-text">정기적으로 이동 (팝업 순환)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Q4, Q5 -->
+            <div class="step" data-step="3">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q4</span>
+                        예상 사용 기간은 어느 정도인가요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q4_1" name="q4" value="short">
+                            <label for="q4_1">
+                                <span class="option-icon">⚡</span>
+                                <span class="option-text">1~3개월</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q4_2" name="q4" value="medium">
+                            <label for="q4_2">
+                                <span class="option-icon">📆</span>
+                                <span class="option-text">3~6개월</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q4_3" name="q4" value="long">
+                            <label for="q4_3">
+                                <span class="option-icon">🗓️</span>
+                                <span class="option-text">6개월~1년</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q4_4" name="q4" value="verylong">
+                            <label for="q4_4">
+                                <span class="option-icon">🏛️</span>
+                                <span class="option-text">1년 이상</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q5</span>
+                        어떤 방식이 가장 적합하다고 생각하시나요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q5_1" name="q5" value="rental">
+                            <label for="q5_1">
+                                <span class="option-icon">🔑</span>
+                                <span class="option-text">렌탈 / 단기 임대</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q5_2" name="q5" value="purchase">
+                            <label for="q5_2">
+                                <span class="option-icon">🏷️</span>
+                                <span class="option-text">구매 (자산으로 보유)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q5_3" name="q5" value="comparing">
+                            <label for="q5_3">
+                                <span class="option-icon">⚖️</span>
+                                <span class="option-text">아직 비교 중</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Q6, Q7 -->
+            <div class="step" data-step="4">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q6</span>
+                        초기 비용으로 고려 가능한 예산 범위는?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q6_1" name="q6" value="budget1">
+                            <label for="q6_1">
+                                <span class="option-icon">💵</span>
+                                <span class="option-text">1천만 원 이하</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_2" name="q6" value="budget2">
+                            <label for="q6_2">
+                                <span class="option-icon">💰</span>
+                                <span class="option-text">1천만~3천만 원</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_3" name="q6" value="budget3">
+                            <label for="q6_3">
+                                <span class="option-icon">💎</span>
+                                <span class="option-text">3천만~5천만 원</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_4" name="q6" value="budget4">
+                            <label for="q6_4">
+                                <span class="option-icon">🏆</span>
+                                <span class="option-text">5천만 원 이상</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q6_5" name="q6" value="budget5">
+                            <label for="q6_5">
+                                <span class="option-icon">❓</span>
+                                <span class="option-text">아직 정하지 않음</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q7</span>
+                        공간 내부에서 반드시 필요한 '핵심 시설'은 무엇인가요?
+                    </h2>
+                    <p class="question-hint">복수 선택 가능합니다</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q7_1" name="q7" value="basic">
+                            <label for="q7_1">
+                                <span class="option-icon">💡</span>
+                                <span class="option-text">기본 전기/조명만 있으면 됨 (창고, 단순 쇼룸)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q7_2" name="q7" value="office_facility">
+                            <label for="q7_2">
+                                <span class="option-icon">🖥️</span>
+                                <span class="option-text">업무용 책상과 인터넷 환경 (사무실)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q7_3" name="q7" value="rest">
+                            <label for="q7_3">
+                                <span class="option-icon">🛋️</span>
+                                <span class="option-text">간이 휴식 시설 (소파, 간단한 다과 공간)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q7_4" name="q7" value="full_option">
+                            <label for="q7_4">
+                                <span class="option-icon">🏡</span>
+                                <span class="option-text">풀옵션 주거 시설 (바닥 난방, 화장실, 샤워실, 주방)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q7_5" name="q7" value="premium">
+                            <label for="q7_5">
+                                <span class="option-icon">✨</span>
+                                <span class="option-text">고급 인테리어와 포토존 (디자인 중심)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Q8, Q9 -->
+            <div class="step" data-step="5">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q8</span>
+                        이 공간을 통해 얻고자 하는 가장 큰 '가치'는 무엇인가요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q8_1" name="q8" value="profit">
+                            <label for="q8_1">
+                                <span class="option-icon">📈</span>
+                                <span class="option-text">수익 창출 (임대 수익, 브랜드 홍보 효과)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_2" name="q8" value="cost_save">
+                            <label for="q8_2">
+                                <span class="option-icon">💸</span>
+                                <span class="option-text">비용 절감 (비싼 월세나 주택 구매 비용 아끼기)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_3" name="q8" value="romance">
+                            <label for="q8_3">
+                                <span class="option-icon">💕</span>
+                                <span class="option-text">나만의 낭만 실현 (감성적인 인테리어, 프라이빗한 공간)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_4" name="q8" value="efficiency">
+                            <label for="q8_4">
+                                <span class="option-icon">⚙️</span>
+                                <span class="option-text">효율성과 편의성 (직주근접, 빠른 설치와 철거)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q8_5" name="q8" value="asset">
+                            <label for="q8_5">
+                                <span class="option-icon">🏦</span>
+                                <span class="option-text">자산 가치 (나중에 되팔 때의 가치 보존)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q9</span>
+                        설치하려는 장소의 '토지 상태'는 어떤가요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q9_1" name="q9" value="urban">
+                            <label for="q9_1">
+                                <span class="option-icon">🏙️</span>
+                                <span class="option-text">도심지 내 유휴 공간 / 주차장 (접근성 중요)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_2" name="q9" value="rural">
+                            <label for="q9_2">
+                                <span class="option-icon">🌳</span>
+                                <span class="option-text">교외/시골의 개인 소유 땅 (전원주택지, 텃밭 등)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_3" name="q9" value="hotplace">
+                            <label for="q9_3">
+                                <span class="option-icon">🎯</span>
+                                <span class="option-text">관광지 인근 핫플레이스</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_4" name="q9" value="rooftop">
+                            <label for="q9_4">
+                                <span class="option-icon">🏗️</span>
+                                <span class="option-text">옥상 또는 특수 공간</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q9_5" name="q9" value="none">
+                            <label for="q9_5">
+                                <span class="option-icon">🔍</span>
+                                <span class="option-text">아직 땅은 없지만 큐브를 먼저 알아보고 있음</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Q10, Q11 -->
+            <div class="step" data-step="6">
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q10</span>
+                        선호하는 인테리어/외관 스타일은?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q10_1" name="q10" value="unique">
+                            <label for="q10_1">
+                                <span class="option-icon">🎨</span>
+                                <span class="option-text">눈에 띄는 디자인 (컬러풀, 유니크, 통유리)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_2" name="q10" value="modern">
+                            <label for="q10_2">
+                                <span class="option-icon">🖤</span>
+                                <span class="option-text">모던하고 심플함 (블랙&화이트, 오피스 느낌)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_3" name="q10" value="cozy">
+                            <label for="q10_3">
+                                <span class="option-icon">🪵</span>
+                                <span class="option-text">따뜻하고 아늑함 (우드톤, 조명 강조, 카페 느낌)</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q10_4" name="q10" value="practical">
+                            <label for="q10_4">
+                                <span class="option-icon">🔧</span>
+                                <span class="option-text">튼튼하고 실용적임 (단열 최우선, 유지보수 편한 자재)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h2 class="question-title">
+                        <span class="question-number">Q11</span>
+                        향후 이 큐브의 '처분 계획'은 어떻게 되시나요?
+                    </h2>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="q11_1" name="q11" value="resell">
+                            <label for="q11_1">
+                                <span class="option-icon">💱</span>
+                                <span class="option-text">필요 없어지면 중고로 판매하여 현금화하고 싶음</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_2" name="q11" value="keep">
+                            <label for="q11_2">
+                                <span class="option-icon">🏡</span>
+                                <span class="option-text">평생 소유하며 세컨하우스나 별채로 계속 쓸 예정</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_3" name="q11" value="convert">
+                            <label for="q11_3">
+                                <span class="option-icon">🔄</span>
+                                <span class="option-text">다른 용도로 개조해서 계속 사용</span>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="q11_4" name="q11" value="return">
+                            <label for="q11_4">
+                                <span class="option-icon">📦</span>
+                                <span class="option-text">렌탈 기간만 끝나면 반납하고 신경 끄고 싶음</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="step" data-step="result">
+                <div class="result-container">
+                    <!-- 왼쪽: 이미지 영역 -->
+                    <div class="result-left">
+                        <div class="selected-badge">SELECTED</div>
+                        <div class="result-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" 
+                                 alt="Result Image" 
+                                 class="result-image"
+                                 id="resultImage">
+                        </div>
+                        <div class="space-type-label">
+                            <div class="label" id="resultLabelEng">WORK SPACE</div>
+                            <div class="title" id="resultSpaceType">사무/공간</div>
+                        </div>
+                    </div>
+
+                    <!-- 오른쪽: 분석 결과 -->
+                    <div class="result-right">
+                        <div class="result-content">
+                            <div class="analysis-complete">
+                                <div class="icon">✓</div>
+                                <div class="text">Analysis Complete</div>
+                            </div>
+
+                            <h2 class="result-type-title" id="resultType">맞춤형 공간</h2>
+                            <p class="result-subtitle" id="resultSubtitle">제안이 완료되었습니다</p>
+                            <p class="result-description" id="resultDescription">
+                                당신에게 알맞은 맞춤 공간을 기반으로 큐브제작을 제공하실수 있습니다.
+                            </p>
+
+                            <div class="result-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">권장 평형</div>
+                                    <div class="detail-value" id="resultSize">85 - 120㎡</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">사용자 선호</div>
+                                    <div class="detail-value" id="resultPreference">모던 미니멀리즘</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">예상 기간</div>
+                                    <div class="detail-value" id="resultDuration">4 - 6개월</div>
+                                </div>
+                            </div>
+
+                            <!-- 매칭률 차트 -->
+                            <div class="matching-rates">
+                                <h3 class="matching-title">📊 유형별 매칭률</h3>
+                                <div class="rate-bars" id="rateBars"></div>
+                            </div>
+                        </div>
+
+                        <div class="result-bottom">
+                            <div class="result-actions">
+                                <button class="action-btn" onclick="restartAnalysis()">
+                                    🔄 다시 분석하기
+                                </button>
+                                <button class="action-btn secondary catalog-btn" onclick="goToEditor()">
+                                    <span class="btn-sparkle">✨</span>
+                                    맞춤 카탈로그 →
+                                </button>
+                            </div>
+
+                            <!-- 공유 섹션 -->
+                            <div class="share-section">
+                                <p class="share-label">결과 공유하기</p>
+                                <div class="share-buttons">
+                                    <button class="share-btn kakao" onclick="shareKakao()" title="카카오톡 공유">💬</button>
+                                    <button class="share-btn link" onclick="copyLink()" title="링크 복사">🔗</button>
+                                    <button class="share-btn download" onclick="downloadResult()" title="이미지 저장">📥</button>
+                                </div>
+                            </div>
+
+                            <div class="progress-indicator">
+                                <div class="progress-text">분석 완료 ✓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons" id="navButtons">
+                <button class="btn-prev" onclick="prevStep()" id="prevBtn" style="display: none;">← 이전</button>
+                <button class="btn-next" onclick="nextStep()" id="nextBtn">다음 →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <script>
+        // ==================== 상태 관리 ====================
+        let currentStep = 1;
+        const totalSteps = 6;
+        let answers = {};
+        let allScores = {};
+        let currentResultType = '';
+        let currentTemplateKey = '';
+
+        // ==================== 결과 유형 정의 (템플릿 키 매핑 포함) ====================
+        const resultTypes = {
+            '단기투자형': {
+                templateKey: 'shortterm',
+                labelEng: 'SHORT-TERM INVESTMENT',
+                spaceType: '팝업/프로모션',
+                subtitle: '단기 고수익 전략',
+                description: '팝업스토어나 브랜드 프로모션에 최적화된 공간입니다. 이동이 용이하고 빠른 설치/철거가 가능한 구조로, 단기간 최대 효과를 낼 수 있습니다. 기본 전기와 조명 중심의 심플한 구성이 특징입니다.',
+                size: '40 - 80㎡ (약 4평)',
+                preference: '유니크 & 모던',
+                duration: '1 - 3개월',
+                image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80'
+            },
+            '장기투자형': {
+                templateKey: 'longterm',
+                labelEng: 'LONG-TERM INVESTMENT',
+                spaceType: '비즈니스 공간',
+                subtitle: '지속 가능한 수익 모델',
+                description: '카페, 레스토랑 등 장기적 상업 운영에 적합한 프리미엄 공간입니다. 고급 마감재(대리석, 가죽)를 사용하여 브랜드 가치를 높이고 안정적인 수익 창출이 가능합니다.',
+                size: '85 - 150㎡ (약 13평)',
+                preference: '럭셔리 프리미엄',
+                duration: '1년 이상',
+                image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'
+            },
+            '실 거주형': {
+                templateKey: 'single',
+                labelEng: 'RESIDENTIAL LIVING',
+                spaceType: '1인 생활 공간',
+                subtitle: '편안한 나만의 공간',
+                description: '워케이션, 휴식, 1인 가구를 위한 실용적인 생활 공간입니다. 침실, 거실, 작업 공간이 효율적으로 배치되어 있으며 따뜻한 우드톤 인테리어가 특징입니다.',
+                size: '50 - 85㎡ (약 7평)',
+                preference: '내추럴 우드',
+                duration: '6개월 - 1년',
+                image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80'
+            },
+            '신혼부부형': {
+                templateKey: 'newlywed',
+                labelEng: 'NEWLYWED COUPLE',
+                spaceType: '신혼 생활 공간',
+                subtitle: '새로운 시작을 위한 공간',
+                description: '새로운 시작을 준비하는 커플을 위한 아늑한 2인 공간입니다. 넓은 침실과 다이닝 공간, 충분한 수납공간을 갖추고 있으며 따뜻한 톤의 패브릭 소재를 활용했습니다.',
+                size: '60 - 100㎡ (약 10평)',
+                preference: '웜톤 & 로맨틱',
+                duration: '1년 이상',
+                image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80'
+            },
+            '오피스텔형': {
+                templateKey: 'homeoffice',
+                labelEng: 'HOME OFFICE',
+                spaceType: '복합 업무 공간',
+                subtitle: '업무와 생활의 조화',
+                description: '재택근무와 생활이 조화를 이루는 홈오피스 공간입니다. 업무 영역과 휴식 영역이 파티션으로 분리되어 있어 집중과 휴식을 모두 만족시킵니다.',
+                size: '55 - 95㎡ (약 8평)',
+                preference: '모던 미니멀',
+                duration: '6개월 - 1년',
+                image: 'https://images.unsplash.com/photo-1497366672149-e5e4b4d34eb3?w=800&q=80'
+            }
+        };
+
+        // ==================== 초기화 ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSavedProgress();
+            updateProgress();
+            updateButtonState();
+            setupKeyboardNavigation();
+        });
+
+        // ==================== 키보드 네비게이션 ====================
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    const nextBtn = document.getElementById('nextBtn');
+                    if (!nextBtn.disabled && nextBtn.style.display !== 'none') {
+                        nextStep();
+                    }
+                } else if (e.key === 'Backspace' && e.target.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    prevStep();
+                }
+            });
+        }
+
+        // ==================== LocalStorage 관련 ====================
+        function saveProgress() {
+            const data = { currentStep, answers, timestamp: Date.now() };
+            localStorage.setItem('cubeAnalysis', JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('cubeAnalysis');
+            if (!saved) return null;
+            const data = JSON.parse(saved);
+            if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('cubeAnalysis');
+                return null;
+            }
+            return data;
+        }
+
+        function checkSavedProgress() {
+            const saved = loadProgress();
+            if (saved && saved.currentStep > 1) {
+                document.getElementById('resumeMessage').textContent = 
+                    `${saved.currentStep}단계까지 진행하셨습니다. 이어서 하시겠습니까?`;
+                document.getElementById('resumeModal').classList.add('active');
+            }
+        }
+
+        function resumeProgress() {
+            const saved = loadProgress();
+            if (saved) {
+                currentStep = saved.currentStep;
+                answers = saved.answers;
+                restoreAnswers();
+                document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+                updateProgress();
+                updateButtonState();
+            }
+            closeResumeModal();
+        }
+
+        function restoreAnswers() {
+            for (let key in answers) {
+                const value = answers[key];
+                if (Array.isArray(value)) {
+                    value.forEach(v => {
+                        const input = document.querySelector(`input[name="${key}"][value="${v}"]`);
+                        if (input) input.checked = true;
+                    });
+                } else {
+                    const input = document.querySelector(`input[name="${key}"][value="${value}"]`);
+                    if (input) input.checked = true;
+                }
+            }
+        }
+
+        function startFresh() {
+            localStorage.removeItem('cubeAnalysis');
+            closeResumeModal();
+        }
+
+        function closeResumeModal() {
+            document.getElementById('resumeModal').classList.remove('active');
+        }
+
+        function clearProgress() {
+            localStorage.removeItem('cubeAnalysis');
+        }
+
+        // ==================== 진행 관리 ====================
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentStepText').textContent = currentStep;
+        }
+
+        function saveAnswer(step) {
+            const currentStepElement = document.querySelector(`.step[data-step="${step}"]`);
+            const checkboxes = currentStepElement.querySelectorAll('input[type="checkbox"]:checked');
+            const radios = currentStepElement.querySelectorAll('input[type="radio"]:checked');
+            
+            currentStepElement.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (!answers[cb.name]) answers[cb.name] = [];
+            });
+            
+            checkboxes.forEach(checkbox => {
+                if (!answers[checkbox.name]) answers[checkbox.name] = [];
+                if (!answers[checkbox.name].includes(checkbox.value)) {
+                    answers[checkbox.name].push(checkbox.value);
+                }
+            });
+            
+            radios.forEach(radio => {
+                answers[radio.name] = radio.value;
+            });
+
+            saveProgress();
+        }
+
+        function isStepValid(step) {
+            const currentStepElement = document.querySelector(`.step[data-step="${step}"]`);
+            const questions = currentStepElement.querySelectorAll('.question');
+            
+            for (let question of questions) {
+                const checkboxes = question.querySelectorAll('input[type="checkbox"]');
+                const radios = question.querySelectorAll('input[type="radio"]');
+                
+                if (checkboxes.length > 0) {
+                    const hasChecked = Array.from(checkboxes).some(cb => cb.checked);
+                    if (!hasChecked) return false;
+                }
+                
+                if (radios.length > 0) {
+                    const hasChecked = Array.from(radios).some(r => r.checked);
+                    if (!hasChecked) return false;
+                }
+            }
+            return true;
+        }
+
+        function updateButtonState() {
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            
+            nextBtn.disabled = !isStepValid(currentStep);
+            prevBtn.style.display = currentStep > 1 ? 'inline-flex' : 'none';
+            nextBtn.innerHTML = currentStep === totalSteps ? '결과 보기 🎉' : '다음 →';
+        }
+
+        function nextStep() {
+            if (!isStepValid(currentStep)) {
+                showToast('모든 질문에 답변해주세요 📝');
+                return;
+            }
+            
+            saveAnswer(currentStep);
+            
+            if (currentStep === totalSteps) {
+                showLoading();
+                return;
+            }
+            
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            currentStep++;
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+            
+            updateProgress();
+            updateButtonState();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep() {
+            if (currentStep <= 1) return;
+            
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            currentStep--;
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+            
+            updateProgress();
+            updateButtonState();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== 로딩 애니메이션 ====================
+        function showLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingText = document.getElementById('loadingText');
+            
+            overlay.classList.add('active');
+            loadingBar.style.animation = 'none';
+            loadingBar.offsetHeight;
+            loadingBar.style.animation = 'loadingProgress 2s ease-in-out forwards';
+            
+            const messages = ['응답을 분석하고 있습니다...', '최적의 유형을 찾고 있습니다...', '맞춤 결과를 생성하고 있습니다...'];
+            let messageIndex = 0;
+            const messageInterval = setInterval(() => {
+                messageIndex++;
+                if (messageIndex < messages.length) {
+                    loadingText.textContent = messages[messageIndex];
+                }
+            }, 600);
+            
+            setTimeout(() => {
+                clearInterval(messageInterval);
+                overlay.classList.remove('active');
+                displayResult();
+            }, 2000);
+        }
+
+        // ==================== 결과 계산 ====================
+        function calculateResult() {
+            const scores = {
+                '단기투자형': 0, '장기투자형': 0, '실 거주형': 0, '신혼부부형': 0, '오피스텔형': 0
+            };
+
+            // Q1: 용도
+            if (answers.q1) {
+                if (answers.q1.includes('popup') || answers.q1.includes('studio')) scores['단기투자형'] += 3;
+                if (answers.q1.includes('cafe') || answers.q1.includes('office')) {
+                    scores['장기투자형'] += 2;
+                    scores['오피스텔형'] += 2;
+                }
+                if (answers.q1.includes('stay') || answers.q1.includes('camping')) scores['실 거주형'] += 3;
+                if (answers.q1.includes('office') && answers.q1.includes('stay')) scores['오피스텔형'] += 2;
+            }
+
+            // Q2: 장소 고정 여부
+            if (answers.q2 === 'mobile') scores['단기투자형'] += 2;
+            else if (answers.q2 === 'fixed') {
+                scores['장기투자형'] += 2;
+                scores['실 거주형'] += 1;
+                scores['오피스텔형'] += 1;
+            }
+
+            // Q3: 이동 빈도
+            if (answers.q3 === 'regular') scores['단기투자형'] += 2;
+            else if (answers.q3 === 'once') scores['장기투자형'] += 1;
+
+            // Q4: 사용 기간
+            if (answers.q4 === 'short' || answers.q4 === 'medium') scores['단기투자형'] += 2;
+            else if (answers.q4 === 'long' || answers.q4 === 'verylong') {
+                scores['장기투자형'] += 2;
+                scores['실 거주형'] += 2;
+                scores['오피스텔형'] += 1;
+            }
+
+            // Q5: 방식
+            if (answers.q5 === 'rental') scores['단기투자형'] += 2;
+            else if (answers.q5 === 'purchase') {
+                scores['장기투자형'] += 2;
+                scores['실 거주형'] += 1;
+            }
+
+            // Q6: 예산
+            if (answers.q6 === 'budget1' || answers.q6 === 'budget2') scores['단기투자형'] += 1;
+            else if (answers.q6 === 'budget3' || answers.q6 === 'budget4') {
+                scores['장기투자형'] += 1;
+                scores['실 거주형'] += 1;
+                scores['오피스텔형'] += 1;
+            }
+
+            // Q7: 핵심 시설
+            if (answers.q7) {
+                if (answers.q7.includes('basic')) scores['단기투자형'] += 3;
+                if (answers.q7.includes('office_facility')) {
+                    scores['오피스텔형'] += 3;
+                    scores['장기투자형'] += 1;
+                }
+                if (answers.q7.includes('full_option')) {
+                    scores['실 거주형'] += 4;
+                    scores['신혼부부형'] += 4;
+                }
+                if (answers.q7.includes('premium')) {
+                    scores['단기투자형'] += 2;
+                    scores['신혼부부형'] += 1;
+                }
+                if (answers.q7.includes('rest')) {
+                    scores['실 거주형'] += 1;
+                    scores['오피스텔형'] += 1;
+                }
+            }
+
+            // Q8: 가치
+            if (answers.q8 === 'profit' || answers.q8 === 'asset') {
+                scores['단기투자형'] += 2;
+                scores['장기투자형'] += 2;
+            } else if (answers.q8 === 'romance') {
+                scores['신혼부부형'] += 3;
+                scores['실 거주형'] += 1;
+            } else if (answers.q8 === 'cost_save' || answers.q8 === 'efficiency') {
+                scores['실 거주형'] += 2;
+                scores['오피스텔형'] += 2;
+            }
+
+            // Q9: 토지 상태
+            if (answers.q9 === 'urban' || answers.q9 === 'hotplace') {
+                scores['단기투자형'] += 2;
+                scores['오피스텔형'] += 1;
+            } else if (answers.q9 === 'rural') {
+                scores['실 거주형'] += 3;
+                scores['장기투자형'] += 2;
+            } else if (answers.q9 === 'rooftop') scores['오피스텔형'] += 2;
+
+            // Q10: 인테리어 스타일
+            if (answers.q10 === 'unique') scores['단기투자형'] += 3;
+            else if (answers.q10 === 'modern') scores['오피스텔형'] += 3;
+            else if (answers.q10 === 'cozy') {
+                scores['신혼부부형'] += 3;
+                scores['실 거주형'] += 1;
+            } else if (answers.q10 === 'practical') {
+                scores['실 거주형'] += 3;
+                scores['장기투자형'] += 1;
+            }
+
+            // Q11: 처분 계획
+            if (answers.q11 === 'resell' || answers.q11 === 'return') scores['단기투자형'] += 3;
+            else if (answers.q11 === 'keep' || answers.q11 === 'convert') {
+                scores['장기투자형'] += 3;
+                scores['실 거주형'] += 2;
+            }
+
+            // 신혼부부형 특별 조건
+            if (answers.q1 && answers.q1.includes('stay') && 
+                (answers.q4 === 'long' || answers.q4 === 'verylong') &&
+                answers.q2 === 'fixed' && answers.q8 === 'romance') {
+                scores['신혼부부형'] += 3;
+            }
+
+            allScores = { ...scores };
+
+            let maxScore = 0;
+            let resultType = '오피스텔형';
+            for (let type in scores) {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    resultType = type;
+                }
+            }
+            return resultType;
+        }
+
+        // ==================== 결과 표시 ====================
+        function displayResult() {
+            const resultTypeName = calculateResult();
+            const result = resultTypes[resultTypeName];
+            
+            currentResultType = resultTypeName;
+            currentTemplateKey = result.templateKey;
+            
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            document.querySelector(`.step[data-step="result"]`).classList.add('active');
+            
+            document.getElementById('resultLabelEng').textContent = result.labelEng;
+            document.getElementById('resultSpaceType').textContent = result.spaceType;
+            document.getElementById('resultType').textContent = resultTypeName;
+            document.getElementById('resultSubtitle').textContent = result.subtitle;
+            document.getElementById('resultDescription').textContent = result.description;
+            document.getElementById('resultSize').textContent = result.size;
+            document.getElementById('resultPreference').textContent = result.preference;
+            document.getElementById('resultDuration').textContent = result.duration;
+            document.getElementById('resultImage').src = result.image;
+            
+            generateMatchingChart(allScores);
+            
+            document.getElementById('navButtons').style.display = 'none';
+            document.getElementById('progressBar').style.width = '100%';
+            
+            // 결과를 localStorage에 저장 (에디터에서 사용)
+            localStorage.setItem('propensity_result', JSON.stringify({
+                type: resultTypeName,
+                templateKey: currentTemplateKey,
+                scores: allScores,
+                answers: answers,
+                timestamp: Date.now()
+            }));
+            
+            clearProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== 매칭률 차트 ====================
+        function generateMatchingChart(scores) {
+            const total = Object.values(scores).reduce((a, b) => a + b, 0);
+            const sortedScores = Object.entries(scores)
+                .map(([type, score]) => ({
+                    type,
+                    percent: total > 0 ? Math.round((score / total) * 100) : 0
+                }))
+                .sort((a, b) => b.percent - a.percent);
+
+            const container = document.getElementById('rateBars');
+            container.innerHTML = sortedScores.map((item, index) => `
+                <div class="rate-item">
+                    <span class="rate-label">${item.type}</span>
+                    <div class="rate-bar-bg">
+                        <div class="rate-bar-fill ${index === 0 ? 'top' : ''}" 
+                             style="width: 0%" 
+                             data-width="${item.percent}%"></div>
+                    </div>
+                    <span class="rate-percent">${item.percent}%</span>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                container.querySelectorAll('.rate-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
+                });
+            }, 300);
+        }
+
+        // ==================== 에디터로 이동 (핵심 기능) ====================
+        function goToEditor() {
+            if (!currentTemplateKey) {
+                showToast('결과를 먼저 확인해주세요');
+                return;
+            }
+            
+            // 에디터 페이지로 템플릿 키와 함께 이동
+            showToast(`${currentResultType} 템플릿을 불러옵니다... ✨`);
+            
+            setTimeout(() => {
+                window.location.href = `editor.html?template=${currentTemplateKey}&from=propensity`;
+            }, 800);
+        }
+
+        // ==================== 결과 액션 ====================
+        function restartAnalysis() {
+            currentStep = 1;
+            answers = {};
+            allScores = {};
+            currentResultType = '';
+            currentTemplateKey = '';
+            
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.querySelector('.step[data-step="1"]').classList.add('active');
+            
+            document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            document.getElementById('navButtons').style.display = 'flex';
+            updateProgress();
+            updateButtonState();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== 공유 기능 ====================
+        function shareKakao() {
+            showToast('카카오 공유 준비 중입니다 💬');
+        }
+
+        function copyLink() {
+            const url = `${window.location.origin}${window.location.pathname}?result=${encodeURIComponent(currentResultType)}`;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('링크가 복사되었습니다! 📋');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = url;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('링크가 복사되었습니다! 📋');
+            });
+        }
+
+        async function downloadResult() {
+            showToast('이미지 생성 중... 📸');
+            try {
+                const element = document.querySelector('.result-container');
+                const canvas = await html2canvas(element, {
+                    scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff'
+                });
+                const link = document.createElement('a');
+                link.download = `큐브컨테이너_${currentResultType}_${new Date().toISOString().slice(0,10)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast('이미지가 저장되었습니다! 🎉');
+            } catch (error) {
+                showToast('이미지 저장에 실패했습니다 😢');
+            }
+        }
+
+        // ==================== 플로팅 버튼 ====================
+        function toggleFloatMenu() {
+            document.getElementById('floatMenu').classList.toggle('active');
+            document.getElementById('floatMainBtn').classList.toggle('active');
+        }
+
+        function openContactForm() {
+            toggleFloatMenu();
+            showToast('문의 폼을 준비 중입니다 📝');
+        }
+
+        document.addEventListener('click', (e) => {
+            const floatingBtns = document.getElementById('floatingButtons');
+            if (!floatingBtns.contains(e.target)) {
+                document.getElementById('floatMenu').classList.remove('active');
+                document.getElementById('floatMainBtn').classList.remove('active');
+            }
+        });
+
+        // ==================== 토스트 메시지 ====================
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // ==================== 이벤트 리스너 ====================
+        document.addEventListener('change', updateButtonState);
+    </script>
+</body>
+</html>
