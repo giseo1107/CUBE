@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
 </head>
 <body>
-    <a href="editor.html">큐브 커스텀 하러가기</a>
   <div class="container mypage-container">
     <div class="profile-section">
       <div class="profile-image-wrapper">
@@ -30,7 +29,16 @@
     
     <div class="form-container">
       <div id="alertBox" class="alert"></div>
-      
+
+      <!-- ===== 탭 네비게이션 ===== -->
+      <div class="tab-nav">
+        <button class="tab-btn is-active" data-tab="tabProfile" onclick="switchTab('tabProfile')">회원정보</button>
+        <button class="tab-btn" data-tab="tabReservation" onclick="switchTab('tabReservation')">예약관리</button>
+      </div>
+
+      <!-- ===== 탭1: 회원정보 ===== -->
+      <div class="tab-content is-active" id="tabProfile">
+
       <!-- 회원정보 섹션 -->
       <div class="section">
         <h3>회원정보</h3>
@@ -115,6 +123,19 @@
       <!-- 로그아웃 & 회원탈퇴 -->
       <button id="logoutBtn" class="btn btn-secondary">로그아웃</button>
       <button id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴</button>
+
+      </div><!-- /tabProfile -->
+
+      <!-- ===== 탭2: 예약관리 ===== -->
+      <div class="tab-content" id="tabReservation">
+        <div class="section" style="background: transparent; padding: 0;">
+          <h3>나의 예약</h3>
+          <div id="reservationList">
+            <div class="reservation-loading">예약 정보를 불러오는 중...</div>
+          </div>
+        </div>
+      </div><!-- /tabReservation -->
+
     </div>
   </div>
 
@@ -162,7 +183,128 @@
       }, 5000);
     }
 
-    // 프로필 이미지 표시
+    // ========================================
+    // 탭 전환
+    // ========================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.tab === tabId);
+      });
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('is-active', content.id === tabId);
+      });
+      if (tabId === 'tabReservation') {
+        loadReservations();
+      }
+    }
+
+    // ========================================
+    // 예약 관리
+    // ========================================
+    const DAYS = ['일','월','화','수','목','금','토'];
+
+    function formatResDate(dateStr) {
+      const d = new Date(dateStr);
+      return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DAYS[d.getDay()]})`;
+    }
+
+    function formatResTime(timeStr) {
+      const t = String(timeStr).substring(0, 5);
+      const hour = parseInt(t.split(':')[0]);
+      const min = t.split(':')[1];
+      const period = hour >= 12 ? '오후' : '오전';
+      const dh = hour > 12 ? hour - 12 : hour;
+      return `${period} ${dh}시${min !== '00' ? ' ' + min + '분' : ''} (${t})`;
+    }
+
+    async function loadReservations() {
+      const container = document.getElementById('reservationList');
+      container.innerHTML = '<div class="reservation-loading">예약 정보를 불러오는 중...</div>';
+
+      try {
+        const response = await fetch('/api/reservation/my');
+        const data = await response.json();
+
+        if (!data.success || !data.reservations || data.reservations.length === 0) {
+          container.innerHTML = `
+            <div class="reservation-empty">
+              <div class="reservation-empty-icon">📋</div>
+              <p class="reservation-empty-text">현재 예약 내역이 없습니다.</p>
+              <a href="/visit-reservation.html" class="btn btn-primary reservation-goto-btn">예약하러 가기</a>
+            </div>
+          `;
+          return;
+        }
+
+        let html = '';
+        data.reservations.forEach(r => {
+          const dateStr = formatResDate(r.visit_date);
+          const timeStr = formatResTime(r.visit_time);
+          const isCancelled = r.status !== 'BOOKED';
+          const statusClass = isCancelled ? 'rs-cancelled' : 'rs-booked';
+          const statusText = isCancelled ? '취소됨' : '예약 확정';
+
+          html += `
+            <div class="res-card ${isCancelled ? 'is-cancelled' : ''}">
+              <div class="res-card-header">
+                <span class="res-card-number">RES-${r.res_id}</span>
+                <span class="res-card-status ${statusClass}">${statusText}</span>
+              </div>
+              <table class="res-card-table">
+                <tr><td class="res-label">방문 날짜</td><td class="res-value">${dateStr}</td></tr>
+                <tr><td class="res-label">방문 시간</td><td class="res-value">${timeStr}</td></tr>
+                <tr><td class="res-label">방문 인원</td><td class="res-value">${r.people_count}명</td></tr>
+                <tr><td class="res-label">연락처</td><td class="res-value">${r.phone || '-'}</td></tr>
+                <tr><td class="res-label">이메일</td><td class="res-value">${r.email || '-'}</td></tr>
+                <tr>
+                  <td class="res-label">방문 장소</td>
+                  <td class="res-value">
+                    C.C.C 큐브 시리즈 전시관
+                    <span class="res-address">서울시 강남구 테헤란로 123 C.C.C 빌딩 1층</span>
+                  </td>
+                </tr>
+              </table>
+              ${!isCancelled ? `<div class="res-card-actions"><button class="btn btn-danger res-cancel-btn" onclick="cancelReservation(${r.res_id})">예약 취소</button></div>` : ''}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+
+      } catch (err) {
+        console.error('예약 목록 로드 실패:', err);
+        container.innerHTML = `
+          <div class="reservation-empty">
+            <div class="reservation-empty-icon">⚠️</div>
+            <p class="reservation-empty-text">예약 정보를 불러올 수 없습니다.</p>
+            <a href="/visit-reservation.html" class="btn btn-primary reservation-goto-btn">예약하러 가기</a>
+          </div>
+        `;
+      }
+    }
+
+    async function cancelReservation(resId) {
+      if (!confirm('정말 예약을 취소하시겠습니까?\n방문 24시간 이내에는 취소가 불가합니다.')) return;
+
+      try {
+        const response = await fetch(`/api/reservation/${resId}/cancel`, { method: 'PATCH' });
+        const data = await response.json();
+
+        if (data.success) {
+          showAlert('예약이 취소되었습니다.', 'success');
+          loadReservations();
+        } else {
+          showAlert(data.message || '예약 취소에 실패했습니다.', 'error');
+        }
+      } catch (err) {
+        console.error('예약 취소 오류:', err);
+        showAlert('예약 취소 중 오류가 발생했습니다.', 'error');
+      }
+    }
+
+    // ========================================
+    // 프로필 이미지
+    // ========================================
     function displayProfileImage(imageData) {
       if (imageData) {
         const existingImg = profileImageContainer.querySelector('img');
@@ -179,7 +321,6 @@
         profileImageContainer.appendChild(img);
         profileImagePlaceholder.style.display = 'none';
         
-        // 이미지가 있으면 수정/삭제 버튼 표시
         hasProfileImage = true;
         profileImageActions.style.display = 'flex';
         profileImageContainer.style.cursor = 'default';
@@ -190,97 +331,67 @@
         }
         profileImagePlaceholder.style.display = 'block';
         
-        // 이미지가 없으면 수정/삭제 버튼 숨김
         hasProfileImage = false;
         profileImageActions.style.display = 'none';
         profileImageContainer.style.cursor = 'pointer';
       }
     }
 
-    // 프로필 이미지 클릭 시 파일 선택 (이미지가 없을 때만)
     profileImageContainer.addEventListener('click', () => {
       if (!hasProfileImage) {
         profileImageInput.click();
       }
     });
 
-    // 이미지 수정 버튼
     editImageBtn.addEventListener('click', () => {
       profileImageInput.click();
     });
 
-    // 이미지 삭제 버튼
-    // 이미지 삭제 버튼
-deleteImageBtn.addEventListener('click', async () => {
-  console.log('삭제 버튼 클릭됨');
-  
-  if (!confirm('프로필 이미지를 삭제하시겠습니까?')) {
-    console.log('삭제 취소됨');
-    return;
-  }
+    deleteImageBtn.addEventListener('click', async () => {
+      if (!confirm('프로필 이미지를 삭제하시겠습니까?')) return;
 
-  try {
-    console.log('DELETE 요청 전송 중...');
-    
-    const response = await fetch('/api/user/profile-image', {
-      method: 'DELETE'
+      try {
+        const response = await fetch('/api/user/profile-image', { method: 'DELETE' });
+        const data = await response.json();
+
+        if (data.success) {
+          displayProfileImage(null);
+          showAlert('프로필 이미지가 삭제되었습니다.', 'success');
+        } else {
+          showAlert(data.message || '이미지 삭제에 실패했습니다.', 'error');
+        }
+      } catch (error) {
+        console.error('이미지 삭제 오류:', error);
+        showAlert('이미지 삭제 중 오류가 발생했습니다.', 'error');
+      }
     });
-
-    console.log('응답 상태:', response.status);
-    console.log('응답 OK:', response.ok);
-
-    const data = await response.json();
-    console.log('응답 데이터:', data);
-
-    if (data.success) {
-      displayProfileImage(null);
-      showAlert('프로필 이미지가 삭제되었습니다.', 'success');
-      console.log('✅ 삭제 완료');
-    } else {
-      showAlert(data.message || '이미지 삭제에 실패했습니다.', 'error');
-      console.log('❌ 삭제 실패:', data.message);
-    }
-  } catch (error) {
-    console.error('❌❌❌ 이미지 삭제 오류 ❌❌❌');
-    console.error(error);
-    showAlert('이미지 삭제 중 오류가 발생했습니다.', 'error');
-  }
-});
 
     // 이미지 선택 시 크롭 모달 열기
     profileImageInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
-      
       if (!file) return;
 
-      console.log('파일 선택:', file.name, file.size, 'bytes');
-
-      // 파일 타입 검증
       if (!file.type.startsWith('image/')) {
         showAlert('이미지 파일만 업로드 가능합니다.', 'error');
         return;
       }
 
-      // 파일 크기 검증 (10MB)
       if (file.size > 10 * 1024 * 1024) {
         showAlert('이미지 크기는 10MB 이하여야 합니다.', 'error');
         return;
       }
 
-      // 이미지 미리보기
       const reader = new FileReader();
       reader.onload = (event) => {
         cropImage.src = event.target.result;
         cropModal.classList.add('show');
 
-        // 기존 cropper 제거
         if (cropper) {
           cropper.destroy();
         }
 
-        // 새로운 cropper 생성 (원형으로 표시)
         cropper = new Cropper(cropImage, {
-          aspectRatio: 1, // 1:1 비율 (정사각형)
+          aspectRatio: 1,
           viewMode: 1,
           dragMode: 'move',
           autoCropArea: 0.8,
@@ -292,7 +403,6 @@ deleteImageBtn.addEventListener('click', async () => {
           cropBoxResizable: true,
           toggleDragModeOnDblclick: false,
           ready() {
-            // 크롭 박스를 원형으로 표시
             const cropBox = document.querySelector('.cropper-crop-box');
             if (cropBox) {
               cropBox.style.borderRadius = '50%';
@@ -306,10 +416,9 @@ deleteImageBtn.addEventListener('click', async () => {
       };
 
       reader.readAsDataURL(file);
-      e.target.value = ''; // input 초기화
+      e.target.value = '';
     });
 
-    // 크롭 취소
     cancelCrop.addEventListener('click', () => {
       cropModal.classList.remove('show');
       if (cropper) {
@@ -318,12 +427,10 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     });
 
-    // 크롭 확인 및 업로드
     confirmCrop.addEventListener('click', async () => {
       if (!cropper) return;
 
       try {
-        // 크롭된 이미지를 캔버스로 가져오기 (100x100 크기에 맞춤)
         const canvas = cropper.getCroppedCanvas({
           width: 100,
           height: 100,
@@ -331,19 +438,14 @@ deleteImageBtn.addEventListener('click', async () => {
           imageSmoothingQuality: 'high',
         });
 
-        // 캔버스를 Base64로 변환
         const base64Image = canvas.toDataURL('image/jpeg', 0.9);
 
-        console.log('크롭된 이미지 크기:', base64Image.length);
-
-        // 모달 닫기
         cropModal.classList.remove('show');
         if (cropper) {
           cropper.destroy();
           cropper = null;
         }
 
-        // 서버로 업로드
         const response = await fetch('/api/user/profile-image', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -351,7 +453,6 @@ deleteImageBtn.addEventListener('click', async () => {
         });
 
         const data = await response.json();
-        console.log('서버 응답:', data);
 
         if (data.success) {
           displayProfileImage(base64Image);
@@ -366,7 +467,9 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     });
 
+    // ========================================
     // 사용자 정보 로드
+    // ========================================
     async function loadUserInfo() {
       try {
         const response = await fetch('/api/user/info');
@@ -379,14 +482,11 @@ deleteImageBtn.addEventListener('click', async () => {
 
         const user = data.user;
         
-        // 프로필 이미지 표시
         displayProfileImage(user.profile_image);
         
-        // 프로필 정보
         document.getElementById('userName').textContent = user.nickname;
         document.getElementById('userEmail').textContent = user.email;
         
-        // 상세 정보
         document.getElementById('displayEmail').textContent = user.email;
         document.getElementById('displayNickname').textContent = user.nickname;
         document.getElementById('displayPhone').textContent = user.tel_number;
@@ -395,7 +495,6 @@ deleteImageBtn.addEventListener('click', async () => {
         document.getElementById('displayMarketing').textContent = 
           user.marketing_agree ? '동의' : '비동의';
         
-        // 폼에 현재 정보 입력
         document.getElementById('nickname').value = user.nickname;
         document.getElementById('tel_number').value = user.tel_number;
         document.getElementById('address').value = user.address;
@@ -408,7 +507,9 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     }
 
+    // ========================================
     // 정보 수정
+    // ========================================
     document.getElementById('updateForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -441,7 +542,9 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     });
 
+    // ========================================
     // 비밀번호 변경
+    // ========================================
     document.getElementById('passwordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -479,7 +582,9 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     });
 
-    // 로그아웃
+    // ========================================
+    // 로그아웃 & 회원탈퇴
+    // ========================================
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       if (!confirm('로그아웃 하시겠습니까?')) return;
 
@@ -495,7 +600,6 @@ deleteImageBtn.addEventListener('click', async () => {
       }
     });
 
-    // 회원 탈퇴
     document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
       const password = prompt('회원 탈퇴를 위해 비밀번호를 입력하세요:');
       
@@ -542,7 +646,7 @@ deleteImageBtn.addEventListener('click', async () => {
       e.target.value = formatted;
     });
 
-    // 페이지 로드 시 사용자 정보 로드
+    // 페이지 로드
     loadUserInfo();
   </script>
 </body>
