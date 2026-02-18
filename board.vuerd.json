@@ -4,13 +4,13 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 0,
-    "scrollLeft": 0,
-    "zoomLevel": 1,
+    "scrollTop": -294.4386,
+    "scrollLeft": -321.1857,
+    "zoomLevel": 0.75,
     "show": 431,
     "database": 4,
     "databaseName": "C_C",
-    "canvasType": "@dineug/erd-editor/builtin-schema-sql",
+    "canvasType": "ERD",
     "language": 1,
     "tableNameCase": 4,
     "columnNameCase": 2,
@@ -280,15 +280,15 @@
           "Qip2QuryIakAPWlYkthzz"
         ],
         "ui": {
-          "x": 603,
-          "y": 731,
+          "x": 602,
+          "y": 825,
           "zIndex": 2,
           "widthName": 67,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1768892551629,
+          "updateAt": 1769418987491,
           "createAt": 1768892509285
         }
       },
@@ -305,7 +305,11 @@
           "O7KOfJ4Q8jDhsvwM13yVG",
           "WczYZfjRy5be5onZJuPZy",
           "e3E_MKm--8reS_eJGNbA4",
-          "WbbtQBjnWQXjlcgybsH3D"
+          "WbbtQBjnWQXjlcgybsH3D",
+          "Pq6zV4A2b6bYaTrVFsVR9",
+          "1UmYRooFq4BZas24zn2aE",
+          "OFDV_YdXM4JHP-7_g_y5b",
+          "u37Ly75eMHwQxrqFV3cQo"
         ],
         "seqColumnIds": [
           "Q5_2bK8Yzt5ROsUaTACin",
@@ -316,18 +320,22 @@
           "O7KOfJ4Q8jDhsvwM13yVG",
           "WczYZfjRy5be5onZJuPZy",
           "e3E_MKm--8reS_eJGNbA4",
-          "WbbtQBjnWQXjlcgybsH3D"
+          "WbbtQBjnWQXjlcgybsH3D",
+          "Pq6zV4A2b6bYaTrVFsVR9",
+          "1UmYRooFq4BZas24zn2aE",
+          "OFDV_YdXM4JHP-7_g_y5b",
+          "u37Ly75eMHwQxrqFV3cQo"
         ],
         "ui": {
-          "x": 642,
-          "y": 365,
+          "x": 544,
+          "y": 366,
           "zIndex": 2,
           "widthName": 60,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1768892577960,
+          "updateAt": 1769419188705,
           "createAt": 1768892509285
         }
       },
@@ -1523,6 +1531,86 @@
           "updateAt": 1768892509285,
           "createAt": 1768892509285
         }
+      },
+      "Pq6zV4A2b6bYaTrVFsVR9": {
+        "id": "Pq6zV4A2b6bYaTrVFsVR9",
+        "tableId": "emM0qUejb8KEQK2LjzFDr",
+        "name": "email_verified ",
+        "comment": "이메일 인증여부(0/1)",
+        "dataType": "TINYINT(1)",
+        "default": "0",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 85,
+          "widthComment": 104,
+          "widthDataType": 64,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1769419085377,
+          "createAt": 1769419023805
+        }
+      },
+      "1UmYRooFq4BZas24zn2aE": {
+        "id": "1UmYRooFq4BZas24zn2aE",
+        "tableId": "emM0qUejb8KEQK2LjzFDr",
+        "name": "email_verification_token",
+        "comment": "이메일 인증 토큰",
+        "dataType": "VARCHAR(25)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 140,
+          "widthComment": 81,
+          "widthDataType": 82,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1769419113951,
+          "createAt": 1769419024756
+        }
+      },
+      "OFDV_YdXM4JHP-7_g_y5b": {
+        "id": "OFDV_YdXM4JHP-7_g_y5b",
+        "tableId": "emM0qUejb8KEQK2LjzFDr",
+        "name": "token_expires_at",
+        "comment": "토큰 만료 시간",
+        "dataType": "DATETIME",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 99,
+          "widthComment": 71,
+          "widthDataType": 61,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1769419152490,
+          "createAt": 1769419026488
+        }
+      },
+      "u37Ly75eMHwQxrqFV3cQo": {
+        "id": "u37Ly75eMHwQxrqFV3cQo",
+        "tableId": "emM0qUejb8KEQK2LjzFDr",
+        "name": "created_at ",
+        "comment": "생성 일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 66,
+          "widthComment": 60,
+          "widthDataType": 71,
+          "widthDefault": 133
+        },
+        "meta": {
+          "updateAt": 1769419185711,
+          "createAt": 1769419026654
+        }
       }
     },
     "relationshipEntities": {
@@ -1536,8 +1624,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 642,
-          "y": 433,
+          "x": 544,
+          "y": 458,
           "direction": 1
         },
         "end": {
@@ -1592,8 +1680,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 1002,
-          "y": 365,
+          "x": 990.25,
+          "y": 366,
           "direction": 4
         },
         "end": {
@@ -1620,8 +1708,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 642,
-          "y": 569,
+          "x": 544,
+          "y": 642,
           "direction": 1
         },
         "end": {
@@ -1648,8 +1736,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 1122,
-          "y": 433,
+          "x": 1139,
+          "y": 458,
           "direction": 2
         },
         "end": {
@@ -1676,8 +1764,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 1122,
-          "y": 569,
+          "x": 1139,
+          "y": 642,
           "direction": 2
         },
         "end": {
@@ -1704,8 +1792,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 882,
-          "y": 637,
+          "x": 841.5,
+          "y": 734,
           "direction": 8
         },
         "end": {
@@ -1713,8 +1801,8 @@
           "columnIds": [
             "yJZUyi3idzKYoutt8SIx5"
           ],
-          "x": 836,
-          "y": 731,
+          "x": 835,
+          "y": 825,
           "direction": 4
         },
         "meta": {
@@ -1760,8 +1848,8 @@
           "columnIds": [
             "Q5_2bK8Yzt5ROsUaTACin"
           ],
-          "x": 762,
-          "y": 365,
+          "x": 692.75,
+          "y": 366,
           "direction": 4
         },
         "end": {

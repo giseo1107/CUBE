@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, maximum-scale=1.0">
+  <title>설치 체크리스트 - C.C.C</title>
+  <link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png">
+  <link rel="stylesheet" type="text/css" href="css/checklist.css">
+</head>
+<body style="margin: 0">
+  <input type="hidden" id="anPageName" name="page" value="checklist">
+  <div class="checklist screen">
+    <div class="container-8">
+
+      <!-- ========== 페이지 헤더 ========== -->
+      <div class="container-9">
+        <div class="heading-1 heading">
+          <h1 class="text-160">컨테이너하우스 설치 체크리스트</h1>
+        </div>
+        <div class="paragraph-1 paragraph-3">
+          <p class="text-161 arial-regular-normal-scarpa-flow-20px">
+            설치에 필요한 모든 서류와 공문을 확인하고 제출하세요
+          </p>
+        </div>
+      </div>
+
+      <!-- ========== 진행률 바 ========== -->
+      <div class="container-10">
+        <div class="container-11">
+          <div class="text-5">
+            <div class="text arial-bold-oxford-blue-18px">전체 진행률</div>
+          </div>
+          <div class="text-6">
+            <div class="text-163"><span id="completedCount">0</span> / <span id="totalCount">8</span></div>
+          </div>
+        </div>
+        <div class="container-12">
+          <div class="container-13" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- ========== 체크리스트 항목들 ========== -->
+      <div class="container-14" id="checklistItems">
+
+        <!-- 항목 1: 건축 신고서 -->
+        <div class="container checklist-item" data-index="0">
+          <div class="container-1">
+            <img class="container-2" src="img/container-7.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-15">
+                <div class="container-16">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">건축 신고서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">
+                      컨테이너하우스 설치를 위한 건축 신고서 제출
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 2: 토지 사용 승인서 -->
+        <div class="container checklist-item" data-index="1">
+          <div class="container-1">
+            <img class="container-2" src="img/container-8.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-17">
+                <div class="container-18">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">토지 사용 승인서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">토지 소유자의 사용 승인 또는 임대 계약서</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 3: 상수도 사용 신청서 -->
+        <div class="container checklist-item" data-index="2">
+          <div class="container-1">
+            <img class="container-2" src="img/container-9.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-19">
+                <div class="container-20">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">상수도 사용 신청서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">상수도 연결 및 사용을 위한 신청서</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 4: 하수도 연결 허가서 -->
+        <div class="container checklist-item" data-index="3">
+          <div class="container-1">
+            <img class="container-2" src="img/container-10.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-6">
+                <div class="container-7">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">하수도 연결 허가서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">하수도 연결을 위한 지자체 허가서</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 5: 전기 설비 신고서 -->
+        <div class="container checklist-item" data-index="4">
+          <div class="container-1">
+            <img class="container-2" src="img/container-11.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-21">
+                <div class="container-22">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">전기 설비 신고서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">전기 설비 설치 및 연결 신고서</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 6: 소방 안전 확인서 -->
+        <div class="container checklist-item" data-index="5">
+          <div class="container-1">
+            <img class="container-2" src="img/container-12.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-23">
+                <div class="container-24">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">소방 안전 확인서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">소방 안전 기준 적합 확인서</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 7: 건물 배치도 -->
+        <div class="container checklist-item" data-index="6">
+          <div class="container-1">
+            <img class="container-2" src="img/container-13.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-6">
+                <div class="container-7">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">건물 배치도</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">컨테이너하우스 배치 및 설계 도면</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 항목 8: 환경 영향 평가서 -->
+        <div class="container checklist-item" data-index="7">
+          <div class="container-1">
+            <img class="container-2" src="img/container-14.svg" alt="아이콘">
+            <div class="container-3">
+              <div class="container-25">
+                <div class="container-26">
+                  <div class="heading-3 heading">
+                    <div class="text-1 arial-bold-mirage-24px">환경 영향 평가서</div>
+                  </div>
+                  <div class="paragraph-3">
+                    <p class="text arial-regular-normal-scarpa-flow-18px">환경에 미치는 영향 평가 자료</p>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4">
+                <div class="text-2">
+                  <div class="text arial-bold-oxford-blue-18px">제출 상태:</div>
+                </div>
+                <div class="container-5">
+                  <div class="button button-2 btn-complete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-1" src="img/vector-32.svg" alt="Vector">
+                    </div>
+                    <div class="text-3 arial-bold-oxford-blue-18px">제출 완료</div>
+                  </div>
+                  <div class="button-1 button-2 btn-incomplete" style="cursor: pointer;">
+                    <div class="icon">
+                      <img class="vector" src="img/vector-31.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-34.svg" alt="Vector">
+                      <img class="vector-2" src="img/vector-35.svg" alt="Vector">
+                    </div>
+                    <div class="text-4 arial-bold-oxford-blue-18px">미제출</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========== 제출 현황 요약 ========== -->
+      <div class="container-27">
+        <div class="container-28">
+          <div class="container-29">
+            <div class="heading-3 heading">
+              <div class="text-204">제출 현황 요약</div>
+            </div>
+            <div class="paragraph-2 paragraph-3">
+              <p class="text-205" id="summaryMessage">모든 서류가 제출되면 설치 절차를 진행할 수 있습니다</p>
+            </div>
+          </div>
+          <div class="container-30">
+            <div class="container-31">
+              <div class="percent" id="percentText">0%</div>
+            </div>
+            <div class="container-32">
+              <div class="text-206">완료</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/checklist.js"></script>
+</body>
+</html>

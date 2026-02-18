@@ -1,0 +1,1116 @@
+/* ===================================
+   Cart Page - 장바구니
+   =================================== */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
+
+/* ===== FONTS ===== */
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  /* Colors */
+  --black: #000000;
+  --white: #ffffff;
+  --mirage: #101828;
+  --oxford-blue: #364153;
+  --bright-gray: #374151;
+  --scarpa-flow: #4a5565;
+  --pale-sky: #6b7280;
+  --santas-gray: #99a1af;
+  --santas-gray-2: #9ca3af;
+  --mischka: #d1d5db;
+  --mercury: #e5e7eb;
+  --wild-sand: #f3f4f6;
+  --cultured-pearl: #f5f5f5;
+  --alabaster: #f9fafb;
+  --chathams-blue: #1a4f85;
+
+  /* Font Sizes */
+  --font-size-xxs: 13px;
+  --font-size-xs: 14px;
+  --font-size-s: 15px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+
+  /* Font Families */
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-inter: "Inter", Helvetica;
+  --font-family-noto_sans_kr: "Noto Sans KR", Helvetica;
+}
+
+/* ===== GLOBAL BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+/* ===== TYPOGRAPHY UTILITY CLASSES ===== */
+
+/* Arial Regular */
+.arial-regular-normal-pale-sky-14px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.arial-regular-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.arial-regular-normal-bright-gray-16px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-18px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-20px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+}
+
+.arial-regular-normal-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+}
+
+/* Arial Bold */
+.arial-bold-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-s);
+  font-weight: 700;
+}
+
+.arial-bold-mirage-16px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+}
+
+.arial-bold-mirage-17px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.arial-bold-mirage-20px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.arial-bold-mirage-24px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+}
+
+.arial-bold-mirage-28px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.arial-bold-oxford-blue-18px {
+  color: var(--oxford-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+}
+
+.arial-bold-chathams-blue-18px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+}
+
+.arial-bold-chathams-blue-36px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.arial-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.arial-bold-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+}
+
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+}
+
+/* Noto Sans KR */
+.notosanskr-normal-pale-sky-13px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xxs);
+  font-weight: 400;
+}
+
+.notosanskr-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+}
+
+.notosanskr-medium-pale-sky-15px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-s);
+  font-weight: 500;
+}
+
+.notosanskr-medium-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+}
+
+.notosanskr-medium-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+/* Baloo Da 2 */
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+/* =========================================================
+   LAYOUT - SCREEN
+   ========================================================= */
+.cart {
+  position: relative;
+  width: 1676px;
+  height: 944px;
+  background-color: var(--white);
+}
+
+.cart .p-k {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1676px;
+  height: 944px;
+  background-color: #fafafa;
+}
+
+/* =========================================================
+   HEADER (뒤로가기 + 장바구니 제목)
+   ========================================================= */
+.cart .container-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 1676px;
+  height: 81px;
+  padding: 0 0 1px;
+  border-bottom: 1px solid var(--mercury);
+  background-color: var(--white);
+}
+
+.cart .container-3 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 80px;
+  padding: 0 64.02px 0 64px;
+}
+
+/* Back Button */
+.cart .button-1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 120.81px;
+  height: 24px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.cart .button-1:hover {
+  opacity: 0.7;
+}
+
+.cart .icon-2 {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.cart .vector {
+  position: absolute;
+  top: 20.00%;
+  left: 32.50%;
+  width: 35.00%;
+  height: 60.00%;
+}
+
+.cart .text-2 {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  height: 24px;
+}
+
+.cart .text-1-1 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  color: var(--chathams-blue);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Cart Title */
+.cart .heading-1 {
+  position: relative;
+  width: 103.05px;
+  height: 42px;
+}
+
+.cart .text-2-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 42px;
+  white-space: nowrap;
+}
+
+/* Spacer */
+.cart .container-4 {
+  position: relative;
+  width: 140px;
+  height: 1px;
+}
+
+/* =========================================================
+   PRODUCT LIST AREA (좌측)
+   ========================================================= */
+.cart .container-5 {
+  display: grid;
+  grid-template-columns: minmax(0, 840fr);
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 32px;
+  position: relative;
+  width: 1312px;
+  height: 569.5px;
+  margin-left: 182px;
+}
+
+.cart .container-6 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* List Header */
+.cart .container-7 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-around;
+  position: relative;
+  width: 100%;
+  height: 30px;
+  padding: 0 711.14px 0 0;
+}
+
+.cart .heading-2 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 128.86px;
+  height: 30px;
+}
+
+.cart .text-3 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  color: var(--mirage);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+.cart .container-8 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 277.5px;
+  padding: 24px 24px 0;
+  border-radius: 16px;
+  background-color: var(--white);
+  box-shadow: 0px 1px 2px -1px #0000001a, 0px 1px 3px #0000001a;
+}
+
+.cart .container-9 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 24px;
+  position: relative;
+  width: 100%;
+  height: 229.5px;
+}
+
+/* Product Image */
+.cart .image {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  background-image: url(../img/image-----------@2x.png);
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+/* Product Info Container */
+.cart .container-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  height: 229.5px;
+}
+
+/* --- Name & Delete --- */
+.cart .container-11 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 65px;
+}
+
+.cart .container-12 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  width: 219.53px;
+  height: 65px;
+}
+
+.cart .heading-3 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 33px;
+}
+
+.cart .text-4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 33px;
+  white-space: nowrap;
+}
+
+.cart .paragraph {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 24px;
+}
+
+.cart .text {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+/* Delete Button */
+.cart .button-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  padding: 8px 8px 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.cart .button-2:hover {
+  opacity: 0.6;
+}
+
+.cart .icon-3 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 20px;
+}
+
+.cart .vector-1 {
+  position: absolute;
+  top: 20.00%;
+  left: 20.00%;
+  width: 60.00%;
+  height: 60.00%;
+}
+
+/* --- Base Price --- */
+.cart .container-13 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 57.5px;
+  padding: 16px 16px 0;
+  border-radius: 10px;
+  background-color: var(--alabaster);
+}
+
+.cart .container-14 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 25.5px;
+}
+
+.cart .text-5 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 59.41px;
+  height: 22.5px;
+}
+
+.cart .text-6 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: 22.5px;
+  white-space: nowrap;
+}
+
+.cart .text-7 {
+  position: relative;
+  width: 100.73px;
+  height: 25.5px;
+}
+
+.cart .text-7-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 25.5px;
+  white-space: nowrap;
+}
+
+/* --- Quantity & Subtotal --- */
+.cart .container-15 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 75px;
+  border-top: 1px solid var(--mercury);
+}
+
+/* Quantity Control */
+.cart .container-16 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  width: 167.77px;
+  height: 42px;
+}
+
+.cart .text-8 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 25.77px;
+  height: 21px;
+}
+
+.cart .text-8-1 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  margin-right: -0.23px;
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.cart .container-17 {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  height: 42px;
+  border: 1px solid var(--mischka);
+  border-radius: 8px;
+}
+
+/* Quantity Buttons (- / +) */
+.cart .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cart .button:hover {
+  background-color: var(--wild-sand);
+  border-radius: 6px;
+}
+
+.cart .icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.cart .vector-2 {
+  position: absolute;
+  top: 43.75%;
+  left: 12.50%;
+  width: 75.00%;
+  height: 12.50%;
+}
+
+.cart .vector-3 {
+  position: absolute;
+  top: 12.50%;
+  left: 12.50%;
+  width: 75.00%;
+  height: 75.00%;
+}
+
+/* Quantity Number */
+.cart .text-9 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  height: 24px;
+}
+
+.cart .number {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Subtotal */
+.cart .container-18 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  position: relative;
+  width: 142.22px;
+  height: 58px;
+}
+
+.cart .paragraph-1 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 18px;
+}
+
+.cart .text-9-1 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  color: var(--santas-gray-2);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: right;
+}
+
+.cart .paragraph-2 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 36px;
+}
+
+.cart .text-10 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 36px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ORDER SUMMARY SIDEBAR (우측)
+   ========================================================= */
+.cart .container-19 {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 129px;
+  left: 1054px;
+  width: 440px;
+  height: 570px;
+  border-radius: 16px;
+  background-color: var(--white);
+  box-shadow: 0px 1px 2px -1px #0000001a, 0px 1px 3px #0000001a;
+}
+
+/* Summary Title */
+.cart .heading-2-1 {
+  display: flex;
+  width: 376px;
+  margin-top: 32px;
+  margin-left: 32px;
+}
+
+.cart .text-11 {
+  width: 95px;
+  height: 36px;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+/* --- Price Details --- */
+.cart .container-20 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  width: 376px;
+  height: 95px;
+  margin-top: 24px;
+  margin-left: 32px;
+  padding: 0 0 1px;
+  border-bottom: 1px solid var(--mercury);
+}
+
+.cart .container {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 27px;
+}
+
+.cart .text-12 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 63.38px;
+  height: 24px;
+}
+
+.cart .text-13 {
+  position: relative;
+  width: 106.66px;
+  height: 27px;
+}
+
+.cart .text-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--mirage);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 27px;
+  white-space: nowrap;
+}
+
+.cart .text-14 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 44.17px;
+  height: 24px;
+}
+
+.cart .text-14-1 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  margin-right: -0.83px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.cart .text-15 {
+  position: relative;
+  width: 33.12px;
+  height: 27px;
+}
+
+/* --- Total Amount --- */
+.cart .container-21 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 376px;
+  height: 48px;
+  margin-top: 24px;
+  margin-left: 32px;
+}
+
+.cart .text-16 {
+  position: relative;
+  width: 103.12px;
+  height: 30px;
+}
+
+.cart .text-16-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+.cart .text-17 {
+  position: relative;
+  width: 189.61px;
+  height: 48px;
+}
+
+.cart .text-17-1 {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 48px;
+  white-space: nowrap;
+}
+
+/* --- Checkout Button --- */
+.cart .button-3 {
+  display: flex;
+  width: 376px;
+  height: 60px;
+  margin-top: 32px;
+  margin-left: 32px;
+  border-radius: 12px;
+  background-color: var(--chathams-blue);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.cart .button-3:hover {
+  opacity: 0.9;
+}
+
+.cart .text-18 {
+  width: 67px;
+  height: 27px;
+  margin-top: 16.5px;
+  margin-left: 154.9px;
+  letter-spacing: 0;
+  line-height: 27px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* --- Checkout Helper Text --- */
+.cart .paragraph-3 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 376px;
+  height: 19.5px;
+  margin-top: 12px;
+  margin-left: 32px;
+}
+
+.cart .text-19 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  color: var(--santas-gray-2);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xxs);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 19.5px;
+  text-align: center;
+}
+
+/* =========================================================
+   INFO NOTICES (제작기간, 현장답사, A/S)
+   ========================================================= */
+.cart .container-22 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  width: 376px;
+  height: 123px;
+  margin-top: 32px;
+  margin-left: 32px;
+  padding: 33px 0 0;
+  border-top: 1px solid var(--mercury);
+}
+
+/* Notice Item - Shared */
+.cart .container-1 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 22px;
+}
+
+/* Notice Icons */
+.cart .icon-1 {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.cart .vector-4 {
+  position: absolute;
+  top: 6.25%;
+  left: 6.25%;
+  width: 87.50%;
+  height: 87.50%;
+}
+
+.cart .vector-5 {
+  position: absolute;
+  top: 26.25%;
+  left: 46.25%;
+  width: 17.50%;
+  height: 37.50%;
+}
+
+.cart .vector-6 {
+  position: absolute;
+  top: 8.75%;
+  left: 8.75%;
+  width: 82.50%;
+  height: 82.50%;
+}
+
+.cart .vector-7 {
+  position: absolute;
+  top: 46.25%;
+  left: 33.75%;
+  width: 32.50%;
+  height: 45.00%;
+}
+
+.cart .vector-8 {
+  position: absolute;
+  top: 6.25%;
+  left: 31.25%;
+  width: 17.50%;
+  height: 87.50%;
+}
+
+.cart .vector-9 {
+  position: absolute;
+  top: 6.25%;
+  left: 51.25%;
+  width: 17.50%;
+  height: 87.50%;
+}
+
+/* Notice Text - Shared */
+.cart .paragraph-4,
+.cart .paragraph-5,
+.cart .paragraph-6 {
+  display: flex;
+  align-items: flex-start;
+  position: absolute;
+  top: 0;
+  left: 28px;
+  height: 21px;
+}
+
+.cart .paragraph-4 { width: 248px; }
+.cart .paragraph-5 { width: 210px; }
+.cart .paragraph-6 { width: 142px; }
+
+.cart .text-20,
+.cart .text-21,
+.cart .as-2 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: 20.8px;
+  white-space: nowrap;
+}

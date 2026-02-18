@@ -1,0 +1,1291 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.bHi5bvb.hcp.png");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.icon-2 {
+  height: 20px;
+  position: relative;
+  width: 20px;
+}
+
+:root { 
+  --alabaster: #f9fafb;
+  --black: #000000;
+  --bright-gray: #374151;
+  --chathams-blue: #1a4f85;
+  --cultured-pearl: #f5f5f5;
+  --mercury: #e5e7eb;
+  --mirage: #101828;
+  --mischka: #d1d5db;
+  --oxford-blue: #364153;
+  --pale-sky: #6b7280;
+  --santas-gray: #99a1af;
+  --santas-gray-2: #9ca3af;
+  --scarpa-flow: #4a5565;
+  --white: #ffffff;
+  --wild-sand: #f3f4f6;
+ 
+  --font-size-l: 18px;
+  --font-size-m: 16px;
+  --font-size-s: 15px;
+  --font-size-xl: 20px;
+  --font-size-xs: 14px;
+  --font-size-xxl: 24px;
+  --font-size-xxs: 13px;
+ 
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-inter: "Inter", Helvetica;
+  --font-family-noto_sans_kr: "Noto Sans KR", Helvetica;
+}
+.arial-bold-oxford-blue-18px {
+  color: var(--oxford-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notosanskr-medium-pale-sky-15px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.arial-bold-mirage-24px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-pale-sky-14px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-17px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-mirage-16px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-scarpa-flow-18px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-28px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-20px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-bright-gray-16px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-chathams-blue-18px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-chathams-blue-36px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notosanskr-medium-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.arial-bold-mirage-20px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-normal-pale-sky-13px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xxs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-medium-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 500;
+}
+/* ==============================
+   Screen - Curation Shop U95 Detailed Page
+   ============================== */
+
+/* --- Base Layout --- */
+.curation-shopu95detailed-page {
+  background-color: var(--white);
+  height: 2430px;
+  position: relative;
+  width: 1920px;
+}
+
+/* ==============================
+   Header / Navigation
+   ============================== */
+.curation-shopu95detailed-page .product-detail-2 {
+  align-items: flex-start;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--mercury);
+  box-shadow:
+    0px 1px 2px -1px #0000001a,
+    0px 1px 3px #0000001a;
+  display: flex;
+  flex-direction: column;
+  height: 91px;
+  left: 7px;
+  padding: 0px 0px 1px;
+  position: absolute;
+  top: 0;
+  width: 1913px;
+}
+
+.curation-shopu95detailed-page .container-23 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  height: 90px;
+  justify-content: space-between;
+  padding: 0px 120px;
+  position: relative;
+  width: 100%;
+}
+
+/* 뒤로가기 버튼 */
+.curation-shopu95detailed-page .button-2 {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  height: 24px;
+  position: relative;
+  width: 154.22px;
+}
+
+.curation-shopu95detailed-page .text-29 {
+  flex: 1;
+  height: 24px;
+  position: relative;
+}
+
+.curation-shopu95detailed-page .text-157 {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* 헤더 우측 가격 영역 */
+.curation-shopu95detailed-page .container-24 {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  height: 42px;
+  position: relative;
+  width: 257.98px;
+}
+
+.curation-shopu95detailed-page .text-30 {
+  height: 21px;
+  position: relative;
+  width: 76.08px;
+}
+
+.curation-shopu95detailed-page .text-31 {
+  flex: 1;
+  height: 42px;
+  position: relative;
+}
+
+.curation-shopu95detailed-page .text-159 {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 28px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 42px;
+  position: absolute;
+  top: 0;
+  width: 177px;
+}
+
+/* 헤더 아이콘 벡터 */
+.curation-shopu95detailed-page .vector-9 {
+  height: 66.67%;
+  left: 16.68%;
+  position: absolute;
+  top: 16.66%;
+  width: 37.50%;
+}
+
+.curation-shopu95detailed-page .vector-10 {
+  height: 8.34%;
+  left: 16.68%;
+  position: absolute;
+  top: 45.83%;
+  width: 66.66%;
+}
+
+/* ==============================
+   Product Detail - 메인 그리드
+   ============================== */
+.curation-shopu95detailed-page .product-detail {
+  background-color: var(--white);
+  display: grid;
+  gap: 80px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  height: 2426px;
+  left: 7px;
+  padding: 154px 120px 60px;
+  position: absolute;
+  top: 0;
+  width: 1913px;
+}
+
+/* ==============================
+   좌측 컬럼 - 이미지 영역
+   ============================== */
+.curation-shopu95detailed-page .container-10 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+/* 메인 상품 이미지 */
+.curation-shopu95detailed-page .image {
+  aspect-ratio: 1.33;
+  height: 478px;
+  left: 79px;
+  object-fit: cover;
+  position: absolute;
+  width: 638px;
+}
+
+/* 서브 이미지 */
+.curation-shopu95detailed-page .image-9 {
+  top: 867px;
+}
+
+.curation-shopu95detailed-page .image-10 {
+  top: 1479px;
+}
+
+/* 상품 상세 이미지 (좌측 하단) */
+.curation-shopu95detailed-page .product-detail-1 {
+  height: 740px;
+  left: 90px;
+  position: absolute;
+  top: 140px;
+  width: 869px;
+}
+
+/* 이미지 뱃지/태그 - 2D */
+.curation-shopu95detailed-page .container-11 {
+  display: flex;
+  gap: 12px;
+  height: 24px;
+  left: 79px;
+  position: absolute;
+  top: 834px;
+  width: 670px;
+}
+
+/* 이미지 뱃지/태그 - 3D */
+.curation-shopu95detailed-page .container-12 {
+  display: flex;
+  gap: 12px;
+  height: 24px;
+  left: 79px;
+  position: absolute;
+  top: 1400px;
+  width: 670px;
+}
+
+/* 뱃지 텍스트 - 2D */
+.curation-shopu95detailed-page .x2-d {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 70px;
+}
+
+/* 뱃지 텍스트 - 3D */
+.curation-shopu95detailed-page .x3-d {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 70px;
+}
+
+/* ==============================
+   우측 컬럼 - 상품 정보 영역
+   ============================== */
+.curation-shopu95detailed-page .container-13 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  height: 100%;
+  justify-self: center;
+  position: relative;
+  width: 100%;
+}
+
+/* --- 상품명 / 가격 섹션 --- */
+.curation-shopu95detailed-page .container-14 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 28px;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+/* 상품명 */
+.curation-shopu95detailed-page .container-item {
+  height: 60px;
+  position: relative;
+  width: 670.5px;
+}
+
+.curation-shopu95detailed-page .text-108 {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 48px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 60px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* 상품 서브 타이틀 */
+.curation-shopu95detailed-page .paragraph-1 {
+  height: 30px;
+  position: relative;
+  width: 670.5px;
+}
+
+.curation-shopu95detailed-page .text-109 {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 30px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* 메인 가격 */
+.curation-shopu95detailed-page .text-7 {
+  display: flex;
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 260px;
+}
+
+.curation-shopu95detailed-page .text-110 {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 52px;
+  font-weight: 700;
+  height: 60px;
+  letter-spacing: 0;
+  line-height: 60px;
+  margin-top: 1px;
+  white-space: nowrap;
+  width: 261px;
+}
+
+/* 가격 단위 */
+.curation-shopu95detailed-page .text-8 {
+  display: flex;
+  height: 36px;
+  left: 276px;
+  position: absolute;
+  top: 22px;
+  width: 22px;
+}
+
+.curation-shopu95detailed-page .text-111 {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xxl);
+  font-weight: 400;
+  height: 36px;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+  width: 23px;
+}
+
+/* --- 할부 정보 박스 --- */
+.curation-shopu95detailed-page .container-15 {
+  align-items: flex-start;
+  background-color: var(--alabaster);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 342px;
+  padding: 32px 32px 0px;
+  position: relative;
+  width: 670.5px;
+}
+
+.curation-shopu95detailed-page .heading-3 {
+  align-self: stretch;
+  height: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.curation-shopu95detailed-page .container-16 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 224px;
+  position: relative;
+  width: 100%;
+}
+
+/* 할부 행 공통 */
+.curation-shopu95detailed-page .container-1 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  height: 24px;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+/* 할부 기간 텍스트 */
+.curation-shopu95detailed-page .text-2 {
+  align-items: flex-start;
+  display: flex;
+  height: 24px;
+  position: relative;
+  width: 63.38px;
+}
+
+.curation-shopu95detailed-page .text-3 {
+  align-items: flex-start;
+  display: flex;
+  height: 24px;
+  position: relative;
+  width: 29.45px;
+}
+
+.curation-shopu95detailed-page .text-15 {
+  align-items: flex-start;
+  display: flex;
+  height: 24px;
+  position: relative;
+  width: 44.17px;
+}
+
+/* 할부 개월 표시 */
+.curation-shopu95detailed-page .text-9 {
+  height: 24px;
+  position: relative;
+  width: 128.09px;
+}
+
+.curation-shopu95detailed-page .text-10 {
+  height: 24px;
+  position: relative;
+  width: 99.7px;
+}
+
+.curation-shopu95detailed-page .text-12 {
+  height: 24px;
+  position: relative;
+  width: 36.47px;
+}
+
+.curation-shopu95detailed-page .text-13 {
+  height: 24px;
+  position: relative;
+  width: 56.14px;
+}
+
+.curation-shopu95detailed-page .text-14 {
+  height: 24px;
+  position: relative;
+  width: 189.05px;
+}
+
+.curation-shopu95detailed-page .text-16 {
+  height: 24px;
+  position: relative;
+  width: 122.92px;
+}
+
+/* 할부 텍스트 공통 (absolute) */
+.curation-shopu95detailed-page .x12m-3m-28m,
+.curation-shopu95detailed-page .text-115,
+.curation-shopu95detailed-page .x26m,
+.curation-shopu95detailed-page .text-118,
+.curation-shopu95detailed-page .text-120,
+.curation-shopu95detailed-page .x100mm {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* 할부 텍스트 공통 (flex) */
+.curation-shopu95detailed-page .text-11,
+.curation-shopu95detailed-page .text-11-1,
+.curation-shopu95detailed-page .text-121 {
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.curation-shopu95detailed-page .text-11-1 {
+  margin-right: -0.55px;
+}
+
+.curation-shopu95detailed-page .text-121 {
+  margin-right: -0.83px;
+}
+
+/* --- 특징 리스트 섹션 --- */
+.curation-shopu95detailed-page .container-17 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 218px;
+  position: relative;
+  width: 670.5px;
+}
+
+.curation-shopu95detailed-page .container-18 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 168px;
+  position: relative;
+  width: 100%;
+}
+
+/* 특징 아이템 행 */
+.curation-shopu95detailed-page .container-2 {
+  align-self: stretch;
+  height: 24px;
+  position: relative;
+  width: 100%;
+}
+
+/* 특징 아이콘 원형 뱃지 (공통) */
+.curation-shopu95detailed-page .container,
+.curation-shopu95detailed-page .container-3 {
+  align-items: center;
+  background-color: var(--chathams-blue);
+  border-radius: 33554400px;
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  width: 20px;
+}
+
+.curation-shopu95detailed-page .container {
+  margin-top: 4px;
+  position: relative;
+}
+
+.curation-shopu95detailed-page .container-3 {
+  left: 0;
+  position: absolute;
+  top: 4px;
+}
+
+/* 아이콘 */
+.curation-shopu95detailed-page .icon {
+  height: 12px;
+  position: relative;
+  width: 12px;
+}
+
+.curation-shopu95detailed-page .icon-1 {
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+/* 체크 벡터 아이콘 */
+.curation-shopu95detailed-page .vector {
+  height: 54.17%;
+  left: 12.50%;
+  position: absolute;
+  top: 20.83%;
+  width: 75.00%;
+}
+
+/* 특징 텍스트 wrapper */
+.curation-shopu95detailed-page .text {
+  display: flex;
+  width: 131.11px;
+}
+
+/* 특징 텍스트 아이템 */
+.curation-shopu95detailed-page .text-17,
+.curation-shopu95detailed-page .text-18,
+.curation-shopu95detailed-page .text-19,
+.curation-shopu95detailed-page .text-20,
+.curation-shopu95detailed-page .text-21 {
+  display: flex;
+  height: 24px;
+  left: 32px;
+  position: absolute;
+  top: 0;
+}
+
+.curation-shopu95detailed-page .text-17 { width: 190px; }
+.curation-shopu95detailed-page .text-18 { width: 161px; }
+.curation-shopu95detailed-page .text-19 { width: 209px; }
+.curation-shopu95detailed-page .text-20 { width: 184px; }
+.curation-shopu95detailed-page .text-21 { width: 131px; }
+
+/* 특징 텍스트 내용 */
+.curation-shopu95detailed-page .text-123,
+.curation-shopu95detailed-page .text-124,
+.curation-shopu95detailed-page .text-126,
+.curation-shopu95detailed-page .text-127 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.curation-shopu95detailed-page .text-123 { width: 190px; }
+.curation-shopu95detailed-page .text-124 { width: 161px; }
+.curation-shopu95detailed-page .text-126 { width: 185px; }
+.curation-shopu95detailed-page .text-127 { width: 132px; }
+
+.curation-shopu95detailed-page .text-125 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 210px;
+}
+
+/* ==============================
+   결제 옵션 섹션
+   ============================== */
+.curation-shopu95detailed-page .container-19 {
+  align-self: stretch;
+  border-top: 1px solid var(--mercury);
+  height: 1289px;
+  position: relative;
+  width: 100%;
+}
+
+/* 결제 섹션 제목 */
+.curation-shopu95detailed-page .heading-3-1 {
+  display: flex;
+  height: 36px;
+  left: calc(50% - 302px);
+  position: absolute;
+  top: calc(50% - 606px);
+  width: 670px;
+}
+
+.curation-shopu95detailed-page .text-128 {
+  height: 36px;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+  width: 175px;
+}
+
+/* 결제 섹션 설명 */
+.curation-shopu95detailed-page .paragraph-2 {
+  display: flex;
+  height: 22px;
+  left: calc(50% - 302px);
+  position: absolute;
+  top: calc(50% - 554px);
+  width: 670px;
+}
+
+.curation-shopu95detailed-page .text-129 {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  height: 23px;
+  letter-spacing: 0;
+  line-height: 22.5px;
+  white-space: nowrap;
+  width: 552px;
+}
+
+/* --- 결제 옵션 목록 --- */
+.curation-shopu95detailed-page .container-20 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 782px;
+  left: calc(50% - 302px);
+  position: absolute;
+  top: calc(50% - 499px);
+  width: 670px;
+}
+
+/* 결제 옵션 버튼 */
+.curation-shopu95detailed-page .button {
+  align-self: stretch;
+  background-color: var(--white);
+  border: 2px solid var(--mercury);
+  border-radius: 12px;
+  height: 98px;
+  position: relative;
+  width: 100%;
+}
+
+.curation-shopu95detailed-page .container-4 {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  height: 54px;
+  left: 22px;
+  position: relative;
+  top: 22px;
+  width: 626px;
+}
+
+/* 결제 아이콘 박스 */
+.curation-shopu95detailed-page .container-5 {
+  align-items: center;
+  background-color: var(--wild-sand);
+  border-radius: 10px;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  position: relative;
+  width: 48px;
+}
+
+.curation-shopu95detailed-page .container-9 {
+  height: 48px;
+  position: relative;
+  width: 48px;
+}
+
+/* 결제 텍스트 컨테이너 */
+.curation-shopu95detailed-page .container-6 {
+  align-items: flex-start;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  height: 54px;
+  position: relative;
+}
+
+.curation-shopu95detailed-page .container-7 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  height: 27px;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+/* 결제 텍스트 */
+.curation-shopu95detailed-page .text-4 {
+  height: 25.5px;
+  position: relative;
+  width: 67.3px;
+}
+
+.curation-shopu95detailed-page .text-1-1 {
+  line-height: 25.5px;
+  white-space: nowrap;
+}
+
+.curation-shopu95detailed-page .text-5 {
+  height: 27px;
+  position: relative;
+  width: 107.16px;
+}
+
+.curation-shopu95detailed-page .text-1-2 {
+  line-height: 27px;
+  width: 108px;
+}
+
+.curation-shopu95detailed-page .text-22 {
+  height: 25.5px;
+  position: relative;
+  width: 87.66px;
+}
+
+.curation-shopu95detailed-page .text-6 {
+  height: 25.5px;
+  position: relative;
+  width: 98.58px;
+}
+
+.curation-shopu95detailed-page .text-23 {
+  height: 25.5px;
+  position: relative;
+  width: 103.3px;
+}
+
+/* 결제 설명 문단 */
+.curation-shopu95detailed-page .paragraph {
+  align-self: stretch;
+  height: 21px;
+  position: relative;
+  width: 100%;
+}
+
+.curation-shopu95detailed-page .text-1-3 {
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+/* 결제 체크박스 */
+.curation-shopu95detailed-page .container-8 {
+  background-color: var(--white);
+  border: 2px solid var(--mischka);
+  border-radius: 6px;
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+/* 결제 아이콘 벡터 */
+.curation-shopu95detailed-page .vector-1 {
+  height: 45.83%;
+  left: 33.33%;
+  position: absolute;
+  top: 45.83%;
+  width: 33.33%;
+}
+
+.curation-shopu95detailed-page .vector-2 {
+  height: 87.50%;
+  left: 8.33%;
+  position: absolute;
+  top: 4.17%;
+  width: 83.33%;
+}
+
+.curation-shopu95detailed-page .vector-3 {
+  height: 91.69%;
+  left: 8.32%;
+  position: absolute;
+  top: 4.16%;
+  width: 83.37%;
+}
+
+.curation-shopu95detailed-page .vector-4 {
+  height: 91.68%;
+  left: 4.17%;
+  position: absolute;
+  top: 4.15%;
+  width: 91.68%;
+}
+
+.curation-shopu95detailed-page .vector-5 {
+  height: 25.00%;
+  left: 4.17%;
+  position: absolute;
+  top: 62.50%;
+  width: 66.67%;
+}
+
+.curation-shopu95detailed-page .vector-6 {
+  height: 29.17%;
+  left: 4.17%;
+  position: absolute;
+  top: 25.00%;
+  width: 91.67%;
+}
+
+.curation-shopu95detailed-page .vector-7 {
+  height: 25.00%;
+  left: 4.17%;
+  position: absolute;
+  top: 12.50%;
+  width: 54.17%;
+}
+
+.curation-shopu95detailed-page .vector-8 {
+  height: 91.68%;
+  left: 12.50%;
+  position: absolute;
+  top: 4.17%;
+  width: 75.00%;
+}
+
+/* ==============================
+   총 결제 금액 섹션
+   ============================== */
+.curation-shopu95detailed-page .container-21 {
+  align-items: flex-start;
+  background-color: var(--alabaster);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 185px;
+  left: calc(50% - 302px);
+  padding: 32px 32px 0px;
+  position: absolute;
+  top: calc(50% + 323px);
+  width: 670px;
+}
+
+.curation-shopu95detailed-page .text-24 {
+  height: 24px;
+  position: relative;
+  width: 63.33px;
+}
+
+.curation-shopu95detailed-page .text-151 {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.curation-shopu95detailed-page .text-25 {
+  height: 24px;
+  position: relative;
+  width: 94.81px;
+}
+
+.curation-shopu95detailed-page .text-152 {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  width: 95px;
+}
+
+/* 총액 행 */
+.curation-shopu95detailed-page .container-22 {
+  align-items: center;
+  align-self: stretch;
+  border-top: 1px solid var(--mercury);
+  display: flex;
+  height: 73px;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.curation-shopu95detailed-page .text-26 {
+  height: 30px;
+  position: relative;
+  width: 103.12px;
+}
+
+.curation-shopu95detailed-page .text-27 {
+  height: 48px;
+  position: relative;
+  width: 189.61px;
+}
+
+.curation-shopu95detailed-page .text-154 {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 32px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 48px;
+  position: absolute;
+  top: 1px;
+  width: 190px;
+}
+
+/* ==============================
+   구매하기 버튼
+   ============================== */
+.curation-shopu95detailed-page .button-1 {
+  background-color: var(--chathams-blue);
+  border-radius: 12px;
+  display: flex;
+  height: 67px;
+  left: calc(50% - 302px);
+  position: absolute;
+  top: calc(50% + 540px);
+  width: 670px;
+}
+
+.curation-shopu95detailed-page .text-28 {
+  align-items: flex-start;
+  display: flex;
+  height: 20px;
+  margin-left: 283.1px;
+  margin-top: 23px;
+  position: relative;
+  width: 104.38px;
+}
+
+.curation-shopu95detailed-page .text-155 {
+  letter-spacing: 0;
+  line-height: 27px;
+  margin-bottom: -6px;
+  margin-right: -0.62px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+/* ==============================
+   하단 안내 문구
+   ============================== */
+.curation-shopu95detailed-page .paragraph-3 {
+  display: flex;
+  height: 20px;
+  left: 96px;
+  position: absolute;
+  top: 1269px;
+  width: 670px;
+}
+
+.curation-shopu95detailed-page .text-156 {
+  color: var(--santas-gray-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xxs);
+  font-weight: 400;
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 19.5px;
+  margin-left: 238.9px;
+  text-align: center;
+  white-space: nowrap;
+  width: 193px;
+}
+
+/* ==============================
+   공통 유틸리티
+   ============================== */
+
+/* absolute 텍스트 기본 */
+.curation-shopu95detailed-page .text-1 {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 30px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.curation-shopu95detailed-page .text-1-4 {
+  left: 0;
+  letter-spacing: 0;
+  position: absolute;
+  top: 0;
+}

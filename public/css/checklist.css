@@ -1,0 +1,899 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.bHi5bvb.hcp.png");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.icon-2 {
+  height: 20px;
+  position: relative;
+  width: 20px;
+}
+
+:root { 
+  --alabaster: #f9fafb;
+  --black: #000000;
+  --bright-gray: #374151;
+  --chathams-blue: #1a4f85;
+  --cultured-pearl: #f5f5f5;
+  --mercury: #e5e7eb;
+  --mirage: #101828;
+  --mischka: #d1d5db;
+  --oxford-blue: #364153;
+  --pale-sky: #6b7280;
+  --santas-gray: #99a1af;
+  --santas-gray-2: #9ca3af;
+  --scarpa-flow: #4a5565;
+  --white: #ffffff;
+  --wild-sand: #f3f4f6;
+ 
+  --font-size-l: 18px;
+  --font-size-m: 16px;
+  --font-size-s: 15px;
+  --font-size-xl: 20px;
+  --font-size-xs: 14px;
+  --font-size-xxl: 24px;
+  --font-size-xxs: 13px;
+ 
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-inter: "Inter", Helvetica;
+  --font-family-noto_sans_kr: "Noto Sans KR", Helvetica;
+}
+.arial-bold-oxford-blue-18px {
+  color: var(--oxford-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notosanskr-medium-pale-sky-15px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.arial-bold-mirage-24px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-pale-sky-14px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-17px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-mirage-16px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-scarpa-flow-18px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-28px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-20px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-bright-gray-16px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-chathams-blue-18px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-chathams-blue-36px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-mirage-15px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notosanskr-medium-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.arial-bold-mirage-20px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-normal-pale-sky-16px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-normal-pale-sky-13px {
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xxs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notosanskr-medium-bright-gray-14px {
+  color: var(--bright-gray);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ===================================
+   Checklist Page - 설치 체크리스트
+   =================================== */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
+
+/* ===== FONTS ===== */
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  /* Colors */
+  --black: #000000;
+  --white: #ffffff;
+  --mirage: #101828;
+  --oxford-blue: #364153;
+  --bright-gray: #374151;
+  --scarpa-flow: #4a5565;
+  --pale-sky: #6b7280;
+  --santas-gray: #99a1af;
+  --santas-gray-2: #9ca3af;
+  --mischka: #d1d5db;
+  --mercury: #e5e7eb;
+  --wild-sand: #f3f4f6;
+  --cultured-pearl: #f5f5f5;
+  --alabaster: #f9fafb;
+  --chathams-blue: #1a4f85;
+
+  /* Font Sizes */
+  --font-size-xxs: 13px;
+  --font-size-xs: 14px;
+  --font-size-s: 15px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+
+  /* Font Families */
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-inter: "Inter", Helvetica;
+  --font-family-noto_sans_kr: "Noto Sans KR", Helvetica;
+}
+
+/* ===== GLOBAL BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+/* ===== TYPOGRAPHY UTILITY CLASSES ===== */
+
+/* Arial Regular */
+.arial-regular-normal-scarpa-flow-18px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-20px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+}
+
+/* Arial Bold */
+.arial-bold-oxford-blue-18px {
+  color: var(--oxford-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+}
+
+.arial-bold-mirage-24px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+}
+
+/* =========================================================
+   LAYOUT - SCREEN
+   ========================================================= */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 1920px;
+  height: 2391px;
+  padding: 48px -259px 0 0;
+  background:
+    linear-gradient(117deg, rgba(249, 250, 251, 1) 0%, rgba(243, 244, 246, 1) 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.checklist .container-8 {
+  position: relative;
+  width: 1920px;
+  height: 2236px;
+}
+
+/* =========================================================
+   PAGE HEADER (제목 + 설명)
+   ========================================================= */
+.checklist .container-9 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: absolute;
+  top: 0;
+  left: 64px;
+  width: 1792px;
+  height: 92px;
+}
+
+.checklist .heading-1 {
+  height: 48px;
+}
+
+.checklist .text-160 {
+  position: absolute;
+  top: -5px;
+  left: 574px;
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 48px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.checklist .paragraph-1 {
+  display: flex;
+  align-items: flex-start;
+}
+
+.checklist .text-161 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: 28px;
+  text-align: center;
+}
+
+/* =========================================================
+   PROGRESS BAR (전체 진행률)
+   ========================================================= */
+.checklist .container-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: absolute;
+  top: 140px;
+  left: 64px;
+  width: 1792px;
+  height: 128px;
+  padding: 32px 32px 0;
+  border-radius: 16px;
+  background-color: var(--white);
+  box-shadow: 0px 4px 6px -4px #0000001a, 0px 10px 15px -3px #0000001a;
+}
+
+.checklist .container-11 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 32px;
+}
+
+.checklist .text-5 {
+  position: relative;
+  width: 96.33px;
+  height: 28px;
+}
+
+.checklist .text {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.checklist .text-6 {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 55.27px;
+  height: 32px;
+}
+
+.checklist .text-163 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 32px;
+}
+
+/* Progress Bar Track */
+.checklist .container-12 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 16px;
+  padding: 0 1728px 0 0;
+  border-radius: 33554400px;
+  overflow: hidden;
+  background-color: var(--mercury);
+}
+
+/* Progress Bar Fill */
+.checklist .container-13 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 16px;
+  margin-right: -1px;
+  border-radius: 33554400px;
+  background: linear-gradient(180deg, rgba(26, 79, 133, 1) 0%, rgba(45, 107, 168, 1) 100%);
+}
+
+/* =========================================================
+   CHECKLIST ITEMS
+   ========================================================= */
+.checklist .container-14 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: absolute;
+  top: 300px;
+  left: 64px;
+  width: 1792px;
+  height: 1744px;
+}
+
+/* --- Shared: Item Card --- */
+.checklist .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: 204px;
+  padding: 32px 32px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--white);
+  box-shadow: 0px 4px 6px -4px #0000001a, 0px 10px 15px -3px #0000001a;
+}
+
+/* --- Shared: Item Inner Layout --- */
+.checklist .container-1 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 24px;
+  position: relative;
+  width: 100%;
+  height: 140px;
+}
+
+/* Item Icon */
+.checklist .container-2 {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+/* Item Content Area */
+.checklist .container-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  height: 140px;
+}
+
+/* --- Shared: Heading + Paragraph --- */
+.checklist .heading {
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+}
+
+.checklist .heading-3 {
+  display: flex;
+  align-items: flex-start;
+  height: 32px;
+}
+
+.checklist .text-1 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  letter-spacing: 0;
+  line-height: 32px;
+}
+
+.checklist .paragraph-3 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 28px;
+}
+
+/* --- Item Title Containers (각 항목별 너비 차이) --- */
+.checklist .container-15,
+.checklist .container-17,
+.checklist .container-19,
+.checklist .container-6,
+.checklist .container-21,
+.checklist .container-23,
+.checklist .container-25 {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: space-around;
+  position: relative;
+  width: 100%;
+  height: 64px;
+}
+
+.checklist .container-15 { padding: 0 1266.36px 0 0; }
+.checklist .container-17 { padding: 0 1296.03px 0 0; }
+.checklist .container-19 { padding: 0 1356.36px 0 0; }
+.checklist .container-6  { padding: 0 1362.69px 0 0; }
+.checklist .container-21 { padding: 0 1392.36px 0 0; }
+.checklist .container-23 { padding: 0 1416.69px 0 0; }
+.checklist .container-25 { padding: 0 1398.69px 0 0; }
+
+/* --- Item Title Inner Containers --- */
+.checklist .container-16,
+.checklist .container-18,
+.checklist .container-20,
+.checklist .container-7,
+.checklist .container-22,
+.checklist .container-24,
+.checklist .container-26 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  position: relative;
+  height: 64px;
+}
+
+.checklist .container-16 { width: 373.64px; }
+.checklist .container-18 { width: 343.97px; }
+.checklist .container-20 { width: 283.64px; }
+.checklist .container-7  { width: 277.31px; }
+.checklist .container-22 { width: 247.64px; }
+.checklist .container-24 { width: 223.31px; }
+.checklist .container-26 { width: 241.31px; }
+
+/* =========================================================
+   STATUS BUTTONS (제출 완료 / 미제출)
+   ========================================================= */
+.checklist .container-4 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 24px;
+  position: relative;
+  width: 100%;
+  height: 52px;
+}
+
+.checklist .text-2 {
+  position: relative;
+  width: 83.05px;
+  height: 28px;
+}
+
+.checklist .container-5 {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  width: 308.33px;
+  height: 52px;
+}
+
+/* Shared Button Base */
+.checklist .button-2 {
+  position: relative;
+  height: 52px;
+  border-radius: 14px;
+  background-color: var(--wild-sand);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checklist .button-2:hover {
+  opacity: 0.85;
+}
+
+/* 제출 완료 Button */
+.checklist .button {
+  flex: 1;
+  flex-grow: 1;
+}
+
+/* 미제출 Button */
+.checklist .button-1 {
+  width: 134px;
+}
+
+/* Button Icons */
+.checklist .icon {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.checklist .vector {
+  position: absolute;
+  top: 4.17%;
+  left: 4.17%;
+  width: 91.67%;
+  height: 91.67%;
+}
+
+/* Check Icon */
+.checklist .vector-1 {
+  position: absolute;
+  top: 37.50%;
+  left: 33.33%;
+  width: 33.33%;
+  height: 25.00%;
+}
+
+/* X Icon */
+.checklist .vector-2 {
+  position: absolute;
+  top: 33.33%;
+  left: 33.33%;
+  width: 33.33%;
+  height: 33.33%;
+}
+
+/* Button Text */
+.checklist .text-3 {
+  position: absolute;
+  top: 11px;
+  left: 59px;
+  letter-spacing: 0;
+  line-height: 28px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.checklist .text-4 {
+  position: absolute;
+  top: 11px;
+  left: 58px;
+  letter-spacing: 0;
+  line-height: 28px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   SUMMARY SECTION (제출 현황 요약)
+   ========================================================= */
+.checklist .container-27 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 2092px;
+  left: 64px;
+  width: 1792px;
+  height: 144px;
+  padding: 32px 32px 0;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(26, 79, 133, 1) 0%, rgba(45, 107, 168, 1) 100%);
+  box-shadow: 0px 25px 50px -12px #00000040;
+}
+
+.checklist .container-28 {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 80px;
+}
+
+/* Summary Text */
+.checklist .container-29 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  width: 440.3px;
+  height: 68px;
+}
+
+.checklist .text-204 {
+  position: relative;
+  flex: 1;
+  margin-top: -1px;
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 32px;
+}
+
+.checklist .paragraph-2 {
+  opacity: 0.9;
+}
+
+.checklist .text-205 {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+/* Summary Percentage */
+.checklist .container-30 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  position: relative;
+  width: 69.86px;
+  height: 80px;
+}
+
+.checklist .container-31 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 48px;
+}
+
+.checklist .percent {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 48px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.checklist .container-32 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 28px;
+  opacity: 0.9;
+}
+
+.checklist .text-206 {
+  position: absolute;
+  top: -1px;
+  left: 36px;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+  text-align: right;
+  white-space: nowrap;
+}
