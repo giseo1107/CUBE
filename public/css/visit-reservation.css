@@ -250,7 +250,7 @@ button {
 .logo-icon {
   width: 71px;
   height: 64px;
-  background: url('../img/logo@2x.png') center / cover no-repeat;
+  background: url('../image/logo@2x.png') center / cover no-repeat;
   flex-shrink: 0;
 }
 
@@ -1026,15 +1026,15 @@ button {
 }
 
 .cube-card-image--modern {
-  background-image: url('../img/imagewithfallback.png');
+  background-image: url('../image/imagewithfallback.png');
 }
 
 .cube-card-image--luxury {
-  background-image: url('../img/imagewithfallback-1.png');
+  background-image: url('../image/imagewithfallback-1.png');
 }
 
 .cube-card-image--industrial {
-  background-image: url('../img/imagewithfallback-2.png');
+  background-image: url('../image/imagewithfallback-2.png');
 }
 
 .cube-badge {
@@ -1262,7 +1262,7 @@ button {
 .footer-logo-icon {
   width: 69px;
   height: 63px;
-  background: url('../img/logo@2x.png') center / cover no-repeat;
+  background: url('../image/logo@2x.png') center / cover no-repeat;
   flex-shrink: 0;
 }
 

@@ -72,12 +72,12 @@
         <div class="product-price" id="productPrice">45,000,000원</div>
       </div>
       <div class="total-row">
-        <span class="total-label">이 결제 금액</span>
+        <span class="total-label">최종 결제 금액</span>
         <span class="total-amount" id="totalAmount">45,000,000원</span>
       </div>
     </div>
 
-    <!-- 설치 장소 / 주문자 정보 -->
+    <!-- 설치 장소 -->
     <div class="card">
       <div class="card-title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -99,6 +99,7 @@
       </div>
     </div>
 
+    <!-- 주문자 정보 -->
     <div class="card">
       <div class="card-title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -176,12 +177,10 @@
   </div>
 
   <script>
-    /* ── URL 파라미터에서 orderId 추출 ── */
     function getParam(key) {
       return new URLSearchParams(window.location.search).get(key);
     }
 
-    /* ── 날짜 포맷 ── */
     function formatDate(dateStr) {
       const d = dateStr ? new Date(dateStr) : new Date();
       return d.toLocaleString('ko-KR', {
@@ -190,50 +189,42 @@
       });
     }
 
-    /* ── 결제수단 한글 변환 ── */
     function payMethodLabel(method) {
       return { card: '신용카드', transfer: '실시간 계좌이체', deposit: '무통장 입금' }[method] || method || '-';
     }
 
-    /* ── 금액 포맷 ── */
     function formatMoney(n) {
       return Number(n).toLocaleString('ko-KR') + '원';
     }
 
-    /* ── UI 렌더링 ── */
     function render(data) {
       document.getElementById('orderNumberDisplay').textContent = data.orderId || '-';
       document.getElementById('orderDate').textContent    = formatDate(data.createdAt);
       document.getElementById('payMethod').textContent    = payMethodLabel(data.payMethod);
 
-      // 상품
       if (data.items && data.items[0]) {
         const item = data.items[0];
-        document.getElementById('productName').textContent = item.name  || '-';
-        document.getElementById('productQty').textContent  = `수량: ${item.qty || 1}개`;
+        document.getElementById('productName').textContent  = item.name  || '-';
+        document.getElementById('productQty').textContent   = `수량: ${item.qty || 1}개`;
         document.getElementById('productPrice').textContent = formatMoney(item.price || 0);
       }
       document.getElementById('totalAmount').textContent = formatMoney(data.totalAmount || 0);
 
-      // 설치 장소
       const s = data.shipping || {};
       document.getElementById('receiverName').textContent  = s.name  || '-';
       document.getElementById('receiverPhone').textContent = s.phone || '-';
       const addr = [s.addressBase, s.addressDetail].filter(Boolean).join(' ');
       document.getElementById('receiverAddress').textContent = addr || '-';
 
-      // 주문자
       const o = data.orderer || {};
       document.getElementById('ordererName').textContent  = o.name  || '-';
       document.getElementById('ordererPhone').textContent = o.phone || '-';
       document.getElementById('ordererEmail').textContent = o.email || '-';
     }
 
-    /* ── 주문 정보 조회 ── */
     async function loadOrderData() {
       const orderId = getParam('orderId');
       if (!orderId) {
-        // orderId 없으면 기본값 표시
         render({ orderId: 'ORD-00000000-SAMPLE' });
         return;
       }
@@ -253,7 +244,6 @@
         }
       } catch (err) {
         console.error('주문 조회 오류:', err);
-        // fallback: URL 파라미터에서 최소 정보만 표시
         render({ orderId });
       } finally {
         document.getElementById('loadingOverlay').classList.remove('show');

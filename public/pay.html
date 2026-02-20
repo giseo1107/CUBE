@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>주문/결제</title>
- <link rel="stylesheet" href="css/pay.css">
+  <link rel="stylesheet" href="css/pay.css">
 </head>
-<body>
+<body class="pay">
 
   <!-- 상단 헤더 -->
   <header class="page-header">
@@ -19,7 +19,7 @@
     <span class="page-title">주문/결제</span>
   </header>
 
-  <div class="layout">
+  <div class="p-k">
     <!-- ─────────────── 왼쪽 폼 영역 ─────────────── -->
     <div class="left-col">
 
@@ -86,27 +86,27 @@
       <div class="card">
         <div class="card-title">결제 방법</div>
         <div class="payment-methods">
-          <input type="radio" name="payMethod" id="pm-card" class="payment-option" value="card" checked>
+          <input type="radio" name="payMethod" id="pm-card" class="payment-radio" value="card" checked>
           <label class="payment-label" for="pm-card">
-            <span class="payment-radio-dot"></span>
+            <span class="radio-dot"></span>
             <span class="payment-info">
               <span class="payment-name">신용카드</span>
               <span class="payment-desc">모든 카드사 무이자 할부 가능</span>
             </span>
           </label>
 
-          <input type="radio" name="payMethod" id="pm-transfer" class="payment-option" value="transfer">
+          <input type="radio" name="payMethod" id="pm-transfer" class="payment-radio" value="transfer">
           <label class="payment-label" for="pm-transfer">
-            <span class="payment-radio-dot"></span>
+            <span class="radio-dot"></span>
             <span class="payment-info">
               <span class="payment-name">실시간 계좌이체</span>
               <span class="payment-desc">은행 계좌를 통한 즉시 이체</span>
             </span>
           </label>
 
-          <input type="radio" name="payMethod" id="pm-deposit" class="payment-option" value="deposit">
+          <input type="radio" name="payMethod" id="pm-deposit" class="payment-radio" value="deposit">
           <label class="payment-label" for="pm-deposit">
-            <span class="payment-radio-dot"></span>
+            <span class="radio-dot"></span>
             <span class="payment-info">
               <span class="payment-name">무통장 입금</span>
               <span class="payment-desc">가상계좌 발급 후 입금</span>
@@ -121,14 +121,14 @@
         <div class="term-item">
           <label class="term-left">
             <input type="checkbox" id="termPayment">
-            <span class="term-label">구매 조건 및 결제 대행 서비스 약관 동의 <span class="required">*</span></span>
+            <span class="term-text">구매 조건 및 결제 대행 서비스 약관 동의 <span class="required">*</span></span>
           </label>
           <button class="term-view-btn" onclick="openTermModal('payment')">보기</button>
         </div>
         <div class="term-item">
           <label class="term-left">
             <input type="checkbox" id="termPrivacy">
-            <span class="term-label">개인정보 수집 및 이용 동의 <span class="required">*</span></span>
+            <span class="term-text">개인정보 수집 및 이용 동의 <span class="required">*</span></span>
           </label>
           <button class="term-view-btn" onclick="openTermModal('privacy')">보기</button>
         </div>
@@ -141,7 +141,7 @@
       <div class="card summary-card">
         <div class="card-title">주문 상품</div>
 
-        <div class="product-item">
+        <div class="product-row">
           <div class="product-img">🏠</div>
           <div>
             <div class="product-name">프리미엄 주거형</div>
@@ -149,17 +149,19 @@
           </div>
         </div>
 
-        <div class="price-row">
-          <span>상품 금액</span>
-          <span class="price-value">45,000,000원</span>
-        </div>
-        <div class="price-row">
-          <span>배송비</span>
-          <span class="price-free">무료</span>
-        </div>
-        <div class="price-row">
-          <span>할인</span>
-          <span class="price-discount">-0원</span>
+        <div class="price-rows">
+          <div class="price-row">
+            <span>상품 금액</span>
+            <span class="price-value">45,000,000원</span>
+          </div>
+          <div class="price-row">
+            <span>배송비</span>
+            <span class="price-free">무료</span>
+          </div>
+          <div class="price-row">
+            <span>할인</span>
+            <span class="price-discount">-0원</span>
+          </div>
         </div>
 
         <div class="total-row">
@@ -221,7 +223,7 @@
       const msg = type === 'payment'
         ? '구매 조건 및 결제 대행 서비스 약관 내용입니다.'
         : '개인정보 수집 및 이용 약관 내용입니다.';
-      alert(msg); // 실제 서비스에서는 모달 팝업으로 교체하세요
+      alert(msg);
     }
 
     /* ── 유효성 검사 ── */
@@ -312,7 +314,7 @@
     }
   </script>
 
-  <!-- 카카오 우편번호 (필요 시 로드) -->
+  <!-- 카카오 우편번호 -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
 </body>
 </html>

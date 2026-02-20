@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>중고 큐브마켓 - C.C.C</title>
-  <link rel="stylesheet" type="text/css" href="/css/used_cube.css">
+  <link rel="stylesheet" type="text/css" href="css/used_cube.css">
 </head>
 <body>
   <div class="used-cube-marketu951">
@@ -44,7 +44,7 @@
             <div class="search-box">
               <input type="text" id="searchInput" placeholder="원하는 컨테이너를 검색하세요...">
               <button class="search-icon-btn" onclick="handleSearch()">
-                <img src="img/vector-5.svg" alt="검색">
+                <img src="used_img/vector-5.svg" alt="검색">
               </button>
             </div>
             <a href="/used-cube-marketu953.html" class="sell-btn">판매하기</a>
@@ -64,13 +64,13 @@
         <!-- 페이지네이션 -->
         <div class="pagination">
           <button class="page-btn prev-btn" onclick="changePage(-1)">
-            <img src="img/vector-30.svg" alt="이전">
+            <img src="used_img/vector-30.svg" alt="이전">
           </button>
           <button class="page-btn active" id="page1" onclick="goToPage(1)">1</button>
           <button class="page-btn" id="page2" onclick="goToPage(2)">2</button>
           <button class="page-btn" id="page3" onclick="goToPage(3)">3</button>
           <button class="page-btn next-btn" onclick="changePage(1)">
-            <img src="img/vector-31.svg" alt="다음">
+            <img src="used_img/vector-31.svg" alt="다음">
           </button>
         </div>
       </section>
@@ -112,7 +112,7 @@
           <hr>
           <div class="footer-bottom-row">
             <p>© 2026 Container House. All rights reserved.</p>
-            <img src="img/container.svg" alt="Container">
+            <img src="used_img/container.svg" alt="Container">
           </div>
         </div>
       </footer>
@@ -123,14 +123,14 @@
   <script>
     /* ── 정적 매물 데이터 (실제 서비스에서는 API 호출) ── */
     const listings = [
-      { id: 1, title: '20평형 싱글 컨테이너 하우스', desc: '깔끔한 상태의 20평형 단층 컨테이너입니다. 즉시 사용 가능하며 내부 인테리어 완료 상태입니다.', location: '부산', price: '₩ 1,850만원', likes: 43, views: 892, img: 'img/image-----------.png' },
-      { id: 2, title: '40평형 2층 컨테이너 주택', desc: '넓은 공간의 2층 구조 컨테이너 하우스. 가족 단위 거주에 최적화된 구조입니다.', location: '서울', price: '₩ 3,200만원', likes: 87, views: 1245, img: 'img/image--2-----------@2x.png' },
-      { id: 3, title: '15평형 블루 컨테이너 하우스', desc: '컴팩트한 15평형 단독 컨테이너. 사무실, 카페 용도로 활용 가능합니다.', location: '경기', price: '₩ 1,200만원', likes: 28, views: 634, img: 'img/image----------@2x.png' },
-      { id: 4, title: '60평형 모던 컨테이너 빌딩', desc: '대규모 상업 공간으로 활용 가능한 멀티 컨테이너 구조. 카페, 레스토랑에 적합합니다.', location: '인천', price: '₩ 5,800만원', likes: 156, views: 2134, img: 'img/image-------------@2x.png' },
-      { id: 5, title: '25평형 옐로우 컨테이너 주택', desc: '밝은 옐로우 컬러가 돋보이는 25평형 컨테이너. 펜션, 카페 운영에 최적화되어 있습니다.', location: '강원', price: '₩ 2,100만원', likes: 62, views: 1087, img: 'img/image---------------@2x.png' },
-      { id: 6, title: '50평형 프리미엄 컨테이너 하우스', desc: '고급스러운 마감의 대형 컨테이너 하우스. 풀옵션 인테리어와 최신 설비가 완비되어 있습니다.', location: '제주', price: '₩ 4,500만원', likes: 124, views: 1893, img: 'img/image----------------@2x.png' },
-      { id: 7, title: '18평형 스탠다드 컨테이너', desc: '표준형 18평 컨테이너. 창고, 사무실 등 다목적으로 사용 가능합니다.', location: '대전', price: '₩ 950만원', likes: 35, views: 756, img: 'img/image-----------.png' },
-      { id: 8, title: '30평형 듀플렉스 컨테이너', desc: '2개 컨테이너가 결합된 30평형 구조. 넓은 공간이 필요한 분들에게 추천합니다.', location: '광주', price: '₩ 2,750만원', likes: 78, views: 1456, img: 'img/image--2-----------@2x.png' },
+      { id: 1, title: '20평형 싱글 컨테이너 하우스', desc: '깔끔한 상태의 20평형 단층 컨테이너입니다. 즉시 사용 가능하며 내부 인테리어 완료 상태입니다.', location: '부산', price: '₩ 1,850만원', likes: 43, views: 892, img: 'used_img/image-----------.png' },
+      { id: 2, title: '40평형 2층 컨테이너 주택', desc: '넓은 공간의 2층 구조 컨테이너 하우스. 가족 단위 거주에 최적화된 구조입니다.', location: '서울', price: '₩ 3,200만원', likes: 87, views: 1245, img: 'used_img/image--2-----------@2x.png' },
+      { id: 3, title: '15평형 블루 컨테이너 하우스', desc: '컴팩트한 15평형 단독 컨테이너. 사무실, 카페 용도로 활용 가능합니다.', location: '경기', price: '₩ 1,200만원', likes: 28, views: 634, img: 'used_img/image----------@2x.png' },
+      { id: 4, title: '60평형 모던 컨테이너 빌딩', desc: '대규모 상업 공간으로 활용 가능한 멀티 컨테이너 구조. 카페, 레스토랑에 적합합니다.', location: '인천', price: '₩ 5,800만원', likes: 156, views: 2134, img: 'used_img/image-------------@2x.png' },
+      { id: 5, title: '25평형 옐로우 컨테이너 주택', desc: '밝은 옐로우 컬러가 돋보이는 25평형 컨테이너. 펜션, 카페 운영에 최적화되어 있습니다.', location: '강원', price: '₩ 2,100만원', likes: 62, views: 1087, img: 'used_img/image---------------@2x.png' },
+      { id: 6, title: '50평형 프리미엄 컨테이너 하우스', desc: '고급스러운 마감의 대형 컨테이너 하우스. 풀옵션 인테리어와 최신 설비가 완비되어 있습니다.', location: '제주', price: '₩ 4,500만원', likes: 124, views: 1893, img: 'used_img/image----------------@2x.png' },
+      { id: 7, title: '18평형 스탠다드 컨테이너', desc: '표준형 18평 컨테이너. 창고, 사무실 등 다목적으로 사용 가능합니다.', location: '대전', price: '₩ 950만원', likes: 35, views: 756, img: 'used_img/image-----------.png' },
+      { id: 8, title: '30평형 듀플렉스 컨테이너', desc: '2개 컨테이너가 결합된 30평형 구조. 넓은 공간이 필요한 분들에게 추천합니다.', location: '광주', price: '₩ 2,750만원', likes: 78, views: 1456, img: 'used_img/image--2-----------@2x.png' },
     ];
 
     function renderListings(items) {
@@ -144,13 +144,13 @@
             <p class="card-desc">${item.desc}</p>
             <div class="card-meta">
               <span class="card-location">
-                <img src="img/vector-6.svg" alt="위치"> ${item.location}
+                <img src="used_img/vector-6.svg" alt="위치"> ${item.location}
               </span>
               <span class="card-price">${item.price}</span>
             </div>
             <div class="card-stats">
-              <span><img src="img/vector-7.svg" alt="좋아요"> ${item.likes}</span>
-              <span><img src="img/vector-8.svg" alt="조회"> ${item.views}</span>
+              <span><img src="used_img/vector-7.svg" alt="좋아요"> ${item.likes}</span>
+              <span><img src="used_img/vector-8.svg" alt="조회"> ${item.views}</span>
             </div>
           </div>
         </div>

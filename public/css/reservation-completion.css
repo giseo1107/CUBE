@@ -237,7 +237,7 @@ button {
 .logo-icon {
   width: 71px;
   height: 64px;
-  background: url('../img/logo@2x.png') center / cover no-repeat;
+  background: url('../image/logo@2x.png') center / cover no-repeat;
   flex-shrink: 0;
 }
 

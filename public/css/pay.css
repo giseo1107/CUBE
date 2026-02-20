@@ -1,7 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+/* Arial Bold 로컬 폰트 (fonts/ 폴더에 파일이 있을 경우) */
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+  font-display: swap;
+}
+
+@keyframes pay-spin { to { transform: rotate(360deg); } }
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  .pay .p-k {
+    grid-template-columns: 1fr;
+  }
+  .pay .summary-card { position: static; }
+}
+@media (max-width: 600px) {
+  .pay .card         { padding: 20px; }
+  .pay .summary-card { padding: 20px; }
+  .pay .form-row     { grid-template-columns: 1fr; }
+  .pay .page-header  { padding: 0 16px; }
+  .pay .header-title { font-size: 18px; }
+}
+
 /* ============================================================
-   pay.css  —  주문/결제 페이지
-   (피그마 고정 px / absolute 레이아웃 → 반응형으로 재작성)
+   styleguide.css  —  디자인 토큰 & 유틸리티 클래스
    ============================================================ */
+
+:root {
+  /* ── 색상 ── */
+  --black:          #000000;
+  --white:          #ffffff;
+  --mirage:         #101828;
+  --bright-gray:    #374151;
+  --pale-sky:       #6b7280;
+  --cod-gray:       rgba(10, 10, 10, 0.5);
+  --mercury:        #e5e7eb;
+  --mischka:        #d1d5db;
+  --salmon-pearl:   #ef4444;
+  --chathams-blue:  #1a4f85;
+  --korma:          #92400e;
+  --peanut:         #78350f;
+
+  /* ── 폰트 패밀리 ── */
+  --font-noto:      "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
+  --font-arial-bold: "Arial-Bold", Arial, Helvetica, sans-serif;
+
+  /* ── 폰트 사이즈 ── */
+  --fs-xs:  13px;
+  --fs-s:   14px;
+  --fs-m:   15px;
+  --fs-l:   16px;
+  --fs-xl:  18px;
+  --fs-2xl: 20px;
+  --fs-3xl: 22px;
+
+  /* ── 그림자 ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
+
+  /* ── 반경 ── */
+  --radius-sm:  8px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-full: 9999px;
+
+  /* ── 간격 ── */
+  --gap-xs:  8px;
+  --gap-sm:  12px;
+  --gap-md:  16px;
+  --gap-lg:  24px;
+  --gap-xl:  32px;
+  --gap-2xl: 48px;
+  --gap-3xl: 64px;
+}
+
+/* ============================================================
+   유틸리티 텍스트 클래스
+   ============================================================ */
+
+.noto-medium-bright-gray-14   { color: var(--bright-gray); font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 500; }
+.noto-medium-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 500; }
+.noto-normal-mirage-15        { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 400; }
+.noto-normal-pale-sky-14      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 400; }
+.noto-normal-pale-sky-15      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-cod-gray-15      { color: var(--cod-gray);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-normal-peanut-15        { color: var(--peanut);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
+.noto-bold-mirage-16          { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-l);  font-weight: 700; }
+.arial-bold-mirage-20         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-2xl); font-weight: 700; }
+.arial-bold-mirage-22         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-3xl); font-weight: 700; }
+.arial-bold-white-12          { color: var(--white);       font-family: var(--font-arial-bold); font-size: 12px;           font-weight: 700; }
+
+/* ============================================================
+   globals.css  —  기본 리셋 & 폰트
+   ============================================================ */
+
+/* ── 리셋 ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
+  color: #101828;
+  background: #fafafa;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+img, svg { display: block; max-width: 100%; }
 
 /* ── 페이지 배경 ── */
 .pay {
@@ -40,7 +158,7 @@
 .pay .back-btn:hover { background: #f0f1f3; }
 .pay .back-btn svg   { width: 20px; height: 20px; flex-shrink: 0; }
 
-.pay .header-title {
+.pay .page-title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -107,7 +225,7 @@
   gap: 16px;
 }
 
-.pay label.field-label {
+.pay .form-group label {
   display: block;
   font-family: var(--font-noto);
   font-size: var(--fs-s);
@@ -115,7 +233,7 @@
   color: var(--bright-gray);
   margin-bottom: 6px;
 }
-.pay label.field-label .required { color: var(--salmon-pearl); margin-left: 2px; }
+.pay .form-group label .required { color: var(--salmon-pearl); margin-left: 2px; }
 
 .pay input[type="text"],
 .pay input[type="email"],
@@ -297,14 +415,6 @@
   top: 80px;
 }
 
-.pay .summary-title {
-  font-family: var(--font-arial-bold);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--mirage);
-  margin-bottom: 24px;
-}
-
 /* 상품 */
 .pay .product-row {
   display: flex;
@@ -320,6 +430,10 @@
   background: center/cover no-repeat url("../img/image-----------@2x.png"),
               linear-gradient(135deg, #e8eaff, #d4d8ff);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
 }
 .pay .product-name {
   font-family: var(--font-noto);
@@ -337,7 +451,14 @@
 }
 
 /* 가격 행 */
-.pay .price-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--mercury); }
+.pay .price-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--mercury);
+}
 
 .pay .price-row {
   display: flex;
@@ -345,7 +466,7 @@
   align-items: center;
   height: 24px;
 }
-.pay .price-label {
+.pay .price-row span:first-child {
   font-family: var(--font-noto);
   font-size: var(--fs-m);
   font-weight: 400;
@@ -422,125 +543,3 @@
   vertical-align: middle;
   margin-right: 8px;
 }
-@keyframes pay-spin { to { transform: rotate(360deg); } }
-
-/* ── 반응형 ── */
-@media (max-width: 900px) {
-  .pay .p-k {
-    grid-template-columns: 1fr;
-  }
-  .pay .summary-card { position: static; }
-}
-@media (max-width: 600px) {
-  .pay .card         { padding: 20px; }
-  .pay .summary-card { padding: 20px; }
-  .pay .form-row     { grid-template-columns: 1fr; }
-  .pay .page-header  { padding: 0 16px; }
-  .pay .header-title { font-size: 18px; }
-}
-
-/* ============================================================
-   styleguide.css  —  디자인 토큰 & 유틸리티 클래스
-   ============================================================ */
-
-:root {
-  /* ── 색상 ── */
-  --black:          #000000;
-  --white:          #ffffff;
-  --mirage:         #101828;
-  --bright-gray:    #374151;
-  --pale-sky:       #6b7280;
-  --cod-gray:       rgba(10, 10, 10, 0.5);
-  --mercury:        #e5e7eb;
-  --mischka:        #d1d5db;
-  --salmon-pearl:   #ef4444;
-  --chathams-blue:  #1a4f85;
-  --korma:          #92400e;
-  --peanut:         #78350f;
-
-  /* ── 폰트 패밀리 ── */
-  --font-noto:      "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
-  --font-arial-bold: "Arial-Bold", Arial, Helvetica, sans-serif;
-
-  /* ── 폰트 사이즈 ── */
-  --fs-xs:  13px;
-  --fs-s:   14px;
-  --fs-m:   15px;
-  --fs-l:   16px;
-  --fs-xl:  18px;
-  --fs-2xl: 20px;
-  --fs-3xl: 22px;
-
-  /* ── 그림자 ── */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
-
-  /* ── 반경 ── */
-  --radius-sm:  8px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  20px;
-  --radius-full: 9999px;
-
-  /* ── 간격 ── */
-  --gap-xs:  8px;
-  --gap-sm:  12px;
-  --gap-md:  16px;
-  --gap-lg:  24px;
-  --gap-xl:  32px;
-  --gap-2xl: 48px;
-  --gap-3xl: 64px;
-}
-
-/* ============================================================
-   유틸리티 텍스트 클래스 (HTML에서 직접 쓸 경우 호환용)
-   ============================================================ */
-
-.noto-medium-bright-gray-14   { color: var(--bright-gray); font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 500; }
-.noto-medium-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 500; }
-.noto-normal-mirage-15        { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
-.noto-normal-pale-sky-13      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-xs); font-weight: 400; }
-.noto-normal-pale-sky-14      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-s);  font-weight: 400; }
-.noto-normal-pale-sky-15      { color: var(--pale-sky);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
-.noto-normal-cod-gray-15      { color: var(--cod-gray);    font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
-.noto-normal-peanut-15        { color: var(--peanut);      font-family: var(--font-noto); font-size: var(--fs-m);  font-weight: 400; }
-.noto-bold-mirage-16          { color: var(--mirage);      font-family: var(--font-noto); font-size: var(--fs-l);  font-weight: 700; }
-.arial-bold-mirage-20         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-2xl); font-weight: 700; }
-.arial-bold-mirage-22         { color: var(--mirage);      font-family: var(--font-arial-bold); font-size: var(--fs-3xl); font-weight: 700; }
-.arial-bold-white-12          { color: var(--white);       font-family: var(--font-arial-bold); font-size: 12px;           font-weight: 700; }
-
-/* ============================================================
-   globals.css  —  기본 리셋 & 폰트
-   ============================================================ */
-
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
-
-/* Arial Bold 로컬 폰트 (fonts/ 폴더에 파일이 있을 경우) */
-@font-face {
-  font-family: "Arial-Bold";
-  font-style: normal;
-  font-weight: 700;
-  src: url("../fonts/ariblk.ttf") format("truetype");
-  font-display: swap;
-}
-
-/* ── 리셋 ── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-
-body {
-  font-family: "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, sans-serif;
-  color: #101828;
-  background: #fafafa;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; }
-img, svg { display: block; max-width: 100%; }
