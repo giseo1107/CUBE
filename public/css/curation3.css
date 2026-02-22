@@ -544,7 +544,7 @@
 
 /* Main hero images */
 .curation-shopu95detailed3 .main3_1 {
-  background-image: url(../img/main3-1.png);
+  background-image: url(../curationimg/main3-1.png);
   background-position: 50% 50%;
   background-size: cover;
   border-radius: 25px;
@@ -567,10 +567,10 @@
   position: absolute;
   top: 762px;
 }
-.curation-shopu95detailed3 .main3_11 { background-image: url(../img/main3-11@2x.png); left: 92px;  width: 203px; }
-.curation-shopu95detailed3 .main3_22 { background-image: url(../img/main3-22@2x.png); left: 313px; width: 201px; }
-.curation-shopu95detailed3 .main3_33 { background-image: url(../img/main3-33@2x.png); left: 534px; width: 201px; }
-.curation-shopu95detailed3 .main3_44 { background-image: url(../img/main3-44@2x.png); left: 756px; width: 201px; }
+.curation-shopu95detailed3 .main3_11 { background-image: url(../curationimg/main3-11@2x.png); left: 92px;  width: 203px; }
+.curation-shopu95detailed3 .main3_22 { background-image: url(../curationimg/main3-22@2x.png); left: 313px; width: 201px; }
+.curation-shopu95detailed3 .main3_33 { background-image: url(../curationimg/main3-33@2x.png); left: 534px; width: 201px; }
+.curation-shopu95detailed3 .main3_44 { background-image: url(../curationimg/main3-44@2x.png); left: 756px; width: 201px; }
 
 /* Product title */
 .curation-shopu95detailed3 .text-1-2 {

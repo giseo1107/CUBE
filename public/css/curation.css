@@ -1,19 +1,17 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
-/* The following line is used to measure usage of this code. You can remove it if you want. */
-@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.bHi5bvb.hcp.png");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Inter:wght@400&family=Baloo+Da+2:wght@700&display=swap");
 
 @font-face {
   font-family: "Arial-Bold";
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/ariblk.ttf") format("truetype");
+  src: local("Arial Black"), local("Arial Bold"), local("ArialMT-Bold");
 }
 @font-face {
   font-family: "Arial-Regular";
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+  src: local("Arial"), local("Helvetica"), local("sans-serif");
 }
 
 .screen a {
@@ -274,23 +272,7 @@
    Curation Shop Page - 큐레이션 샵
    =================================== */
 
-@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,400|Inter:400|Baloo+Da+2:700");
-
-/* ===== FONTS ===== */
-@font-face {
-  font-family: "Arial-Bold";
-  font-style: normal;
-  font-weight: 700;
-  src: url("../fonts/ariblk.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Arial-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
-}
+/* ===== FONTS (using system fonts as fallback) ===== */
 
 /* ===== CSS VARIABLES ===== */
 :root {
@@ -492,6 +474,7 @@
   width: 1920px;
   height: 80px;
   background-color: #1b5086;
+  z-index: 100;
 }
 
 .curation-shop .container-22 {
@@ -527,7 +510,7 @@
   left: 0;
   width: 71px;
   height: 64px;
-  background-image: url(../img/image@2x.png);
+  background-image: url(../curationmain/image@2x.png);
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1092,7 +1075,7 @@
   left: -73px;
   width: 620px;
   height: 450px;
-  background-image: url(../img/imagewithfallback.png);
+  background-image: url(../curationmain/imagewithfallback.png);
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1107,8 +1090,8 @@
   background-size: cover;
 }
 
-.curation-shop .image-with-fallback-1 { background-image: url(../img/imagewithfallback-1.png); }
-.curation-shop .image-with-fallback-2 { background-image: url(../img/imagewithfallback-2.png); }
+.curation-shop .image-with-fallback-1 { background-image: url(../curationmain/imagewithfallback-1.png); }
+.curation-shop .image-with-fallback-2 { background-image: url(../curationmain/imagewithfallback-2.png); }
 
 /* Badge (인기/할인/신규) */
 .curation-shop .container-1 {
@@ -1791,7 +1774,7 @@
   left: 0;
   width: 69px;
   height: 63px;
-  background-image: url(../img/image@2x.png);
+  background-image: url(../curationmain/image@2x.png);
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1857,4 +1840,132 @@
 .curation-shop .container-34 {
   width: 152px;
   height: 40px;
+}
+
+/* =========================================================
+   FIX OVERRIDES - 링크 색상, 드롭다운, 필터
+   ========================================================= */
+
+/* 링크 색상: 브라우저 기본 보라색 방지 */
+.curation-shop a,
+.curation-shop a:visited,
+.curation-shop a:hover,
+.curation-shop a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 정렬 드롭다운 (select) */
+.curation-shop .sort-select {
+  flex: 1;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--mischka);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--bright-gray);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+}
+
+.curation-shop .sort-select:focus {
+  border-color: var(--chathams-blue);
+}
+
+/* 필터 버튼 활성/비활성 전환 */
+.curation-shop .filter-btn.active {
+  background-color: var(--chathams-blue) !important;
+}
+
+.curation-shop .filter-btn.active .text-81 {
+  color: var(--white);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 그리드: 필터 시 높이 자동 조절 */
+.curation-shop .container-19 {
+  height: auto !important;
+  min-height: 739px;
+  grid-auto-rows: minmax(0, 739px);
+  grid-template-rows: none !important;
+}
+
+/* 그리드 위치 자동 배치 (필터링 대응) */
+.curation-shop .product-card,
+.curation-shop .product-card-1,
+.curation-shop .product-card-2,
+.curation-shop .product-card-3,
+.curation-shop .product-card-4,
+.curation-shop .product-card-5 {
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+/* 페이지 전체 높이 자동 */
+.curation-shop {
+  height: auto !important;
+  min-height: 100vh;
+  overflow: visible !important;
+}
+
+.curation-shop .curation-shop-1 {
+  position: relative !important;
+  top: auto !important;
+  height: auto !important;
+  padding-top: 80px;
+  margin-top: 0;
+}
+
+.curation-shop .footer {
+  position: relative !important;
+  top: auto !important;
+}
+
+/* 헤더-히어로 겹침 방지: 히어로 상단 패딩 추가 */
+.curation-shop .container-10 {
+  padding-top: 120px !important;
+  height: auto !important;
+  min-height: 424px;
+}
+
+/* 카운터 박스 크기 확대 */
+.curation-shop .container-14 {
+  width: 220px !important;
+  height: 170px !important;
+  padding: 30px 30px 10px !important;
+  align-items: center !important;
+}
+
+.curation-shop .number {
+  position: relative !important;
+  left: auto !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.curation-shop .text-24 {
+  position: relative !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+/* 필터 버튼 폭 통일 & 확대 (글자 안 깨지게) */
+.curation-shop .button,
+.curation-shop .button-2 {
+  width: auto !important;
+  min-width: 80px !important;
+  padding: 10px 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }

@@ -7,9 +7,11 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const designsRoutes = require('./routes/designs');
 const reservationRoutes = require('./routes/reservation');
+const usedItemsRoute = require('./routes/usedItems');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 
 // Render 등 리버스 프록시 환경에서 HTTPS 인식 (세션 설정보다 위에 있어야 함)
 app.set('trust proxy', 1);
@@ -39,6 +41,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/designs', designsRoutes);
 app.use('/api/reservation', reservationRoutes);
+app.use('/api/used-items', usedItemsRoute);
 
 // 루트 경로는 로그인 페이지로
 app.get('/', (req, res) => {

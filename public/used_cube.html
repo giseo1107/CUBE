@@ -5,6 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>중고 큐브마켓 - C.C.C</title>
   <link rel="stylesheet" type="text/css" href="css/used_cube.css">
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let currentPage = 1;
+  let totalPages  = 1;
+  const LIMIT     = 8;
+
+  const grid         = document.getElementById('listingGrid');
+  const countEl      = document.getElementById('listingCount');
+  const searchInput  = document.getElementById('searchInput');
+
+  // ── API 호출 → 목록 렌더링 ──────────────────────────────
+  async function loadItems(page = 1, query = '') {
+    try {
+      const params = new URLSearchParams({ page, limit: LIMIT });
+      if (query) params.set('q', query);
+
+      const res  = await fetch(`/api/used-items?${params}`);
+      const json = await res.json();
+
+      if (!json.success) {
+        grid.innerHTML = '<p style="color:#99a1af;text-align:center;padding:40px;">매물을 불러올 수 없습니다.</p>';
+        return;
+      }
+
+      const { data, pagination } = json;
+      currentPage = pagination.page;
+      totalPages  = pagination.totalPages;
+
+      countEl.textContent = pagination.total;
+      renderCards(data);
+      renderPagination();
+
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = '<p style="color:#99a1af;text-align:center;padding:40px;">서버에 연결할 수 없습니다.</p>';
+    }
+  }
+
+  // ── 카드 렌더링 ─────────────────────────────────────────
+  function renderCards(items) {
+    if (items.length === 0) {
+      grid.innerHTML = '<p style="color:#99a1af;text-align:center;padding:40px;grid-column:1/-1;">검색 결과가 없습니다.</p>';
+      return;
+    }
+
+    grid.innerHTML = items.map(item => {
+      // 썸네일: DB 이미지 있으면 사용, 없으면 기본 이미지
+      const thumb = item.thumbnail || 'used_img/image-----------.png';
+
+      return `
+        <div class="listing-card" onclick="location.href='/used_cube1.html?id=${item.item_id}'">
+          <div class="card-img" style="background-image:url('${thumb}')"></div>
+          <div class="card-body">
+            <h3 class="card-title">${escapeHtml(item.title)}</h3>
+            <p class="card-desc">${escapeHtml(item.description || '')}</p>
+            <div class="card-meta">
+              <span class="card-location">
+                <img src="used_img/vector-6.svg" alt="위치"> ${escapeHtml(item.location || '')}
+              </span>
+              <span class="card-price">${item.price_display}</span>
+            </div>
+            <div class="card-stats">
+              <span><img src="used_img/vector-7.svg" alt="좋아요"> ${item.like_count || 0}</span>
+              <span><img src="used_img/vector-8.svg" alt="조회"> ${item.view_count || 0}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ── 페이지네이션 렌더링 ─────────────────────────────────
+  function renderPagination() {
+    const container = document.querySelector('.pagination');
+    if (!container) return;
+
+    let html = `
+      <button class="page-btn prev-btn" ${currentPage <= 1 ? 'disabled' : ''}>
+        <img src="used_img/vector-30.svg" alt="이전">
+      </button>
+    `;
+
+    for (let i = 1; i <= totalPages; i++) {
+      html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    }
+
+    html += `
+      <button class="page-btn next-btn" ${currentPage >= totalPages ? 'disabled' : ''}>
+        <img src="used_img/vector-31.svg" alt="다음">
+      </button>
+    `;
+
+    container.innerHTML = html;
+
+    // 이벤트 바인딩
+    container.querySelectorAll('[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        loadItems(parseInt(btn.dataset.page), searchInput.value.trim());
+      });
+    });
+    container.querySelector('.prev-btn')?.addEventListener('click', () => {
+      if (currentPage > 1) loadItems(currentPage - 1, searchInput.value.trim());
+    });
+    container.querySelector('.next-btn')?.addEventListener('click', () => {
+      if (currentPage < totalPages) loadItems(currentPage + 1, searchInput.value.trim());
+    });
+  }
+
+  // ── 검색 ────────────────────────────────────────────────
+  function handleSearch() {
+    const q = searchInput.value.trim();
+    loadItems(1, q);
+  }
+
+  // 검색 버튼 (onclick="handleSearch()" 대신 이벤트 위임)
+  document.querySelector('.search-icon-btn')?.addEventListener('click', handleSearch);
+  searchInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSearch();
+  });
+
+  // ── 유틸 ────────────────────────────────────────────────
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ── 초기 로드 ───────────────────────────────────────────
+  loadItems(1);
+});
+</script>
 </head>
 <body>
   <div class="used-cube-marketu951">
@@ -14,7 +145,7 @@
       <nav class="navbar">
         <div class="navbar-inner">
           <div class="nav-logo">
-            <div class="logo-img"></div>
+            <div class="logo-img"><a href="index.html"></a></div>
             <div class="logo-text">
               <h1 class="logo-title">C.C.C</h1>
               <span class="logo-sub">Custom Cube Company</span>
@@ -43,11 +174,11 @@
           <div class="search-row">
             <div class="search-box">
               <input type="text" id="searchInput" placeholder="원하는 컨테이너를 검색하세요...">
-              <button class="search-icon-btn" onclick="handleSearch()">
+              <button class="search-icon-btn">
                 <img src="used_img/vector-5.svg" alt="검색">
               </button>
             </div>
-            <a href="/used-cube-marketu953.html" class="sell-btn">판매하기</a>
+            <a href="used_cube_write.html" class="sell-btn">판매하기</a>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 /* ============================================================
-   used-cube-marketu951.css
+   used_cube.css
    ✅ globals.css + styleguide.css 통합
-   중고 큐브마켓 목록 페이지
+   중고 큐브마켓 목록 페이지 — HTML 시맨틱 클래스에 맞춤
    ============================================================ */
 
 /* ── [globals] 리셋 & 폰트 ─────────────────────────────── */
@@ -25,7 +25,7 @@
 
 * { box-sizing: border-box; }
 
-.screen a { display: contents; text-decoration: none; }
+a { text-decoration: none; color: inherit; }
 
 /* ── [styleguide] 디자인 토큰 ───────────────────────────── */
 :root {
@@ -57,31 +57,6 @@
   --font-family-inter:         "Inter", Helvetica;
 }
 
-/* ── [styleguide] 유틸리티 클래스 ───────────────────────── */
-.arial-regular-normal-santas-gray-16px { color: var(--santas-gray); font-family: var(--font-family-arial-regular); font-size: var(--font-size-m); font-weight: 400; }
-.arial-regular-normal-santas-gray-14px { color: var(--santas-gray); font-family: var(--font-family-arial-regular); font-size: var(--font-size-s); font-weight: 400; }
-.balooda2-bold-white-14px              { color: var(--white); font-family: var(--font-family-baloo_da_2); font-size: var(--font-size-s); font-weight: 700; }
-.arial-regular-normal-pale-sky-14px    { color: var(--pale-sky); font-family: var(--font-family-arial-regular); font-size: var(--font-size-s); font-weight: 400; }
-.arial-regular-normal-white-20px       { color: var(--white); font-family: var(--font-family-arial-regular); font-size: var(--font-size-xl); font-weight: 400; }
-.arial-regular-normal-white-16px       { color: var(--white); font-family: var(--font-family-arial-regular); font-size: var(--font-size-m); font-weight: 400; }
-.arial-regular-normal-white-16px-2     { color: var(--white-2); font-family: var(--font-family-arial-regular); font-size: var(--font-size-m); font-weight: 400; }
-.arial-bold-white-18px                 { color: var(--white); font-family: var(--font-family-arial-bold); font-size: var(--font-size-l); font-weight: 700; }
-.arial-regular-normal-white-14px       { color: var(--white); font-family: var(--font-family-arial-regular); font-size: var(--font-size-s); font-weight: 400; }
-.inter-normal-ice-cold-48px            { color: var(--ice-cold); font-family: var(--font-family-inter); font-size: var(--font-size-xxxl); font-weight: 400; }
-.inter-normal-ice-cold-12px            { color: var(--ice-cold); font-family: var(--font-family-inter); font-size: var(--font-size-xs); font-weight: 400; }
-.inter-normal-chathams-blue-48px       { color: var(--chathams-blue); font-family: var(--font-family-inter); font-size: var(--font-size-xxxl); font-weight: 400; }
-.inter-normal-chathams-blue-12px       { color: var(--chathams-blue); font-family: var(--font-family-inter); font-size: var(--font-size-xs); font-weight: 400; }
-
-/* ── [globals] 전역 유틸 ────────────────────────────────── */
-.custom-cube-company { letter-spacing: 0; line-height: normal; position: relative; width: fit-content; }
-.ccc { letter-spacing: 0; line-height: normal; position: relative; width: fit-content; }
-.faq { letter-spacing: 0; line-height: 24px; white-space: nowrap; }
-.x2026-container-hou { letter-spacing: 0; line-height: 20px; white-space: nowrap; }
-
-/* ── footer 컬럼 그리드 배치 ─────────────────────────────── */
-.footer-column   { grid-column: 4 / 5; grid-row: 1 / 2; height: 100%; position: relative; width: 100%; }
-.footer-column-1 { grid-column: 3 / 4; grid-row: 1 / 2; height: 100%; position: relative; width: 100%; }
-
 /* ============================================================
    페이지 레이아웃
    ============================================================ */
@@ -96,17 +71,16 @@
   flex-direction: column;
 }
 
-/* ── 헤더 ───────────────────────────────────────────────── */
-.used-cube-marketu951 .container-22 {
-  background-color: transparent;
+/* ── 네비게이션 ─────────────────────────────────────────── */
+.navbar {
+  background-color: rgba(26, 31, 46, 0.9);
   box-shadow: 0 1px 2px #0000001a, 0 1px 3px #0000001a;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(8px);
-  background-color: rgba(26,31,46,0.9);
 }
-.used-cube-marketu951 .container-23 {
+.navbar-inner {
   max-width: 1534px;
   margin: 0 auto;
   padding: 0 24px;
@@ -115,61 +89,110 @@
   align-items: center;
   justify-content: space-between;
 }
-.used-cube-marketu951 .container-24 { display: flex; align-items: center; }
-.used-cube-marketu951 .container-25 { display: flex; align-items: center; gap: 7px; height: 80px; }
-.used-cube-marketu951 .image {
-  background-image: url(../img/image--c-c-c-logo-@2x.png);
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 80px;
+}
+.logo-img {
+  background-image: url(../used_img/image--c-c-c-logo-@2x.png);
   background-position: 50% 50%;
   background-size: cover;
   height: 64px;
   width: 71px;
   flex-shrink: 0;
 }
-.used-cube-marketu951 .container-26 { display: flex; flex-direction: column; justify-content: center; }
-.used-cube-marketu951 .container { display: flex; }
-.used-cube-marketu951 .paragraph-8 { display: flex; align-items: center; }
-.used-cube-marketu951 .title { letter-spacing: 0; line-height: normal; position: relative; width: fit-content; }
-.used-cube-marketu951 .paragraph-9 { display: flex; align-items: center; }
-.used-cube-marketu951 .container-27 { display: flex; align-items: center; gap: 26px; height: 64px; flex-shrink: 0; }
-.used-cube-marketu951 .paragraph-10,
-.used-cube-marketu951 .paragraph-11 { display: flex; align-items: center; cursor: pointer; }
-.used-cube-marketu951 .text-50,
-.used-cube-marketu951 .text-51 { letter-spacing: 0; line-height: 20px; white-space: nowrap; }
-.used-cube-marketu951 .container-28 {
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logo-title {
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xxxl);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+}
+.logo-sub {
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+}
+.nav-menu {
   display: flex;
   align-items: center;
   gap: 32px;
+  list-style: none;
   flex: 1;
   justify-content: center;
 }
-.used-cube-marketu951 .paragraph-12,
-.used-cube-marketu951 .paragraph,
-.used-cube-marketu951 .paragraph-13,
-.used-cube-marketu951 .paragraph-14,
-.used-cube-marketu951 .paragraph-15 { display: flex; align-items: center; cursor: pointer; }
-.used-cube-marketu951 .text-5,
-.used-cube-marketu951 .text-54,
-.used-cube-marketu951 .qn-a,
-.used-cube-marketu951 .text-56 { letter-spacing: 0; line-height: 20px; white-space: nowrap; }
+.nav-menu li {
+  cursor: pointer;
+}
+.nav-menu li a {
+  color: var(--white-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+  letter-spacing: 0;
+  transition: color 0.15s;
+}
+.nav-menu li.active a,
+.nav-menu li a:hover {
+  color: var(--white);
+}
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.nav-auth a {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+  letter-spacing: 0;
+  transition: opacity 0.15s;
+}
+.nav-auth a:hover {
+  opacity: 0.8;
+}
 
 /* ── 히어로 ─────────────────────────────────────────────── */
-.used-cube-marketu951 .container-29 {
-  background: linear-gradient(180deg, rgba(26,31,46,1) 0%, rgba(37,43,61,1) 100%);
+.hero {
+  background: linear-gradient(180deg, rgba(26, 31, 46, 1) 0%, rgba(37, 43, 61, 1) 100%);
   padding: 80px 24px 48px;
 }
-.used-cube-marketu951 .container-30 { max-width: 1076px; margin: 0 auto; }
-.used-cube-marketu951 .container-31 { display: flex; flex-direction: column; gap: 32px; }
-.used-cube-marketu951 .container-32 { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; }
-.used-cube-marketu951 .paragraph-16 { display: flex; justify-content: center; }
-.used-cube-marketu951 .text-57 {
+.hero-inner {
+  max-width: 1076px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  text-align: center;
+}
+.hero-title {
   color: var(--white);
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xxxl);
   font-weight: 400;
   line-height: 1.1;
+  letter-spacing: 0;
 }
-.used-cube-marketu951 .paragraph-17 { display: flex; justify-content: center; }
-.used-cube-marketu951 .text-58 {
+.hero-desc {
   color: var(--santas-gray);
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-l);
@@ -177,70 +200,83 @@
   line-height: 1.6;
   text-align: center;
 }
-.used-cube-marketu951 .container-33 {
+.search-row {
   display: flex;
   gap: 16px;
   max-width: 672px;
   margin: 0 auto;
   width: 100%;
 }
+
 /* 검색박스 */
-.used-cube-marketu951 .container-34 {
+.search-box {
   position: relative;
   flex: 1;
   height: 50px;
 }
-.used-cube-marketu951 .container-35,
-.used-cube-marketu951 .container-37 {
+.search-box input {
   background-color: var(--mirage);
   border: 1px solid var(--oxford-blue);
   border-radius: 10px;
   height: 50px;
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  padding: 0 48px 0 20px;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  outline: none;
 }
-.used-cube-marketu951 .container-36 {
-  border-radius: 10px;
-  height: 50px;
+.search-box input::placeholder {
+  color: var(--white-2);
+}
+.search-icon-btn {
   position: absolute;
-  inset: 0;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 0;
 }
-.used-cube-marketu951 .paragraph-18 { display: flex; align-items: center; width: 100%; padding: 0 48px 0 20px; }
-.used-cube-marketu951 .text-60 {
-  background: none; border: none; outline: none; width: 100%;
-  color: var(--white-2); font-family: var(--font-family-arial-regular);
-  font-size: var(--font-size-m); font-weight: 400;
+.search-icon-btn img {
+  width: 100%;
+  height: 100%;
 }
-.used-cube-marketu951 .text-60::placeholder { color: var(--white-2); }
-.used-cube-marketu951 .container-38 {
-  position: absolute;
-  right: 16px; top: 50%; transform: translateY(-50%);
-  width: 20px; height: 20px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 1;
-}
-.used-cube-marketu951 .icon-6, .used-cube-marketu951 .icon-7 { width: 100%; height: 100%; position: relative; }
-.used-cube-marketu951 .vector-4 { position: absolute; width: 35%; height: 35%; right: 0; bottom: 0; }
-.used-cube-marketu951 .vector_2-2 { position: absolute; width: 100%; height: 100%; }
+
 /* 판매하기 버튼 */
-.used-cube-marketu951 .container-39 {
+.sell-btn {
   background-color: var(--science-blue);
   border-radius: 10px;
   height: 50px;
   padding: 0 26px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
   transition: opacity 0.15s;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  line-height: 24px;
+  white-space: nowrap;
+  letter-spacing: 0;
 }
-.used-cube-marketu951 .container-39:hover { opacity: 0.88; }
-.used-cube-marketu951 .paragraph-19 { display: flex; }
-.used-cube-marketu951 .text-59 { letter-spacing: 0; line-height: 24px; text-align: center; white-space: nowrap; }
+.sell-btn:hover {
+  opacity: 0.88;
+}
 
 /* ── 매물 목록 섹션 ─────────────────────────────────────── */
-.used-cube-marketu951 .container-40 {
+.listing-section {
   background-color: var(--mirage);
   padding: 40px 0 60px;
   display: flex;
@@ -248,7 +284,7 @@
   gap: 24px;
   flex: 1;
 }
-.used-cube-marketu951 .container-41 {
+.listing-header {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -257,21 +293,24 @@
   width: 100%;
   padding: 0 24px;
 }
-.used-cube-marketu951 .paragraph-20, .used-cube-marketu951 .paragraph-22 { display: flex; align-items: center; }
-.used-cube-marketu951 .text-61, .used-cube-marketu951 .text { letter-spacing: 0; line-height: 24px; white-space: nowrap; }
-.used-cube-marketu951 .container-42 { display: flex; }
-.used-cube-marketu951 .paragraph-21 { display: flex; }
-.used-cube-marketu951 .number-3 {
+.listing-count {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.count-num {
   color: var(--science-blue);
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-m);
   font-weight: 400;
   line-height: 24px;
 }
-.used-cube-marketu951 .number-4 { letter-spacing: 0; white-space: nowrap; }
 
 /* 카드 그리드 */
-.used-cube-marketu951 .container-43 {
+.listing-grid {
   max-width: 1464px;
   margin: 0 auto;
   width: 100%;
@@ -281,15 +320,8 @@
   gap: 24px;
 }
 
-/* 개별 카드 (container-44 ~ container-56: 동일 스타일) */
-.used-cube-marketu951 .container-44,
-.used-cube-marketu951 .container-46,
-.used-cube-marketu951 .container-47,
-.used-cube-marketu951 .container-49,
-.used-cube-marketu951 .container-51,
-.used-cube-marketu951 .container-53,
-.used-cube-marketu951 .container-55,
-.used-cube-marketu951 .container-56 {
+/* 개별 카드 */
+.listing-card {
   background-color: var(--ebony-clay);
   border-radius: 10px;
   box-shadow: 0 4px 6px -4px #0000001a, 0 10px 15px -3px #0000001a;
@@ -299,238 +331,287 @@
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
 }
-.used-cube-marketu951 .container-44:hover,
-.used-cube-marketu951 .container-46:hover,
-.used-cube-marketu951 .container-47:hover,
-.used-cube-marketu951 .container-49:hover,
-.used-cube-marketu951 .container-51:hover,
-.used-cube-marketu951 .container-53:hover,
-.used-cube-marketu951 .container-55:hover,
-.used-cube-marketu951 .container-56:hover { transform: translateY(-4px); box-shadow: 0 8px 24px #0000004d; }
+.listing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px #0000004d;
+}
 
 /* 카드 썸네일 이미지 */
-.used-cube-marketu951 .container-1 {
-  background-image: url(../img/image-----------.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
-}
-.used-cube-marketu951 .container-15 {
-  background-image: url(../img/image--2-----------@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
-}
-.used-cube-marketu951 .container-48 {
-  background-image: url(../img/image----------@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
-}
-.used-cube-marketu951 .container-50 {
-  background-image: url(../img/image-------------@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
-}
-.used-cube-marketu951 .container-52 {
-  background-image: url(../img/image---------------@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
-}
-.used-cube-marketu951 .container-54 {
-  background-image: url(../img/image----------------@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 200px; width: 100%;
+.card-img {
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 200px;
+  width: 100%;
 }
 
 /* 카드 바디 */
-.used-cube-marketu951 .container-2 { display: flex; flex-direction: column; padding: 20px; flex: 1; }
-.used-cube-marketu951 .container-3 { display: flex; margin-bottom: 8px; }
-.used-cube-marketu951 .paragraph-1 { display: flex; width: 100%; }
-.used-cube-marketu951 .text-1,
-.used-cube-marketu951 .text-66,
-.used-cube-marketu951 .text-74,
-.used-cube-marketu951 .text-82,
-.used-cube-marketu951 .text-6 {
-  letter-spacing: 0; line-height: 28px;
-  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex: 1;
 }
-/* 설명 */
-.used-cube-marketu951 .container-45,
-.used-cube-marketu951 .container-16,
-.used-cube-marketu951 .container-18 {
-  display: flex; flex-direction: column;
-  height: 40px; overflow: hidden;
+.card-title {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-desc {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
   margin-bottom: 12px;
+  height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
-.used-cube-marketu951 .paragraph-23,
-.used-cube-marketu951 .paragraph-4 { position: relative; height: 100%; width: 100%; }
-.used-cube-marketu951 .x20,
-.used-cube-marketu951 .text-67,
-.used-cube-marketu951 .text-3,
-.used-cube-marketu951 .text-4,
-.used-cube-marketu951 .text-79,
-.used-cube-marketu951 .text-91 {
-  letter-spacing: 0; line-height: 20px;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
+
 /* 위치 + 가격 행 */
-.used-cube-marketu951 .container-4 {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: auto; padding-top: 12px;
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
   border-top: 1px solid var(--oxford-blue);
 }
-.used-cube-marketu951 .container-5 { display: flex; align-items: center; gap: 4px; }
-.used-cube-marketu951 .container-6 { width: 16px; height: 16px; display: flex; align-items: center; flex-shrink: 0; }
-.used-cube-marketu951 .icon { width: 100%; height: 100%; position: relative; }
-.used-cube-marketu951 .icon-1 { position: relative; width: 58%; height: 75%; top: 12.5%; left: 20.83%; }
-.used-cube-marketu951 .vector { position: absolute; height: 44%; width: 114%; left: -7%; top: 61%; }
-.used-cube-marketu951 .vector_2 { position: absolute; height: 56%; width: 71%; left: 14%; top: -6%; }
-.used-cube-marketu951 .container-7 { display: flex; align-items: center; }
-.used-cube-marketu951 .paragraph-24,
-.used-cube-marketu951 .paragraph-25,
-.used-cube-marketu951 .paragraph-26,
-.used-cube-marketu951 .paragraph-27,
-.used-cube-marketu951 .paragraph-28,
-.used-cube-marketu951 .paragraph-29,
-.used-cube-marketu951 .paragraph-30,
-.used-cube-marketu951 .paragraph-32 { display: flex; }
-.used-cube-marketu951 .text-64,
-.used-cube-marketu951 .text-68,
-.used-cube-marketu951 .text-72,
-.used-cube-marketu951 .text-76,
-.used-cube-marketu951 .text-80,
-.used-cube-marketu951 .text-84,
-.used-cube-marketu951 .text-88,
-.used-cube-marketu951 .text-92 { letter-spacing: 0; line-height: 20px; white-space: nowrap; }
-.used-cube-marketu951 .container-8 { display: flex; }
-.used-cube-marketu951 .paragraph-2,
-.used-cube-marketu951 .paragraph-31 { display: flex; }
-.used-cube-marketu951 .text-2,
-.used-cube-marketu951 .text-89 { letter-spacing: 0; line-height: 20px; white-space: nowrap; }
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--pale-sky);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+.card-location img {
+  width: 16px;
+  height: 16px;
+}
+.card-price {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 /* 좋아요 / 조회수 행 */
-.used-cube-marketu951 .container-9 {
-  display: flex; align-items: center; gap: 16px;
+.card-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   border-top: 1px solid var(--oxford-blue);
-  margin-top: 12px; padding-top: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
 }
-.used-cube-marketu951 .container-10,
-.used-cube-marketu951 .container-13 { display: flex; align-items: center; gap: 6px; }
-.used-cube-marketu951 .container-11 { width: 18px; height: 18px; display: flex; align-items: center; flex-shrink: 0; }
-.used-cube-marketu951 .icon-2 { width: 100%; height: 100%; position: relative; }
-.used-cube-marketu951 .icon-3 { position: relative; width: 83%; height: 71%; top: 16.6%; left: 8.33%; }
-.used-cube-marketu951 .vector-1 { position: absolute; width: 110%; height: 112%; left: -5%; top: -6%; }
-.used-cube-marketu951 .icon-4 { position: relative; width: 83%; height: 58%; top: 20.84%; left: 8.33%; }
-.used-cube-marketu951 .vector-2 { position: absolute; width: 110%; height: 114%; left: -5%; top: -7%; }
-.used-cube-marketu951 .vector_2-1 { position: absolute; width: 40%; height: 57%; left: 30%; top: 21%; }
-.used-cube-marketu951 .container-12,
-.used-cube-marketu951 .container-14,
-.used-cube-marketu951 .container-17,
-.used-cube-marketu951 .container-19 { display: flex; align-items: center; }
-.used-cube-marketu951 .paragraph-3 { display: flex; align-items: center; }
-.used-cube-marketu951 .number,
-.used-cube-marketu951 .number-1 { letter-spacing: 0; line-height: 24px; white-space: nowrap; }
+.card-stats span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.card-stats img {
+  width: 18px;
+  height: 18px;
+}
 
 /* ── 페이지네이션 ──────────────────────────────────────── */
-.used-cube-marketu951 .container-57 {
-  background-color: var(--mirage);
+.pagination {
   padding: 32px 24px;
-  display: flex; justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
-.used-cube-marketu951 .container-58 {
-  display: flex; align-items: center; gap: 8px;
-}
-.used-cube-marketu951 .container-59,
-.used-cube-marketu951 .container-60,
-.used-cube-marketu951 .container-20,
-.used-cube-marketu951 .container-61 {
-  width: 32px; height: 32px;
+.page-btn {
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
   background-color: var(--ebony-clay);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: none;
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
 }
-.used-cube-marketu951 .container-60 { background-color: var(--science-blue); }
-.used-cube-marketu951 .container-59:hover,
-.used-cube-marketu951 .container-20:hover,
-.used-cube-marketu951 .container-61:hover { background-color: var(--oxford-blue); }
-.used-cube-marketu951 .icon-5 { width: 16px; height: 16px; position: relative; }
-.used-cube-marketu951 .vector-3 { position: absolute; width: 33%; height: 58%; left: 33%; top: 21%; }
-.used-cube-marketu951 .paragraph-5 { display: flex; align-items: center; justify-content: center; }
-.used-cube-marketu951 .number-2 { letter-spacing: 0; line-height: 20px; }
+.page-btn.active {
+  background-color: var(--science-blue);
+}
+.page-btn:hover:not(.active) {
+  background-color: var(--oxford-blue);
+}
+.page-btn img {
+  width: 16px;
+  height: 16px;
+}
 
 /* ── 푸터 ───────────────────────────────────────────────── */
-.used-cube-marketu951 .footer {
+.footer {
   background-color: var(--mirage-2);
   padding: 58px 0 0;
 }
-.used-cube-marketu951 .footer-content {
+.footer-content {
   max-width: 1749px;
   margin: 0 auto;
   padding: 0 167px 40px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 48px;
 }
-/* 푸터 고객지원 / 제품 컬럼 공통 스타일 */
-.used-cube-marketu951 .paragraph-33,
-.used-cube-marketu951 .paragraph-34 { display: flex; margin-bottom: 16px; }
-.used-cube-marketu951 .text-94,
-.used-cube-marketu951 .text-98 { letter-spacing: 0; line-height: 28px; white-space: nowrap; }
-.used-cube-marketu951 .container-21 { display: flex; flex-direction: column; gap: 8px; }
-.used-cube-marketu951 .paragraph-6,
-.used-cube-marketu951 .paragraph-7,
-.used-cube-marketu951 .paragraph-35 { display: flex; cursor: pointer; }
-.used-cube-marketu951 .text-95,
-.used-cube-marketu951 .text-96,
-.used-cube-marketu951 .text-7,
-.used-cube-marketu951 .text-101,
-.used-cube-marketu951 .text-102 { letter-spacing: 0; line-height: 24px; white-space: nowrap; }
+
+/* 푸터 고객지원 / 제품 컬럼 */
+.footer-col h4 {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin-bottom: 16px;
+}
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-col ul li a {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  transition: color 0.15s;
+}
+.footer-col ul li a:hover {
+  color: var(--white);
+}
+
 /* 브랜드 컬럼 */
-.used-cube-marketu951 .container-62 { position: relative; grid-column: 1 / 3; }
-.used-cube-marketu951 .container-63 { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-.used-cube-marketu951 .paragraph-36,
-.used-cube-marketu951 .paragraph-37 { display: flex; }
-.used-cube-marketu951 .text-103,
-.used-cube-marketu951 .text-104 { letter-spacing: 0; line-height: 26px; white-space: nowrap; }
-.used-cube-marketu951 .container-64 { display: flex; flex-direction: column; }
-.used-cube-marketu951 .paragraph-38,
-.used-cube-marketu951 .paragraph-39 { display: flex; align-items: flex-start; }
-.used-cube-marketu951 .image-1 {
-  background-image: url(../img/image--c-c-c-logo-@2x.png);
-  background-position: 50% 50%; background-size: cover;
-  height: 63px; width: 69px;
-  position: absolute; top: 0; left: 0;
+.footer-brand {
+  order: -1;
 }
+.footer-brand p {
+  color: var(--white-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.footer-logo-img {
+  background-image: url(../used_img/image--c-c-c-logo-@2x.png);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 63px;
+  width: 69px;
+  flex-shrink: 0;
+}
+.footer-logo-title {
+  display: block;
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xxxl);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+}
+.footer-logo-sub {
+  display: block;
+  color: var(--ice-cold);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
 /* 푸터 하단 */
-.used-cube-marketu951 .footer-bottom {
-  max-width: 1749px; margin: 0 auto; padding: 0 167px 28px; position: relative;
+.footer-bottom {
+  max-width: 1749px;
+  margin: 0 auto;
+  padding: 0 167px 28px;
+  position: relative;
 }
-.used-cube-marketu951 .container-65 {
+.footer-bottom hr {
+  border: none;
   border-top: 1px solid var(--ebony-clay-2);
   margin-bottom: 20px;
 }
-.used-cube-marketu951 .container-66 { display: flex; justify-content: space-between; align-items: center; }
-.used-cube-marketu951 .container-67 { display: flex; align-items: center; }
-.used-cube-marketu951 .paragraph-40 { position: relative; }
-.used-cube-marketu951 .container-68 { height: 40px; width: 152px; }
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom-row p {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+.footer-bottom-row img {
+  height: 40px;
+  width: 152px;
+}
 
 /* ── 반응형 ──────────────────────────────────────────────── */
 @media (max-width: 1200px) {
-  .used-cube-marketu951 .container-43 { grid-template-columns: repeat(3, 1fr); }
-  .used-cube-marketu951 .footer-content { padding: 0 60px 40px; }
-  .used-cube-marketu951 .footer-bottom { padding: 0 60px 28px; }
+  .listing-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-content { padding: 0 60px 40px; }
+  .footer-bottom { padding: 0 60px 28px; }
 }
 @media (max-width: 900px) {
-  .used-cube-marketu951 .container-43 { grid-template-columns: repeat(2, 1fr); }
-  .used-cube-marketu951 .container-28 { gap: 20px; }
-  .used-cube-marketu951 .footer-content { grid-template-columns: repeat(2, 1fr); padding: 0 32px 40px; }
-  .used-cube-marketu951 .container-62 { grid-column: span 2; }
+  .listing-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-menu { gap: 20px; }
+  .footer-content { grid-template-columns: 1fr 1fr; padding: 0 32px 40px; }
+  .footer-brand { grid-column: span 2; }
 }
 @media (max-width: 640px) {
-  .used-cube-marketu951 .container-43 { grid-template-columns: 1fr; }
-  .used-cube-marketu951 .container-28 { display: none; }
-  .used-cube-marketu951 .container-33 { flex-direction: column; }
-  .used-cube-marketu951 .container-39 { width: 100%; }
-  .used-cube-marketu951 .footer-content { grid-template-columns: 1fr; padding: 0 20px 40px; }
-  .used-cube-marketu951 .container-62 { grid-column: span 1; }
-  .used-cube-marketu951 .footer-bottom { padding: 0 20px 28px; }
-  .used-cube-marketu951 .container-66 { flex-direction: column; gap: 12px; }
+  .listing-grid { grid-template-columns: 1fr; }
+  .nav-menu { display: none; }
+  .search-row { flex-direction: column; }
+  .sell-btn { width: 100%; }
+  .footer-content { grid-template-columns: 1fr; padding: 0 20px 40px; }
+  .footer-brand { grid-column: span 1; }
+  .footer-bottom { padding: 0 20px 28px; }
+  .footer-bottom-row { flex-direction: column; gap: 12px; }
 }
