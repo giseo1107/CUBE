@@ -177,7 +177,7 @@
   position: relative;
   width: 1920px;
   height: 2744px;
-  padding: 0 -259px 0 0;
+  padding: 0;
   background:
     linear-gradient(180deg, rgba(26, 31, 46, 1) 0%, rgba(37, 43, 61, 1) 100%),
     linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
