@@ -96,7 +96,7 @@ a { text-decoration: none; color: inherit; }
   height: 80px;
 }
 .logo-img {
-  background-image: url(../used_img/image--c-c-c-logo-@2x.png);
+  background-image: url(/used_img/image--c-c-c-logo-@2x.png);
   background-position: 50% 50%;
   background-size: cover;
   height: 64px;
@@ -537,7 +537,7 @@ a { text-decoration: none; color: inherit; }
   margin-top: 12px;
 }
 .footer-logo-img {
-  background-image: url(../used_img/image--c-c-c-logo-@2x.png);
+  background-image: url(/used_img/image--c-c-c-logo-@2x.png);
   background-position: 50% 50%;
   background-size: cover;
   height: 63px;
