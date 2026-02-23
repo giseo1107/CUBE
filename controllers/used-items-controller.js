@@ -160,9 +160,9 @@ exports.createItem = async (req, res) => {
     // 이미지 저장
     if (req.files && req.files.length > 0) {
       const imgValues = req.files.map((f, i) => [
-        itemId,
-        `/usedcubeimg/${f.filename}`,
-        i,
+      itemId,
+      f.path,  // Cloudinary가 자동으로 URL을 f.path에 넣어줌
+      i,
       ]);
       await conn.query(
         'INSERT INTO used_item_images (item_id, file_path, sort_order) VALUES ?',
