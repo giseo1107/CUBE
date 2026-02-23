@@ -140,7 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // 전송
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
-      submitBtn.querySelector('.text-3').textContent = '등록 중...';
+      const btnText = submitBtn.querySelector('.text-3');
+      if (btnText) btnText.textContent = '등록하기';
 
       try {
         const res  = await fetch('/api/used-items', {
