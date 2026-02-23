@@ -1,3 +1,76 @@
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) return;
+
+  try {
+    const res = await fetch(`/api/used-items/${id}`);
+    const json = await res.json();
+    if (!json.success) return;
+
+    const item = json.data;
+
+    // 제목
+    document.querySelectorAll('.text-56, .text-55').forEach(el => el.textContent = item.title);
+
+    // 위치
+    document.querySelector('.text-57').textContent = item.location || '';
+
+    // 좋아요/조회수
+    document.querySelector('.number').textContent = item.like_count || 0;
+    document.querySelector('.number-1').textContent = item.view_count || 0;
+
+    // 제품 사양
+    document.querySelector('.text-60').textContent = item.size_info || '-';
+    document.querySelector('.text-62').textContent = item.structure || '-';
+    document.querySelector('.text-64').textContent = item.build_year || '-';
+    document.querySelector('.a').textContent = item.condition || '-';
+    document.querySelector('.text-67').textContent = item.interior || '-';
+    document.querySelector('.x100mm').textContent = item.insulation || '-';
+
+    // 상세 설명 (여러 단락 → 하나로)
+    const descEl = document.querySelector('.x20');
+    if (descEl) {
+      descEl.textContent = item.description || '';
+      // 나머지 하드코딩 단락 숨기기
+      ['.x2023', '.led', '.x100mm-1', '.text-71', '.text-72', '.text-73', '.x'].forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) el.style.display = 'none';
+      });
+    }
+
+    // 가격
+    document.querySelector('.text-88').textContent = item.price_display || '';
+
+    // 태그
+    if (item.tags) {
+      const tagEls = document.querySelectorAll('.container-26 .text-2');
+      const tags = item.tags.split(',').map(t => t.trim()).filter(Boolean);
+      tagEls.forEach((el, i) => {
+        el.textContent = tags[i] ? `#${tags[i]}` : '';
+      });
+    }
+
+    // 이미지
+    if (item.images && item.images.length > 0) {
+      const imgClasses = ['.us1_1', '.us1_11', '.us1_22', '.us1_33', '.us1_44'];
+      item.images.forEach((img, i) => {
+        if (imgClasses[i]) {
+          const el = document.querySelector(imgClasses[i]);
+          if (el) el.style.backgroundImage = `url('${img.file_path}')`;
+        }
+      });
+      // 이미지 카운터
+      document.querySelector('.text-52').textContent = `1 / ${item.images.length}`;
+    }
+
+  } catch (err) {
+    console.error('상세 조회 실패:', err);
+  }
+});
+</script>
+
 <!DOCTYPE html>
 <html>
   <head>
