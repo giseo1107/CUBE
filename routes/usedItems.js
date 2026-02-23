@@ -4,7 +4,7 @@
 
 const express    = require('express');
 const router     = express.Router();
-const controller = require('../controllers/useditemsController');
+const controller = require('../controllers/usedItemsController');
 const multer     = require('multer');
 const path       = require('path');
 const fs         = require('fs');
