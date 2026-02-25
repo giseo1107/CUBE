@@ -87,7 +87,7 @@
         </div>
 
         <!-- 글쓰기 폼 -->
-        <form class="form" action="/gallery/post" method="POST" enctype="multipart/form-data">
+        <form class="form" id="galleryForm" enctype="multipart/form-data">
 
           <!-- 제목 입력 -->
           <div class="container-7">
@@ -166,5 +166,48 @@
       </main>
 
     </div>
+    
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('galleryForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title   = document.getElementById('post-title').value.trim();
+    const content = document.getElementById('post-content').value.trim();
+    const image   = document.getElementById('post-image').files[0];
+
+    if (!title) { alert('제목을 입력해주세요.'); return; }
+    if (!content) { alert('내용을 입력해주세요.'); return; }
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    if (image) formData.append('image', image);
+
+    const submitBtn = document.querySelector('.button-1');
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.text-10').textContent = '등록 중...';
+
+    try {
+      const res  = await fetch('/api/gallery', { method: 'POST', body: formData });
+      const json = await res.json();
+
+      if (json.success) {
+        alert('게시글이 등록되었습니다!');
+        window.location.href = '/cube_gallery.html';
+      } else {
+        alert('등록 실패: ' + (json.message || '알 수 없는 오류'));
+      }
+    } catch (err) {
+      alert('서버 연결에 실패했습니다.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.querySelector('.text-10').textContent = '게시하기';
+    }
+  });
+});
+</script>
   </body>
 </html>

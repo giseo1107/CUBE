@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>큐브 갤러리 - C.C.C</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700">
+  <link rel="stylesheet" type="text/css" href="css/cube_gallery.css">
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-img"></div>
+        <div class="logo-text">
+          <h1>C.C.C</h1>
+          <span>Custom Cube Company</span>
+        </div>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="editor.html">커스텀 큐브</a></li>
+        <li class="active"><a href="cube_gallery.html">큐브 갤러리</a></li>
+        <li><a href="used_cube.html">중고 큐브마켓</a></li>
+        <li><a href="curation.html">큐레이션 샵</a></li>
+        <li><a href="#">QnA 및 후기</a></li>
+        <li><a href="visit-reservation.html">방문 예약</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="login.html">로그인</a>
+        <a href="signup.html">회원가입</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <h2>큐브 갤러리</h2>
+    <p>커스텀 컨테이너 하우스의 다양한 디자인을 만나보세요</p>
+  </div>
+
+  <!-- 툴바 -->
+  <div class="toolbar">
+    <button class="btn-write" id="writeBtn">글쓰기</button>
+    <div class="search-wrap">
+      <img class="search-icon" src="img/vector-3.svg" alt="검색">
+      <input type="text" id="searchInput" placeholder="검색어를 입력하세요...">
+    </div>
+  </div>
+
+  <!-- 목록 헤더 -->
+  <div class="list-header">
+    총 <span class="count" id="postCount">0</span>개의 작품
+  </div>
+
+  <!-- 게시글 목록 -->
+  <div class="post-list" id="postList">
+    <div class="loading">불러오는 중...</div>
+  </div>
+
+  <!-- 페이지네이션 -->
+  <div class="pagination" id="pagination"></div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let currentPage = 1;
+    let totalPages  = 1;
+    const LIMIT     = 6;
+
+    const postList    = document.getElementById('postList');
+    const countEl     = document.getElementById('postCount');
+    const searchInput = document.getElementById('searchInput');
+
+    function formatDate(str) {
+      const d = new Date(str);
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    function renderPosts(posts) {
+      if (posts.length === 0) {
+        postList.innerHTML = '<div class="empty-state">등록된 게시글이 없습니다.</div>';
+        return;
+      }
+      postList.innerHTML = posts.map(post => `
+        <div class="post-card" onclick="location.href='/cube_gallery_detail.html?id=${post.post_id}'">
+          <div class="post-card-img" style="${post.image_url ? `background-image:url('${post.image_url}')` : ''}"></div>
+          <div class="post-card-body">
+            <div>
+              <div class="post-card-title">${escapeHtml(post.title)}</div>
+              <div class="post-card-desc">${escapeHtml(post.content)}</div>
+            </div>
+            <div>
+              <div class="post-card-meta">
+                <span class="post-card-author">
+                  <img src="img/vector-5.svg" alt="">
+                  <img src="img/vector-6.svg" alt="">
+                  <span>${escapeHtml(post.author_name || '익명')}</span>
+                </span>
+                <span class="post-card-date">
+                  <img src="img/vector-7.svg" alt="">
+                  <span>${formatDate(post.created_at)}</span>
+                </span>
+              </div>
+              <div class="post-card-stats">
+                <span class="post-card-stat">
+                  <img src="img/vector-11.svg" alt="좋아요"> ${post.like_count}
+                </span>
+                <span class="post-card-stat">
+                  <img src="img/vector-12.svg" alt="조회"> ${post.view_count}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPagination() {
+      const container = document.getElementById('pagination');
+      if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+      let html = `<button class="page-btn" id="prevBtn" ${currentPage <= 1 ? 'disabled' : ''}>◀</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+      }
+      html += `<button class="page-btn" id="nextBtn" ${currentPage >= totalPages ? 'disabled' : ''}>▶</button>`;
+      container.innerHTML = html;
+
+      container.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', () => loadPosts(parseInt(btn.dataset.page), searchInput.value.trim()));
+      });
+      container.querySelector('#prevBtn')?.addEventListener('click', () => {
+        if (currentPage > 1) loadPosts(currentPage - 1, searchInput.value.trim());
+      });
+      container.querySelector('#nextBtn')?.addEventListener('click', () => {
+        if (currentPage < totalPages) loadPosts(currentPage + 1, searchInput.value.trim());
+      });
+    }
+
+    async function loadPosts(page = 1, query = '') {
+      postList.innerHTML = '<div class="loading">불러오는 중...</div>';
+      try {
+        const params = new URLSearchParams({ page, limit: LIMIT });
+        if (query) params.set('q', query);
+        const res  = await fetch(`/api/gallery?${params}`);
+        const json = await res.json();
+        if (!json.success) return;
+
+        currentPage = json.pagination.page;
+        totalPages  = json.pagination.totalPages;
+        countEl.textContent = json.pagination.total;
+        renderPosts(json.data);
+        renderPagination();
+      } catch (err) {
+        console.error(err);
+        postList.innerHTML = '<div class="empty-state">서버에 연결할 수 없습니다.</div>';
+      }
+    }
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') loadPosts(1, e.target.value.trim());
+    });
+
+    document.getElementById('writeBtn').addEventListener('click', async () => {
+      try {
+        const res  = await fetch('/api/auth/check');
+        const data = await res.json();
+        window.location.href = data.authenticated
+          ? '/cube_gallery_write.html'
+          : '/login.html?redirect=/cube_gallery_write.html';
+      } catch {
+        window.location.href = '/login.html?redirect=/cube_gallery_write.html';
+      }
+    });
+
+    loadPosts();
+  });
+  </script>
+</body>
+</html>
