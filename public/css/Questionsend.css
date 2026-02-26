@@ -1,0 +1,127 @@
+/* ── 외부 리소스 ── */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face { font-family: "Arial-Bold";    font-weight: 700; src: url("../fonts/ariblk.ttf") format("truetype"); }
+@font-face { font-family: "Arial-Regular"; font-weight: 400; src: url("../fonts/Satoshi-Regular.ttf") format("truetype"); }
+
+:root {
+  --alabaster:     #f8f9fa;
+  --chathams-blue: #1a4f85;
+  --ebony-clay:    #263238;
+  --mirage:        #101828;
+  --scarpa-flow:   #4a5565;
+  --border-light:  #00000014;
+  --white:         #ffffff;
+
+  --f-bold:    "Arial-Bold",    Helvetica;
+  --f-regular: "Arial-Regular", Helvetica;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--alabaster); font-family: var(--f-regular); }
+
+/* ════════════════════════════
+   히어로 배너
+════════════════════════════ */
+.hero {
+  background: var(--ebony-clay);
+  padding: 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 384px; height: 384px;
+  background: #fff;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: .1;
+}
+.hero::before { top: 0; left: 0; }
+.hero::after  { top: -92px; right: 0; }
+.hero .breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero .breadcrumb a    { font-size: 14px; color: #ffffff99; }
+.hero .breadcrumb span { font-size: 14px; color: #ffffff66; }
+.hero .breadcrumb .current { font-size: 14px; color: #fff; }
+.hero h1 { font-family: var(--f-bold); font-size: 40px; color: #fff; font-weight: 700; position: relative; }
+.hero p  { font-size: 18px; color: #ffffffe6; margin-top: 12px; position: relative; }
+
+/* ════════════════════════════
+   완료 카드
+════════════════════════════ */
+.complete-wrap {
+  max-width: 860px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+.complete-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px #0000000f;
+  padding: 64px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+.success-icon {
+  background: #1a4f8514;
+  border-radius: 50%;
+  width: 96px; height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success-icon img { width: 48px; height: 48px; }
+.complete-card h2 {
+  font-family: var(--f-bold);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--mirage);
+}
+.complete-card p {
+  font-size: 16px;
+  color: var(--scarpa-flow);
+  line-height: 1.7;
+}
+.complete-card .email-highlight { color: var(--chathams-blue); font-family: var(--f-bold); }
+
+.btn-group { display: flex; gap: 12px; margin-top: 8px; }
+.btn-outline {
+  border: 1px solid var(--chathams-blue);
+  border-radius: 10px;
+  background: none;
+  color: var(--chathams-blue);
+  font-family: var(--f-regular);
+  font-size: 16px;
+  height: 52px;
+  padding: 0 32px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn-outline:hover { background: var(--chathams-blue); color: #fff; }
+.btn-primary {
+  border: none;
+  border-radius: 10px;
+  background: var(--chathams-blue);
+  color: #fff;
+  font-family: var(--f-regular);
+  font-size: 16px;
+  height: 52px;
+  padding: 0 32px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-primary:hover { opacity: .9; }

@@ -1,0 +1,198 @@
+/* ── 외부 리소스 ── */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face { font-family: "Arial-Bold";    font-weight: 700; src: url("../fonts/ariblk.ttf") format("truetype"); }
+@font-face { font-family: "Arial-Regular"; font-weight: 400; src: url("../fonts/Satoshi-Regular.ttf") format("truetype"); }
+
+:root {
+  --alabaster:      #f8f9fa;
+  --chathams-blue:  #1a4f85;
+  --chathams-blue2: #1a4f8533;
+  --chathams-blue3: #1a4f850d;
+  --ebony-clay:     #263238;
+  --mirage:         #101828;
+  --orange-red:     #fb2c36;
+  --scarpa-flow:    #4a5565;
+  --santas-gray:    #9ca3af;
+  --border:         #00000026;
+  --border-light:   #00000014;
+  --white:          #ffffff;
+
+  --f-bold:    "Arial-Bold",    Helvetica;
+  --f-regular: "Arial-Regular", Helvetica;
+  --f-baloo:   "Baloo Da 2",    Helvetica;
+  --f-inter:   "Inter",         Helvetica;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--alabaster); font-family: var(--f-regular); }
+a { text-decoration: none; color: inherit; }
+
+/* ════════════════════════════
+   히어로 배너
+════════════════════════════ */
+.hero {
+  background: var(--ebony-clay);
+  padding: 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 384px; height: 384px;
+  background: #fff;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: .1;
+}
+.hero::before { top: 0; left: 0; }
+.hero::after  { top: -92px; right: 0; }
+.hero .breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero .breadcrumb a   { font-size: 14px; color: #ffffff99; transition: color .2s; }
+.hero .breadcrumb a:hover { color: #fff; }
+.hero .breadcrumb span { font-size: 14px; color: #ffffff66; }
+.hero .breadcrumb .current { font-size: 14px; color: #fff; }
+.hero h1 { font-family: var(--f-bold); font-size: 40px; color: #fff; font-weight: 700; position: relative; }
+.hero p  { font-size: 18px; color: #ffffffe6; margin-top: 12px; position: relative; }
+
+/* ════════════════════════════
+   폼 카드
+════════════════════════════ */
+.form-wrap {
+  max-width: 860px;
+  margin: 60px auto;
+  padding: 0 24px 80px;
+}
+.form-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px #0000000f;
+  overflow: hidden;
+}
+
+/* 폼 헤더 */
+.form-header {
+  background: #1a4f850a;
+  border-bottom: 1px solid var(--border-light);
+  padding: 28px 48px;
+}
+.form-header h2 { font-family: var(--f-bold); font-size: 20px; color: var(--mirage); font-weight: 700; }
+.form-header p  { font-size: 14px; color: var(--scarpa-flow); margin-top: 4px; }
+.form-header .required { color: var(--orange-red); }
+
+/* 폼 바디 */
+.form-body { padding: 40px 48px; display: flex; flex-direction: column; gap: 24px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 16px; color: var(--mirage); }
+.field label .req { color: var(--orange-red); }
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 16px;
+  height: 52px;
+  font-family: var(--f-regular);
+  font-size: 16px;
+  color: var(--mirage);
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.field input::placeholder,
+.field textarea::placeholder { color: var(--santas-gray); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--chathams-blue); }
+.field textarea { height: 186px; padding: 14px 16px; resize: vertical; }
+.field .char-count { font-size: 13px; color: var(--santas-gray); text-align: right; }
+.field .error-msg  { font-size: 13px; color: var(--orange-red); display: none; }
+.field.invalid input,
+.field.invalid select,
+.field.invalid textarea { border-color: var(--orange-red); }
+.field.invalid .error-msg { display: block; }
+
+/* 구분선 */
+.divider { border: none; border-top: 1px solid var(--border-light); margin: 4px 0; }
+
+/* 개인정보 동의 박스 */
+.privacy-box {
+  background: #1a4f8508;
+  border: 1px solid #1a4f851f;
+  border-radius: 12px;
+  padding: 20px;
+}
+.privacy-box h4 { font-family: var(--f-bold); font-size: 15px; color: var(--mirage); font-weight: 700; margin-bottom: 12px; }
+.privacy-content {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 13px;
+  color: var(--scarpa-flow);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.privacy-agree {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--mirage);
+  cursor: pointer;
+}
+.privacy-agree input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--chathams-blue); }
+.privacy-agree .req { color: var(--orange-red); }
+
+/* 버튼 영역 */
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 28px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  font-family: var(--f-regular);
+  font-size: 16px;
+  color: var(--scarpa-flow);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.btn-back:hover { border-color: var(--chathams-blue); color: var(--chathams-blue); }
+.btn-submit {
+  height: 56px;
+  padding: 0 40px;
+  background: var(--chathams-blue);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #1a4f854c;
+  font-family: var(--f-regular);
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-submit:hover    { opacity: .9; }
+.btn-submit:disabled { opacity: .6; cursor: not-allowed; }
