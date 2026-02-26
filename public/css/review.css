@@ -1,0 +1,291 @@
+/* ══════════════════════════════════════════
+   globals.css + styleguide.css + review.css
+   ══════════════════════════════════════════ */
+
+/* ── 외부 폰트 ── */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+
+@font-face { font-family: "Arial-Regular"; font-weight: 400; src: url("../fonts/Satoshi-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Arial-Bold";    font-weight: 700; src: url("../fonts/ariblk.ttf")          format("truetype"); }
+
+/* ── CSS 변수 (styleguide) ── */
+:root {
+  --aqua-squeeze:  #e8edf2;
+  --chathams-blue: #1a4f85;
+  --ebony-clay:    #263238;
+  --mirage:        #101828;
+  --santas-gray:   #99a1af;
+  --scarpa-flow:   #4a5565;
+  --seashell:      #f1f1f1;
+  --white:         #ffffff;
+  --white-2:       #ffffffe6;
+  --black-2:       #0000000f;
+  --black-3:       #0000001a;
+
+  --font-size-xxs: 12px;
+  --font-size-xs:  13px;
+  --font-size-s:   14px;
+  --font-size-m:   15px;
+  --font-size-l:   16px;
+  --font-size-xl:  18px;
+  --font-size-xxl: 20px;
+
+  --f-regular: "Arial-Regular", Helvetica;
+  --f-bold:    "Arial-Bold",    Helvetica;
+  --f-baloo:   "Baloo Da 2",    Helvetica;
+  --f-inter:   "Inter",         Helvetica;
+}
+
+/* ── 타이포 유틸 (styleguide) ── */
+.arial-regular-normal-white-12px      { color: var(--white);        font-family: var(--f-regular); font-size: var(--font-size-xxs); font-weight: 400; }
+.arial-regular-normal-chathams-blue-13px { color: var(--chathams-blue); font-family: var(--f-regular); font-size: var(--font-size-xs); font-weight: 400; }
+.arial-regular-normal-scarpa-flow-12px { color: var(--scarpa-flow);  font-family: var(--f-regular); font-size: var(--font-size-xxs); font-weight: 400; }
+.arial-regular-normal-santas-gray-13px { color: var(--santas-gray);  font-family: var(--f-regular); font-size: var(--font-size-xs);  font-weight: 400; }
+.arial-regular-normal-mirage-15px     { color: var(--mirage);        font-family: var(--f-regular); font-size: var(--font-size-m);   font-weight: 400; }
+.arial-regular-normal-mirage-18px     { color: var(--mirage);        font-family: var(--f-regular); font-size: var(--font-size-xl);  font-weight: 400; }
+.arial-regular-normal-scarpa-flow-15px{ color: var(--scarpa-flow);   font-family: var(--f-regular); font-size: var(--font-size-m);   font-weight: 400; }
+.arial-regular-normal-scarpa-flow-16px{ color: var(--scarpa-flow);   font-family: var(--f-regular); font-size: var(--font-size-l);   font-weight: 400; }
+.arial-regular-normal-santas-gray-16px{ color: var(--santas-gray);   font-family: var(--f-regular); font-size: var(--font-size-l);   font-weight: 400; }
+.balooda2-bold-white-14px             { color: var(--white);         font-family: var(--f-baloo);   font-size: var(--font-size-s);   font-weight: 700; }
+
+/* ── 기본 ── */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--seashell); font-family: var(--f-regular); color: var(--mirage); }
+a    { text-decoration: none; color: inherit; }
+
+/* ════════════════════════════
+   네비게이션
+════════════════════════════ */
+.navbar {
+  background: var(--chathams-blue);
+  box-shadow: 0 1px 2px -1px #0000001a, 0 1px 3px #0000001a;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo .logo-img { width: 50px; height: 50px; background: url(../reviewimg/image@2x.png) center/cover; border-radius: 4px; }
+.nav-logo h1   { font-family: var(--f-inter); font-size: 28px; color: #aff9f5; font-weight: 400; }
+.nav-logo span { font-family: var(--f-inter); font-size: 12px; color: #aff9f5; }
+.nav-menu { display: flex; gap: 40px; list-style: none; }
+.nav-menu a { font-family: var(--f-baloo); font-size: 14px; font-weight: 700; color: var(--white); transition: color .2s; }
+.nav-menu a:hover, .nav-menu .active a { color: #aff9f5; }
+.nav-auth { display: flex; gap: 20px; }
+.nav-auth a { font-family: var(--f-baloo); font-size: 14px; font-weight: 700; color: var(--white); transition: color .2s; }
+.nav-auth a:hover { color: #aff9f5; }
+
+/* ════════════════════════════
+   히어로 배너
+════════════════════════════ */
+.hero {
+  background: var(--chathams-blue);
+  padding: 96px 60px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 384px; height: 384px;
+  background: var(--white);
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: .1;
+  pointer-events: none;
+}
+.hero::before { top: 0; left: 0; }
+.hero::after  { top: 15px; right: -100px; }
+.hero h1 { font-family: var(--f-regular); font-size: 48px; color: var(--white); position: relative; }
+.hero p  { font-size: var(--font-size-xxl); color: var(--white-2); margin-top: 16px; position: relative; }
+.btn-write {
+  display: inline-block;
+  margin-top: 28px;
+  background: #325b83;
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0 40px;
+  height: 56px;
+  line-height: 56px;
+  font-family: var(--f-regular);
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  transition: opacity .2s;
+  position: relative;
+}
+.btn-write:hover { opacity: .85; }
+
+/* ════════════════════════════
+   탭 바
+════════════════════════════ */
+.tab-bar {
+  background: var(--white);
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+.tab-btn {
+  padding: 14px 32px;
+  font-family: var(--f-bold);
+  font-size: var(--font-size-l);
+  color: var(--scarpa-flow);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.tab-btn.active { color: var(--chathams-blue); border-bottom-color: var(--chathams-blue); }
+
+/* ════════════════════════════
+   리뷰 목록 영역
+════════════════════════════ */
+.review-section {
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 0 60px 80px;
+}
+.review-header { margin-bottom: 32px; }
+.review-header h2 { font-family: var(--f-bold); font-size: 24px; font-weight: 700; }
+.review-header p  { font-size: var(--font-size-l); color: var(--scarpa-flow); margin-top: 8px; }
+
+/* ── 카드 그리드 ── */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+/* ── 리뷰 카드 ── */
+.review-card {
+  background: var(--white);
+  border: 1px solid var(--black-3);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow .2s, transform .2s;
+}
+.review-card:hover { box-shadow: 0 8px 24px #0000001a; transform: translateY(-2px); }
+
+/* 카드 이미지 */
+.card-img {
+  width: 100%;
+  height: 240px;
+  background: var(--aqua-squeeze) center/cover no-repeat;
+  position: relative;
+  flex-shrink: 0;
+}
+.card-model-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--chathams-blue);
+  border-radius: 999px;
+  box-shadow: 0 2px 4px -2px #0000001a, 0 4px 6px -1px #0000001a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  height: 30px;
+}
+.card-model-badge img  { width: 12px; height: 12px; }
+.card-model-badge span { font-size: var(--font-size-xxs); color: var(--white); white-space: nowrap; }
+
+.card-rating-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: var(--white-2);
+  border-radius: 999px;
+  box-shadow: 0 2px 4px -2px #0000001a, 0 4px 6px -1px #0000001a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  height: 32px;
+}
+.card-rating-badge img  { width: 14px; height: 14px; }
+.card-rating-badge span { font-size: var(--font-size-xs); color: var(--chathams-blue); font-weight: 700; }
+
+/* 카드 바디 */
+.card-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 12px; }
+
+.card-meta { display: flex; align-items: center; justify-content: space-between; }
+.card-author { display: flex; align-items: center; gap: 8px; }
+.author-avatar {
+  background: var(--chathams-blue);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-s);
+  color: var(--white);
+  flex-shrink: 0;
+}
+.author-name   { font-size: var(--font-size-m); color: var(--mirage); }
+.author-region { font-size: var(--font-size-xxs); color: var(--scarpa-flow); display: flex; align-items: center; gap: 4px; }
+.author-region img { width: 12px; height: 12px; }
+.card-date { font-size: var(--font-size-xs); color: var(--santas-gray); }
+
+.card-divider { border: none; border-top: 1px solid var(--black-2); margin: 0; }
+.card-title   { font-size: var(--font-size-xl); color: var(--mirage); }
+.card-content {
+  font-size: var(--font-size-m);
+  color: var(--scarpa-flow);
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 페이지네이션 ── */
+.pagination { display: flex; justify-content: center; gap: 8px; margin-top: 48px; }
+.page-btn {
+  width: 40px; height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: var(--white);
+  font-size: var(--font-size-s);
+  color: var(--scarpa-flow);
+  cursor: pointer;
+  transition: all .2s;
+}
+.page-btn:hover, .page-btn.active { background: var(--chathams-blue); border-color: var(--chathams-blue); color: var(--white); }
+
+/* ── 빈 상태 / 로딩 ── */
+.empty-state { text-align: center; padding: 80px 0; color: var(--santas-gray); font-size: var(--font-size-l); grid-column: 1 / -1; }
+
+/* ════════════════════════════
+   푸터
+════════════════════════════ */
+.footer { background: var(--mirage); padding: 60px; color: var(--santas-gray); }
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #1e2939;
+}
+.footer-col h4 { font-family: var(--f-bold); font-size: var(--font-size-xl); color: var(--white); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: var(--font-size-l); }
+.footer-brand .logo { font-family: var(--f-inter); font-size: 36px; color: var(--chathams-blue); }
+.footer-brand .sub  { font-family: var(--f-inter); font-size: 12px; color: var(--chathams-blue); }
+.footer-bottom { max-width: 1400px; margin: 24px auto 0; font-size: var(--font-size-s); }

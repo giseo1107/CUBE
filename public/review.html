@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>고객 후기 - C.C.C</title>
+  <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+  <!-- ── 네비게이션 ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="logo-img"></div>
+        <div><h1>C.C.C</h1><span>Custom Cube Company</span></div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#">커스텀 큐브</a></li>
+        <li><a href="/cube_gallery.html">큐브 갤러리</a></li>
+        <li><a href="/used_cube.html">중고 큐브마켓</a></li>
+        <li><a href="#">큐레이션 샵</a></li>
+        <li class="active"><a href="/QnA.html">QnA 및 후기</a></li>
+        <li><a href="#">방문 예약</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="/login.html" id="navLogin">로그인</a>
+        <a href="/signup.html" id="navSignup">회원가입</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── 히어로 ── -->
+  <section class="hero">
+    <h1>고객 후기 게시판</h1>
+    <p>커스텀 컨테이너 하우스를 경험한 고객님들의 생생한 후기를 확인하세요</p>
+    <button class="btn-write" id="btnWrite">후기 작성하기</button>
+  </section>
+
+  <!-- ── 탭 바 ── -->
+  <div class="tab-bar">
+    <button class="tab-btn" onclick="location.href='/QnA.html'">자주 묻는 질문</button>
+    <button class="tab-btn active">고객 후기</button>
+  </div>
+
+  <!-- ── 후기 목록 ── -->
+  <section class="review-section">
+    <div class="review-header">
+      <h2 id="reviewCount">후기를 불러오는 중...</h2>
+      <p>만족도 높은 고객님들의 실제 경험담입니다</p>
+    </div>
+    <div id="reviewGrid" class="review-grid">
+      <div class="empty-state">불러오는 중...</div>
+    </div>
+    <div id="pagination" class="pagination"></div>
+  </section>
+
+  <!-- ── 푸터 ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div class="logo">C.C.C</div>
+        <div class="sub">Custom Cube Company</div>
+        <p style="margin-top:12px;font-size:14px;line-height:1.7;">혁신적인 컨테이너 하우스로<br>새로운 주거 문화를 만들어갑니다</p>
+      </div>
+      <div class="footer-col">
+        <h4>제품</h4>
+        <ul><li>커스텀 큐브</li><li>큐브 갤러리</li><li>중고 큐브마켓</li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>고객 지원</h4>
+        <ul><li>FAQ</li><li>1:1 문의</li><li>방문 예약</li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>회사 정보</h4>
+        <ul><li>회사 소개</li><li>개인정보처리방침</li><li>이용약관</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Container House. All rights reserved.</div>
+  </footer>
+
+  <script>
+  const PAGE_SIZE = 6;
+  let currentPage = 1;
+  let totalPages  = 1;
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ── 로그인 상태 확인 ────────────────────────────────
+    fetch('/api/auth/check')
+      .then(r => r.json())
+      .then(data => {
+        if (data.authenticated) {
+          document.getElementById('navLogin').textContent  = '마이페이지';
+          document.getElementById('navLogin').href         = '/mypage.html';
+          document.getElementById('navSignup').textContent = '로그아웃';
+          document.getElementById('navSignup').href        = '/api/auth/logout';
+          // 로그인 시 바로 작성 페이지로
+          document.getElementById('btnWrite').onclick = () => location.href = '/reviewWrite.html';
+        } else {
+          document.getElementById('btnWrite').onclick = () => {
+            if (confirm('후기 작성은 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?'))
+              location.href = '/login.html?redirect=/reviewWrite.html';
+          };
+        }
+      })
+      .catch(() => {
+        document.getElementById('btnWrite').onclick = () => location.href = '/reviewWrite.html';
+      });
+
+    loadReviews(1);
+  });
+
+  // ── 후기 목록 로드 ─────────────────────────────────────
+  async function loadReviews(page) {
+    currentPage = page;
+    const grid = document.getElementById('reviewGrid');
+    grid.innerHTML = '<div class="empty-state">불러오는 중...</div>';
+
+    try {
+      const res  = await fetch(`/api/reviews?page=${page}&limit=${PAGE_SIZE}`);
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+
+      totalPages = json.pagination.totalPages;
+      document.getElementById('reviewCount').textContent = `전체 후기 ${json.pagination.total}개`;
+
+      if (json.data.length === 0) {
+        grid.innerHTML = '<div class="empty-state">아직 등록된 후기가 없습니다.<br>첫 번째 후기를 작성해보세요!</div>';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = json.data.map(renderCard).join('');
+      renderPagination();
+    } catch {
+      grid.innerHTML = '<div class="empty-state">후기를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>';
+    }
+  }
+
+  // ── 카드 HTML 생성 ─────────────────────────────────────
+  function renderCard(r) {
+    const avg     = ((r.rating_quality + r.rating_durability + r.rating_interior +
+                      r.rating_custom  + r.rating_maintenance + r.rating_service) / 6).toFixed(1);
+    const imgStyle = r.image_url ? `background-image:url('${esc(r.image_url)}')` : '';
+    const date     = new Date(r.created_at).toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' });
+    const initial  = (r.author_name || '익명')[0];
+
+    return `
+      <article class="review-card" onclick="location.href='/reviewDetail.html?id=${r.review_id}'">
+        <div class="card-img" style="${imgStyle}">
+          <div class="card-model-badge">
+            <img src="reviewimg/vector-43.svg" alt="" />
+            <span>${esc(r.model_name || '모델 미지정')}</span>
+          </div>
+          <div class="card-rating-badge">
+            <img src="reviewimg/vector-2.svg" alt="★" />
+            <span>${avg}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <div class="card-author">
+              <div class="author-avatar">${esc(initial)}</div>
+              <div>
+                <div class="author-name">${esc(r.author_name || '익명')}</div>
+                <div class="author-region">
+                  <img src="reviewimg/vector-46.svg" alt="" />
+                  ${esc(r.region || '')}
+                </div>
+              </div>
+            </div>
+            <div class="card-date">${date}</div>
+          </div>
+          <hr class="card-divider" />
+          <div class="card-title">${esc(r.title)}</div>
+          <div class="card-content">${esc(r.content)}</div>
+        </div>
+      </article>`;
+  }
+
+  // ── 페이지네이션 ───────────────────────────────────────
+  function renderPagination() {
+    const el = document.getElementById('pagination');
+    if (totalPages <= 1) { el.innerHTML = ''; return; }
+    let html = '';
+    if (currentPage > 1)
+      html += `<button class="page-btn" onclick="loadReviews(${currentPage - 1})">‹</button>`;
+    for (let i = 1; i <= totalPages; i++)
+      html += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="loadReviews(${i})">${i}</button>`;
+    if (currentPage < totalPages)
+      html += `<button class="page-btn" onclick="loadReviews(${currentPage + 1})">›</button>`;
+    el.innerHTML = html;
+  }
+
+  function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+  </script>
+
+</body>
+</html>
