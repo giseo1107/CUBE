@@ -4,7 +4,6 @@ const MySQLStore = require('express-mysql-session')(session);
 const path = require('path');
 require('dotenv').config();
 
-
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const designsRoutes = require('./routes/designs');
@@ -12,22 +11,12 @@ const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
 const reviewRoutes = require('./routes/review');
+const pool = require('./config/db');  // ← 기존 SSL 적용된 pool 가져오기
 
-const sessionStore = new MySQLStore({
-  host:     process.env.DB_HOST,
-  port:     process.env.DB_PORT || 3306,
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  ssl: {
-    minVersion: 'TLSv1.2',
-    rejectUnauthorized: true,
-  },
-});
+const sessionStore = new MySQLStore({}, pool);  // ← pool 직접 전달 (SSL 옵션 불필요)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 
 // Render 등 리버스 프록시 환경에서 HTTPS 인식 (세션 설정보다 위에 있어야 함)
 app.set('trust proxy', 1);
@@ -44,7 +33,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store:             sessionStore, 
+    store: sessionStore,
     cookie: {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
@@ -62,11 +51,12 @@ app.use('/api/used-items', usedItemsRoute);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/reviews', reviewRoutes);
 
-// 루트 경로는 로그인 페이지로
+// 후기 상세 페이지 (깔끔한 URL)
 app.get('/review/:id', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'reviewDetail.html'));
 });
 
+// 루트 경로는 로그인 페이지로
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
