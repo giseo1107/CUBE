@@ -8,10 +8,8 @@ const upload = multer({
   storage: multer.memoryStorage(),
   limits:  { fileSize: 5 * 1024 * 1024 },   // 5MB
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.match(/image\/(jpeg|png|webp)/)) {
-      return cb(new Error('JPG, PNG, WEBP 파일만 업로드 가능합니다.'));
-    }
-    cb(null, true);
+    const ok = !!file.mimetype.match(/image\/(jpeg|png|webp)/);
+    cb(null, ok);
   },
 });
 
