@@ -12,9 +12,18 @@ const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
 const reviewRoutes = require('./routes/review');
-const pool = require('./config/db'); 
 
-const sessionStore = new MySQLStore({}, pool);
+const sessionStore = new MySQLStore({
+  host:     process.env.DB_HOST,
+  port:     process.env.DB_PORT || 3306,
+  user:     process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true,
+  },
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -54,6 +63,10 @@ app.use('/api/gallery', galleryRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 // 루트 경로는 로그인 페이지로
+app.get('/review/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'reviewDetail.html'));
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });

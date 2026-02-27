@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>후기 상세 - C.C.C</title>
+  <link rel="stylesheet" href="css/reviewDetail.css" />
+</head>
+<body>
+
+  <!-- 로딩 중 -->
+  <div id="loadingState" class="page-loading">불러오는 중...</div>
+
+  <!-- 본문 (로드 후 표시) -->
+  <div id="pageContent" style="display:none;">
+
+    <!-- ── 히어로 헤더 ── -->
+    <header class="hero-header">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-inner">
+        <button class="btn-back" onclick="location.href='/review.html'">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          고객 후기 목록으로 돌아가기
+        </button>
+        <div class="model-badge" id="modelBadge"></div>
+        <h1 class="hero-title" id="heroTitle"></h1>
+        <div class="hero-meta">
+          <div class="author-chip">
+            <div class="author-avatar" id="authorAvatar"></div>
+            <span class="author-name"  id="authorName"></span>
+            <span class="author-region" id="authorRegion"></span>
+          </div>
+          <span class="hero-date" id="heroDate"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── 메인 2컬럼 ── -->
+    <div class="detail-wrap">
+
+      <!-- 왼쪽 본문 -->
+      <div class="main-col">
+
+        <!-- 요약 카드 -->
+        <div class="summary-card">
+          <div class="avg-score">
+            <div class="score" id="avgScore">0.0</div>
+            <div class="stars" id="avgStars">★★★★★</div>
+            <div class="label" id="avgLabel">매우 만족</div>
+          </div>
+          <div class="divider-v"></div>
+          <div class="summary-text">
+            <div class="author-full" id="summaryAuthor"></div>
+            <div class="meta-line"   id="summaryMeta"></div>
+            <div class="one-line"    id="summaryText"></div>
+          </div>
+        </div>
+
+        <!-- 상세 후기 -->
+        <div class="section-title">상세 후기</div>
+        <div class="content-body" id="contentBody"></div>
+
+        <!-- 사진 -->
+        <div id="photoSection" style="display:none;">
+          <div class="section-title">후기 사진</div>
+          <div class="photo-grid" id="photoGrid"></div>
+        </div>
+
+        <!-- 목록으로 -->
+        <button class="btn-to-list" onclick="location.href='/review.html'">
+          ← 후기 목록으로 돌아가기
+        </button>
+      </div>
+
+      <!-- 오른쪽 사이드바 -->
+      <aside class="sidebar">
+
+        <!-- 메인 이미지 -->
+        <div class="side-main-img" id="sideMainImg"></div>
+
+        <!-- 항목별 만족도 -->
+        <div class="side-card">
+          <div class="side-card-title">항목별 만족도</div>
+          <div class="rating-bars" id="ratingBars"></div>
+        </div>
+
+        <!-- 제품 정보 -->
+        <div class="side-card">
+          <div class="side-card-title">제품 정보</div>
+          <div class="info-list" id="infoList"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-card" id="ctaCard">
+          <h3 id="ctaTitle"></h3>
+          <p id="ctaDesc"></p>
+          <button class="btn-cta-primary"   onclick="location.href='/reservation.html'">방문 예약하기</button>
+          <button class="btn-cta-secondary" onclick="location.href='#'">제품 상세 보기</button>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- ── 다른 후기 ── -->
+    <section class="other-section">
+      <div class="section-title">다른 고객 후기</div>
+      <div class="other-grid" id="otherGrid"></div>
+    </section>
+
+  </div><!-- /#pageContent -->
+
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    // ── URL에서 id 파싱 ──────────────────────────────────
+    const reviewId = location.pathname.split('/').pop();
+
+    if (!reviewId) {
+      document.getElementById('loadingState').textContent = '잘못된 접근입니다.';
+      return;
+    }
+
+    try {
+      // ── 현재 후기 + 다른 후기 동시 로드 ───────────────
+      const [detailRes, listRes] = await Promise.all([
+        fetch(`/api/reviews/${reviewId}`),
+        fetch(`/api/reviews?limit=4`),
+      ]);
+      const detailJson = await detailRes.json();
+      const listJson   = await listRes.json();
+
+      if (!detailJson.success) throw new Error(detailJson.message);
+
+      const r = detailJson.data;
+      render(r);
+
+      // 다른 후기 (현재 것 제외, 최대 3개)
+      const others = (listJson.data || []).filter(x => x.review_id != reviewId).slice(0, 3);
+      renderOthers(others);
+
+      // 완성 후 표시
+      document.getElementById('loadingState').style.display  = 'none';
+      document.getElementById('pageContent').style.display   = '';
+
+    } catch (e) {
+      document.getElementById('loadingState').textContent = '후기를 불러오지 못했습니다.';
+    }
+  });
+
+  // ── 메인 렌더링 ────────────────────────────────────────
+  function render(r) {
+    const avg    = calcAvg(r);
+    const date   = fmtDate(r.created_at);
+    const initial = (r.author_name || '익명')[0];
+
+    // 히어로
+    if (r.image_url) document.getElementById('heroBg').style.backgroundImage = `url('${r.image_url}')`;
+    document.getElementById('modelBadge').textContent  = r.model_name || '';
+    document.getElementById('heroTitle').textContent   = r.title;
+    document.getElementById('authorAvatar').textContent = initial;
+    document.getElementById('authorName').textContent  = r.author_name || '익명';
+    document.getElementById('authorRegion').textContent = r.region || '';
+    document.getElementById('heroDate').textContent    = date;
+
+    // 요약 카드
+    document.getElementById('avgScore').textContent  = avg;
+    document.getElementById('avgStars').textContent  = starsStr(parseFloat(avg));
+    document.getElementById('avgLabel').textContent  = scoreLabel(parseFloat(avg));
+    document.getElementById('summaryAuthor').textContent = `${r.author_name || '익명'}님의 솔직한 후기`;
+    document.getElementById('summaryMeta').textContent   = `${r.region || ''} · ${date} · ${r.model_name || ''}`;
+    document.getElementById('summaryText').textContent   = r.summary || '';
+
+    // 상세 내용 (줄바꿈 → <p> 분리)
+    const contentEl = document.getElementById('contentBody');
+    const paragraphs = (r.content || '').split(/\n\n+/).filter(s => s.trim());
+    if (paragraphs.length > 1) {
+      contentEl.innerHTML = paragraphs.map(p => `<p>${esc(p.trim())}</p>`).join('');
+    } else {
+      // 단락 구분 없이 긴 텍스트면 200자 단위로 분할
+      const text = r.content || '';
+      const chunks = text.match(/.{1,200}(\s|$)/g) || [text];
+      contentEl.innerHTML = chunks.map(p => `<p>${esc(p.trim())}</p>`).join('');
+    }
+
+    // 사진
+    if (r.image_url) {
+      document.getElementById('photoSection').style.display = '';
+      document.getElementById('photoGrid').innerHTML =
+        `<div class="photo" style="background-image:url('${r.image_url}')"></div>`;
+      document.getElementById('sideMainImg').style.backgroundImage = `url('${r.image_url}')`;
+    }
+
+    // 항목별 만족도
+    const bars = [
+      { label: '시공 품질', val: r.rating_quality },
+      { label: '내구성',    val: r.rating_durability },
+      { label: '인테리어',  val: r.rating_interior },
+      { label: '맞춤 설계', val: r.rating_custom },
+      { label: '유지 관리', val: r.rating_maintenance },
+      { label: '고객 서비스', val: r.rating_service },
+    ];
+    document.getElementById('ratingBars').innerHTML = bars.map(b => `
+      <div class="rating-bar-row">
+        <span class="bar-label">${b.label}</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${(b.val / 5) * 100}%"></div></div>
+        <span class="bar-score">${(b.val || 0).toFixed(1)}</span>
+      </div>`).join('');
+
+    // 제품 정보
+    document.getElementById('infoList').innerHTML = `
+      <div class="info-row">
+        <span class="info-key">제품명</span>
+        <span class="model-chip">${esc(r.model_name || '')}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">설치 지역</span>
+        <span class="info-val">${esc(r.region || '')}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">작성일</span>
+        <span class="info-val">${date}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">종합 평점</span>
+        <span class="rating-chip"><span class="star">★</span> ${avg}</span>
+      </div>`;
+
+    // CTA
+    document.getElementById('ctaTitle').textContent = `저도 경험하고 싶어요!`;
+    document.getElementById('ctaDesc').textContent  = `${r.model_name || ''}에 대해 더 자세히 알아보세요`;
+  }
+
+  // ── 다른 후기 렌더링 ──────────────────────────────────
+  function renderOthers(list) {
+    const el = document.getElementById('otherGrid');
+    if (!list.length) { el.closest('.other-section').style.display = 'none'; return; }
+
+    el.innerHTML = list.map(r => {
+      const avg = calcAvg(r);
+      return `
+        <div class="other-card" onclick="location.href='/reviewDetail.html?id=${r.review_id}'">
+          <div class="other-card-header">
+            <div class="other-author">
+              <span class="name">${esc(r.author_name || '익명')}</span>
+              <span class="region">${esc(r.region || '')}</span>
+            </div>
+            <span class="other-model-badge">${esc(r.model_name || '')}</span>
+          </div>
+          <div class="other-title">${esc(r.title)}</div>
+          <div class="other-content">${esc(r.content)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── 유틸 ──────────────────────────────────────────────
+  function calcAvg(r) {
+    const vals = [r.rating_quality, r.rating_durability, r.rating_interior,
+                  r.rating_custom, r.rating_maintenance, r.rating_service];
+    const sum  = vals.reduce((a, b) => a + (b || 0), 0);
+    return (sum / vals.length).toFixed(1);
+  }
+
+  function starsStr(avg) {
+    const full  = Math.round(avg);
+    return '★'.repeat(full) + '☆'.repeat(5 - full);
+  }
+
+  function scoreLabel(avg) {
+    if (avg >= 4.5) return '매우 만족';
+    if (avg >= 3.5) return '만족';
+    if (avg >= 2.5) return '보통';
+    if (avg >= 1.5) return '불만족';
+    return '매우 불만족';
+  }
+
+  function fmtDate(str) {
+    return new Date(str).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+  </script>
+
+</body>
+</html>

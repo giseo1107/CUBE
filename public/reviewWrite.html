@@ -458,7 +458,7 @@
 
         if (json.success) {
           alert('후기가 성공적으로 등록되었습니다!');
-          location.href = '/review.html';
+          location.href = `/review/${json.reviewId}`;
         } else {
           throw new Error(json.message || '등록 실패');
         }

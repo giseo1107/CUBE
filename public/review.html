@@ -147,14 +147,14 @@
     const initial  = (r.author_name || '익명')[0];
 
     return `
-      <article class="review-card" onclick="location.href='/reviewDetail.html?id=${r.review_id}'">
+      <article class="review-card" onclick="location.href='/review/${r.review_id}'">
         <div class="card-img" style="${imgStyle}">
           <div class="card-model-badge">
-            <img src="reviewimg/vector-43.svg" alt="" />
+            <img src="img/vector-43.svg" alt="" />
             <span>${esc(r.model_name || '모델 미지정')}</span>
           </div>
           <div class="card-rating-badge">
-            <img src="reviewimg/vector-2.svg" alt="★" />
+            <img src="img/vector-2.svg" alt="★" />
             <span>${avg}</span>
           </div>
         </div>
@@ -165,7 +165,7 @@
               <div>
                 <div class="author-name">${esc(r.author_name || '익명')}</div>
                 <div class="author-region">
-                  <img src="reviewimg/vector-46.svg" alt="" />
+                  <img src="img/vector-46.svg" alt="" />
                   ${esc(r.region || '')}
                 </div>
               </div>
