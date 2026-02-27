@@ -9,6 +9,7 @@ const designsRoutes = require('./routes/designs');
 const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
+const reviewRoutes = require('./routes/review');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,6 +45,7 @@ app.use('/api/designs', designsRoutes);
 app.use('/api/reservation', reservationRoutes);
 app.use('/api/used-items', usedItemsRoute);
 app.use('/api/gallery', galleryRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // 루트 경로는 로그인 페이지로
 app.get('/', (req, res) => {
