@@ -1,4 +1,4 @@
-const db        = require('../config/db');
+const db         = require('../config/db');
 const cloudinary = require('cloudinary').v2;
 
 // ─────────────────────────────────────────
@@ -29,12 +29,7 @@ exports.getReviews = async (req, res) => {
     res.json({
       success: true,
       data: rows,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
     });
   } catch (err) {
     console.error('[reviews] 목록 조회 실패:', err);
@@ -64,7 +59,7 @@ exports.getReviewById = async (req, res) => {
 // ─────────────────────────────────────────
 exports.createReview = async (req, res) => {
   try {
-    if (!req.session?.user) {
+    if (!req.session?.userId) {  // ← user → userId
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
 
@@ -74,7 +69,6 @@ exports.createReview = async (req, res) => {
       rating_custom, rating_maintenance, rating_service,
     } = req.body;
 
-    // 서버 측 검증
     const required = { name, region, model_name, title, summary, content };
     for (const [key, val] of Object.entries(required)) {
       if (!val?.trim()) return res.status(400).json({ success: false, message: `${key} 항목을 입력해주세요.` });
@@ -94,7 +88,7 @@ exports.createReview = async (req, res) => {
           rating_custom, rating_maintenance, rating_service)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        req.session.user.id,
+        req.session.userId,  // ← user.id → userId
         name.trim(), region.trim(), model_name.trim(),
         title.trim(), summary.trim(), content.trim(),
         image_url || null,
@@ -115,7 +109,7 @@ exports.createReview = async (req, res) => {
 // ─────────────────────────────────────────
 exports.uploadImages = async (req, res) => {
   try {
-    if (!req.session?.user) {
+    if (!req.session?.userId) {  // ← user → userId
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
     if (!req.files?.length) {
@@ -146,7 +140,7 @@ exports.uploadImages = async (req, res) => {
 // ─────────────────────────────────────────
 exports.deleteReview = async (req, res) => {
   try {
-    if (!req.session?.user) {
+    if (!req.session?.userId) {  // ← user → userId
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
 
@@ -154,7 +148,7 @@ exports.deleteReview = async (req, res) => {
       `SELECT user_id FROM reviews WHERE review_id = ?`, [req.params.id]
     );
     if (!row) return res.status(404).json({ success: false, message: '후기를 찾을 수 없습니다.' });
-    if (row.user_id !== req.session.user.id) {
+    if (row.user_id !== req.session.userId) {  // ← user.id → userId
       return res.status(403).json({ success: false, message: '삭제 권한이 없습니다.' });
     }
 
