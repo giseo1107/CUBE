@@ -1,7 +1,9 @@
 const express = require('express');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const path = require('path');
 require('dotenv').config();
+
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
@@ -10,6 +12,15 @@ const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
 const reviewRoutes = require('./routes/review');
+
+const sessionStore = new MySQLStore({           // ← 추가
+  host:     process.env.DB_HOST,
+  port:     process.env.DB_PORT || 3306,
+  user:     process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: { rejectUnauthorized: false },
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +41,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store:             sessionStore, 
     cookie: {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
