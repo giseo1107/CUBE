@@ -12,18 +12,9 @@ const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
 const reviewRoutes = require('./routes/review');
+const pool = require('./config/db'); 
 
-const sessionStore = new MySQLStore({
-  host:     process.env.DB_HOST,
-  port:     process.env.DB_PORT || 3306,
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  ssl: {
-    minVersion: 'TLSv1.2',
-    rejectUnauthorized: true,
-  },
-});
+const sessionStore = new MySQLStore({}, pool);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
