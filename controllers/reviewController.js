@@ -15,14 +15,16 @@ exports.getReviews = async (req, res) => {
     );
 
     const [rows] = await db.execute(
-      `SELECT review_id, user_id, author_name, region, model_name,
-              title, summary, content, image_url,
-              rating_quality, rating_durability, rating_interior,
-              rating_custom, rating_maintenance, rating_service,
-              created_at
-       FROM reviews
-       WHERE is_public = 1
-       ORDER BY created_at DESC
+      `SELECT r.review_id, r.user_id, r.author_name, r.region, r.model_name,
+              r.title, r.summary, r.content,
+              r.rating_quality, r.rating_durability, r.rating_interior,
+              r.rating_custom, r.rating_maintenance, r.rating_service,
+              r.created_at,
+              (SELECT image_url FROM review_images
+               WHERE review_id = r.review_id ORDER BY sort_order LIMIT 1) AS image_url
+       FROM reviews r
+       WHERE r.is_public = 1
+       ORDER BY r.created_at DESC
        LIMIT ${limit} OFFSET ${offset}`
     );
 
@@ -47,6 +49,15 @@ exports.getReviewById = async (req, res) => {
       [req.params.id]
     );
     if (!row) return res.status(404).json({ success: false, message: '후기를 찾을 수 없습니다.' });
+
+    // 사진 목록 함께 조회
+    const [images] = await db.execute(
+      `SELECT image_url FROM review_images
+       WHERE review_id = ? ORDER BY sort_order ASC`,
+      [req.params.id]
+    );
+    row.images = images.map(i => i.image_url);
+
     res.json({ success: true, data: row });
   } catch (err) {
     console.error('[reviews] 상세 조회 실패:', err);
@@ -59,16 +70,18 @@ exports.getReviewById = async (req, res) => {
 // ─────────────────────────────────────────
 exports.createReview = async (req, res) => {
   try {
-    if (!req.session?.userId) {  // ← user → userId
+    if (!req.session?.userId) {
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
 
     const {
-      name, region, model_name, title, summary, content, image_url,
+      name, region, model_name, title, summary, content,
+      image_urls,  // ← 배열로 받음
       rating_quality, rating_durability, rating_interior,
       rating_custom, rating_maintenance, rating_service,
     } = req.body;
 
+    // 서버 측 검증
     const required = { name, region, model_name, title, summary, content };
     for (const [key, val] of Object.entries(required)) {
       if (!val?.trim()) return res.status(400).json({ success: false, message: `${key} 항목을 입력해주세요.` });
@@ -81,23 +94,36 @@ exports.createReview = async (req, res) => {
       return res.status(400).json({ success: false, message: '모든 항목의 별점을 선택해주세요.' });
     }
 
+    // 후기 저장
     const [result] = await db.execute(
       `INSERT INTO reviews
-         (user_id, author_name, region, model_name, title, summary, content, image_url,
+         (user_id, author_name, region, model_name, title, summary, content,
           rating_quality, rating_durability, rating_interior,
           rating_custom, rating_maintenance, rating_service)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        req.session.userId,  // ← user.id → userId
+        req.session.userId,
         name.trim(), region.trim(), model_name.trim(),
         title.trim(), summary.trim(), content.trim(),
-        image_url || null,
         rating_quality, rating_durability, rating_interior,
         rating_custom, rating_maintenance, rating_service,
       ]
     );
 
-    res.json({ success: true, reviewId: result.insertId });
+    const reviewId = result.insertId;
+
+    // 사진 저장 (있는 경우만)
+    if (Array.isArray(image_urls) && image_urls.length > 0) {
+      const imageValues = image_urls.map((url, idx) => [reviewId, url, idx]);
+      for (const [rid, url, order] of imageValues) {
+        await db.execute(
+          `INSERT INTO review_images (review_id, image_url, sort_order) VALUES (?, ?, ?)`,
+          [rid, url, order]
+        );
+      }
+    }
+
+    res.json({ success: true, reviewId });
   } catch (err) {
     console.error('[reviews] 등록 실패:', err);
     res.status(500).json({ success: false, message: err.message });
@@ -109,7 +135,7 @@ exports.createReview = async (req, res) => {
 // ─────────────────────────────────────────
 exports.uploadImages = async (req, res) => {
   try {
-    if (!req.session?.userId) {  // ← user → userId
+    if (!req.session?.userId) {
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
     if (!req.files?.length) {
@@ -140,7 +166,7 @@ exports.uploadImages = async (req, res) => {
 // ─────────────────────────────────────────
 exports.deleteReview = async (req, res) => {
   try {
-    if (!req.session?.userId) {  // ← user → userId
+    if (!req.session?.userId) {
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
 
@@ -148,10 +174,11 @@ exports.deleteReview = async (req, res) => {
       `SELECT user_id FROM reviews WHERE review_id = ?`, [req.params.id]
     );
     if (!row) return res.status(404).json({ success: false, message: '후기를 찾을 수 없습니다.' });
-    if (row.user_id !== req.session.userId) {  // ← user.id → userId
+    if (row.user_id !== req.session.userId) {
       return res.status(403).json({ success: false, message: '삭제 권한이 없습니다.' });
     }
 
+    // ON DELETE CASCADE로 review_images도 자동 삭제
     await db.execute(`DELETE FROM reviews WHERE review_id = ?`, [req.params.id]);
     res.json({ success: true });
   } catch (err) {

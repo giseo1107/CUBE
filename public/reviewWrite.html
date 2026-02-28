@@ -425,7 +425,7 @@
       btn.textContent = '등록 중...';
 
       try {
-        let imageUrl = null;
+        let imageUrls = [];
 
         // 1) 사진 먼저 업로드 (있는 경우)
         if (files.length > 0) {
@@ -433,7 +433,7 @@
           files.forEach(f => fd.append('images', f));
           const imgRes  = await fetch('/api/reviews/upload', { method: 'POST', body: fd });
           const imgJson = await imgRes.json();
-          if (imgJson.success && imgJson.urls?.length > 0) imageUrl = imgJson.urls[0];
+          if (imgJson.success && imgJson.urls?.length > 0) imageUrls = imgJson.urls;
         }
 
         // 2) 후기 데이터 전송
@@ -444,7 +444,7 @@
           title:              document.getElementById('rTitle').value.trim(),
           summary:            document.getElementById('rSummary').value.trim(),
           content:            document.getElementById('rContent').value.trim(),
-          image_url:          imageUrl,
+          image_urls:         imageUrls,
           rating_quality:     ratings.rating_quality,
           rating_durability:  ratings.rating_durability,
           rating_interior:    ratings.rating_interior,

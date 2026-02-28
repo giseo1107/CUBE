@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>후기 상세 - C.C.C</title>
-  <link rel="stylesheet" href="/css/reviewDetail.css" />
+  <link rel="stylesheet" href="css/reviewDetail.css" />
 </head>
 <body>
 
@@ -181,12 +181,13 @@
       contentEl.innerHTML = chunks.map(p => `<p>${esc(p.trim())}</p>`).join('');
     }
 
-    // 사진
-    if (r.image_url) {
+    // 사진 (여러 장)
+    const imgs = r.images || (r.image_url ? [r.image_url] : []);
+    if (imgs.length > 0) {
       document.getElementById('photoSection').style.display = '';
       document.getElementById('photoGrid').innerHTML =
-        `<div class="photo" style="background-image:url('${r.image_url}')"></div>`;
-      document.getElementById('sideMainImg').style.backgroundImage = `url('${r.image_url}')`;
+        imgs.map(url => `<div class="photo" style="background-image:url('${url}')"></div>`).join('');
+      document.getElementById('sideMainImg').style.backgroundImage = `url('${imgs[0]}')`;
     }
 
     // 항목별 만족도
