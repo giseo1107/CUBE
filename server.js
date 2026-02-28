@@ -56,6 +56,11 @@ app.get('/review/:id', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'reviewDetail.html'));
 });
 
+// 중고 큐브 상세 페이지 (깔끔한 URL)
+app.get('/used/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'used_cube1.html'));
+});
+
 // 루트 경로는 로그인 페이지로
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));

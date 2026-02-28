@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const thumb = item.thumbnail || 'used_img/image-----------.png';
 
       return `
-        <div class="listing-card" onclick="location.href='/used_cube1.html?id=${item.item_id}'">
+        <div class="listing-card" onclick="location.href='/used/${item.item_id}'">
           <div class="card-img" style="background-image:url('${thumb}')"></div>
           <div class="card-body">
             <h3 class="card-title">${escapeHtml(item.title)}</h3>
@@ -269,4 +269,4 @@ document.getElementById('sellBtn').addEventListener('click', async (e) => {
     </div>
   </div>
 </body>
-</html> 
+</html>

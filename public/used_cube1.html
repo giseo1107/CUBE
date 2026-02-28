@@ -1,7 +1,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = window.location.pathname.split('/').pop();
   if (!id) return;
 
   try {
@@ -42,6 +41,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 가격
     document.querySelector('.text-88').textContent = item.price_display || '';
+
+    // 판매자 정보
+    document.querySelector('.text-90').textContent = item.seller_name || '판매자';
+    document.querySelector('.phone').textContent   = '등록일: ' + new Date(item.created_at).toLocaleDateString('ko-KR').replace(/\. /g,'.').replace('.','');
 
     // 태그
     if (item.tags) {
