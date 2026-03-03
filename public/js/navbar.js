@@ -104,9 +104,9 @@
       transition: color .15s;
       white-space: nowrap;
     }
-    #g-nav .gn-menu li a:hover { color: #fff; }
+    #g-nav .gn-menu li a:hover { color: #aff9f5; }
     #g-nav .gn-menu li.active a {
-      color: #fff;
+      color: #aff9f5;
       font-weight: 700;
     }
 
