@@ -23,37 +23,6 @@
         <button onclick="showTemplateInfo()" class="btn-sm btn-outline">템플릿 설명 보기</button>
     </div>
 </div>
-
-<div class="user-header">
-    <div class="user-header-left">
-        <h1 class="app-title">큐브 에디터</h1>
-    </div>
-    
-    <div class="user-header-right">
-        <!-- 비로그인 상태 -->
-        <div id="userLoggedOut" class="user-section">
-            <button onclick="location.href='login.html'" class="btn-login">로그인</button>
-            <button onclick="location.href='register.html'" class="btn-register">회원가입</button>
-        </div>
-        
-        <!-- 로그인 상태 -->
-        <div id="userLoggedIn" class="user-section" style="display: none;">
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">
-                    <img id="userProfileImage" src="" alt="프로필" style="display: none;">
-                    <span id="userProfilePlaceholder">👤</span>
-                </div>
-                <div class="user-details">
-                    <span class="user-name" id="userName">사용자</span>
-                    <span class="user-email" id="userEmail">user@example.com</span>
-                </div>
-            </div>
-            <button onclick="location.href='mypage.html'" class="btn-mypage">마이페이지</button>
-            <button onclick="logoutUser()" class="btn-logout">로그아웃</button>
-        </div>
-    </div>
-</div>
-
 <!-- ============ 툴바 ============ -->
 <div class="toolbar">
     <div class="toolbar-group furniture-buttons">
