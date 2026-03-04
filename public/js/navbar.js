@@ -133,6 +133,56 @@
     #g-nav .gn-auth a:hover,
     #g-nav .gn-auth button:hover { color: #aff9f5; }
 
+    /* 로그인 상태: 유저 정보 */
+    #g-nav .gn-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #g-nav .gn-user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 18px;
+      flex-shrink: 0;
+      border: 2px solid rgba(175, 249, 245, 0.4);
+    }
+    #g-nav .gn-user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #g-nav .gn-user-name {
+      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+    }
+    #g-nav .gn-btn-logout {
+      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    #g-nav .gn-btn-logout:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
     /* 바디 여백 (navbar 높이만큼) */
     body { padding-top: 80px !important; }
   `;
@@ -176,23 +226,35 @@
 
   document.body ? mount() : document.addEventListener('DOMContentLoaded', mount);
 
-  // ── 로그인 상태 반영 ────────────────────────────────────
+  // ── 로그인 상태 반영 (index.html과 동일 방식) ──────────
   async function checkAuth() {
     const authEl = document.getElementById('gn-auth');
     if (!authEl) return;
+
     try {
-      const res  = await fetch('/api/auth/check');
+      const res  = await fetch('/api/user/info');
       const data = await res.json();
-      if (data.authenticated) {
+
+      if (data.success && data.user) {
+        const user = data.user;
+        const avatarHTML = user.profile_image
+          ? `<img src="${user.profile_image}" alt="프로필">`
+          : `<span>👤</span>`;
+
         authEl.innerHTML = `
-          <span style="font-size:13px;color:rgba(255,255,255,0.75);font-family:'Arial-Regular',Helvetica;">
-            ${data.email}
-          </span>
-          <button id="gn-logout">로그아웃</button>
+          <div class="gn-user-info">
+            <div class="gn-user-avatar">${avatarHTML}</div>
+            <span class="gn-user-name">${user.nickname || user.email || '사용자'}</span>
+            <button class="gn-btn-logout" id="gn-logout">로그아웃</button>
+          </div>
         `;
+
         document.getElementById('gn-logout').addEventListener('click', async () => {
-          await fetch('/api/auth/logout', { method: 'POST' });
-          location.href = '/login.html';
+          if (!confirm('로그아웃 하시겠습니까?')) return;
+          try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            location.reload();
+          } catch { location.href = '/login.html'; }
         });
       }
     } catch { /* 기본 로그인/회원가입 유지 */ }
