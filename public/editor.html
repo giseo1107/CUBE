@@ -25,23 +25,41 @@
 </div>
 <!-- ============ 툴바 ============ -->
 <div class="toolbar">
+    <!-- 평면 뷰 표시 -->
+    <div class="toolbar-group">
+        <span class="view-label">📐 평면</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 익스테리어 (집 짓는 순서: 벽 > 문 > 창문 > 바닥) -->
     <div class="toolbar-group furniture-buttons">
+        <span class="group-label">익스테리어</span>
+        <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
+        <button onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
+        <button onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
+        <button onclick="addBlock('#dfe6e9', 'Floor', 200, 200, 5)">🟫 바닥</button>
+    </div>
+    
+    <div class="divider"></div>
+
+    <!-- 인테리어 -->
+    <div class="toolbar-group furniture-buttons">
+        <span class="group-label">인테리어</span>
         <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)">🛏️ 침대</button>
         <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)">🪑 테이블</button>
         <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)">🛋️ 소파</button>
         <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)">🪑 의자</button>
-        <button onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
-        <button onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
         <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)">🗄️ 수납장</button>
         <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)">💡 조명</button>
     </div>
     
     <div class="divider"></div>
     
+    <!-- 편집 도구 -->
     <div class="toolbar-group">
         <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon">↩️</button>
         <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon">↪️</button>
-        <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
         <button onclick="groupObjects()">🔗 그룹</button>
         <button onclick="ungroupObjects()">💔 해제</button>
         <button onclick="toggleGrid()" id="gridBtn">📐 격자 ON</button>
@@ -69,19 +87,19 @@
     
     <div class="spacer"></div>
     
+    <!-- 저장/불러오기 -->
     <div class="toolbar-group">
-        <button class="btn-warning" onclick="clearCanvas()">캔버스 초기화</button>
         <input type="text" id="design-title" placeholder="디자인 제목" value="나의 디자인" maxlength="50" style="width: 140px;">
         <button class="btn-success" onclick="saveDesign()">💾 저장</button>
         <button class="btn-warning" onclick="showMyDesigns()">📂 불러오기</button>
+        <button class="btn-warning" onclick="clearCanvas()">🗑️ 초기화</button>
     </div>
-    
+
     <div class="divider"></div>
-    
+
+    <!-- 3D 보기 (오른쪽 끝) -->
     <div class="toolbar-group">
-        <button onclick="showPriceTable()">💵 가격표</button>
-        <button onclick="exportEstimate()" class="btn-warning">📄 견적서</button>
-        <button class="btn-primary" onclick="sendToViewer()">✨ 3D 보기</button>
+        <button class="btn-primary btn-3d" onclick="sendToViewer()">🏠 3D로 보기</button>
     </div>
 </div>
 
@@ -98,11 +116,34 @@
 
     <!-- 사이드 패널 -->
     <div class="side-panel">
-        <!-- 견적 패널 -->
+        <!-- 설정 (방 크기 + 격자) - 접이식 -->
+        <div class="panel-section settings-section">
+            <h3 class="settings-toggle" onclick="toggleSettings()">
+                <span class="icon">⚙️</span> 설정
+                <span class="toggle-arrow" id="settingsArrow">▼</span>
+            </h3>
+            <div id="settingsContent" class="settings-content" style="display:none;">
+                <div class="prop-group">
+                    <label>방 크기 (1px = 1cm)</label>
+                    <div class="row">
+                        <input type="number" id="canvasW" value="600" min="200" max="2000" step="50">
+                        <span>×</span>
+                        <input type="number" id="canvasH" value="600" min="200" max="2000" step="50">
+                        <button onclick="applyCanvasSettings()" class="btn-primary btn-sm">적용</button>
+                    </div>
+                    <span class="hint">예: 600×500 = 6m × 5m (약 9평)</span>
+                </div>
+                <div class="prop-group">
+                    <label>격자 간격 (px)</label>
+                    <input type="number" id="gridSizeInput" value="20" min="5" max="100" step="5" onchange="applyCanvasSettings()" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 견적 패널 (가격표 버튼 제거, 가구수 제거, 할인코드 제거) -->
         <div class="estimate-panel">
             <div class="estimate-header">
                 <h3>💰 실시간 견적</h3>
-                <button class="btn-sm" onclick="showPriceTable()">가격표</button>
             </div>
             
             <div class="estimate-total" id="totalEstimate">₩0</div>
@@ -117,20 +158,12 @@
                     <span class="value" id="furnitureCost">₩0</span>
                 </div>
                 <div class="estimate-row">
-                    <span class="label">📦 가구 수</span>
-                    <span class="value" id="furnitureCountDisplay">0개</span>
-                </div>
-                <div class="estimate-row">
                     <span class="label">📏 방 크기</span>
                     <span class="value" id="roomSize">0평</span>
                 </div>
             </div>
-            
-            <div class="estimate-discount">
-                <label>🎁 할인 코드</label>
-                <input type="text" id="discountCode" placeholder="예: WELCOME10" oninput="applyDiscount()">
-                <div id="discountMessage"></div>
-            </div>
+
+            <button class="btn-export-estimate" onclick="exportEstimate()">📄 견적서 내보내기</button>
         </div>
 
         <!-- 속성 편집 -->
@@ -184,29 +217,8 @@
                 <span class="hint">블록 쌓기: 아래 블록 높이만큼 입력</span>
             </div>
         </div>
-        
-        <!-- 캔버스 설정 -->
-        <div class="panel-section">
-            <h3><span class="icon">📏</span> 방 크기 설정</h3>
-            
-            <div class="prop-group">
-                <label>캔버스 크기 (1px = 1cm)</label>
-                <div class="row">
-                    <input type="number" id="canvasW" value="600" min="200" max="2000" step="50">
-                    <span>×</span>
-                    <input type="number" id="canvasH" value="600" min="200" max="2000" step="50">
-                    <button onclick="applyCanvasSettings()" class="btn-primary">적용</button>
-                </div>
-                <span class="hint">예: 600×500 = 6m × 5m (약 9평)</span>
-            </div>
 
-            <div class="prop-group">
-                <label>격자 간격 (px)</label>
-                <input type="number" id="gridSizeInput" value="20" min="5" max="100" step="5" onchange="applyCanvasSettings()" style="width: 100%;">
-            </div>
-        </div>
-
-        <!-- 레이어 목록 -->
+        <!-- 레이어 목록 (이름 변경) -->
         <div class="panel-section">
             <h3><span class="icon">📑</span> 레이어 (<span id="layerCount">0</span>개)</h3>
             <div id="layerList" class="layer-box"></div>
@@ -373,6 +385,7 @@ const PRICING = {
         Lamp: { base: 200000, refVolume: 30 * 30 * 150 },
         Door: { base: 350000, refVolume: 10 * 80 * 200 },
         Window: { base: 450000, refVolume: 10 * 100 * 120 },
+        Floor: { base: 200000, refVolume: 200 * 200 * 5 },
         Wall: { base: 100000, perMeter: true },
         Desk: { base: 450000, refVolume: 140 * 70 * 75 },
         Bookshelf: { base: 500000, refVolume: 100 * 40 * 180 },
@@ -934,7 +947,9 @@ function getSubtotal() {
 }
 
 function applyDiscount() {
-    const code = document.getElementById('discountCode').value.toUpperCase().trim();
+    const codeEl = document.getElementById('discountCode');
+    if (!codeEl) return;
+    const code = codeEl.value.toUpperCase().trim();
     const discountInfo = PRICING.discounts[code];
     const msgEl = document.getElementById('discountMessage');
     
@@ -970,7 +985,6 @@ function updateEstimate() {
     
     document.getElementById('roomCost').textContent = formatPrice(roomCost);
     document.getElementById('furnitureCost').textContent = formatPrice(furnitureCost);
-    document.getElementById('furnitureCountDisplay').textContent = getFurnitureCount() + '개';
     document.getElementById('roomSize').textContent = pyeong + '평';
     
     let totalHtml = formatPrice(total);
@@ -1029,6 +1043,19 @@ function redo() {
         state.historyProcessing = false;
         showToast('↪️ 다시 실행');
     });
+}
+
+// ============ 설정 패널 토글 ============
+function toggleSettings() {
+    const content = document.getElementById('settingsContent');
+    const arrow = document.getElementById('settingsArrow');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        arrow.textContent = '▲';
+    } else {
+        content.style.display = 'none';
+        arrow.textContent = '▼';
+    }
 }
 
 // ============ 격자 ============
@@ -1399,6 +1426,22 @@ function ungroupObjects() {
 }
 
 // ============ 레이어 리스트 ============
+const LAYER_NAME_MAP = {
+    'Wall': '🧱 벽', 'Door': '🚪 문', 'Window': '🪟 창문', 'Floor': '🟫 바닥',
+    'Bed': '🛏️ 침대', 'Table': '🪑 테이블', 'Sofa': '🛋️ 소파', 'Chair': '🪑 의자',
+    'Cabinet': '🗄️ 수납장', 'Lamp': '💡 조명', 'Desk': '🗄️ 책상',
+    'Bookshelf': '📚 책장', 'Kitchen': '🍳 주방', 'Bathroom': '🛁 욕실'
+};
+
+function getLayerDisplayName(name) {
+    if (!name) return 'Unknown';
+    const parts = name.split('_');
+    const type = parts[0];
+    const suffix = parts.slice(1).join('_');
+    const koreanType = LAYER_NAME_MAP[type] || type;
+    return suffix ? `${koreanType} (${suffix})` : koreanType;
+}
+
 function updateLayerList() {
     const listDiv = document.getElementById('layerList');
     listDiv.innerHTML = '';
@@ -1414,7 +1457,7 @@ function updateLayerList() {
         item.innerHTML = `
             <div class="info">
                 <div class="layer-color" style="background:${obj.fill || '#ccc'}"></div>
-                <span class="layer-name">${sanitizeInput(obj.userData?.name || 'Unknown')}</span>
+                <span class="layer-name">${getLayerDisplayName(obj.userData?.name)}</span>
             </div>
             <span class="layer-price">${formatPrice(calculateFurnitureCost(obj))}</span>
         `;
@@ -2204,7 +2247,8 @@ function calculateTotalPrice() {
 function getFurniturePrice(name) {
     const prices = {
         'Bed': 500000, 'Table': 200000, 'Sofa': 400000, 'Chair': 80000,
-        'Door': 150000, 'Window': 120000, 'Cabinet': 250000, 'Lamp': 60000
+        'Door': 150000, 'Window': 120000, 'Cabinet': 250000, 'Lamp': 60000,
+        'Floor': 200000
     };
     return prices[name] || 0;
 }
