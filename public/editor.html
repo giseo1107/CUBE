@@ -46,20 +46,30 @@
     <!-- 인테리어 -->
     <div class="toolbar-group furniture-buttons">
         <span class="group-label">인테리어</span>
-        <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)">🛏️ 침대</button>
-        <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)">🪑 테이블</button>
-        <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)">🛋️ 소파</button>
-        <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)">🪑 의자</button>
-        <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)">🗄️ 수납장</button>
-        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)">💡 조명</button>
+        <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)" data-type="Bed" class="has-badge">🛏️ 침대<span class="count-badge" id="badge-Bed"></span></button>
+        <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)" data-type="Table" class="has-badge">🪑 테이블<span class="count-badge" id="badge-Table"></span></button>
+        <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)" data-type="Sofa" class="has-badge">🛋️ 소파<span class="count-badge" id="badge-Sofa"></span></button>
+        <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)" data-type="Chair" class="has-badge">🪑 의자<span class="count-badge" id="badge-Chair"></span></button>
+        <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)" data-type="Cabinet" class="has-badge">🗄️ 수납장<span class="count-badge" id="badge-Cabinet"></span></button>
+        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)" data-type="Lamp" class="has-badge">💡 조명<span class="count-badge" id="badge-Lamp"></span></button>
     </div>
     
     <div class="divider"></div>
     
     <!-- 편집 도구 -->
     <div class="toolbar-group">
-        <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon">↩️</button>
+        <div class="undo-redo-wrapper">
+            <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon">↩️</button>
+            <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon btn-history-toggle" id="historyToggleBtn">▾</button>
+            <div class="history-dropdown" id="historyDropdown">
+                <div class="history-dropdown-header">📋 작업 히스토리</div>
+                <div class="history-dropdown-list" id="historyList">
+                    <div class="history-empty">기록 없음</div>
+                </div>
+            </div>
+        </div>
         <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon">↪️</button>
+        <button onclick="duplicateObject()" title="선택 가구 복제">📋 복제</button>
         <button onclick="groupObjects()">🔗 그룹</button>
         <button onclick="ungroupObjects()">💔 해제</button>
         <button onclick="toggleGrid()" id="gridBtn">📐 격자 ON</button>
@@ -171,6 +181,15 @@
         <!-- 속성 편집 -->
         <div class="panel-section">
             <h3><span class="icon">⚙️</span> 속성 편집</h3>
+
+            <!-- 선택된 가구 가격 표시 -->
+            <div class="selected-price-box" id="selectedPriceBox" style="display:none;">
+                <div class="selected-price-row">
+                    <span class="selected-price-label" id="selectedItemName">—</span>
+                    <span class="selected-price-value" id="selectedItemPrice">₩0</span>
+                </div>
+                <div class="selected-price-detail" id="selectedPriceDetail"></div>
+            </div>
             
             <div class="prop-group">
                 <label>이름</label>
@@ -210,6 +229,7 @@
                     <button onclick="rotateObject(-45)" style="flex:1;">↺ 45°</button>
                     <button onclick="rotateObject(45)" style="flex:1;">↻ 45°</button>
                     <button onclick="toggleLock()" id="lockBtn" style="flex:1;">🔓</button>
+                    <button onclick="duplicateObject()" style="flex:1;" title="선택 가구 복제">📋 복제</button>
                 </div>
             </div>
 
@@ -220,9 +240,14 @@
             </div>
         </div>
 
-        <!-- 레이어 목록 (이름 변경) -->
+        <!-- 레이어 목록 (탭 분리) -->
         <div class="panel-section">
             <h3><span class="icon">📑</span> 레이어 (<span id="layerCount">0</span>개)</h3>
+            <div class="layer-tabs">
+                <button class="layer-tab active" data-tab="all" onclick="switchLayerTab('all')">전체</button>
+                <button class="layer-tab" data-tab="interior" onclick="switchLayerTab('interior')">🪑 인테리어</button>
+                <button class="layer-tab" data-tab="exterior" onclick="switchLayerTab('exterior')">🧱 익스테리어</button>
+            </div>
             <div id="layerList" class="layer-box"></div>
         </div>
     </div>
@@ -653,6 +678,7 @@ let state = {
     history: [],
     historyIndex: -1,
     historyProcessing: false,
+    historyLabels: [],         // 히스토리 라벨 (작업 설명)
     wallRect: null,
     startX: 0,
     startY: 0,
@@ -661,7 +687,9 @@ let state = {
     autoSaveTimer: null,
     currentDiscount: 0,
     loadedFromPropensity: false,
-    currentTemplateKey: null
+    currentTemplateKey: null,
+    currentLayerTab: 'all',     // 레이어 탭 상태
+    lastEstimateTotal: 0        // 금액 애니메이션용
 };
 
 // ============ 캔버스 초기화 ============
@@ -978,26 +1006,116 @@ function updateEstimate() {
     document.getElementById('furnitureCost').textContent = formatPrice(furnitureCost);
     document.getElementById('furnitureCount').textContent = interiorCount + '개';
     
-    let totalHtml = formatPrice(total);
-    if (state.currentDiscount > 0) {
-        totalHtml = `<span style="text-decoration:line-through; font-size:14px; opacity:0.6;">${formatPrice(subtotal)}</span><br>${formatPrice(total)}`;
+    // 금액 애니메이션
+    const totalEl = document.getElementById('totalEstimate');
+    const prevTotal = state.lastEstimateTotal || 0;
+    
+    if (prevTotal !== total && prevTotal > 0) {
+        animatePrice(totalEl, prevTotal, total, state.currentDiscount > 0 ? subtotal : 0);
+    } else {
+        let totalHtml = formatPrice(total);
+        if (state.currentDiscount > 0) {
+            totalHtml = `<span style="text-decoration:line-through; font-size:14px; opacity:0.6;">${formatPrice(subtotal)}</span><br>${formatPrice(total)}`;
+        }
+        totalEl.innerHTML = totalHtml;
     }
-    document.getElementById('totalEstimate').innerHTML = totalHtml;
+    state.lastEstimateTotal = total;
+    
+    // 수량 뱃지 업데이트
+    updateBadges();
+}
+
+// 금액 카운트 애니메이션
+function animatePrice(el, from, to, strikethrough) {
+    const duration = 400;
+    const startTime = performance.now();
+    const diff = to - from;
+    
+    // 변동 방향에 따른 색상 효과
+    el.classList.remove('price-up', 'price-down');
+    el.classList.add(diff > 0 ? 'price-up' : 'price-down');
+    setTimeout(() => el.classList.remove('price-up', 'price-down'), 600);
+    
+    function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        const current = Math.round(from + diff * eased);
+        
+        let html = formatPrice(current);
+        if (strikethrough > 0) {
+            html = `<span style="text-decoration:line-through; font-size:14px; opacity:0.6;">${formatPrice(strikethrough)}</span><br>${formatPrice(current)}`;
+        }
+        el.innerHTML = html;
+        
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+// ============ 수량 뱃지 업데이트 ============
+function updateBadges() {
+    const types = ['Bed', 'Table', 'Sofa', 'Chair', 'Cabinet', 'Lamp'];
+    const counts = {};
+    types.forEach(t => counts[t] = 0);
+    
+    canvas.getObjects().forEach(obj => {
+        if (obj.type === 'rect' && obj.userData) {
+            const typeName = (obj.userData.name || '').split('_')[0];
+            if (counts[typeName] !== undefined) counts[typeName]++;
+        }
+    });
+    
+    types.forEach(t => {
+        const badge = document.getElementById('badge-' + t);
+        if (badge) {
+            if (counts[t] > 0) {
+                badge.textContent = counts[t];
+                badge.style.display = 'inline-flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    });
+}
+
+// ============ 가구 복제 ============
+function duplicateObject() {
+    const obj = canvas.getActiveObject();
+    if (!obj) { showToast('복제할 가구를 선택하세요'); return; }
+    
+    obj.clone(function(cloned) {
+        cloned.set({
+            left: obj.left + 20,
+            top: obj.top + 20,
+            userData: JSON.parse(JSON.stringify(obj.userData))
+        });
+        canvas.add(cloned);
+        canvas.setActiveObject(cloned);
+        canvas.renderAll();
+        saveHistory('복제: ' + getLayerDisplayName(obj.userData?.name));
+        updateLayerList();
+        updateEstimate();
+        showToast('📋 가구 복제 완료');
+    }, ['userData']);
 }
 
 // ============ 히스토리 (Undo/Redo) ============
-function saveHistory() {
+function saveHistory(label) {
     if (state.historyProcessing) return;
     
     if (state.historyIndex < state.history.length - 1) {
         state.history = state.history.slice(0, state.historyIndex + 1);
+        state.historyLabels = state.historyLabels.slice(0, state.historyIndex + 1);
     }
     
     state.history.push(JSON.stringify(canvas.toJSON(['userData'])));
+    state.historyLabels.push(label || '편집');
     state.historyIndex++;
     
     if (state.history.length > CONFIG.MAX_HISTORY) {
         state.history.shift();
+        state.historyLabels.shift();
         state.historyIndex--;
     }
 }
@@ -1034,6 +1152,75 @@ function redo() {
         state.historyProcessing = false;
         showToast('↪️ 다시 실행');
     });
+}
+
+// ============ 히스토리 드롭다운 ============
+function toggleHistoryDropdown() {
+    const dd = document.getElementById('historyDropdown');
+    const isVisible = dd.style.display === 'block';
+    dd.style.display = isVisible ? 'none' : 'block';
+    
+    if (!isVisible) renderHistoryDropdown();
+    
+    // 바깥 클릭 시 닫기
+    if (!isVisible) {
+        setTimeout(() => {
+            document.addEventListener('click', closeHistoryOnOutside, { once: true });
+        }, 10);
+    }
+}
+
+function closeHistoryOnOutside(e) {
+    const dd = document.getElementById('historyDropdown');
+    const btn = document.getElementById('historyToggleBtn');
+    if (!dd.contains(e.target) && e.target !== btn) {
+        dd.style.display = 'none';
+    }
+}
+
+function renderHistoryDropdown() {
+    const list = document.getElementById('historyList');
+    if (state.history.length <= 1) {
+        list.innerHTML = '<div class="history-empty">기록 없음</div>';
+        return;
+    }
+    
+    // 최근 8개만 보여줌
+    const start = Math.max(0, state.historyIndex - 7);
+    let html = '';
+    for (let i = state.historyIndex; i >= start; i--) {
+        const isCurrent = i === state.historyIndex;
+        const label = state.historyLabels[i] || '편집';
+        html += `<div class="history-item ${isCurrent ? 'current' : ''}" onclick="jumpToHistory(${i})">
+            <span class="history-idx">#${i + 1}</span>
+            <span class="history-label">${label}</span>
+            ${isCurrent ? '<span class="history-current-badge">현재</span>' : ''}
+        </div>`;
+    }
+    list.innerHTML = html;
+}
+
+function jumpToHistory(idx) {
+    if (idx === state.historyIndex || idx < 0 || idx >= state.history.length) return;
+    
+    state.historyProcessing = true;
+    state.historyIndex = idx;
+    canvas.loadFromJSON(state.history[idx], () => {
+        canvas.renderAll();
+        updateLayerList();
+        updateEstimate();
+        state.historyProcessing = false;
+        document.getElementById('historyDropdown').style.display = 'none';
+        showToast(`⏪ #${idx + 1} 시점으로 이동`);
+    });
+}
+
+// ============ 레이어 탭 전환 ============
+function switchLayerTab(tab) {
+    state.currentLayerTab = tab;
+    document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.layer-tab[data-tab="${tab}"]`).classList.add('active');
+    updateLayerList();
 }
 
 // ============ 설정 패널 토글 ============
@@ -1226,7 +1413,10 @@ canvas.on('object:moving', function(options) {
 });
 
 canvas.on('object:scaling', e => updateDimDisplay(e.target));
-canvas.on('selection:cleared', () => document.getElementById('dim-display').style.display = 'none');
+canvas.on('selection:cleared', () => {
+    document.getElementById('dim-display').style.display = 'none';
+    document.getElementById('selectedPriceBox').style.display = 'none';
+});
 
 function updateDimDisplay(target) {
     const dimDisplay = document.getElementById('dim-display');
@@ -1265,20 +1455,6 @@ function addBlock(color, name, width = 100, depth = 100, height = 50) {
     updateLayerList();
     updateEstimate();
     showToast(`${name} 추가됨 (${formatPrice(calculateFurnitureCost(rect))})`);
-}
-
-function duplicateObject() {
-    const obj = canvas.getActiveObject();
-    if (!obj) { showToast('복사할 객체를 선택하세요'); return; }
-    
-    obj.clone(function(cloned) {
-        cloned.set({ left: obj.left + 20, top: obj.top + 20 });
-        canvas.add(cloned);
-        canvas.setActiveObject(cloned);
-        updateLayerList();
-        updateEstimate();
-        showToast('객체 복사됨');
-    }, ['userData']);
 }
 
 function deleteObject() {
@@ -1343,6 +1519,28 @@ function syncPanel(obj) {
     document.getElementById('objColor').value = obj.fill || '#000000';
     document.getElementById('objTexture').value = obj.userData.texture || 'color';
     document.getElementById('lockBtn').textContent = obj.lockMovementX ? "🔒" : "🔓";
+    
+    // 가격 툴팁 표시
+    const priceBox = document.getElementById('selectedPriceBox');
+    const typeName = (obj.userData.name || '').split('_')[0];
+    const isExterior = EXTERIOR_TYPES.includes(typeName);
+    const cost = calculateFurnitureCost(obj);
+    
+    priceBox.style.display = 'block';
+    document.getElementById('selectedItemName').textContent = getLayerDisplayName(obj.userData.name);
+    
+    if (isExterior) {
+        document.getElementById('selectedItemPrice').textContent = '별도 시공';
+        document.getElementById('selectedItemPrice').style.color = '#999';
+        document.getElementById('selectedPriceDetail').textContent = '익스테리어 — 견적에 미포함';
+    } else {
+        document.getElementById('selectedItemPrice').textContent = formatPrice(cost);
+        document.getElementById('selectedItemPrice').style.color = '#667eea';
+        const texture = obj.userData.texture || 'color';
+        const textureLabel = {color:'단색', wood:'나무', fabric:'천', marble:'대리석', metal:'금속', glass:'유리', leather:'가죽'}[texture] || '단색';
+        const multiplier = PRICING.materials[texture] || 1.0;
+        document.getElementById('selectedPriceDetail').textContent = `재질: ${textureLabel} (×${multiplier}) | 크기 보정 적용`;
+    }
 }
 
 function updateProperties() {
@@ -1440,9 +1638,26 @@ function updateLayerList() {
     const objects = canvas.getObjects().filter(o => o.type === 'rect' && o.userData);
     const activeObj = canvas.getActiveObject();
     
+    // 탭 필터링
+    const tab = state.currentLayerTab;
+    const filtered = objects.filter(obj => {
+        if (tab === 'all') return true;
+        const typeName = (obj.userData?.name || '').split('_')[0];
+        const isExterior = EXTERIOR_TYPES.includes(typeName);
+        return tab === 'exterior' ? isExterior : !isExterior;
+    });
+    
     document.getElementById('layerCount').textContent = objects.length;
 
-    [...objects].reverse().forEach(obj => {
+    if (filtered.length === 0) {
+        listDiv.innerHTML = `<div style="padding:12px;text-align:center;color:#aaa;font-size:12px;">${
+            tab === 'all' ? '배치된 가구가 없습니다' : 
+            tab === 'interior' ? '인테리어 가구가 없습니다' : '익스테리어 요소가 없습니다'
+        }</div>`;
+        return;
+    }
+
+    [...filtered].reverse().forEach(obj => {
         const item = document.createElement('div');
         item.className = 'layer-item' + (obj === activeObj ? ' active' : '');
         const typeName = (obj.userData?.name || '').split('_')[0];

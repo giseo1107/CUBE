@@ -1407,6 +1407,233 @@ input[type="number"] {
     }
 }
 
+/* ============ 수량 뱃지 ============ */
+.has-badge {
+    position: relative;
+}
+
+.count-badge {
+    display: none;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    line-height: 18px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4);
+    pointer-events: none;
+}
+
+/* ============ 선택된 가구 가격 표시 ============ */
+.selected-price-box {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8ecfb 100%);
+    border: 1.5px solid #d0d8f0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    animation: priceBoxIn 0.2s ease;
+}
+
+@keyframes priceBoxIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.selected-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selected-price-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.selected-price-value {
+    font-size: 16px;
+    font-weight: 800;
+    color: #667eea;
+}
+
+.selected-price-detail {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ============ 견적 금액 애니메이션 ============ */
+.price-up {
+    animation: priceFlashUp 0.5s ease;
+}
+
+.price-down {
+    animation: priceFlashDown 0.5s ease;
+}
+
+@keyframes priceFlashUp {
+    0% { color: white; }
+    30% { color: #ff6b6b; transform: scale(1.05); }
+    100% { color: white; transform: scale(1); }
+}
+
+@keyframes priceFlashDown {
+    0% { color: white; }
+    30% { color: #51cf66; transform: scale(1.05); }
+    100% { color: white; transform: scale(1); }
+}
+
+/* ============ 히스토리 드롭다운 ============ */
+.undo-redo-wrapper {
+    position: relative;
+    display: flex;
+    gap: 0;
+}
+
+.btn-history-toggle {
+    padding: 8px 5px !important;
+    font-size: 11px !important;
+    border-left: none !important;
+    border-radius: 0 6px 6px 0 !important;
+    color: #888;
+}
+
+.undo-redo-wrapper > button:first-child {
+    border-radius: 6px 0 0 6px !important;
+}
+
+.history-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 220px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 100;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.history-dropdown-header {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+.history-dropdown-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.history-item:hover {
+    background: #f0f8ff;
+}
+
+.history-item.current {
+    background: #e8f4fd;
+    font-weight: 700;
+}
+
+.history-idx {
+    color: #aaa;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 24px;
+}
+
+.history-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+}
+
+.history-current-badge {
+    font-size: 9px;
+    background: #667eea;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.history-empty {
+    padding: 20px;
+    text-align: center;
+    color: #bbb;
+    font-size: 12px;
+}
+
+/* ============ 레이어 탭 ============ */
+.layer-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.layer-tab {
+    flex: 1;
+    padding: 6px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    background: #f8f9fa;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    border-radius: 0;
+}
+
+.layer-tab:not(:last-child) {
+    border-right: 1px solid #ddd;
+}
+
+.layer-tab:hover {
+    background: #eef;
+    transform: none;
+    box-shadow: none;
+}
+
+.layer-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.layer-tab.active:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 /* ============ 스크롤바 스타일 ============ */
 ::-webkit-scrollbar {
     width: 8px;
