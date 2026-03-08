@@ -110,13 +110,13 @@
         <!-- 캔버스 상단 바: 제목 + 저장/불러오기/초기화 -->
         <div class="canvas-top-bar">
             <div class="canvas-top-left">
-                <span class="canvas-top-icon">📝</span>
-                <input type="text" id="design-title" class="design-title-input" placeholder="디자인 제목을 입력하세요" value="나의 디자인" maxlength="50">
+                <input type="text" id="design-title" class="design-title-input" placeholder="제목 없음" value="나의 디자인" maxlength="50" spellcheck="false">
+                <span class="title-edit-hint" id="titleEditHint">✎</span>
             </div>
             <div class="canvas-top-right">
                 <button class="ctb-btn ctb-save" onclick="saveDesign()">💾 저장</button>
-                <button class="ctb-btn ctb-load" onclick="showMyDesigns()">📂 불러오기</button>
-                <button class="ctb-btn ctb-reset" onclick="clearCanvas()">🗑️ 초기화</button>
+                <button class="ctb-btn ctb-ghost" onclick="showMyDesigns()">📂 불러오기</button>
+                <button class="ctb-btn ctb-danger-ghost" onclick="clearCanvas()" title="캔버스 초기화">🗑️</button>
             </div>
         </div>
         <div class="canvas-wrapper">
@@ -2472,6 +2472,24 @@ function getFurniturePrice(name) {
 
 
 
+
+// ============ 제목 입력 자동 길이 조절 ============
+(function() {
+    const titleInput = document.getElementById('design-title');
+    const sizer = document.createElement('span');
+    sizer.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:15px;font-weight:700;letter-spacing:-0.01em;padding:0 8px;';
+    document.body.appendChild(sizer);
+    
+    function autoResize() {
+        sizer.textContent = titleInput.value || titleInput.placeholder;
+        const newWidth = Math.max(80, Math.min(280, sizer.offsetWidth + 24));
+        titleInput.style.width = newWidth + 'px';
+    }
+    
+    titleInput.addEventListener('input', autoResize);
+    titleInput.addEventListener('focus', autoResize);
+    autoResize(); // 초기 실행
+})();
 
 console.log('🏠 Editor 로드 완료 | 단축키: Ctrl+Z/Y/D/S, Delete, Alt+드래그, 휠 줌');
 </script>

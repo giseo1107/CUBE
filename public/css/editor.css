@@ -837,95 +837,135 @@ input[type="number"] {
     width: 100%;
     max-width: 800px;
     background: white;
-    padding: 10px 16px;
-    border-radius: 10px;
+    padding: 14px 20px;
+    border-radius: 12px;
     margin-bottom: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    border: 1px solid #e0e0e0;
-    gap: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.06);
+    gap: 16px;
 }
 
 .canvas-top-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
     flex: 1;
     min-width: 0;
+    position: relative;
 }
 
-.canvas-top-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
+/* Notion/Figma 스타일 인라인 제목 입력 */
 .design-title-input {
-    flex: 1;
-    min-width: 0;
-    padding: 8px 12px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #2d3436;
-    transition: all 0.2s;
-    background: #f8f9fa;
+    min-width: 60px;
+    max-width: 280px;
+    width: auto;
+    padding: 6px 8px;
+    border: 1.5px solid transparent;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    background: transparent;
+    transition: all 0.2s ease;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+
+.design-title-input::placeholder {
+    color: #bbb;
+    font-weight: 500;
+}
+
+.design-title-input:hover {
+    background: #f4f5f7;
+    border-color: #f4f5f7;
 }
 
 .design-title-input:focus {
     outline: none;
-    border-color: #667eea;
     background: white;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 편집 힌트 아이콘: 평소 연하게, 호버 시 살짝 진해짐 */
+.title-edit-hint {
+    font-size: 12px;
+    color: #ccc;
+    margin-left: 4px;
+    transition: all 0.2s;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+.canvas-top-left:hover .title-edit-hint {
+    color: #999;
+}
+
+.design-title-input:focus ~ .title-edit-hint {
+    opacity: 0;
 }
 
 .canvas-top-right {
     display: flex;
     gap: 6px;
     flex-shrink: 0;
+    align-items: center;
 }
 
+/* 버튼 공통 */
 .ctb-btn {
     padding: 7px 14px;
     border-radius: 7px;
-    border: none;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    line-height: 1.3;
 }
 
+/* Primary: 저장 — 유일하게 색상 채움 */
 .ctb-save {
-    background: #27ae60;
+    background: #667eea;
     color: white;
+    border: none;
 }
 
 .ctb-save:hover {
-    background: #219a52;
+    background: #5a6fd6;
     transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
 
-.ctb-load {
-    background: #f39c12;
-    color: white;
+/* Ghost: 불러오기 — 배경 없이 테두리만 */
+.ctb-ghost {
+    background: transparent;
+    color: #555;
+    border: 1.5px solid #ddd;
 }
 
-.ctb-load:hover {
-    background: #e08e0b;
+.ctb-ghost:hover {
+    background: #f8f9fa;
+    border-color: #bbb;
     transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(243, 156, 18, 0.3);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
-.ctb-reset {
-    background: #e74c3c;
-    color: white;
+/* Danger Ghost: 초기화 — 아이콘만 연하게 */
+.ctb-danger-ghost {
+    background: transparent;
+    color: #bbb;
+    border: 1.5px solid transparent;
+    padding: 7px 9px;
+    font-size: 13px;
 }
 
-.ctb-reset:hover {
-    background: #d63031;
+.ctb-danger-ghost:hover {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.06);
+    border-color: rgba(231, 76, 60, 0.15);
     transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
 }
 
 /* 견적 안내 힌트 */
@@ -1398,7 +1438,17 @@ input[type="number"] {
     
     .canvas-top-bar {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
+        padding: 12px 16px;
+    }
+    
+    .canvas-top-left {
+        width: 100%;
+    }
+    
+    .design-title-input {
+        max-width: 100%;
+        width: 100% !important;
     }
     
     .canvas-top-right {
