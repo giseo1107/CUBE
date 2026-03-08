@@ -86,16 +86,6 @@
     </div>
     
     <div class="spacer"></div>
-    
-    <!-- 저장/불러오기 -->
-    <div class="toolbar-group">
-        <input type="text" id="design-title" placeholder="디자인 제목" value="나의 디자인" maxlength="50" style="width: 140px;">
-        <button class="btn-success" onclick="saveDesign()">💾 저장</button>
-        <button class="btn-warning" onclick="showMyDesigns()">📂 불러오기</button>
-        <button class="btn-warning" onclick="clearCanvas()">🗑️ 초기화</button>
-    </div>
-
-    <div class="divider"></div>
 
     <!-- 3D 보기 (오른쪽 끝) -->
     <div class="toolbar-group">
@@ -107,6 +97,18 @@
 <div class="main-container">
     <!-- 캔버스 영역 -->
     <div class="canvas-area">
+        <!-- 캔버스 상단 바: 제목 + 저장/불러오기/초기화 -->
+        <div class="canvas-top-bar">
+            <div class="canvas-top-left">
+                <span class="canvas-top-icon">📝</span>
+                <input type="text" id="design-title" class="design-title-input" placeholder="디자인 제목을 입력하세요" value="나의 디자인" maxlength="50">
+            </div>
+            <div class="canvas-top-right">
+                <button class="ctb-btn ctb-save" onclick="saveDesign()">💾 저장</button>
+                <button class="ctb-btn ctb-load" onclick="showMyDesigns()">📂 불러오기</button>
+                <button class="ctb-btn ctb-reset" onclick="clearCanvas()">🗑️ 초기화</button>
+            </div>
+        </div>
         <div class="canvas-wrapper">
             <canvas id="editorCanvas" width="600" height="600"></canvas>
             <div id="dim-display">W: 0 × D: 0</div>
@@ -140,7 +142,7 @@
             </div>
         </div>
 
-        <!-- 견적 패널 (가격표 버튼 제거, 가구수 제거, 할인코드 제거) -->
+        <!-- 견적 패널 (인테리어 가구만 계산) -->
         <div class="estimate-panel">
             <div class="estimate-header">
                 <h3>💰 실시간 견적</h3>
@@ -150,17 +152,17 @@
             
             <div class="estimate-breakdown">
                 <div class="estimate-row">
-                    <span class="label">📐 방 시공비</span>
-                    <span class="value" id="roomCost">₩0</span>
-                </div>
-                <div class="estimate-row">
-                    <span class="label">🪑 가구 총액</span>
+                    <span class="label">🪑 인테리어 가구 총액</span>
                     <span class="value" id="furnitureCost">₩0</span>
                 </div>
                 <div class="estimate-row">
-                    <span class="label">📏 방 크기</span>
-                    <span class="value" id="roomSize">0평</span>
+                    <span class="label">📦 가구 수</span>
+                    <span class="value" id="furnitureCount">0개</span>
                 </div>
+            </div>
+
+            <div class="estimate-hint">
+                <span>※ 익스테리어(벽·문·창문·바닥)는 별도 시공 견적입니다</span>
             </div>
 
             <button class="btn-export-estimate" onclick="exportEstimate()">📄 견적서 내보내기</button>
@@ -240,27 +242,19 @@
     <div class="modal-content">
         <h2>💵 가격표</h2>
         
-        <h4>📐 시공비 (평당)</h4>
+        <h4>🪑 인테리어 가구 기본가</h4>
         <table class="price-table">
-            <tr><th>항목</th><th>단가</th><th>비고</th></tr>
-            <tr><td>기본 시공</td><td>₩500,000/평</td><td>바닥, 벽, 천장 포함</td></tr>
-            <tr><td>프리미엄 시공</td><td>₩800,000/평</td><td>고급 마감재</td></tr>
-        </table>
-        
-        <h4>🪑 가구 기본가</h4>
-        <table class="price-table">
-            <tr><th>가구</th><th>���본가</th><th>기준 크기 (cm)</th></tr>
+            <tr><th>가구</th><th>기본가</th><th>기준 크기 (cm)</th></tr>
             <tr><td>🛏️ 침대</td><td>₩800,000</td><td>200×180×60</td></tr>
             <tr><td>🛋️ 소파</td><td>₩1,200,000</td><td>180×90×80</td></tr>
             <tr><td>🪑 테이블</td><td>₩400,000</td><td>120×80×75</td></tr>
             <tr><td>🪑 의자</td><td>₩150,000</td><td>50×50×90</td></tr>
             <tr><td>🗄️ 수납장</td><td>₩600,000</td><td>120×60×200</td></tr>
             <tr><td>💡 조명</td><td>₩200,000</td><td>30×30×150</td></tr>
-            <tr><td>🚪 문</td><td>₩350,000</td><td>10×80×200</td></tr>
-            <tr><td>🪟 창문</td><td>₩450,000</td><td>10×100×120</td></tr>
-            <tr><td>🧱 벽</td><td>₩100,000/m</td><td>높이 240cm 기준</td></tr>
         </table>
         
+        <p style="font-size:12px; color:#888; margin:10px 0;">※ 익스테리어(벽·문·창문·바닥)는 별도 시공 견적으로 산정됩니다</p>
+
         <h4>✨ 재질 배율</h4>
         <table class="price-table">
             <tr><th>재질</th><th>배율</th><th>예시 (침대)</th></tr>
@@ -374,8 +368,10 @@ const CONFIG = {
 };
 
 // ============ 가격 정책 ============
+// 익스테리어 타입 (가격 계산 제외)
+const EXTERIOR_TYPES = ['Wall', 'Door', 'Window', 'Floor'];
+
 const PRICING = {
-    roomCostPerPyeong: 500000,
     furniture: {
         Bed: { base: 800000, refVolume: 200 * 180 * 60 },
         Sofa: { base: 1200000, refVolume: 180 * 90 * 80 },
@@ -383,10 +379,6 @@ const PRICING = {
         Chair: { base: 150000, refVolume: 50 * 50 * 90 },
         Cabinet: { base: 600000, refVolume: 120 * 60 * 200 },
         Lamp: { base: 200000, refVolume: 30 * 30 * 150 },
-        Door: { base: 350000, refVolume: 10 * 80 * 200 },
-        Window: { base: 450000, refVolume: 10 * 100 * 120 },
-        Floor: { base: 200000, refVolume: 200 * 200 * 5 },
-        Wall: { base: 100000, perMeter: true },
         Desk: { base: 450000, refVolume: 140 * 70 * 75 },
         Bookshelf: { base: 500000, refVolume: 100 * 40 * 180 },
         Kitchen: { base: 2000000, refVolume: 200 * 60 * 90 },
@@ -895,17 +887,17 @@ function closeTemplateInfoModal() {
 
 // ============ 가격 계산 ============
 function calculateRoomCost() {
-    const widthCm = canvas.getWidth();
-    const heightCm = canvas.getHeight();
-    const sqMeters = (widthCm * heightCm) / 10000;
-    const pyeong = sqMeters / 3.3;
-    return Math.round(pyeong * PRICING.roomCostPerPyeong);
+    return 0; // 방 크기는 별도 시공 — 에디터 견적에 포함하지 않음
 }
 
 function calculateFurnitureCost(obj) {
     if (!obj || !obj.userData) return 0;
     
     const typeName = (obj.userData.name || '').split('_')[0];
+    
+    // 익스테리어는 가격 계산하지 않음
+    if (EXTERIOR_TYPES.includes(typeName)) return 0;
+    
     const priceInfo = PRICING.furniture[typeName];
     if (!priceInfo) return 0;
     
@@ -913,12 +905,6 @@ function calculateFurnitureCost(obj) {
     const d = obj.height * obj.scaleY;
     const h = obj.userData.h || 50;
     const texture = obj.userData.texture || 'color';
-    
-    if (typeName === 'Wall' && priceInfo.perMeter) {
-        const lengthM = Math.max(w, d) / 100;
-        const heightM = h / 100;
-        return Math.round(priceInfo.base * lengthM * (heightM / 2.4) * (PRICING.materials[texture] || 1));
-    }
     
     const volume = w * d * h;
     const volumeRatio = priceInfo.refVolume ? volume / priceInfo.refVolume : 1;
@@ -938,12 +924,20 @@ function getTotalFurnitureCost() {
     return total;
 }
 
+function getInteriorFurnitureCount() {
+    return canvas.getObjects().filter(obj => {
+        if (obj.type !== 'rect' || !obj.userData) return false;
+        const typeName = (obj.userData.name || '').split('_')[0];
+        return !EXTERIOR_TYPES.includes(typeName);
+    }).length;
+}
+
 function getFurnitureCount() {
     return canvas.getObjects().filter(obj => obj.type === 'rect' && obj.userData).length;
 }
 
 function getSubtotal() {
-    return calculateRoomCost() + getTotalFurnitureCost();
+    return getTotalFurnitureCost();
 }
 
 function applyDiscount() {
@@ -975,17 +969,14 @@ function applyDiscount() {
 }
 
 function updateEstimate() {
-    const roomCost = calculateRoomCost();
     const furnitureCost = getTotalFurnitureCost();
-    const subtotal = roomCost + furnitureCost;
+    const subtotal = furnitureCost;
     const discount = Math.round(subtotal * state.currentDiscount);
     const total = subtotal - discount;
+    const interiorCount = getInteriorFurnitureCount();
     
-    const pyeong = ((canvas.getWidth() * canvas.getHeight()) / 10000 / 3.3).toFixed(1);
-    
-    document.getElementById('roomCost').textContent = formatPrice(roomCost);
     document.getElementById('furnitureCost').textContent = formatPrice(furnitureCost);
-    document.getElementById('roomSize').textContent = pyeong + '평';
+    document.getElementById('furnitureCount').textContent = interiorCount + '개';
     
     let totalHtml = formatPrice(total);
     if (state.currentDiscount > 0) {
@@ -1454,12 +1445,15 @@ function updateLayerList() {
     [...objects].reverse().forEach(obj => {
         const item = document.createElement('div');
         item.className = 'layer-item' + (obj === activeObj ? ' active' : '');
+        const typeName = (obj.userData?.name || '').split('_')[0];
+        const isExterior = EXTERIOR_TYPES.includes(typeName);
+        const priceText = isExterior ? '<span style="color:#999;font-style:italic;">별도</span>' : formatPrice(calculateFurnitureCost(obj));
         item.innerHTML = `
             <div class="info">
                 <div class="layer-color" style="background:${obj.fill || '#ccc'}"></div>
                 <span class="layer-name">${getLayerDisplayName(obj.userData?.name)}</span>
             </div>
-            <span class="layer-price">${formatPrice(calculateFurnitureCost(obj))}</span>
+            <span class="layer-price">${priceText}</span>
         `;
         item.onclick = () => {
             canvas.setActiveObject(obj);
@@ -1715,46 +1709,51 @@ function loadTemplate(key) {
 
 // ============ 견적서 내보내기 ============
 function exportEstimate() {
-    const roomCost = calculateRoomCost();
     let furnitureTotal = 0;
     const items = [];
     
     canvas.getObjects().forEach(obj => {
         if (obj.type === 'rect' && obj.userData) {
+            const typeName = (obj.userData.name || '').split('_')[0];
             const cost = calculateFurnitureCost(obj);
+            // 익스테리어는 가격 0이지만 목록에는 표시
+            const isExterior = EXTERIOR_TYPES.includes(typeName);
             furnitureTotal += cost;
             items.push({
                 name: obj.userData.name,
                 texture: { color:'단색', wood:'나무', fabric:'천', marble:'대리석', metal:'금속', glass:'유리', leather:'가죽' }[obj.userData.texture] || '단색',
                 size: `${Math.round(obj.width * obj.scaleX)}×${Math.round(obj.height * obj.scaleY)}×${obj.userData.h}`,
-                cost
+                cost,
+                isExterior
             });
         }
     });
     
-    const subtotal = roomCost + furnitureTotal;
+    const subtotal = furnitureTotal;
     const discount = Math.round(subtotal * state.currentDiscount);
     const total = subtotal - discount;
-    const pyeong = ((canvas.getWidth() * canvas.getHeight()) / 10000 / 3.3).toFixed(1);
     const title = sanitizeInput(document.getElementById('design-title').value) || '나의 디자인';
     const templateInfo = state.currentTemplateKey && TEMPLATES[state.currentTemplateKey] 
         ? TEMPLATES[state.currentTemplateKey].name 
         : '커스텀';
     
+    const interiorItems = items.filter(i => !i.isExterior);
+    const exteriorItems = items.filter(i => i.isExterior);
+    
     const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>견적서</title>
-<style>body{font-family:'Malgun Gothic',sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{text-align:center;border-bottom:3px solid #333;padding-bottom:20px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{padding:12px;border:1px solid #ddd;text-align:left}th{background:#f5f5f5}.total{font-weight:bold;font-size:18px;background:#667eea;color:white}.right{text-align:right}.template-badge{display:inline-block;background:#667eea;color:white;padding:5px 12px;border-radius:20px;font-size:12px;margin-left:10px}</style></head>
+<style>body{font-family:'Malgun Gothic',sans-serif;padding:40px;max-width:800px;margin:0 auto}h1{text-align:center;border-bottom:3px solid #333;padding-bottom:20px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{padding:12px;border:1px solid #ddd;text-align:left}th{background:#f5f5f5}.total{font-weight:bold;font-size:18px;background:#667eea;color:white}.right{text-align:right}.template-badge{display:inline-block;background:#667eea;color:white;padding:5px 12px;border-radius:20px;font-size:12px;margin-left:10px}.ext{color:#888;font-style:italic}</style></head>
 <body><h1>🏠 인테리어 견적서 <span class="template-badge">${templateInfo}</span></h1>
 <p><strong>디자인:</strong> ${title} | <strong>발행일:</strong> ${new Date().toLocaleDateString('ko-KR')}</p>
-<h3>📐 시공</h3><table><tr><th>항목</th><th>내용</th><th class="right">금액</th></tr>
-<tr><td>방 크기</td><td>${canvas.getWidth()}×${canvas.getHeight()}cm (${pyeong}평)</td><td class="right">${formatPrice(roomCost)}</td></tr></table>
-<h3>🪑 가구 (${items.length}개)</h3><table><tr><th>품목</th><th>재질</th><th>크기</th><th class="right">금액</th></tr>
-${items.map(i=>`<tr><td>${i.name}</td><td>${i.texture}</td><td>${i.size}</td><td class="right">${formatPrice(i.cost)}</td></tr>`).join('')}
+<h3>🪑 인테리어 가구 (${interiorItems.length}개)</h3><table><tr><th>품목</th><th>재질</th><th>크기</th><th class="right">금액</th></tr>
+${interiorItems.map(i=>`<tr><td>${i.name}</td><td>${i.texture}</td><td>${i.size}</td><td class="right">${formatPrice(i.cost)}</td></tr>`).join('')}
 <tr><td colspan="3"><strong>소계</strong></td><td class="right"><strong>${formatPrice(furnitureTotal)}</strong></td></tr></table>
-<h3>💰 총 견적</h3><table><tr><td>시공비</td><td class="right">${formatPrice(roomCost)}</td></tr>
-<tr><td>가구</td><td class="right">${formatPrice(furnitureTotal)}</td></tr>
+${exteriorItems.length > 0 ? `<h3>🧱 익스테리어 (별도 시공)</h3><table><tr><th>품목</th><th>재질</th><th>크기</th><th class="right">비고</th></tr>
+${exteriorItems.map(i=>`<tr class="ext"><td>${i.name}</td><td>${i.texture}</td><td>${i.size}</td><td class="right">별도 견적</td></tr>`).join('')}</table>` : ''}
+<h3>💰 총 견적</h3><table>
+<tr><td>인테리어 가구</td><td class="right">${formatPrice(furnitureTotal)}</td></tr>
 ${discount?`<tr style="color:#e74c3c"><td>할인</td><td class="right">-${formatPrice(discount)}</td></tr>`:''}
 <tr class="total"><td>최종</td><td class="right">${formatPrice(total)}</td></tr></table>
-<p style="text-align:center;color:#888;margin-top:40px">유효기간: 발행일로부터 30일</p>
+<p style="text-align:center;color:#888;margin-top:40px">※ 익스테리어 시공비는 현장 상담 후 별도 안내 | 유효기간: 발행일로부터 30일</p>
 
 <div class="modal" id="galleryShareModal">
     <div class="modal-content" style="max-width: 500px;">
@@ -1874,7 +1873,7 @@ function sendToViewer() {
 
     localStorage.setItem('furniture_data', JSON.stringify(furnitureData));
     localStorage.setItem('estimate_data', JSON.stringify({
-        roomCost: calculateRoomCost(), furnitureCost: getTotalFurnitureCost(),
+        roomCost: 0, furnitureCost: getTotalFurnitureCost(),
         discount: state.currentDiscount, total: getSubtotal() * (1 - state.currentDiscount),
         roomSize: { width: canvas.getWidth(), height: canvas.getHeight() },
         templateKey: state.currentTemplateKey
@@ -2245,10 +2244,11 @@ function calculateTotalPrice() {
 }
 
 function getFurniturePrice(name) {
+    // 익스테리어는 가격 없음
+    if (EXTERIOR_TYPES.includes(name)) return 0;
     const prices = {
         'Bed': 500000, 'Table': 200000, 'Sofa': 400000, 'Chair': 80000,
-        'Door': 150000, 'Window': 120000, 'Cabinet': 250000, 'Lamp': 60000,
-        'Floor': 200000
+        'Cabinet': 250000, 'Lamp': 60000
     };
     return prices[name] || 0;
 }

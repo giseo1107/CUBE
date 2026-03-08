@@ -829,6 +829,117 @@ input[type="number"] {
     position: relative; 
 }
 
+/* 캔버스 상단 바 (제목 + 저장/불러오기/초기화) */
+.canvas-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+    gap: 12px;
+}
+
+.canvas-top-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.canvas-top-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.design-title-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3436;
+    transition: all 0.2s;
+    background: #f8f9fa;
+}
+
+.design-title-input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.canvas-top-right {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.ctb-btn {
+    padding: 7px 14px;
+    border-radius: 7px;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.ctb-save {
+    background: #27ae60;
+    color: white;
+}
+
+.ctb-save:hover {
+    background: #219a52;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3);
+}
+
+.ctb-load {
+    background: #f39c12;
+    color: white;
+}
+
+.ctb-load:hover {
+    background: #e08e0b;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(243, 156, 18, 0.3);
+}
+
+.ctb-reset {
+    background: #e74c3c;
+    color: white;
+}
+
+.ctb-reset:hover {
+    background: #d63031;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* 견적 안내 힌트 */
+.estimate-hint {
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    font-size: 11px;
+    opacity: 0.8;
+    line-height: 1.5;
+    text-align: center;
+}
+
 .canvas-wrapper { 
     background: white; 
     box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
@@ -1283,6 +1394,16 @@ input[type="number"] {
     
     .divider {
         display: none;
+    }
+    
+    .canvas-top-bar {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .canvas-top-right {
+        width: 100%;
+        justify-content: center;
     }
 }
 
