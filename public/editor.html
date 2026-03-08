@@ -25,10 +25,8 @@
 </div>
 <!-- ============ 툴바 ============ -->
 <div class="toolbar">
-    <!-- 프로젝트 이름 (좌측, Notion 스타일 인라인) -->
-    <div class="toolbar-group toolbar-title-group">
-        <input type="text" id="design-title" class="toolbar-title-input" placeholder="제목 없음" value="나의 디자인" maxlength="50" spellcheck="false">
-        <span class="toolbar-title-hint">✎</span>
+    <div class="toolbar-group">
+        <span class="view-label">📐 평면</span>
     </div>
 
     <div class="divider"></div>
@@ -121,6 +119,11 @@
     <!-- 캔버스 영역 -->
     <div class="canvas-area">
         <div class="canvas-wrapper">
+            <!-- 캔버스 내부 제목 -->
+            <div class="canvas-title-overlay" id="canvasTitleOverlay">
+                <input type="text" id="design-title" class="canvas-title-input" placeholder="제목을 입력하세요" value="나의 디자인" maxlength="50" spellcheck="false">
+                <span class="canvas-title-pencil">✎</span>
+            </div>
             <canvas id="editorCanvas" width="600" height="600"></canvas>
             <div id="dim-display">W: 0 × D: 0</div>
             <div class="zoom-indicator" id="zoom-indicator">100%</div>
@@ -2235,23 +2238,46 @@ function getFurniturePrice(name) {
 
 
 
-// ============ 제목 입력 자동 길이 조절 ============
-(function() {
+// ============ 캔버스 크기에 맞는 제목 자동 조절 ============
+function updateCanvasTitleSize() {
     const titleInput = document.getElementById('design-title');
-    const sizer = document.createElement('span');
-    sizer.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font-size:14px;font-weight:700;padding:0 8px;';
-    document.body.appendChild(sizer);
+    const overlay = document.getElementById('canvasTitleOverlay');
+    if (!titleInput || !overlay) return;
     
-    function autoResize() {
-        sizer.textContent = titleInput.value || titleInput.placeholder;
-        const newWidth = Math.max(60, Math.min(180, sizer.offsetWidth + 20));
-        titleInput.style.width = newWidth + 'px';
-    }
+    const cw = canvas.getWidth();
     
-    titleInput.addEventListener('input', autoResize);
-    titleInput.addEventListener('focus', autoResize);
-    autoResize();
-})();
+    // 캔버스 너비에 비례하여 폰트 크기 결정
+    // 350px → 14px, 500px → 17px, 700px → 22px
+    const fontSize = Math.max(12, Math.min(24, Math.round(cw * 0.032)));
+    const padding = Math.max(6, Math.round(cw * 0.015));
+    
+    titleInput.style.fontSize = fontSize + 'px';
+    titleInput.style.padding = `${padding}px ${padding * 2}px`;
+    
+    // 입력 너비도 캔버스에 맞춰 조절
+    titleInput.style.maxWidth = Math.round(cw * 0.7) + 'px';
+    
+    // 연필 아이콘도 비례
+    const pencil = overlay.querySelector('.canvas-title-pencil');
+    if (pencil) pencil.style.fontSize = Math.max(10, fontSize - 4) + 'px';
+}
+
+// 캔버스 크기 변경 시 호출 연동
+const _origApplyCanvasSettings = applyCanvasSettings;
+applyCanvasSettings = function() {
+    _origApplyCanvasSettings();
+    updateCanvasTitleSize();
+};
+
+// 초기 실행 + 템플릿 로드 시에도 적용
+const _origLoadTemplateDirectly = loadTemplateDirectly;
+loadTemplateDirectly = function(key, showBanner) {
+    _origLoadTemplateDirectly(key, showBanner);
+    setTimeout(updateCanvasTitleSize, 100);
+};
+
+// 페이지 로드 시
+setTimeout(updateCanvasTitleSize, 300);
 
 console.log('🏠 Editor 로드 완료 | 단축키: Ctrl+Z/Y/D/S, Delete, Alt+드래그, 휠 줌');
 </script>

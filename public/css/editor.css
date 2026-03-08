@@ -829,57 +829,74 @@ input[type="number"] {
     position: relative; 
 }
 
-/* 툴바 내 프로젝트 제목 (Notion 스타일) */
-.toolbar-title-group {
-    position: relative;
-    flex-shrink: 0;
+/* 캔버스 내부 제목 오버레이 */
+.canvas-title-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.6) 70%, transparent 100%);
+    z-index: 50;
+    pointer-events: none;
+    transition: all 0.25s ease;
 }
 
-.toolbar-title-input {
-    width: auto;
-    min-width: 60px;
-    max-width: 180px;
-    padding: 5px 8px;
+.canvas-title-overlay:hover {
+    background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.8) 70%, transparent 100%);
+}
+
+.canvas-title-input {
+    pointer-events: auto;
     border: 1.5px solid transparent;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a2e;
+    border-radius: 6px;
     background: transparent;
-    transition: all 0.2s ease;
+    color: #1a1a2e;
+    font-weight: 800;
+    text-align: center;
     text-overflow: ellipsis;
+    transition: all 0.25s ease;
+    padding: 4px 12px;
+    max-width: 80%;
+    /* 기본 크기 — JS에서 캔버스 크기에 맞춰 덮어씀 */
+    font-size: 18px;
 }
 
-.toolbar-title-input::placeholder {
-    color: #bbb;
+.canvas-title-input::placeholder {
+    color: #ccc;
     font-weight: 500;
 }
 
-.toolbar-title-input:hover {
-    background: #f0f1f3;
-    border-color: #f0f1f3;
+.canvas-title-input:hover {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(0,0,0,0.06);
 }
 
-.toolbar-title-input:focus {
+.canvas-title-input:focus {
     outline: none;
     background: white;
     border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.12);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
-.toolbar-title-hint {
-    font-size: 11px;
-    color: #ccc;
-    margin-left: 2px;
-    transition: all 0.2s;
+.canvas-title-pencil {
     pointer-events: none;
+    font-size: 12px;
+    color: #ccc;
+    transition: all 0.2s;
+    opacity: 0;
 }
 
-.toolbar-title-group:hover .toolbar-title-hint {
-    color: #999;
+.canvas-title-overlay:hover .canvas-title-pencil {
+    opacity: 1;
+    color: #aaa;
 }
 
-.toolbar-title-input:focus ~ .toolbar-title-hint {
+.canvas-title-input:focus ~ .canvas-title-pencil {
     opacity: 0;
 }
 
@@ -960,6 +977,7 @@ input[type="number"] {
     border: 1px solid #ccc; 
     position: relative;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 /* ============ 사이드 패널 ============ */
