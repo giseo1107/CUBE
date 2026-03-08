@@ -829,143 +829,117 @@ input[type="number"] {
     position: relative; 
 }
 
-/* 캔버스 상단 바 (제목 + 저장/불러오기/초기화) */
-.canvas-top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
-    background: white;
-    padding: 14px 20px;
-    border-radius: 12px;
-    margin-bottom: 14px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    border: 1px solid rgba(0,0,0,0.06);
-    gap: 16px;
-}
-
-.canvas-top-left {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    flex: 1;
-    min-width: 0;
+/* 툴바 내 프로젝트 제목 (Notion 스타일) */
+.toolbar-title-group {
     position: relative;
+    flex-shrink: 0;
 }
 
-/* Notion/Figma 스타일 인라인 제목 입력 */
-.design-title-input {
-    min-width: 60px;
-    max-width: 280px;
+.toolbar-title-input {
     width: auto;
-    padding: 6px 8px;
+    min-width: 60px;
+    max-width: 180px;
+    padding: 5px 8px;
     border: 1.5px solid transparent;
-    border-radius: 6px;
-    font-size: 15px;
+    border-radius: 5px;
+    font-size: 14px;
     font-weight: 700;
     color: #1a1a2e;
     background: transparent;
     transition: all 0.2s ease;
     text-overflow: ellipsis;
-    letter-spacing: -0.01em;
 }
 
-.design-title-input::placeholder {
+.toolbar-title-input::placeholder {
     color: #bbb;
     font-weight: 500;
 }
 
-.design-title-input:hover {
-    background: #f4f5f7;
-    border-color: #f4f5f7;
+.toolbar-title-input:hover {
+    background: #f0f1f3;
+    border-color: #f0f1f3;
 }
 
-.design-title-input:focus {
+.toolbar-title-input:focus {
     outline: none;
     background: white;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.12);
 }
 
-/* 편집 힌트 아이콘: 평소 연하게, 호버 시 살짝 진해짐 */
-.title-edit-hint {
-    font-size: 12px;
+.toolbar-title-hint {
+    font-size: 11px;
     color: #ccc;
-    margin-left: 4px;
+    margin-left: 2px;
     transition: all 0.2s;
     pointer-events: none;
-    flex-shrink: 0;
 }
 
-.canvas-top-left:hover .title-edit-hint {
+.toolbar-title-group:hover .toolbar-title-hint {
     color: #999;
 }
 
-.design-title-input:focus ~ .title-edit-hint {
+.toolbar-title-input:focus ~ .toolbar-title-hint {
     opacity: 0;
 }
 
-.canvas-top-right {
-    display: flex;
-    gap: 6px;
-    flex-shrink: 0;
-    align-items: center;
+/* 툴바 우측 저장/불러오기/초기화 */
+.toolbar-actions {
+    gap: 4px !important;
 }
 
-/* 버튼 공통 */
-.ctb-btn {
-    padding: 7px 14px;
-    border-radius: 7px;
+.tb-save {
+    padding: 6px 12px;
+    border-radius: 6px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    line-height: 1.3;
-}
-
-/* Primary: 저장 — 유일하게 색상 채움 */
-.ctb-save {
     background: #667eea;
     color: white;
     border: none;
+    transition: all 0.2s;
+    white-space: nowrap;
 }
 
-.ctb-save:hover {
+.tb-save:hover {
     background: #5a6fd6;
     transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
-/* Ghost: 불러오기 — 배경 없이 테두리만 */
-.ctb-ghost {
+.tb-ghost {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
     background: transparent;
-    color: #555;
+    color: #666;
     border: 1.5px solid #ddd;
+    transition: all 0.2s;
 }
 
-.ctb-ghost:hover {
+.tb-ghost:hover {
     background: #f8f9fa;
     border-color: #bbb;
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
-/* Danger Ghost: 초기화 — 아이콘만 연하게 */
-.ctb-danger-ghost {
-    background: transparent;
-    color: #bbb;
-    border: 1.5px solid transparent;
-    padding: 7px 9px;
+.tb-danger-ghost {
+    padding: 6px 8px;
+    border-radius: 6px;
     font-size: 13px;
+    cursor: pointer;
+    background: transparent;
+    color: #ccc;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
 }
 
-.ctb-danger-ghost:hover {
+.tb-danger-ghost:hover {
     color: #e74c3c;
     background: rgba(231, 76, 60, 0.06);
     border-color: rgba(231, 76, 60, 0.15);
-    transform: translateY(-1px);
 }
 
 /* 견적 안내 힌트 */
@@ -1436,25 +1410,7 @@ input[type="number"] {
         display: none;
     }
     
-    .canvas-top-bar {
-        flex-direction: column;
-        gap: 10px;
-        padding: 12px 16px;
-    }
-    
-    .canvas-top-left {
-        width: 100%;
-    }
-    
-    .design-title-input {
-        max-width: 100%;
-        width: 100% !important;
-    }
-    
-    .canvas-top-right {
-        width: 100%;
-        justify-content: center;
-    }
+    .canvas-top-bar-removed { display: none; /* placeholder for removed styles */ }
 }
 
 /* ============ 수량 뱃지 ============ */
