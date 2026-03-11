@@ -62,7 +62,7 @@
     #g-nav .gn-logo-img {
       width: 54px;
       height: 54px;
-      background-image: url('/img/image--c-c-c-logo-@2x.png');
+      background-image: url('/main_img/logo.svg');
       background-size: cover;
       background-position: center;
       flex-shrink: 0;
