@@ -554,8 +554,10 @@ function loadTemplateDirectly(key, showBanner = false) {
     updateEstimate();
     document.getElementById('design-title').value = template.name;
     document.getElementById('templateSelect').value = key;
+    state.currentTemplateKey = key;
     
     setTimeout(saveHistory, 500);
+    if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 100);
     
     if (showBanner) {
         showPropensityBanner(template.name);
@@ -1049,6 +1051,7 @@ function applyCanvasSettings() {
     
     if (state.gridVisible) createGrid();
     updateEstimate();
+    if (typeof updateCanvasTitleSize === 'function') updateCanvasTitleSize();
     showToast('설정 적용됨');
 }
 
@@ -1863,45 +1866,61 @@ function sendToViewer() {
 }
 
 // ============ 단축키 ============
+// ============ 초기화 (페이지 로드 — 단일 핸들러로 통합) ============
 window.addEventListener('load', () => {
-    // URL 파라미터 먼저 확인
+    // 1순위: URL 파라미터 (?template=xxx)
     const urlParams = new URLSearchParams(window.location.search);
-    const hasTemplate = urlParams.get('template');
+    const hasTemplateParam = urlParams.get('template');
     
-    if (hasTemplate) {
-        // 템플릿 파라미터가 있으면 먼저 처리
+    if (hasTemplateParam) {
         handleURLParameters();
-    } else {
-        // 기존 저장 데이터 로드
-        const saved = localStorage.getItem('editor_2d_state');
-        if (saved) {
-            try {
-                const data = JSON.parse(saved);
-                canvas.loadFromJSON(data.canvas || data, () => {
-                    if (data.settings) {
-                        canvas.setWidth(data.settings.canvasWidth || 600);
-                        canvas.setHeight(data.settings.canvasHeight || 600);
-                        state.gridSize = data.settings.gridSize || 20;
-                        document.getElementById('canvasW').value = canvas.getWidth();
-                        document.getElementById('canvasH').value = canvas.getHeight();
-                        document.getElementById('gridSizeInput').value = state.gridSize;
-                    }
-                    if (state.gridVisible) createGrid();
-                    canvas.renderAll();
-                    updateLayerList();
-                    updateEstimate();
-                    setTimeout(saveHistory, 500);
-                });
-            } catch (e) {
-                createGrid();
+        if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 300);
+        return;
+    }
+    
+    // 2순위: 성향 분석 결과
+    if (checkPropensityResult()) {
+        if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 300);
+        return;
+    }
+    
+    // 3순위: localStorage 저장 데이터
+    const saved = localStorage.getItem('editor_2d_state');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            canvas.loadFromJSON(data.canvas || data, () => {
+                if (data.settings) {
+                    canvas.setWidth(data.settings.canvasWidth || 600);
+                    canvas.setHeight(data.settings.canvasHeight || 600);
+                    state.gridSize = data.settings.gridSize || 20;
+                    document.getElementById('canvasW').value = canvas.getWidth();
+                    document.getElementById('canvasH').value = canvas.getHeight();
+                    document.getElementById('gridSizeInput').value = state.gridSize;
+                }
+                if (data.templateKey) {
+                    state.currentTemplateKey = data.templateKey;
+                    document.getElementById('templateSelect').value = data.templateKey;
+                }
+                if (state.gridVisible) createGrid();
+                canvas.renderAll();
+                updateLayerList();
                 updateEstimate();
                 setTimeout(saveHistory, 500);
-            }
-        } else {
+                if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 300);
+            });
+        } catch (e) {
             createGrid();
             updateEstimate();
             setTimeout(saveHistory, 500);
+            if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 300);
         }
+    } else {
+        // 4순위: 빈 캔버스
+        createGrid();
+        updateEstimate();
+        setTimeout(saveHistory, 500);
+        if (typeof updateCanvasTitleSize === 'function') setTimeout(updateCanvasTitleSize, 300);
     }
 });
 
@@ -1925,48 +1944,7 @@ window.addEventListener('beforeunload', (e) => {
     }
 });
 
-// ============ 초기화 ============
-window.addEventListener('load', () => {
-    // 성향 분석에서 온 경우 먼저 처리
-    if (checkPropensityResult()) {
-        return; // 템플릿이 로드되므로 기존 저장 데이터는 무시
-    }
-    
-    // 기존 저장 데이터 확인
-    const saved = localStorage.getItem('editor_2d_state');
-    if (saved) {
-        try {
-            const data = JSON.parse(saved);
-            canvas.loadFromJSON(data.canvas || data, () => {
-                if (data.settings) {
-                    canvas.setWidth(data.settings.canvasWidth || 600);
-                    canvas.setHeight(data.settings.canvasHeight || 600);
-                    state.gridSize = data.settings.gridSize || 20;
-                    document.getElementById('canvasW').value = canvas.getWidth();
-                    document.getElementById('canvasH').value = canvas.getHeight();
-                    document.getElementById('gridSizeInput').value = state.gridSize;
-                }
-                if (data.templateKey) {
-                    state.currentTemplateKey = data.templateKey;
-                    document.getElementById('templateSelect').value = data.templateKey;
-                }
-                if (state.gridVisible) createGrid();
-                canvas.renderAll();
-                updateLayerList();
-                updateEstimate();
-                setTimeout(saveHistory, 500);
-            });
-        } catch (e) {
-            createGrid();
-            updateEstimate();
-            setTimeout(saveHistory, 500);
-        }
-    } else {
-        createGrid();
-        updateEstimate();
-        setTimeout(saveHistory, 500);
-    }
-});
+// (두 번째 초기화 핸들러 → 위의 단일 핸들러로 통합 완료)
 
 function shareToGallery() {
     if (!currentUser) {
@@ -2262,21 +2240,7 @@ function updateCanvasTitleSize() {
     if (pencil) pencil.style.fontSize = Math.max(10, fontSize - 4) + 'px';
 }
 
-// 캔버스 크기 변경 시 호출 연동
-const _origApplyCanvasSettings = applyCanvasSettings;
-applyCanvasSettings = function() {
-    _origApplyCanvasSettings();
-    updateCanvasTitleSize();
-};
-
-// 초기 실행 + 템플릿 로드 시에도 적용
-const _origLoadTemplateDirectly = loadTemplateDirectly;
-loadTemplateDirectly = function(key, showBanner) {
-    _origLoadTemplateDirectly(key, showBanner);
-    setTimeout(updateCanvasTitleSize, 100);
-};
-
-// 페이지 로드 시
+// 페이지 로드 시 초기 호출
 setTimeout(updateCanvasTitleSize, 300);
 
 console.log('🏠 Editor 로드 완료 | 단축키: Ctrl+Z/Y/D/S, Delete, Alt+드래그, 휠 줌');
