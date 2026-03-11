@@ -201,10 +201,6 @@
     <div class="gn-inner">
       <a href="/index.html" class="gn-logo">
         <div class="gn-logo-img"></div>
-        <div class="gn-logo-text">
-          <span class="gn-logo-title">C.C.C</span>
-          <span class="gn-logo-sub">Custom Cube Company</span>
-        </div>
       </a>
       <ul class="gn-menu">${menuHTML}</ul>
       <div class="gn-auth" id="gn-auth">
