@@ -70,7 +70,7 @@
     #g-nav .gn-logo-text { display: flex; flex-direction: column; }
     #g-nav .gn-logo-title {
       font-family: "Inter", Helvetica;
-      font-size: 28px;
+      font-size: 34px;
       font-weight: 400;
       color: #aff9f5;
       line-height: 1;
@@ -78,7 +78,7 @@
     }
     #g-nav .gn-logo-sub {
       font-family: "Inter", Helvetica;
-      font-size: 11px;
+      font-size: 13px;
       color: #aff9f5;
       opacity: 0.75;
       line-height: 1.4;
@@ -97,7 +97,7 @@
     }
     #g-nav .gn-menu li a {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 700;
       color: rgba(255,255,255,0.65);
       text-decoration: none;
@@ -120,7 +120,7 @@
     #g-nav .gn-auth a,
     #g-nav .gn-auth button {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
       text-decoration: none;
@@ -159,7 +159,7 @@
     }
     #g-nav .gn-user-name {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
@@ -171,7 +171,7 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       transition: all .2s;
