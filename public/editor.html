@@ -552,8 +552,11 @@ function loadTemplateDirectly(key, showBanner = false) {
         canvas.add(rect);
     });
     state.historyProcessing = false;
-    
+
+    state.historyProcessing = true; // createGrid 내부 object:added 이벤트도 히스토리에서 제외
     if (state.gridVisible) createGrid();
+    state.historyProcessing = false;
+
     canvas.renderAll();
     updateLayerList();
     updateEstimate();
@@ -569,17 +572,6 @@ function loadTemplateDirectly(key, showBanner = false) {
     }
     
     showToast(`✅ "${template.name}" 템플릿이 적용되었습니다!`, 3000);
-}
-
-function showPropensityBanner(typeName) {
-    const banner = document.getElementById('propensityBanner');
-    const bannerType = document.getElementById('bannerType');
-    
-    bannerType.textContent = typeName;
-    banner.style.display = 'block';
-    
-    // 스크롤 위치 조정
-    document.body.style.paddingTop = '80px';
 }
 
 function showPropensityBanner(templateName) {
