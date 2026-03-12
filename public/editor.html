@@ -57,14 +57,9 @@
     <div class="toolbar-right">
         <div class="toolbar-group edit-tools-group">
             <span class="edit-section-label">✏️ 편집 도구</span>
-            
-            <button class="btn-icon-only btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택 객체 삭제">🗑️</button>
-            <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋</button>
-            <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗</button>
-            <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔</button>
 
             <div class="undo-redo-wrapper icon-wrapper">
-                <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon-only">↩️</button>
+                <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon-only">↩️ 되돌리기</button>
                 <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon-only btn-history-toggle" id="historyToggleBtn">▾</button>
                 <div class="history-dropdown" id="historyDropdown">
                     <div class="history-dropdown-header">📋 작업 히스토리</div>
@@ -73,7 +68,12 @@
                     </div>
                 </div>
             </div>
-            <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon-only">↪️</button>
+            <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon-only">↪️ 다시실행</button>
+
+            <button class="btn-icon-only btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택 객체 삭제">🗑️ 삭제</button>
+            <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋 복사</button>
+            <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗 묶기</button>
+            <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔 해제</button>
         </div>
 
         <div class="divider"></div>

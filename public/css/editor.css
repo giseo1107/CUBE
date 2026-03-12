@@ -2027,8 +2027,6 @@ input[type="number"] {
 .wall-btn-wrapper {
     position: relative;
     display: inline-flex;
-    min-width: 280px;
-    justify-content: center;
 }
 
 /* OFF 상태 hover 강조 */
@@ -2215,7 +2213,11 @@ input[type="number"] {
 .edit-tools-group {
     display: flex;
     align-items: center;
-    gap: 4px; /* 연관된 편집 툴끼리는 간격을 좁게 */
+    gap: 4px;
+    background: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px solid #eef0f5;
 }
 
 .btn-icon-only {
