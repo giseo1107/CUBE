@@ -1431,7 +1431,189 @@ input[type="number"] {
     .canvas-top-bar-removed { display: none; /* placeholder for removed styles */ }
 }
 
-/* ============ 수량 뱃지 ============ */
+/* ============ 툴바 탭 그룹 ============ */
+.tool-tab-group {
+    display: flex;
+    gap: 0;
+    background: #f0f2fa;
+    border-radius: 8px;
+    padding: 3px;
+    border: 1px solid #e0e4f5;
+}
+
+.tool-tab-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    color: #667eea;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+    box-shadow: none;
+}
+
+.tool-tab-btn:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+
+.tool-tab-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+    transform: none;
+}
+
+/* ============ 수정(편집) 토글 버튼 ============ */
+.btn-edit-toggle {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    background: white;
+    color: #555;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-edit-toggle:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.15);
+}
+
+.btn-edit-toggle.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+/* ============ 캔버스 컨트롤 바 ============ */
+.canvas-control-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px; /* 캔버스 기본 너비에 맞춤 */
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+    box-sizing: border-box;
+}
+
+.ccb-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.ccb-pencil-icon {
+    font-size: 15px;
+    color: #aaa;
+    flex-shrink: 0;
+    transition: color 0.2s;
+}
+
+.ccb-left:focus-within .ccb-pencil-icon {
+    color: #667eea;
+}
+
+.ccb-title-input {
+    border: 1.5px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: #1a1a2e;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 4px 8px;
+    min-width: 160px;
+    max-width: 300px;
+    transition: all 0.2s ease;
+}
+
+.ccb-title-input:hover {
+    background: #f8f9fa;
+    border-color: #e0e0e0;
+}
+
+.ccb-title-input:focus {
+    outline: none;
+    background: white;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.ccb-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.ccb-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 7px;
+    border: 1.5px solid #ddd;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+}
+
+.ccb-btn:hover {
+    background: #f0f2fa;
+    border-color: #bbb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.ccb-btn-save {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.ccb-btn-save:hover {
+    background: #5a6fd6;
+    border-color: #5a6fd6;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.35);
+}
+
+.ccb-btn-danger {
+    color: #c0392b;
+    border-color: rgba(192, 57, 43, 0.25);
+    background: rgba(231, 76, 60, 0.04);
+}
+
+.ccb-btn-danger:hover {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+    color: #e74c3c;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.2);
+}
+
+/* canvas-wrapper 상단 모서리를 컨트롤 바와 이음새 없이 연결 */
+.canvas-wrapper {
+    border-radius: 0 0 8px 8px !important;
+}
+
+
 .has-badge {
     position: relative;
 }
@@ -1828,17 +2010,36 @@ input[type="number"] {
     animation: pulse-glow 2s ease-in-out infinite;
 }
 
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(102, 126, 234, 0.7);
+    }
+}
 
-/* ============ 벽 버튼 툴팁 (OFF 상태 호버) ============ */
+/* ============================================================
+   추가 스타일 — 5가지 UX 개선
+   ============================================================ */
+
+/* ── 1. 벽 버튼 툴팁 (OFF 호버) ── */
 .wall-btn-wrapper {
     position: relative;
     display: inline-flex;
 }
 
+/* OFF 상태 hover 강조 */
+#btnWall:not(.btn-wall-active):hover {
+    background: #f0f4ff;
+    border-color: #667eea;
+    color: #667eea;
+}
+
 .wall-btn-tooltip {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 9px);
     left: 50%;
     transform: translateX(-50%);
     background: #2d3436;
@@ -1849,12 +2050,12 @@ input[type="number"] {
     padding: 6px 12px;
     border-radius: 6px;
     pointer-events: none;
-    z-index: 200;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 999;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.28);
     line-height: 1.4;
 }
 
-/* 화살표 */
+/* 말풍선 화살표 */
 .wall-btn-tooltip::before {
     content: '';
     position: absolute;
@@ -1865,82 +2066,80 @@ input[type="number"] {
     border-bottom-color: #2d3436;
 }
 
-/* OFF 상태일 때만 호버 시 툴팁 표시 */
-#btnWall:not(.btn-wall-active):hover {
-    background: #f0f4ff;
-    border-color: #667eea;
-    color: #667eea;
-}
-
+/* OFF 상태 hover 시에만 툴팁 노출 */
 .wall-btn-wrapper:hover .wall-btn-tooltip {
     display: block;
 }
 
-/* ON 상태에서는 툴팁 숨김 */
+/* ON 상태(btn-wall-active)일 때는 무조건 숨김 */
 .wall-btn-wrapper:has(#btnWall.btn-wall-active) .wall-btn-tooltip {
     display: none !important;
 }
 
-/* ============ 벽 그리기 모드 고정 안내 배너 ============ */
+/* ── 2. 벽 ON 고정 안내 배너 ── */
 .wall-mode-banner {
     width: 100%;
-    max-width: 800px;
-    margin-bottom: 10px;
-    padding: 10px 18px;
+    max-width: 860px;
+    margin-bottom: 8px;
+    padding: 10px 20px;
     background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
     color: #fff;
     font-size: 13px;
     font-weight: 600;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(225, 112, 85, 0.35);
+    box-shadow: 0 3px 12px rgba(225, 112, 85, 0.38);
     text-align: center;
-    animation: bannerFadeIn 0.25s ease;
-    line-height: 1.5;
+    line-height: 1.6;
+    animation: wallBannerIn 0.25s ease;
+    box-sizing: border-box;
 }
 
 .wall-mode-banner strong {
-    font-weight: 800;
+    font-weight: 900;
     text-decoration: underline;
 }
 
-@keyframes bannerFadeIn {
+@keyframes wallBannerIn {
     from { opacity: 0; transform: translateY(-6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ============ 수정 섹션 라벨 (클릭 불가) ============ */
+/* ── 3. 수정 섹션 라벨 (클릭 불가) ── */
 .edit-section-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.08);
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid rgba(102, 126, 234, 0.18);
-    cursor: default;
-    user-select: none;
-    white-space: nowrap;
-    letter-spacing: 0.3px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 6px;
+    cursor: default;           /* 클릭 불가 커서 */
+    user-select: none;
+    pointer-events: none;      /* 완전히 이벤트 차단 */
+    white-space: nowrap;
+    letter-spacing: 0.3px;
 }
 
-/* ============ 객체 삭제 버튼 ============ */
+/* ── 5. 객체 삭제 버튼 ── */
+/* 폰트·크기·기본 구조는 툴바 button과 동일하게 */
 .btn-delete-obj {
     padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     cursor: pointer;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: white;
-    color: #c0392b;
-    transition: all 0.2s;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     display: inline-flex;
     align-items: center;
     gap: 5px;
+    color: #c0392b;
+    transition: all 0.2s;
     white-space: nowrap;
 }
 
@@ -1954,4 +2153,5 @@ input[type="number"] {
 
 .btn-delete-obj:active {
     transform: translateY(0);
+    box-shadow: none;
 }
