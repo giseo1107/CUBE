@@ -2155,3 +2155,107 @@ input[type="number"] {
     transform: translateY(0);
     box-shadow: none;
 }
+
+/* ============================================================
+   UX 개선: 툴바 좌-중-우 1줄 레이아웃 (기존 UI 파괴 방지)
+   ============================================================ */
+
+/* 1. 툴바 메인 컨테이너 재정의 */
+.toolbar { 
+    display: flex; 
+    justify-content: space-between; /* 좌, 중, 우를 양 끝으로 밀어냄 */
+    align-items: center; 
+    flex-wrap: nowrap; /* 1줄 고정 */
+    overflow-x: auto;  /* 화면이 좁아지면 가로 스크롤 허용하여 깨짐 완벽 방지 */
+    padding: 10px 20px; 
+}
+
+/* 2. 좌/중/우 섹션 여백 설정 */
+.toolbar-left, 
+.toolbar-center, 
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 그룹 간 넓은 여백으로 직관적인 분리 */
+    white-space: nowrap;
+}
+
+.toolbar-center {
+    flex: 1;
+    justify-content: center; /* 생성 도구들은 무조건 화면 정중앙 유지 */
+}
+
+/* 3. 생성 도구 스타일 (체급 2 - 흰색 테두리 버튼) */
+.furniture-buttons {
+    background: #f8f9fa; /* 연한 배경 박스로 묶어주어 "도구함" 느낌 강조 */
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px solid #eef0f5;
+    display: flex;
+    gap: 8px;
+}
+
+.furniture-buttons button.btn-outline {
+    background: white;
+    border: 1.5px solid #dcdde1;
+    color: #2d3436;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.furniture-buttons button.btn-outline:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: #f0f4ff;
+    transform: translateY(-1px);
+}
+
+/* 4. 편집 도구 스타일 (체급 3 - 배경/테두리 없는 아이콘 버튼) */
+.edit-tools-group {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* 연관된 편집 툴끼리는 간격을 좁게 */
+}
+
+.btn-icon-only {
+    padding: 6px 8px;
+    background: transparent !important;
+    border: 1.5px solid transparent !important;
+    font-size: 16px;
+    box-shadow: none !important;
+    border-radius: 6px;
+    transition: all 0.2s;
+    color: #4a4a4a;
+}
+
+.btn-icon-only:hover {
+    background: #f1f2f6 !important;
+    border-color: #dcdde1 !important;
+    transform: translateY(-1px);
+}
+
+/* 삭제 버튼(휴지통) 호버 시 붉은색 경고 효과 */
+.btn-icon-only.btn-delete-obj:hover {
+    background: rgba(231, 76, 60, 0.08) !important;
+    border-color: rgba(231, 76, 60, 0.2) !important;
+    color: #e74c3c !important;
+}
+
+/* 5. 기타 소소한 디테일 수정 */
+.icon-wrapper .btn-history-toggle {
+    border-left: 1px solid #eee !important;
+    padding: 6px 4px !important;
+}
+
+.template-select {
+    max-width: 140px; /* 우측 영역이 너무 넓어지지 않도록 방어 */
+}
+
+.btn-util {
+    background: white;
+    border: 1.5px solid #eee;
+}
+
+.toolbar-left .divider,
+.toolbar-right .divider {
+    margin: 0 5px; /* 기존 디바이더 좌우 간격 축소 */
+}

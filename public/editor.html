@@ -25,75 +25,62 @@
 </div>
 <!-- ============ 툴바 ============ -->
 <div class="toolbar">
-    <div class="toolbar-group">
+    <div class="toolbar-left">
         <span class="view-label">📐 평면</span>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- 메인 카테고리 탭 -->
-    <div class="toolbar-group">
+        <div class="divider"></div>
         <div class="tool-tab-group">
             <button class="tool-tab-btn active" data-tab="exterior" onclick="switchToolTab('exterior')">🧱 익스테리어</button>
             <button class="tool-tab-btn" data-tab="interior" onclick="switchToolTab('interior')">🪑 인테리어</button>
         </div>
     </div>
 
-    <!-- 익스테리어 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-exterior">
-        <div class="wall-btn-wrapper">
-            <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
-            <div class="wall-btn-tooltip">이 버튼을 누르고 드래그하면 벽이 생성됩니다</div>
+    <div class="toolbar-center">
+        <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-exterior">
+            <div class="wall-btn-wrapper">
+                <button id="btnWall" class="btn-outline" onclick="toggleWallMode()">🧱 벽(OFF)</button>
+                <div class="wall-btn-tooltip">이 버튼을 누르고 드래그하면 벽이 생성됩니다</div>
+            </div>
+            <button class="btn-outline" onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
+            <button class="btn-outline" onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
+            <button class="btn-outline" onclick="addBlock('#dfe6e9', 'Floor', 200, 200, 5)">🟫 바닥</button>
         </div>
-        <button onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
-        <button onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
-        <button onclick="addBlock('#dfe6e9', 'Floor', 200, 200, 5)">🟫 바닥</button>
+
+        <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-interior" style="display:none;">
+            <button class="btn-outline has-badge" onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)" data-type="Bed">🛏️ 침대<span class="count-badge" id="badge-Bed"></span></button>
+            <button class="btn-outline has-badge" onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)" data-type="Table">🪑 테이블<span class="count-badge" id="badge-Table"></span></button>
+            <button class="btn-outline has-badge" onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)" data-type="Sofa">🛋️ 소파<span class="count-badge" id="badge-Sofa"></span></button>
+            <button class="btn-outline has-badge" onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)" data-type="Chair">🪑 의자<span class="count-badge" id="badge-Chair"></span></button>
+            <button class="btn-outline has-badge" onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)" data-type="Cabinet">🗄️ 수납장<span class="count-badge" id="badge-Cabinet"></span></button>
+        </div>
     </div>
 
-    <!-- 인테리어 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-interior" style="display:none;">
-        <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)" data-type="Bed" class="has-badge">🛏️ 침대<span class="count-badge" id="badge-Bed"></span></button>
-        <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)" data-type="Table" class="has-badge">🪑 테이블<span class="count-badge" id="badge-Table"></span></button>
-        <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)" data-type="Sofa" class="has-badge">🛋️ 소파<span class="count-badge" id="badge-Sofa"></span></button>
-        <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)" data-type="Chair" class="has-badge">🪑 의자<span class="count-badge" id="badge-Chair"></span></button>
-        <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)" data-type="Cabinet" class="has-badge">🗄️ 수납장<span class="count-badge" id="badge-Cabinet"></span></button>
-    </div>
+    <div class="toolbar-right">
+        <div class="toolbar-group edit-tools-group">
+            <span class="edit-section-label">✏️ 편집 도구</span>
+            
+            <button class="btn-icon-only btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택 객체 삭제">🗑️</button>
+            <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋</button>
+            <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗</button>
+            <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔</button>
 
-    <!-- 조명 서브 버튼 -->
-
-    <div class="divider"></div>
-
-    <!-- 수정 섹션 라벨 (클릭 불가 — 카테고리 표시 전용) + 객체 삭제 버튼 -->
-    <div class="toolbar-group">
-        <span class="edit-section-label">✏️ 수정</span>
-        <button class="btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택한 객체 삭제">🗑️ 삭제</button>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- 편집 도구 -->
-    <div class="toolbar-group">
-        <div class="undo-redo-wrapper">
-            <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon">↩️</button>
-            <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon btn-history-toggle" id="historyToggleBtn">▾</button>
-            <div class="history-dropdown" id="historyDropdown">
-                <div class="history-dropdown-header">📋 작업 히스토리</div>
-                <div class="history-dropdown-list" id="historyList">
-                    <div class="history-empty">기록 없음</div>
+            <div class="undo-redo-wrapper icon-wrapper">
+                <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon-only">↩️</button>
+                <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon-only btn-history-toggle" id="historyToggleBtn">▾</button>
+                <div class="history-dropdown" id="historyDropdown">
+                    <div class="history-dropdown-header">📋 작업 히스토리</div>
+                    <div class="history-dropdown-list" id="historyList">
+                        <div class="history-empty">기록 없음</div>
+                    </div>
                 </div>
             </div>
+            <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon-only">↪️</button>
         </div>
-        <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon">↪️</button>
-        <button onclick="duplicateObject()" title="선택 가구 복제">📋 복제</button>
-        <button onclick="groupObjects()">🔗 그룹</button>
-        <button onclick="ungroupObjects()">💔 해제</button>
-        <button onclick="toggleGrid()" id="gridBtn">📐 격자 ON</button>
-    </div>
-    
-    <div class="divider"></div>
-    
-    <div class="toolbar-group">
-        <select id="templateSelect" onchange="loadTemplate(this.value)">
+
+        <div class="divider"></div>
+
+        <button onclick="toggleGrid()" id="gridBtn" class="btn-util">📐 격자 ON</button>
+        
+        <select id="templateSelect" class="template-select" onchange="loadTemplate(this.value)">
             <option value="">📁 템플릿...</option>
             <optgroup label="성향별 추천">
                 <option value="shortterm">1️⃣ 단기 투자형</option>
@@ -102,21 +89,8 @@
                 <option value="newlywed">4️⃣ 신혼부부형</option>
                 <option value="officetel">5️⃣ 오피스텔형</option>
             </optgroup>
-            <optgroup label="기본 템플릿">
-                <option value="empty_small">빈 공간 (소형)</option>
-                <option value="empty_medium">빈 공간 (중형)</option>
-                <option value="empty_large">빈 공간 (대형)</option>
-            </optgroup>
-            <optgroup label="상업용 템플릿">
-                <option value="cafe">☕ 카페형</option>
-            </optgroup>
         </select>
-    </div>
-    
-    <div class="spacer"></div>
-
-    <!-- 3D 보기 (맨 오른쪽) -->
-    <div class="toolbar-group">
+        
         <button class="btn-primary btn-3d" onclick="sendToViewer()">🏠 3D로 보기</button>
     </div>
 </div>
