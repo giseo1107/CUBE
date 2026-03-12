@@ -1431,7 +1431,189 @@ input[type="number"] {
     .canvas-top-bar-removed { display: none; /* placeholder for removed styles */ }
 }
 
-/* ============ 수량 뱃지 ============ */
+/* ============ 툴바 탭 그룹 ============ */
+.tool-tab-group {
+    display: flex;
+    gap: 0;
+    background: #f0f2fa;
+    border-radius: 8px;
+    padding: 3px;
+    border: 1px solid #e0e4f5;
+}
+
+.tool-tab-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    color: #667eea;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+    box-shadow: none;
+}
+
+.tool-tab-btn:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+
+.tool-tab-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+    transform: none;
+}
+
+/* ============ 수정(편집) 토글 버튼 ============ */
+.btn-edit-toggle {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    background: white;
+    color: #555;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-edit-toggle:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.15);
+}
+
+.btn-edit-toggle.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+/* ============ 캔버스 컨트롤 바 ============ */
+.canvas-control-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px; /* 캔버스 기본 너비에 맞춤 */
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+    box-sizing: border-box;
+}
+
+.ccb-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.ccb-pencil-icon {
+    font-size: 15px;
+    color: #aaa;
+    flex-shrink: 0;
+    transition: color 0.2s;
+}
+
+.ccb-left:focus-within .ccb-pencil-icon {
+    color: #667eea;
+}
+
+.ccb-title-input {
+    border: 1.5px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: #1a1a2e;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 4px 8px;
+    min-width: 160px;
+    max-width: 300px;
+    transition: all 0.2s ease;
+}
+
+.ccb-title-input:hover {
+    background: #f8f9fa;
+    border-color: #e0e0e0;
+}
+
+.ccb-title-input:focus {
+    outline: none;
+    background: white;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.ccb-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.ccb-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 7px;
+    border: 1.5px solid #ddd;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+}
+
+.ccb-btn:hover {
+    background: #f0f2fa;
+    border-color: #bbb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.ccb-btn-save {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.ccb-btn-save:hover {
+    background: #5a6fd6;
+    border-color: #5a6fd6;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.35);
+}
+
+.ccb-btn-danger {
+    color: #c0392b;
+    border-color: rgba(192, 57, 43, 0.25);
+    background: rgba(231, 76, 60, 0.04);
+}
+
+.ccb-btn-danger:hover {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+    color: #e74c3c;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.2);
+}
+
+/* canvas-wrapper 상단 모서리를 컨트롤 바와 이음새 없이 연결 */
+.canvas-wrapper {
+    border-radius: 0 0 8px 8px !important;
+}
+
+
 .has-badge {
     position: relative;
 }
