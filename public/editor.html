@@ -57,24 +57,31 @@
         <div class="toolbar-group edit-tools-group">
             <span class="edit-section-label">✏️ 편집 도구</span>
 
-            <div class="undo-redo-wrapper icon-wrapper">
-                <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon-only">↩️ 되돌리기</button>
-                <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon-only btn-history-toggle" id="historyToggleBtn">▾</button>
-                <div class="history-dropdown" id="historyDropdown">
-                    <div class="history-dropdown-header">📋 작업 히스토리</div>
-                    <div class="history-dropdown-list" id="historyList">
-                        <div class="history-empty">기록 없음</div>
+            <div class="edit-tools-rows">
+                <!-- Row 1: 되돌리기 / 다시실행 / 삭제 / 복사 -->
+                <div class="edit-tools-row">
+                    <div class="undo-redo-wrapper icon-wrapper">
+                        <button onclick="undo()" title="실행 취소 (Ctrl+Z)" class="btn-icon-only">↩️ 되돌리기</button>
+                        <button onclick="toggleHistoryDropdown()" title="히스토리 보기" class="btn-icon-only btn-history-toggle" id="historyToggleBtn">▾</button>
+                        <div class="history-dropdown" id="historyDropdown">
+                            <div class="history-dropdown-header">📋 작업 히스토리</div>
+                            <div class="history-dropdown-list" id="historyList">
+                                <div class="history-empty">기록 없음</div>
+                            </div>
+                        </div>
                     </div>
+                    <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon-only">↪️ 다시실행</button>
+                    <button class="btn-icon-only btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택 객체 삭제">🗑️ 삭제</button>
+                    <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋 복사</button>
+                </div>
+                <!-- Row 2: 묶기 / 해제 / 앞으로 / 뒤로 -->
+                <div class="edit-tools-row">
+                    <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗 묶기</button>
+                    <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔 해제</button>
+                    <button class="btn-icon-only" onclick="bringObjectForward()" title="앞으로 이동 (레이어 순서)">⬆️ 앞으로</button>
+                    <button class="btn-icon-only" onclick="sendObjectBackward()" title="뒤로 이동 (레이어 순서)">⬇️ 뒤로</button>
                 </div>
             </div>
-            <button onclick="redo()" title="다시 실행 (Ctrl+Y)" class="btn-icon-only">↪️ 다시실행</button>
-
-            <button class="btn-icon-only btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택 객체 삭제">🗑️ 삭제</button>
-            <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋 복사</button>
-            <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗 묶기</button>
-            <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔 해제</button>
-            <button class="btn-icon-only" onclick="bringObjectForward()" title="앞으로 이동 (레이어 순서)">⬆️ 앞으로</button>
-            <button class="btn-icon-only" onclick="sendObjectBackward()" title="뒤로 이동 (레이어 순서)">⬇️ 뒤로</button>
         </div>
 
         <div class="divider"></div>
@@ -1445,10 +1452,10 @@ function getLayerDisplayName(name) {
 function updateLayerList() {
     const listDiv = document.getElementById('layerList');
     listDiv.innerHTML = '';
-    
+
     const objects = canvas.getObjects().filter(o => o.type === 'rect' && o.userData);
     const activeObj = canvas.getActiveObject();
-    
+
     // 탭 필터링
     const tab = state.currentLayerTab;
     const filtered = objects.filter(obj => {
@@ -1457,36 +1464,124 @@ function updateLayerList() {
         const isExterior = EXTERIOR_TYPES.includes(typeName);
         return tab === 'exterior' ? isExterior : !isExterior;
     });
-    
+
     document.getElementById('layerCount').textContent = objects.length;
 
     if (filtered.length === 0) {
         listDiv.innerHTML = `<div style="padding:12px;text-align:center;color:#aaa;font-size:12px;">${
-            tab === 'all' ? '배치된 가구가 없습니다' : 
+            tab === 'all' ? '배치된 가구가 없습니다' :
             tab === 'interior' ? '인테리어 가구가 없습니다' : '익스테리어 요소가 없습니다'
         }</div>`;
         return;
     }
 
-    [...filtered].reverse().forEach(obj => {
+    // 레이어 순서: canvas 상단(높은 z) → 리스트 상단
+    const reversed = [...filtered].reverse();
+
+    // ── 드래그 상태 ──
+    let dragSrcListIdx = null;
+
+    reversed.forEach((obj, listIdx) => {
         const item = document.createElement('div');
         item.className = 'layer-item' + (obj === activeObj ? ' active' : '');
+        item.draggable = true;
+
         const typeName = (obj.userData?.name || '').split('_')[0];
         const isExterior = EXTERIOR_TYPES.includes(typeName);
-        const priceText = isExterior ? '<span style="color:#999;font-style:italic;">별도</span>' : formatPrice(calculateFurnitureCost(obj));
+        const priceText = isExterior
+            ? '<span style="color:#999;font-style:italic;">별도</span>'
+            : formatPrice(calculateFurnitureCost(obj));
+
         item.innerHTML = `
+            <div class="layer-drag-handle" title="드래그하여 순서 변경">⠿</div>
             <div class="info">
                 <div class="layer-color" style="background:${obj.fill || '#ccc'}"></div>
                 <span class="layer-name">${getLayerDisplayName(obj.userData?.name)}</span>
             </div>
             <span class="layer-price">${priceText}</span>
         `;
-        item.onclick = () => {
+
+        // 클릭 선택 (핸들 제외)
+        item.addEventListener('click', (e) => {
+            if (e.target.closest('.layer-drag-handle')) return;
             canvas.setActiveObject(obj);
             canvas.renderAll();
             syncPanel(obj);
             updateLayerList();
-        };
+        });
+
+        // ── HTML5 Drag & Drop ──
+        item.addEventListener('dragstart', (e) => {
+            dragSrcListIdx = listIdx;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', String(listIdx));
+            // 약간의 딜레이 후 반투명 처리 (dragstart 완료 후 적용해야 고스트 이미지가 정상)
+            requestAnimationFrame(() => item.classList.add('layer-dragging'));
+        });
+
+        item.addEventListener('dragend', () => {
+            item.classList.remove('layer-dragging');
+            listDiv.querySelectorAll('.layer-item').forEach(el => {
+                el.classList.remove('layer-drag-over-top', 'layer-drag-over-bottom');
+            });
+            dragSrcListIdx = null;
+        });
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            // 마우스가 아이템 위/아래 절반 어디에 있는지 판별
+            const rect = item.getBoundingClientRect();
+            const mid = rect.top + rect.height / 2;
+            listDiv.querySelectorAll('.layer-item').forEach(el => {
+                el.classList.remove('layer-drag-over-top', 'layer-drag-over-bottom');
+            });
+            item.classList.add(e.clientY < mid ? 'layer-drag-over-top' : 'layer-drag-over-bottom');
+        });
+
+        item.addEventListener('dragleave', (e) => {
+            // 자식 요소로 이동 시 불필요한 dragleave 방지
+            if (!item.contains(e.relatedTarget)) {
+                item.classList.remove('layer-drag-over-top', 'layer-drag-over-bottom');
+            }
+        });
+
+        item.addEventListener('drop', (e) => {
+            e.preventDefault();
+            item.classList.remove('layer-drag-over-top', 'layer-drag-over-bottom');
+
+            const fromListIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+            if (isNaN(fromListIdx) || fromListIdx === listIdx) return;
+
+            // 드롭 위치: 위/아래 절반 판별
+            const rect = item.getBoundingClientRect();
+            const insertBefore = e.clientY < rect.top + rect.height / 2;
+
+            // reversed[fromListIdx] → 드래그한 객체
+            // reversed[listIdx]     → 드롭 대상 객체
+            const draggedObj = reversed[fromListIdx];
+            const allObjects = canvas.getObjects();
+
+            // 드롭 대상의 canvas index
+            let targetCanvasIdx = allObjects.indexOf(reversed[listIdx]);
+
+            // 리스트 상단 = canvas 높은 index(앞) → insertBefore(리스트 위) = 더 높은 index
+            if (insertBefore) {
+                // 리스트에서 위쪽 = canvas에서 더 높은 z
+                if (fromListIdx > listIdx) targetCanvasIdx = Math.min(targetCanvasIdx + 1, allObjects.length - 1);
+            } else {
+                // 리스트에서 아래쪽 = canvas에서 더 낮은 z
+                if (fromListIdx < listIdx) targetCanvasIdx = Math.max(targetCanvasIdx - 1, 0);
+            }
+
+            canvas.moveTo(draggedObj, targetCanvasIdx);
+            // 그리드는 항상 맨 뒤로
+            canvas.getObjects().filter(o => o.isGrid).forEach(o => canvas.sendToBack(o));
+            canvas.renderAll();
+            saveHistory();
+            updateLayerList();
+        });
+
         listDiv.appendChild(item);
     });
 }

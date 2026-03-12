@@ -1142,29 +1142,31 @@ input[type="number"] {
 }
 
 .layer-item {
-    padding: 10px 12px;
+    padding: 8px 10px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
     font-size: 12px;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-between;
     background: white;
-    transition: all 0.15s;
+    transition: background 0.15s, border 0.15s, opacity 0.15s;
+    gap: 6px;
+    user-select: none;
 }
 
 .layer-item:last-child {
     border-bottom: none;
 }
 
-.layer-item:hover { 
-    background: #f0f8ff; 
+.layer-item:hover {
+    background: #f0f8ff;
 }
 
-.layer-item.active { 
+.layer-item.active {
     background: #e3f2fd;
     border-left: 4px solid var(--primary);
-    padding-left: 8px;
+    padding-left: 6px;
 }
 
 .layer-item .info {
@@ -1172,6 +1174,37 @@ input[type="number"] {
     align-items: center;
     gap: 8px;
     overflow: hidden;
+    flex: 1;
+}
+
+/* 드래그 핸들 (⠿ 아이콘) */
+.layer-drag-handle {
+    color: #bbb;
+    cursor: grab;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0 2px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+}
+.layer-drag-handle:hover {
+    color: #667eea;
+}
+
+/* 드래그 중인 아이템 */
+.layer-item.layer-dragging {
+    opacity: 0.35;
+    background: #f8f9fa;
+}
+
+/* 드롭 대상 강조 (위에 삽입될 위치 표시) */
+.layer-item.layer-drag-over-top {
+    border-top: 2px solid #667eea;
+    background: #f0f4ff;
+}
+.layer-item.layer-drag-over-bottom {
+    border-bottom: 2px solid #667eea;
+    background: #f0f4ff;
 }
 
 .layer-color { 
@@ -1434,6 +1467,8 @@ input[type="number"] {
 /* ============ 툴바 탭 그룹 ============ */
 .tool-tab-group {
     display: flex;
+    flex-wrap: nowrap;   /* 절대 줄바꿈 금지 */
+    flex-shrink: 0;      /* 좁아져도 찌그러지지 않음 */
     gap: 0;
     background: #f0f2fa;
     border-radius: 8px;
@@ -2210,15 +2245,30 @@ input[type="number"] {
     transform: translateY(-1px);
 }
 
-/* 4. 편집 도구 스타일 (체급 3 - 배경/테두리 없는 아이콘 버튼) */
+/* 4. 편집 도구 스타일 — 2-row 레이아웃 */
 .edit-tools-group {
     display: flex;
     align-items: center;
     gap: 6px;
     background: #f8f9fa;
-    padding: 8px 16px;
+    padding: 6px 12px;
     border-radius: 12px;
     border: 1px solid #eef0f5;
+}
+
+/* 두 줄 묶음 컨테이너 */
+.edit-tools-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* 각 행 */
+.edit-tools-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-wrap: nowrap;
 }
 
 .btn-icon-only {
