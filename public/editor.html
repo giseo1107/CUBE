@@ -124,6 +124,11 @@
 <!-- ============ 메인 컨테이너 ============ -->
 <div class="main-container">
     <!-- 캔버스 영역 -->
+
+    <div class="wall-mode-banner" id="wallModeBanner" style="display:none;">
+            🧱 벽 생성이 끝날 경우, 벽 버튼을 한 번 더 눌러서 꼭 벽 그리기 모드를 <strong>OFF</strong> 해주세요!
+    </div>
+
     <div class="canvas-area">
         <!-- ── 캔버스 컨트롤 바 ── -->
         <div class="canvas-control-bar">
@@ -133,6 +138,8 @@
                        placeholder="디자인 이름을 입력하세요" value="나의 디자인"
                        maxlength="50" spellcheck="false">
             </div>
+
+
             <div class="ccb-right">
                 <button class="ccb-btn" onclick="showMyDesigns()">📂 불러오기</button>
                 <button class="ccb-btn ccb-btn-save" onclick="saveDesign()">💾 저장</button>
@@ -141,9 +148,7 @@
         </div>
 
         <!-- 벽 그리기 모드 고정 안내 배너 (ON 상태에서만 표시) -->
-        <div class="wall-mode-banner" id="wallModeBanner" style="display:none;">
-            🧱 벽 생성이 끝날 경우, 벽 버튼을 한 번 더 눌러서 꼭 벽 그리기 모드를 <strong>OFF</strong> 해주세요!
-        </div>
+        
 
         <div class="canvas-wrapper">
             <canvas id="editorCanvas" width="800" height="600"></canvas>
