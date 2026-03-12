@@ -2027,6 +2027,8 @@ input[type="number"] {
 .wall-btn-wrapper {
     position: relative;
     display: inline-flex;
+    min-width: 280px;
+    justify-content: center;
 }
 
 /* OFF 상태 hover 강조 */
@@ -2166,8 +2168,8 @@ input[type="number"] {
     justify-content: space-between; /* 좌, 중, 우를 양 끝으로 밀어냄 */
     align-items: center; 
     flex-wrap: nowrap; /* 1줄 고정 */
-    overflow-x: auto;  /* 화면이 좁아지면 가로 스크롤 허용하여 깨짐 완벽 방지 */
-    padding: 10px 20px; 
+    overflow: visible; /* 툴팁이 툴바 아래로 보이도록 overflow 클리핑 제거 */
+    padding: 10px 20px;
 }
 
 /* 2. 좌/중/우 섹션 여백 설정 */
