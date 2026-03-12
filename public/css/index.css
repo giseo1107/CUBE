@@ -6,6 +6,7 @@
 /* ---- Reset & Fonts ---- */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
 
 @font-face {
   font-family: "Arial-Bold";
@@ -21,26 +22,118 @@
 }
 
 /* ---- Variables ---- */
+/* styleguide.css 원본 변수명 + index.css 별칭 동시 선언 */
 :root {
-  --color-primary: #1a4f85;
+  /* ── styleguide.css 원본 (피그마 토큰) ── */
+  --black:          #000000;
+  --chathams-blue:  #1a4f85;
+  --mirage:         #101828;
+  --santas-gray:    #99a1af;
+  --scarpa-flow:    #4a5565;
+  --white:          #ffffff;
+
+  --font-size-xxs: 14px;
+  --font-size-xs:  16px;
+  --font-size-s:   18px;
+  --font-size-m:   20px;
+  --font-size-l:   22px;
+  --font-size-xl:  24px;
+  --font-size-xxl: 48px;
+
+  --font-family-arial-bold:    "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2:    "Baloo Da 2", Helvetica;
+
+  /* ── index.css 별칭 (피그마 토큰에 매핑) ── */
+  --color-primary:      var(--chathams-blue);   /* #1a4f85 */
   --color-primary-dark: #143d68;
-  --color-dark: #101828;
-  --color-text: #4a5565;
-  --color-muted: #99a1af;
-  --color-light: #f9fafb;
-  --color-white: #ffffff;
-  --color-border: #e5e7eb;
+  --color-dark:         var(--mirage);           /* #101828 */
+  --color-text:         var(--scarpa-flow);       /* #4a5565 */
+  --color-muted:        var(--santas-gray);       /* #99a1af */
+  --color-light:        #f9fafb;
+  --color-white:        var(--white);             /* #ffffff */
+  --color-border:       #e5e7eb;
 
-  --ff-heading: "Arial-Bold", "Noto Sans KR", -apple-system, sans-serif;
-  --ff-body: "Arial-Regular", "Noto Sans KR", -apple-system, sans-serif;
-  --ff-nav: "Baloo Da 2", "Noto Sans KR", sans-serif;
+  --ff-heading: var(--font-family-arial-bold);
+  --ff-body:    var(--font-family-arial-regular);
+  --ff-nav:     var(--font-family-baloo_da_2);
 
-  --max-width: 1280px;
+  --max-width:       1280px;
   --section-padding: 100px 0;
 }
 
-/* ---- Base ---- */
+/* ---- styleguide.css 유틸리티 클래스 (피그마 원본 그대로 유지) ---- */
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-xxs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-white-20px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-20px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-black-20px {
+  color: var(--black);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-32px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-scarpa-flow-22px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ---- Base (globals.css 통합) ---- */
 *, *::before, *::after { box-sizing: border-box; }
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
 
 body {
   margin: 0;
@@ -65,7 +158,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   padding: 16px 32px;
   border-radius: 10px;
   font-family: var(--ff-body);
-  font-size: 18px;
+  font-size: var(--font-size-s);   /* 18px */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -101,12 +194,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .section-header h2 {
   font-family: var(--ff-heading);
-  font-size: 48px;
+  font-size: var(--font-size-xxl);   /* 48px */
   color: var(--color-dark);
   margin-bottom: 16px;
 }
 .section-header p {
-  font-size: 20px;
+  font-size: var(--font-size-m);     /* 20px */
   color: var(--color-text);
 }
 
@@ -165,7 +258,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .hero-desc {
-  font-size: clamp(18px, 1.8vw, 24px);
+  font-size: clamp(var(--font-size-s), 1.8vw, var(--font-size-xl));  /* 18px ~ 24px */
   line-height: 1.7;
   color: #e5e7eb;
   margin-bottom: 40px;
@@ -178,7 +271,85 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 /* ============================================================
-   PRODUCTS
+   CUSTOM (Why Choose) — 피그마 기준 Hero 바로 다음
+   ============================================================ */
+.custom {
+  position: relative;
+  background: #748283;
+  padding: 120px 0 140px;
+  overflow: hidden;
+}
+
+.custom-inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.custom-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-text h2 {
+  font-family: var(--ff-heading);
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--color-white);
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.custom-desc {
+  font-size: var(--font-size-m);    /* 20px */
+  color: var(--color-white);
+  opacity: 0.85;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--font-size-s);    /* 18px */
+  color: var(--color-white);
+  line-height: 1.6;
+}
+.feature-list li img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.custom-image {
+  flex: 1;
+  min-width: 0;
+}
+.custom-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.custom-deco {
+  position: absolute;
+  bottom: -20px;
+  left: 60px;
+  width: 400px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ============================================================
+   PRODUCTS — 피그마 기준 Custom 다음
    ============================================================ */
 .products {
   padding: var(--section-padding);
@@ -229,7 +400,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   background: var(--color-primary);
   color: var(--color-white);
   font-family: var(--ff-heading);
-  font-size: 14px;
+  font-size: var(--font-size-xxs);  /* 14px */
   padding: 8px 16px;
   border-radius: 20px;
 }
@@ -244,7 +415,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-bottom: 8px;
 }
 .product-body p {
-  font-size: 16px;
+  font-size: var(--font-size-xs);   /* 16px */
   color: var(--color-text);
   margin-bottom: 20px;
   line-height: 1.6;
@@ -255,90 +426,12 @@ ul { list-style: none; margin: 0; padding: 0; }
   align-items: center;
   gap: 6px;
   font-family: var(--ff-heading);
-  font-size: 16px;
+  font-size: var(--font-size-xs);   /* 16px */
   color: var(--color-primary);
   transition: gap 0.2s ease;
 }
 .product-link:hover {
   gap: 12px;
-}
-
-/* ============================================================
-   CUSTOM (Why Choose)
-   ============================================================ */
-.custom {
-  position: relative;
-  background: #748283;
-  padding: 120px 0 140px;
-  overflow: hidden;
-}
-
-.custom-inner {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 60px;
-}
-
-.custom-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.custom-text h2 {
-  font-family: var(--ff-heading);
-  font-size: clamp(36px, 4vw, 56px);
-  color: var(--color-white);
-  line-height: 1.25;
-  margin-bottom: 20px;
-}
-
-.custom-desc {
-  font-size: 20px;
-  color: var(--color-white);
-  opacity: 0.85;
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-.feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 40px;
-}
-.feature-list li {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 18px;
-  color: var(--color-white);
-  line-height: 1.6;
-}
-.feature-list li img {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.custom-image {
-  flex: 1;
-  min-width: 0;
-}
-.custom-image img {
-  width: 100%;
-  border-radius: 16px;
-}
-
-.custom-deco {
-  position: absolute;
-  bottom: -20px;
-  left: 60px;
-  width: 400px;
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 /* ============================================================
@@ -370,12 +463,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .gallery-header h2 {
   font-family: var(--ff-heading);
-  font-size: 48px;
+  font-size: var(--font-size-xxl);  /* 48px */
   color: var(--color-white);
   margin-bottom: 12px;
 }
 .gallery-header p {
-  font-size: 20px;
+  font-size: var(--font-size-m);    /* 20px */
   color: rgba(255,255,255,0.8);
 }
 
@@ -427,12 +520,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .survey-text h2 {
   font-family: var(--ff-heading);
-  font-size: 48px;
+  font-size: var(--font-size-xxl);  /* 48px */
   color: var(--color-dark);
   margin-bottom: 16px;
 }
 .survey-text p {
-  font-size: 20px;
+  font-size: var(--font-size-m);    /* 20px */
   color: var(--color-text);
   margin-bottom: 36px;
   line-height: 1.6;
@@ -469,7 +562,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chart-label {
   position: absolute;
   font-family: var(--ff-body);
-  font-size: 16px;
+  font-size: var(--font-size-xs);   /* 16px */
   color: var(--color-dark);
   white-space: nowrap;
 }
@@ -497,14 +590,14 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-bottom: 16px;
 }
 .footer-brand p {
-  font-size: 16px;
+  font-size: var(--font-size-xs);   /* 16px */
   line-height: 1.7;
   color: var(--color-muted);
 }
 
 .footer-links h4 {
   font-family: var(--ff-heading);
-  font-size: 18px;
+  font-size: var(--font-size-s);    /* 18px */
   color: var(--color-white);
   margin-bottom: 16px;
 }
@@ -512,7 +605,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-bottom: 10px;
 }
 .footer-links a {
-  font-size: 16px;
+  font-size: var(--font-size-xs);   /* 16px */
   color: var(--color-muted);
   transition: color 0.2s;
 }
@@ -530,7 +623,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   padding: 24px 60px;
 }
 .footer-bottom p {
-  font-size: 14px;
+  font-size: var(--font-size-xxs);  /* 14px */
 }
 .footer-social {
   width: 150px;
@@ -559,7 +652,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   :root {
     --section-padding: 60px 0;
   }
-  
+
   .hero-content {
     padding: 0 24px;
   }
@@ -576,16 +669,16 @@ ul { list-style: none; margin: 0; padding: 0; }
     max-width: 480px;
     margin: 0 auto;
   }
-  
+
   .custom-inner,
   .survey-inner {
     padding: 0 24px;
   }
-  
+
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .footer-inner {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -595,7 +688,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     gap: 16px;
     text-align: center;
   }
-  
+
   .section-header h2,
   .gallery-header h2,
   .survey-text h2 {
@@ -606,7 +699,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 @media (max-width: 480px) {
   .btn {
     padding: 14px 24px;
-    font-size: 16px;
+    font-size: var(--font-size-xs);  /* 16px */
   }
   .gallery-grid {
     grid-template-columns: 1fr 1fr;
