@@ -36,7 +36,6 @@
         <div class="tool-tab-group">
             <button class="tool-tab-btn active" data-tab="exterior" onclick="switchToolTab('exterior')">🧱 익스테리어</button>
             <button class="tool-tab-btn" data-tab="interior" onclick="switchToolTab('interior')">🪑 인테리어</button>
-            <button class="tool-tab-btn" data-tab="lighting" onclick="switchToolTab('lighting')">💡 조명</button>
         </div>
     </div>
 
@@ -61,11 +60,6 @@
     </div>
 
     <!-- 조명 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-lighting" style="display:none;">
-        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)" data-type="Lamp" class="has-badge">💡 스탠드<span class="count-badge" id="badge-Lamp"></span></button>
-        <button onclick="addBlock('#fff9c4', 'CeilingLight', 60, 60, 10)" data-type="CeilingLight" class="has-badge">🔆 천장등<span class="count-badge" id="badge-CeilingLight"></span></button>
-        <button onclick="addBlock('#ffe0b2', 'WallLight', 15, 15, 120)" data-type="WallLight" class="has-badge">🕯️ 벽등<span class="count-badge" id="badge-WallLight"></span></button>
-    </div>
 
     <div class="divider"></div>
 
@@ -307,7 +301,6 @@
             <tr><td>🪑 테이블</td><td>₩400,000</td><td>120×80×75</td></tr>
             <tr><td>🪑 의자</td><td>₩150,000</td><td>50×50×90</td></tr>
             <tr><td>🗄️ 수납장</td><td>₩600,000</td><td>120×60×200</td></tr>
-            <tr><td>💡 조명</td><td>₩200,000</td><td>30×30×150</td></tr>
         </table>
         
         <p style="font-size:12px; color:#888; margin:10px 0;">※ 익스테리어(벽·문·창문·바닥)는 별도 시공 견적으로 산정됩니다</p>
@@ -1433,7 +1426,7 @@ function ungroupObjects() {
 const LAYER_NAME_MAP = {
     'Wall': '🧱 벽', 'Door': '🚪 문', 'Window': '🪟 창문', 'Floor': '🟫 바닥',
     'Bed': '🛏️ 침대', 'Table': '🪑 테이블', 'Sofa': '🛋️ 소파', 'Chair': '🪑 의자',
-    'Cabinet': '🗄️ 수납장', 'Lamp': '💡 조명', 'Desk': '🗄️ 책상',
+    'Cabinet': '🗄️ 수납장', 'Desk': '🗄️ 책상',
     'Bookshelf': '📚 책장', 'Kitchen': '🍳 주방', 'Bathroom': '🛁 욕실'
 };
 
