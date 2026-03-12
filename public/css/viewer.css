@@ -555,6 +555,23 @@
             z-index: 100;
         }
         
+        .edit-mode-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(231, 76, 60, 0.92);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 100;
+            align-items: center;
+            gap: 0;
+            white-space: nowrap;
+        }
+
         /* 로딩 */
         .loading-overlay {
             position: fixed;

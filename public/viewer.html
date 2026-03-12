@@ -52,6 +52,7 @@
             <button class="action-btn secondary" onclick="resetCamera()">🔄 시점 리셋</button>
             <button class="action-btn secondary" onclick="captureScene()">📸 캡처</button>
             <button class="action-btn secondary" onclick="saveChanges()">💾 저장</button>
+            <button class="action-btn secondary" id="editModeBtn" onclick="toggleEditMode()">🖊️ 편집 모드</button>
             <button class="action-btn primary" onclick="goToEditor()">✏️ 편집기로</button>
         </div>
     </div>
@@ -126,8 +127,13 @@
         <button class="view-btn" onclick="setView('auto')">🔄 자동회전</button>
     </div>
 
-    <div class="bottom-info">
+    <div class="bottom-info" id="bottomInfo">
         🖱️ 드래그: 회전 | 휠: 확대/축소 | 클릭: 선택
+    </div>
+
+    <div class="edit-mode-bar" id="editModeBar" style="display:none;">
+        <span>✏️ 편집 모드 — 가구를 드래그하여 이동</span>
+        <button onclick="toggleEditMode()" style="margin-left:12px; padding:4px 12px; border:none; border-radius:6px; background:#e74c3c; color:#fff; cursor:pointer; font-weight:700;">뷰 모드로</button>
     </div>
 
     <div class="no-data" id="noData" style="display: none;">
@@ -186,11 +192,17 @@
         let selectedFurniture = null;
         let originalData = [];
 
+        // 편집 모드 (드래그 이동)
+        let editMode = false;
+        let isDragging = false;
+        let dragOffset = new THREE.Vector3();
+        const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+
         // ============ 초기화 ============
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color('#e8e8e8');
-            scene.fog = new THREE.Fog('#e8e8e8', 800, 2000);
+            // scene.fog removed for clear view
 
             renderer = new THREE.WebGLRenderer({
                 canvas: document.getElementById('canvas'),
@@ -327,45 +339,57 @@
 
         function createBed(size, color) {
             const group = new THREE.Group();
-            
+
             const frameMat = new THREE.MeshStandardMaterial({ color, roughness: 0.7, metalness: 0.1 });
             const mattressMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
 
-            // 프레임
+            // 비율 기반 높이 (size.h 기준)
+            const frameH = size.h * 0.25;         // 프레임 높이: h의 25%
+            const headboardH = size.h * 0.75;     // 헤드보드 높이: h의 75%
+            const mattressH = size.h * 0.18;      // 매트리스 높이: h의 18%
+            const pillowH = size.h * 0.12;        // 베개 높이: h의 12%
+
+            // 프레임 (바닥면)
             const frame = new THREE.Mesh(
-                new THREE.BoxGeometry(size.w, 25, size.d),
+                new THREE.BoxGeometry(size.w, frameH, size.d),
                 frameMat
             );
-            frame.position.y = -size.h/2 + 12.5;
+            frame.position.y = -size.h / 2 + frameH / 2;
             frame.castShadow = true;
             frame.receiveShadow = true;
             group.add(frame);
 
             // 헤드보드
             const headboard = new THREE.Mesh(
-                new THREE.BoxGeometry(size.w, size.h * 0.7, 10),
+                new THREE.BoxGeometry(size.w, headboardH, size.w * 0.05),
                 frameMat
             );
-            headboard.position.set(0, 0, -size.d/2 + 5);
+            headboard.position.set(0, -size.h / 2 + headboardH / 2, -size.d / 2 + size.w * 0.025);
             headboard.castShadow = true;
             group.add(headboard);
 
             // 매트리스
             const mattress = new THREE.Mesh(
-                new THREE.BoxGeometry(size.w - 10, 20, size.d - 20),
+                new THREE.BoxGeometry(size.w * 0.95, mattressH, size.d * 0.88),
                 mattressMat
             );
-            mattress.position.y = -size.h/2 + 35;
+            mattress.position.y = -size.h / 2 + frameH + mattressH / 2;
             mattress.castShadow = true;
             group.add(mattress);
 
             // 베개
+            const pillowW = size.w * 0.25;
+            const pillowD = size.d * 0.2;
             for (let i = -1; i <= 1; i += 2) {
                 const pillow = new THREE.Mesh(
-                    new THREE.BoxGeometry(50, 12, 35),
+                    new THREE.BoxGeometry(pillowW, pillowH, pillowD),
                     new THREE.MeshStandardMaterial({ color: 0xf8f8f8, roughness: 0.95 })
                 );
-                pillow.position.set(i * 50, -size.h/2 + 50, -size.d/2 + 40);
+                pillow.position.set(
+                    i * (size.w * 0.22),
+                    -size.h / 2 + frameH + mattressH + pillowH / 2,
+                    -size.d / 2 + pillowD * 1.2
+                );
                 pillow.castShadow = true;
                 group.add(pillow);
             }
@@ -712,6 +736,9 @@
             });
 
             renderer.domElement.addEventListener('click', onCanvasClick);
+            renderer.domElement.addEventListener('pointerdown', onPointerDown);
+            renderer.domElement.addEventListener('pointermove', onPointerMove);
+            renderer.domElement.addEventListener('pointerup', onPointerUp);
 
             // 이미지 드래그 앤 드롭
             const uploadArea = document.getElementById('imageUpload');
@@ -760,6 +787,87 @@
             }
         }
 
+        // ============ 편집 모드 (드래그 이동) ============
+        window.toggleEditMode = function() {
+            editMode = !editMode;
+            const btn = document.getElementById('editModeBtn');
+            const bar = document.getElementById('editModeBar');
+            const info = document.getElementById('bottomInfo');
+            if (editMode) {
+                btn.textContent = '👁️ 뷰 모드';
+                btn.style.background = '#e74c3c';
+                bar.style.display = 'flex';
+                info.style.display = 'none';
+                controls.enabled = false;
+            } else {
+                btn.textContent = '🖊️ 편집 모드';
+                btn.style.background = '';
+                bar.style.display = 'none';
+                info.style.display = '';
+                controls.enabled = true;
+                isDragging = false;
+            }
+        };
+
+        function getMouseNDC(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            return {
+                x: ((event.clientX - rect.left) / rect.width) * 2 - 1,
+                y: -((event.clientY - rect.top) / rect.height) * 2 + 1
+            };
+        }
+
+        function onPointerDown(event) {
+            if (!editMode) return;
+            const ndc = getMouseNDC(event);
+            mouse.set(ndc.x, ndc.y);
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(furnitureObjects, true);
+            if (intersects.length > 0) {
+                let obj = intersects[0].object;
+                while (obj.parent && !furnitureObjects.includes(obj)) obj = obj.parent;
+                if (furnitureObjects.includes(obj)) {
+                    selectFurniture(obj);
+                    isDragging = true;
+                    // Compute offset between furniture position and floor hit point
+                    const floorHit = new THREE.Vector3();
+                    raycaster.ray.intersectPlane(floorPlane, floorHit);
+                    dragOffset.set(
+                        obj.position.x - floorHit.x,
+                        0,
+                        obj.position.z - floorHit.z
+                    );
+                    renderer.domElement.style.cursor = 'grabbing';
+                }
+            }
+        }
+
+        function onPointerMove(event) {
+            if (!editMode || !isDragging || !selectedFurniture) return;
+            const ndc = getMouseNDC(event);
+            mouse.set(ndc.x, ndc.y);
+            raycaster.setFromCamera(mouse, camera);
+            const floorHit = new THREE.Vector3();
+            if (raycaster.ray.intersectPlane(floorPlane, floorHit)) {
+                selectedFurniture.position.x = floorHit.x + dragOffset.x;
+                selectedFurniture.position.z = floorHit.z + dragOffset.z;
+                // Sync position to userData for saveChanges
+                selectedFurniture.userData.position = {
+                    x: selectedFurniture.position.x,
+                    y: selectedFurniture.position.y,
+                    z: selectedFurniture.position.z
+                };
+            }
+        }
+
+        function onPointerUp(event) {
+            if (!editMode) return;
+            if (isDragging) {
+                isDragging = false;
+                renderer.domElement.style.cursor = 'default';
+            }
+        }
+
         function selectFurniture(obj) {
             selectedFurniture = obj;
             const data = obj.userData;
@@ -768,8 +876,9 @@
             document.getElementById('selectedName').textContent = `${typeInfo.name} - ${data.name}`;
             document.getElementById('propertiesPanel').classList.add('active');
             document.getElementById('customColor').value = data.color;
-            document.getElementById('scaleSlider').value = 100;
-            document.getElementById('scaleValue').textContent = '100%';
+            const currentScale = Math.round((data.scaleFactor || 1) * 100);
+            document.getElementById('scaleSlider').value = currentScale;
+            document.getElementById('scaleValue').textContent = currentScale + '%';
 
             // 스타일 옵션 생성
             const styleOptions = document.getElementById('styleOptions');
@@ -806,9 +915,30 @@
             showToast('스타일 변경됨');
         };
 
+        // ============ 2D 편집기 상태 동기화 ============
+        function syncToEditor(furnitureName, updates) {
+            try {
+                const editorState = localStorage.getItem('editor_2d_state');
+                if (!editorState) return;
+                const state = JSON.parse(editorState);
+                const objects = state.canvas && state.canvas.objects ? state.canvas.objects : [];
+                let changed = false;
+                objects.forEach(canvasObj => {
+                    if (canvasObj.userData && canvasObj.userData.name === furnitureName) {
+                        if (updates.color !== undefined) canvasObj.fill = updates.color;
+                        if (updates.texture !== undefined) canvasObj.userData.texture = updates.texture;
+                        changed = true;
+                    }
+                });
+                if (changed) localStorage.setItem('editor_2d_state', JSON.stringify(state));
+            } catch(e) {
+                console.error('2D 동기화 오류:', e);
+            }
+        }
+
         window.applyColor = function(color) {
             if (!selectedFurniture) return;
-            
+
             selectedFurniture.traverse(child => {
                 if (child.isMesh && child.material) {
                     const newMat = child.material.clone();
@@ -816,14 +946,15 @@
                     child.material = newMat;
                 }
             });
-            
+
             selectedFurniture.userData.color = color;
             document.getElementById('customColor').value = color;
-            
+
             document.querySelectorAll('.color-item').forEach(item => {
                 item.classList.toggle('selected', item.style.background === color);
             });
-            
+
+            syncToEditor(selectedFurniture.userData.name, { color });
             updateFurnitureList();
             showToast(`색상: ${color}`);
         };
@@ -854,11 +985,12 @@
             });
 
             selectedFurniture.userData.material = materialId;
-            
+
             document.querySelectorAll('.material-item').forEach(item => {
                 item.classList.toggle('selected', item.dataset.id === materialId);
             });
-            
+
+            syncToEditor(selectedFurniture.userData.name, { texture: materialId });
             showToast(`재질: ${MATERIALS.find(m => m.id === materialId)?.name || materialId}`);
         };
 
@@ -867,6 +999,8 @@
             const scale = document.getElementById('scaleSlider').value / 100;
             selectedFurniture.scale.set(scale, scale, scale);
             document.getElementById('scaleValue').textContent = Math.round(scale * 100) + '%';
+            // Persist scale factor so saveChanges can use the final THREE.js scale
+            selectedFurniture.userData.scaleFactor = scale;
         };
 
         window.deleteSelected = function() {
@@ -977,8 +1111,9 @@
             if (editorState) {
                 try {
                     const state = JSON.parse(editorState);
-                    state.objects.forEach(canvasObj => {
-                        if (canvasObj.userData?.name) {
+                    const objects = state.canvas && state.canvas.objects ? state.canvas.objects : [];
+                    objects.forEach(canvasObj => {
+                        if (canvasObj.userData && canvasObj.userData.name) {
                             const updated = updatedData.find(f => f.name === canvasObj.userData.name);
                             if (updated) {
                                 canvasObj.fill = updated.color;

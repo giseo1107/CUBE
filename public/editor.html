@@ -73,6 +73,8 @@
             <button class="btn-icon-only" onclick="duplicateObject()" title="선택 가구 복제">📋 복사</button>
             <button class="btn-icon-only" onclick="groupObjects()" title="그룹 묶기">🔗 묶기</button>
             <button class="btn-icon-only" onclick="ungroupObjects()" title="그룹 해제">💔 해제</button>
+            <button class="btn-icon-only" onclick="bringObjectForward()" title="앞으로 이동 (레이어 순서)">⬆️ 앞으로</button>
+            <button class="btn-icon-only" onclick="sendObjectBackward()" title="뒤로 이동 (레이어 순서)">⬇️ 뒤로</button>
         </div>
 
         <div class="divider"></div>
@@ -1396,6 +1398,31 @@ function ungroupObjects() {
     canvas.requestRenderAll();
     updateLayerList();
     showToast('그룹 해제됨');
+}
+
+// ============ 레이어 순서 ============
+function bringObjectForward() {
+    const active = canvas.getActiveObject();
+    if (!active) { showToast('객체를 선택하세요'); return; }
+    canvas.bringForward(active);
+    // Keep grid lines always at back
+    canvas.getObjects().filter(o => o.isGrid).forEach(o => canvas.sendToBack(o));
+    canvas.renderAll();
+    updateLayerList();
+    saveHistory();
+    showToast('앞으로 이동됨');
+}
+
+function sendObjectBackward() {
+    const active = canvas.getActiveObject();
+    if (!active) { showToast('객체를 선택하세요'); return; }
+    canvas.sendBackwards(active);
+    // Keep grid lines always at back
+    canvas.getObjects().filter(o => o.isGrid).forEach(o => canvas.sendToBack(o));
+    canvas.renderAll();
+    updateLayerList();
+    saveHistory();
+    showToast('뒤로 이동됨');
 }
 
 // ============ 레이어 리스트 ============
