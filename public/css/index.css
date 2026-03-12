@@ -710,3 +710,10 @@ ul { list-style: none; margin: 0; padding: 0; }
     height: 250px;
   }
 }
+
+/* "제품 둘러보기" 버튼 영역을 원래대로 완벽하게 각지게 고정 */
+.index .button1,
+.index .container-8,
+.index .container-9 {
+  border-radius: 0 !important; /* 모서리 둥글기를 0으로 강제 설정하여 직각으로 만듭니다 */
+}
