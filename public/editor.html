@@ -535,19 +535,23 @@ function loadTemplateDirectly(key, showBanner = false) {
     document.getElementById('canvasW').value = template.roomSize.width;
     document.getElementById('canvasH').value = template.roomSize.height;
     
+    state.historyProcessing = true; // 일괄 추가 중 object:added 이벤트로 인한 개별 히스토리 저장 방지
     template.furniture.forEach(item => {
         const rect = new fabric.Rect({
             left: item.left, top: item.top, width: item.width, height: item.height,
-            fill: item.fill, stroke: '#2d3436', strokeWidth: 2
+            fill: item.fill, stroke: '#2d3436', strokeWidth: 2,
+            originX: 'left', originY: 'top',
+            cornerColor: '#4a90e2', cornerSize: 10, cornerStyle: 'circle', transparentCorners: false
         });
-        rect.set('userData', { 
-            name: item.name, 
-            h: item.h || 50, 
-            elevation: item.elevation || 0, 
-            texture: item.texture || 'color' 
+        rect.set('userData', {
+            name: item.name,
+            h: item.h || 50,
+            elevation: item.elevation || 0,
+            texture: item.texture || 'color'
         });
         canvas.add(rect);
     });
+    state.historyProcessing = false;
     
     if (state.gridVisible) createGrid();
     canvas.renderAll();
