@@ -31,44 +31,35 @@
 
     <div class="divider"></div>
 
-    <!-- 메인 카테고리 탭 -->
-    <div class="toolbar-group">
-        <div class="tool-tab-group">
-            <button class="tool-tab-btn active" data-tab="exterior" onclick="switchToolTab('exterior')">🧱 익스테리어</button>
-            <button class="tool-tab-btn" data-tab="interior" onclick="switchToolTab('interior')">🪑 인테리어</button>
-            <button class="tool-tab-btn" data-tab="lighting" onclick="switchToolTab('lighting')">💡 조명</button>
+    <!-- 익스테리어 -->
+    <div class="toolbar-group furniture-buttons">
+        <span class="group-label">익스테리어</span>
+        <div class="wall-btn-wrapper">
+            <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
+            <div class="wall-btn-tooltip">이 버튼을 누르고 드래그하면 벽이 생성됩니다</div>
         </div>
-    </div>
-
-    <!-- 익스테리어 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-exterior">
-        <button id="btnWall" onclick="toggleWallMode()">🧱 벽(OFF)</button>
         <button onclick="addBlock('#a29bfe', 'Door', 10, 80, 200)">🚪 문</button>
         <button onclick="addBlock('#81ecec', 'Window', 10, 100, 120)">🪟 창문</button>
         <button onclick="addBlock('#dfe6e9', 'Floor', 200, 200, 5)">🟫 바닥</button>
     </div>
+    
+    <div class="divider"></div>
 
-    <!-- 인테리어 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-interior" style="display:none;">
+    <!-- 인테리어 -->
+    <div class="toolbar-group furniture-buttons">
+        <span class="group-label">인테리어</span>
         <button onclick="addBlock('#74b9ff', 'Bed', 200, 180, 60)" data-type="Bed" class="has-badge">🛏️ 침대<span class="count-badge" id="badge-Bed"></span></button>
         <button onclick="addBlock('#ffeaa7', 'Table', 120, 80, 75)" data-type="Table" class="has-badge">🪑 테이블<span class="count-badge" id="badge-Table"></span></button>
         <button onclick="addBlock('#55efc4', 'Sofa', 180, 90, 80)" data-type="Sofa" class="has-badge">🛋️ 소파<span class="count-badge" id="badge-Sofa"></span></button>
         <button onclick="addBlock('#ff7675', 'Chair', 50, 50, 90)" data-type="Chair" class="has-badge">🪑 의자<span class="count-badge" id="badge-Chair"></span></button>
         <button onclick="addBlock('#dfe6e9', 'Cabinet', 120, 60, 200)" data-type="Cabinet" class="has-badge">🗄️ 수납장<span class="count-badge" id="badge-Cabinet"></span></button>
+        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)" data-type="Lamp" class="has-badge">💡 조명<span class="count-badge" id="badge-Lamp"></span></button>
     </div>
-
-    <!-- 조명 서브 버튼 -->
-    <div class="toolbar-group furniture-buttons tool-tab-panel" id="tool-tab-lighting" style="display:none;">
-        <button onclick="addBlock('#fdcb6e', 'Lamp', 30, 30, 150)" data-type="Lamp" class="has-badge">💡 스탠드<span class="count-badge" id="badge-Lamp"></span></button>
-        <button onclick="addBlock('#fff9c4', 'CeilingLight', 60, 60, 10)" data-type="CeilingLight" class="has-badge">🔆 천장등<span class="count-badge" id="badge-CeilingLight"></span></button>
-        <button onclick="addBlock('#ffe0b2', 'WallLight', 15, 15, 120)" data-type="WallLight" class="has-badge">🕯️ 벽등<span class="count-badge" id="badge-WallLight"></span></button>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- 수정(편집) 토글 버튼 -->
+    
+    <!-- 수정 섹션 라벨 + 객체 삭제 버튼 -->
     <div class="toolbar-group">
-        <button id="btnEditMode" class="btn-edit-toggle" onclick="toggleEditMode()" title="객체 선택·이동·회전 편집 모드">✏️ 수정</button>
+        <span class="edit-section-label">✏️ 수정</span>
+        <button class="btn-delete-obj" onclick="deleteObjectWithConfirm()" title="선택한 객체 삭제">🗑️ 삭제</button>
     </div>
 
     <div class="divider"></div>
@@ -117,6 +108,15 @@
     
     <div class="spacer"></div>
 
+    <!-- 저장 / 불러오기 / 초기화 (우측) -->
+    <div class="toolbar-group toolbar-actions">
+        <button class="tb-save" onclick="saveDesign()" title="저장">💾 저장</button>
+        <button class="tb-ghost" onclick="showMyDesigns()" title="불러오기">📂</button>
+        <button class="tb-danger-ghost" onclick="clearCanvas()" title="초기화">🗑️</button>
+    </div>
+
+    <div class="divider"></div>
+
     <!-- 3D 보기 (맨 오른쪽) -->
     <div class="toolbar-group">
         <button class="btn-primary btn-3d" onclick="sendToViewer()">🏠 3D로 보기</button>
@@ -127,23 +127,17 @@
 <div class="main-container">
     <!-- 캔버스 영역 -->
     <div class="canvas-area">
-        <!-- ── 캔버스 컨트롤 바 ── -->
-        <div class="canvas-control-bar">
-            <div class="ccb-left">
-                <span class="ccb-pencil-icon">✎</span>
-                <input type="text" id="design-title" class="ccb-title-input"
-                       placeholder="디자인 이름을 입력하세요" value="나의 디자인"
-                       maxlength="50" spellcheck="false">
-            </div>
-            <div class="ccb-right">
-                <button class="ccb-btn" onclick="showMyDesigns()">📂 불러오기</button>
-                <button class="ccb-btn ccb-btn-save" onclick="saveDesign()">💾 저장</button>
-                <button class="ccb-btn ccb-btn-danger" onclick="clearCanvas()">🗑️ 모두 지우기</button>
-            </div>
+        <!-- 벽 그리기 모드 안내 배너 (ON일 때만 표시) -->
+        <div class="wall-mode-banner" id="wallModeBanner" style="display:none;">
+            🧱 벽 생성이 끝날 경우, 벽 버튼을 한 번 더 눌러서 꼭 벽 그리기 모드를 <strong>OFF</strong> 해주세요!
         </div>
-
         <div class="canvas-wrapper">
-            <canvas id="editorCanvas" width="600" height="600"></canvas>
+            <!-- 캔버스 내부 제목 -->
+            <div class="canvas-title-overlay" id="canvasTitleOverlay">
+                <input type="text" id="design-title" class="canvas-title-input" placeholder="제목을 입력하세요" value="나의 디자인" maxlength="50" spellcheck="false">
+                <span class="canvas-title-pencil">✎</span>
+            </div>
+            <canvas id="editorCanvas" width="800" height="600"></canvas>
             <div id="dim-display">W: 0 × D: 0</div>
             <div class="zoom-indicator" id="zoom-indicator">100%</div>
         </div>
@@ -161,7 +155,7 @@
                 <div class="prop-group">
                     <label>방 크기 (1px = 1cm)</label>
                     <div class="row">
-                        <input type="number" id="canvasW" value="600" min="200" max="2000" step="50">
+                        <input type="number" id="canvasW" value="800" min="200" max="2000" step="50">
                         <span>×</span>
                         <input type="number" id="canvasH" value="600" min="200" max="2000" step="50">
                         <button onclick="applyCanvasSettings()" class="btn-primary btn-sm">적용</button>
@@ -1078,19 +1072,38 @@ function applyCanvasSettings() {
 function toggleWallMode() {
     state.isWallMode = !state.isWallMode;
     const btn = document.getElementById('btnWall');
+    const banner = document.getElementById('wallModeBanner');
     
     if (state.isWallMode) {
         btn.textContent = "🧱 벽(ON)";
         btn.classList.add('btn-wall-active');
         canvas.selection = false;
         canvas.defaultCursor = 'crosshair';
-        showToast('벽 그리기 모드 활성화');
+        if (banner) banner.style.display = '';   // 고정 안내 배너 표시
     } else {
         btn.textContent = "🧱 벽(OFF)";
         btn.classList.remove('btn-wall-active');
         canvas.selection = true;
         canvas.defaultCursor = 'default';
+        if (banner) banner.style.display = 'none'; // 배너 숨김
     }
+}
+
+// ============ 객체 삭제 (확인 팝업 포함) ============
+function deleteObjectWithConfirm() {
+    const obj = canvas.getActiveObject();
+    if (!obj) {
+        showToast('삭제할 객체를 먼저 선택하세요');
+        return;
+    }
+    if (!confirm('객체를 삭제하시겠습니까?')) return;
+    const name = obj.userData ? obj.userData.name : '객체';
+    canvas.remove(obj);
+    canvas.discardActiveObject();
+    updateLayerList();
+    updateEstimate();
+    saveHistory('삭제: ' + name);
+    showToast(`🗑️ ${name} 삭제됨`);
 }
 
 // ============ 캔버스 이벤트 ============
@@ -1258,7 +1271,7 @@ function deleteObject() {
 }
 
 function clearCanvas() {
-    if (!confirm("정말 모든 객체를 지우시겠습니까?\n이 작업은 되돌릴 수 없습니다.")) return;
+    if (!confirm("모든 객체를 삭제하시겠습니까?")) return;
     
     canvas.clear();
     if (state.gridVisible) createGrid();
@@ -2237,41 +2250,30 @@ function getFurniturePrice(name) {
 
 // ============ 캔버스 크기에 맞는 제목 자동 조절 ============
 function updateCanvasTitleSize() {
-    // 컨트롤 바 방식으로 변경되어 동적 크기 조절 불필요 (no-op 유지)
+    const titleInput = document.getElementById('design-title');
+    const overlay = document.getElementById('canvasTitleOverlay');
+    if (!titleInput || !overlay) return;
+    
+    const cw = canvas.getWidth();
+    
+    // 캔버스 너비에 비례하여 폰트 크기 결정
+    // 350px → 14px, 500px → 17px, 700px → 22px
+    const fontSize = Math.max(12, Math.min(24, Math.round(cw * 0.032)));
+    const padding = Math.max(6, Math.round(cw * 0.015));
+    
+    titleInput.style.fontSize = fontSize + 'px';
+    titleInput.style.padding = `${padding}px ${padding * 2}px`;
+    
+    // 입력 너비도 캔버스에 맞춰 조절
+    titleInput.style.maxWidth = Math.round(cw * 0.7) + 'px';
+    
+    // 연필 아이콘도 비례
+    const pencil = overlay.querySelector('.canvas-title-pencil');
+    if (pencil) pencil.style.fontSize = Math.max(10, fontSize - 4) + 'px';
 }
 
-// ============ 툴바 탭 전환 ============
-function switchToolTab(tab) {
-    // 탭 버튼 활성화
-    document.querySelectorAll('.tool-tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tab);
-    });
-    // 패널 표시/숨김
-    document.querySelectorAll('.tool-tab-panel').forEach(panel => {
-        panel.style.display = panel.id === 'tool-tab-' + tab ? '' : 'none';
-    });
-}
-
-// ============ 수정(편집) 모드 토글 ============
-let _editModeActive = false;
-function toggleEditMode() {
-    _editModeActive = !_editModeActive;
-    const btn = document.getElementById('btnEditMode');
-    if (_editModeActive) {
-        btn.classList.add('active');
-        btn.textContent = '✏️ 수정 중';
-        // 캔버스 객체 선택 강조
-        canvas.getObjects().forEach(obj => { if (!obj.userData?.isGrid) obj.set({ hasControls: true, hasBorders: true }); });
-        canvas.renderAll();
-        showToast('✏️ 편집 모드 ON — 객체를 클릭하여 이동·회전하세요');
-    } else {
-        btn.classList.remove('active');
-        btn.textContent = '✏️ 수정';
-        canvas.discardActiveObject();
-        canvas.renderAll();
-        showToast('편집 모드 OFF');
-    }
-}
+// 페이지 로드 시 초기 호출
+setTimeout(updateCanvasTitleSize, 300);
 
 console.log('🏠 Editor 로드 완료 | 단축키: Ctrl+Z/Y/D/S, Delete, Alt+드래그, 휠 줌');
 </script>
