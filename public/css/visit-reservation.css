@@ -1771,3 +1771,154 @@ button {
    기능 CSS에 이미 정의되어 있으므로 별도 규칙 불필요.
    (이미 .loading-overlay, .loading-overlay.is-active 존재)
    ---------------------------------------------------------- */
+/* ==========================================================
+   FIX PATCH — 예약 섹션 레이아웃 수정
+   대상: container-16/17/18/19 (캘린더), container-21 (시간),
+         container-23 (인원 카운터)
+   규칙: 예약 섹션 내부만 수정, 기존 스타일 덮어쓰기 최소화
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   FIX-1. 캘린더 외곽 컨테이너 (container-16)
+   .calendar 클래스가 아닌 container-16에 동일한 박스 스타일 적용
+   ---------------------------------------------------------- */
+.container-16 {
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+/* ----------------------------------------------------------
+   FIX-2. 월 네비게이션 행 (container-17)
+   .calendar-header와 동일한 flex 레이아웃
+   ---------------------------------------------------------- */
+.container-17 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* ----------------------------------------------------------
+   FIX-3. 요일 헤더 행 (container-18)
+   .calendar-weekdays와 동일한 7열 그리드
+   내부 div 래퍼(text-16~22)가 각 칸을 차지하도록
+   ---------------------------------------------------------- */
+.container-18 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+/* container-18 내부의 div 래퍼들: 칸 전체를 채우고 텍스트 중앙 정렬 */
+.container-18 > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* 요일 헤더 텍스트 스타일 통일 */
+.container-18 > div > div {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 21px;
+}
+
+/* 일요일(첫 칸) 빨간색, 토요일(마지막 칸) 파란색 */
+.container-18 > div:first-child > div { color: #e74c3c; }
+.container-18 > div:last-child  > div { color: var(--curious-blue); }
+
+/* ----------------------------------------------------------
+   FIX-4. 날짜 그리드 (container-19 / id="calendarGrid")
+   이미 MERGE PATCH에서 정의되어 있으나, 명시적으로 강화
+   ---------------------------------------------------------- */
+.container-19 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* ----------------------------------------------------------
+   FIX-5. 시간 슬롯 컨테이너 (container-21 / id="timeSlots")
+   이미 MERGE PATCH에서 정의됨 — slot-time span 스타일 추가
+   ---------------------------------------------------------- */
+.container-21 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* 시간 슬롯 버튼 내 slot-time span 텍스트 스타일 */
+.time-slot .slot-time {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--cod-gray);
+  line-height: 24px;
+  pointer-events: none;
+}
+
+/* selected 상태: span 텍스트도 흰색 */
+.time-slot.is-selected .slot-time {
+  color: #ffffff !important;
+}
+
+/* is-full 상태: slot-time 흐리게 */
+.time-slot.is-full .slot-time {
+  color: inherit;
+}
+
+/* ----------------------------------------------------------
+   FIX-6. 인원 카운터 행 (container-23)
+   이미 MERGE PATCH에서 flex 정의됨 — counter-value span 강화
+   ---------------------------------------------------------- */
+.container-23 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* counter-value가 이제 span#counterValue에 직접 적용 */
+span.counter-value,
+#counterValue {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  text-align: center;
+  min-width: 60px;
+  line-height: 30px;
+  display: inline-block;
+}
+
+/* button-1 + counter-btn: 완전한 버튼 초기화 및 sizing */
+.button-1.counter-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xl);
+  color: var(--cyber-grape);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.button-1.counter-btn:hover:not(:disabled) {
+  background: rgba(84, 83, 123, 0.08);
+  border-color: var(--cyber-grape);
+}
+
+.button-1.counter-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

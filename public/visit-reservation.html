@@ -182,19 +182,19 @@
                    id="timeSlots" 부여. 각 버튼에 data-time, .time-slot 추가 -->
               <div class="container-21" id="timeSlots">
                 <button class="button-37 time-slot" data-time="10:00">
-                  <div class="text-2"><div class="text-58 abhayalibresemibold-regular-normal-cod-gray-16px slot-time">10:00</div></div>
+                  <span class="slot-time">10:00</span>
                 </button>
                 <button class="button-38 time-slot" data-time="11:30">
-                  <div class="text-2"><div class="text-59 abhayalibresemibold-regular-normal-cod-gray-16px slot-time">11:30</div></div>
+                  <span class="slot-time">11:30</span>
                 </button>
                 <button class="button-39 time-slot" data-time="13:00">
-                  <div class="text-2"><div class="text-60 abhayalibresemibold-regular-normal-cod-gray-16px slot-time">13:00</div></div>
+                  <span class="slot-time">13:00</span>
                 </button>
                 <button class="button-40 time-slot" data-time="14:30">
-                  <div class="text-2"><div class="text-61 abhayalibresemibold-regular-normal-cod-gray-16px slot-time">14:30</div></div>
+                  <span class="slot-time">14:30</span>
                 </button>
                 <button class="button-41 time-slot" data-time="16:00">
-                  <div class="text-2"><div class="text-62 abhayalibresemibold-regular-normal-cod-gray-16px slot-time">16:00</div></div>
+                  <span class="slot-time">16:00</span>
                 </button>
               </div>
             </div><!-- /container-20 (시간 선택) -->
@@ -216,18 +216,9 @@
               </div>
               <!-- 카운터: 디자인 container-23 유지 + 기능 id/class 병합 -->
               <div class="container-23">
-                <!-- 감소 버튼 → id="counterMinus", class="counter-btn counter-minus" 추가 -->
-                <button class="button-1 counter-btn counter-minus" id="counterMinus" aria-label="인원 감소">
-                  <div class="text-23"><div class="text-6 arial-regular-normal-cyber-grape-20px">-</div></div>
-                </button>
-                <!-- 인원 표시 → id="counterValue" 추가 -->
-                <div class="text-24" id="counterValue">
-                  <div class="text-65 abhayalibresemibold-regular-normal-cyber-grape-20px">1명</div>
-                </div>
-                <!-- 증가 버튼 → id="counterPlus", class="counter-btn counter-plus" 추가 -->
-                <button class="button-1 counter-btn counter-plus" id="counterPlus" aria-label="인원 증가">
-                  <div class="text-25"><div class="text-6 arial-regular-normal-cyber-grape-20px">+</div></div>
-                </button>
+                <button class="button-1 counter-btn counter-minus" id="counterMinus" aria-label="인원 감소">−</button>
+                <span class="counter-value" id="counterValue">1명</span>
+                <button class="button-1 counter-btn counter-plus" id="counterPlus" aria-label="인원 증가">+</button>
               </div>
               <!-- 잔여석 안내 메시지 (JS 동적 삽입) -->
               <div class="people-limit-info" id="peopleLimitInfo"></div>
@@ -711,13 +702,9 @@
     const counterPlus  = document.getElementById('counterPlus');
     const peopleLimitInfo = document.getElementById('peopleLimitInfo');
 
-    // counterValue는 div 감싸기 구조이므로 내부 텍스트 업데이트 헬퍼 사용
     function updateCounterDisplay() {
       const el = document.getElementById('counterValue');
-      // 디자인 구조: <div id="counterValue"><div class="text-65 ...">1명</div></div>
-      const inner = el.querySelector('.text-65');
-      if (inner) inner.textContent = `${peopleCount}명`;
-      else el.textContent = `${peopleCount}명`;
+      el.textContent = `${peopleCount}명`;
     }
 
     function getMaxAvailable() {
