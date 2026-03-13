@@ -1,3 +1,436 @@
+/* ============================================================
+   globals.css
+   ============================================================ */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.PKFqYbv.hcp.png");
+
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Abhaya Libre SemiBold-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.rectangle-19 {
+  height: 534px;
+  left: 962px;
+  position: absolute;
+  top: 0;
+  width: 958px;
+}
+
+.rectangle-19-1 {
+  height: 534px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 962px;
+}
+
+.top-1 {
+  height: 534px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1920px;
+}
+
+.heading-1 {
+  display: flex;
+  margin-top: 24px;
+  width: 658.25px;
+}
+
+.top-2 {
+  box-shadow: 0px 1px 2px -1px #0000001a , 0px 1px 3px #0000001a;
+  display: flex;
+  height: 80px;
+  left: calc(50.00% - 910px);
+  position: absolute;
+  top: calc(50.00% - 247px);
+  width: 1821px;
+}
+
+.logo-nav {
+  display: flex;
+  margin-left: 12px;
+  width: 1809px;
+}
+
+.logo {
+  height: 80px;
+  margin-left: 31px;
+  width: 78.42px;
+}
+
+.navigation {
+  display: flex;
+  margin-left: 452.6px;
+  margin-top: 30px;
+  width: 685.16px;
+}
+
+.qn-a {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 71px;
+}
+
+.login {
+  display: flex;
+  gap: 26px;
+  height: 64px;
+  margin-left: 337.8px;
+  margin-top: 8px;
+  width: 180px;
+}
+
+.vector-2 {
+  height: 41.67%;
+  left: 45.83%;
+  position: absolute;
+  top: 20.83%;
+  width: 25.00%;
+}
+
+.heading-3 {
+  align-self: stretch;
+  height: 36px;
+  position: relative;
+  width: 100%;
+}
+
+.footer-content {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-rows: repeat(1,minmax(0,1fr));
+  height: 164px;
+  margin-left: 167px;
+  margin-top: 58px;
+  position: relative;
+  width: 1749px;
+}
+
+.footer-column {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.paragraph-18 {
+  display: flex;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  width: 71px;
+}
+
+.faq {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 33px;
+}
+
+.footer-column-1 {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.paragraph-19 {
+  display: flex;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  width: 33px;
+}
+
+.paragraph-20 {
+  display: flex;
+  margin-left: 0.2px;
+  width: 347.25px;
+}
+
+.paragraph-21 {
+  display: flex;
+  margin-top: -2px;
+  width: 185.53px;
+}
+
+.paragraph-22 {
+  display: flex;
+  width: 219.42px;
+}
+
+.group-10 {
+  height: 80px;
+  left: 32px;
+  position: absolute;
+  top: 0;
+  width: 78px;
+}
+
+.footer-bottom {
+  height: 73px;
+  margin-left: 167px;
+  position: relative;
+  width: 1749px;
+}
+
+.paragraph-23 {
+  align-self: stretch;
+  height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.x2026-container-hou {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   styleguide.css
+   ============================================================ */
+
+:root { 
+  --black: #000000;
+  --chathams-blue: #1a4f85;
+  --cod-gray: #0a0a0a;
+  --curious-blue: #358de6;
+  --curious-blue-2: #358de61a;
+  --cyber-grape: #54537b;
+  --cyber-grape-2: #52537a33;
+  --ebony-clay: #1e2939;
+  --mirage: #101828;
+  --pink-swan: #bbbbbb;
+  --santas-gray: #99a1af;
+  --scarpa-flow: #4a5565;
+  --white: #ffffff;
+  --white-2: #ffffff1a;
+  --white-3: #ffffffe6;
+ 
+  --font-size-l: 18px;
+  --font-size-m: 16px;
+  --font-size-s: 14px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-xxxl: 56px;
+  --font-size-xxxxl: 72px;
+ 
+  --font-family-abhaya_libre_semibold-regular: "Abhaya Libre SemiBold-Regular", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+}
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.abhayalibresemibold-regular-normal-cod-gray-14px {
+  color: var(--cod-gray);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.abhayalibresemibold-regular-normal-cyber-grape-14px {
+  color: var(--cyber-grape);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-16px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.abhayalibresemibold-regular-normal-black-14px {
+  color: var(--black);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.abhayalibresemibold-regular-normal-pink-swan-14px {
+  color: var(--pink-swan);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-chathams-blue-18px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.abhayalibresemibold-regular-normal-cod-gray-16px {
+  color: var(--cod-gray);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-cyber-grape-20px {
+  color: var(--cyber-grape);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-scarpa-flow-14px {
+  color: var(--scarpa-flow);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.abhayalibresemibold-regular-normal-cyber-grape-20px {
+  color: var(--cyber-grape);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-ebony-clay-16px {
+  color: var(--ebony-clay);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-white-20px {
+  color: var(--white-3);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-mirage-24px {
+  color: var(--mirage);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-chathams-blue-20px {
+  color: var(--chathams-blue);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   visit-reservation.css
+   ============================================================ */
+
 /* screen - visit-reservation */
 
 .visit-reservation {
@@ -2368,279 +2801,4 @@
 .visit-reservation .text-9-3 {
   letter-spacing: 0;
   white-space: nowrap;
-}
-
-/* =====================================================
-   FUNCTIONAL ADDITIONS — Calendar, Time Slots,
-   Counter, Button hover, Loading overlay
-   (Scoped strictly to the reservation form)
-   ===================================================== */
-
-/* ── Loading Overlay ── */
-.loading-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-}
-.loading-overlay.is-active {
-  display: flex;
-}
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top-color: var(--white);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ── Calendar nav buttons (calPrev / calNext) ── */
-.visit-reservation .button#calPrev,
-.visit-reservation .button#calNext {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
-.visit-reservation .button#calPrev:hover,
-.visit-reservation .button#calNext:hover {
-  background: var(--curious-blue-2);
-}
-
-/* ── Month label: allow it to grow so longer months don't clip ── */
-.visit-reservation .text-15 {
-  width: auto;
-  min-width: 88px;
-}
-.visit-reservation .text-49 {
-  position: relative;
-  top: auto;
-  white-space: nowrap;
-}
-
-/* ── Calendar day-header grid ── */
-.visit-reservation .container-18 {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  height: auto;
-  padding: 0 2px;
-}
-.visit-reservation .container-18 > div {
-  position: static;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 36px;
-}
-
-/* ── Calendar grid (JS-rendered .cal-day buttons) ── */
-.visit-reservation .container-19 {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  height: auto;
-  min-height: 276px;
-}
-
-.visit-reservation .cal-day {
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--cyber-grape);
-  font-family: var(--font-family-abhaya_libre_semibold-regular);
-  font-size: var(--font-size-s);
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, color 0.15s;
-  line-height: 1;
-  padding: 0;
-}
-.visit-reservation .cal-day:hover:not(:disabled) {
-  background: var(--curious-blue-2);
-  color: var(--chathams-blue);
-}
-.visit-reservation .cal-day.is-today {
-  background: var(--cyber-grape-2);
-  font-weight: 700;
-}
-.visit-reservation .cal-day.is-selected {
-  background: var(--cyber-grape);
-  color: var(--white);
-  font-weight: 700;
-}
-.visit-reservation .cal-day.is-past,
-.visit-reservation .cal-day.is-prev,
-.visit-reservation .cal-day.is-next {
-  color: var(--pink-swan);
-  cursor: default;
-  opacity: 0.5;
-}
-.visit-reservation .cal-day.is-closed {
-  color: #e05555;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.visit-reservation .cal-day:disabled {
-  cursor: default;
-}
-
-/* Give the calendar box enough height for 6 rows */
-.visit-reservation .container-16 {
-  height: auto;
-  min-height: 440px;
-}
-
-/* ── Time slots ── */
-.visit-reservation .container-21 {
-  align-self: stretch;
-  width: 100%;
-}
-.visit-reservation .time-slot {
-  cursor: pointer;
-  border: 2px solid var(--cyber-grape-2);
-  border-radius: 8px;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 8px 4px;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-  height: 100%;
-  width: 100%;
-}
-.visit-reservation .time-slot:hover:not(.is-full) {
-  background: var(--curious-blue-2);
-  border-color: var(--curious-blue);
-}
-.visit-reservation .time-slot.is-selected {
-  background: var(--cyber-grape);
-  border-color: var(--cyber-grape);
-}
-.visit-reservation .time-slot.is-selected .slot-time {
-  color: var(--white);
-}
-.visit-reservation .time-slot.is-full {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-.visit-reservation .slot-time {
-  color: var(--cyber-grape);
-  font-family: var(--font-family-abhaya_libre_semibold-regular);
-  font-size: var(--font-size-s);
-  font-weight: 400;
-  line-height: 1.4;
-  text-align: center;
-}
-.visit-reservation .slot-remain {
-  font-family: var(--font-family-arial-regular);
-  font-size: 11px;
-  color: var(--santas-gray);
-  text-align: center;
-  line-height: 1.2;
-}
-.visit-reservation .time-slot.is-selected .slot-remain {
-  color: rgba(255,255,255,0.75);
-}
-
-/* ── People counter ── */
-.visit-reservation .container-22 {
-  height: auto;
-  min-height: 86px;
-}
-/* label row: allow the "(시간대별 최대 4명)" hint to wrap */
-.visit-reservation .container-22 .label {
-  width: auto;
-  flex: 1;
-  min-width: 0;
-}
-.visit-reservation .container-22 .text {
-  white-space: normal;
-  position: static;
-  line-height: 1.4;
-}
-.visit-reservation .counter-btn {
-  background: transparent;
-  border: 2px solid var(--cyber-grape-2);
-  border-radius: 8px;
-  color: var(--cyber-grape);
-  font-size: 20px;
-  font-family: var(--font-family-arial-bold);
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-.visit-reservation .counter-btn:hover:not(:disabled) {
-  background: var(--curious-blue-2);
-}
-.visit-reservation .counter-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-.visit-reservation .counter-value {
-  color: var(--cyber-grape);
-  font-family: var(--font-family-abhaya_libre_semibold-regular);
-  font-size: var(--font-size-xl);
-  font-weight: 400;
-  min-width: 56px;
-  text-align: center;
-}
-/* Remaining-seat info message */
-.visit-reservation .people-limit-info {
-  font-family: var(--font-family-arial-regular);
-  font-size: var(--font-size-s);
-  color: var(--santas-gray);
-  min-height: 18px;
-  line-height: 1.4;
-  margin-top: -8px;
-}
-.visit-reservation .people-limit-info.is-warning {
-  color: #d97706;
-}
-.visit-reservation .people-limit-info.is-full {
-  color: #dc2626;
-}
-.visit-reservation .people-limit-info.is-ok {
-  color: var(--chathams-blue);
-}
-
-/* ── 예약하기 button ── */
-.visit-reservation .button-42 {
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-}
-.visit-reservation .button-42:hover {
-  background-color: var(--cyber-grape) !important;
-  box-shadow: 0 6px 20px rgba(84, 83, 123, 0.45);
-  transform: translateY(-1px);
-}
-.visit-reservation .button-42:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* ── Adjust container-14 height to auto so calendar expansion works ── */
-.visit-reservation .container-14 {
-  height: auto;
-  min-height: 1194px;
 }
