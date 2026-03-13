@@ -1,14 +1,15 @@
 /* ==========================================================
-   C.C.C - Custom Cube Company
-   Visit Reservation Page
-   통합 스타일시트 (globals + styleguide + visit-reservation)
+   C.C.C — Custom Cube Company
+   visit-reservation.css
+   Merged: globals + styleguide + page design
+   Mapped to functional HTML class structure
    ========================================================== */
 
 /* ----------------------------------------------------------
    1. IMPORTS & FONTS
    ---------------------------------------------------------- */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Inter:400|Baloo+Da+2:700");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700|Inter:400");
 
 @font-face {
   font-family: "Arial-Bold";
@@ -32,66 +33,82 @@
 }
 
 /* ----------------------------------------------------------
-   2. CSS VARIABLES (원본 styleguide 값 그대로)
+   2. CSS VARIABLES
+   — Merges :root from styleguide.css + page-level tokens
    ---------------------------------------------------------- */
 :root {
-  /* ---- Colors (원본 정확히 유지) ---- */
-  --black: #000000;
-  --white: #ffffff;
-  --white-2: #ffffff1a;        /* rgba(255,255,255,0.1) */
-  --white-3: #ffffffe6;        /* rgba(255,255,255,0.9) */
-  --mirage: #101828;
-  --chathams-blue: #1a4f85;
-  --chathams-blue-dark: #15436f;
-  --scarpa-flow: #4a5565;
-  --oxford-blue: #364153;
-  --santas-gray: #99a1af;
-  --cod-gray: #0a0a0a;
-  --pink-swan: #bbbbbb;
-  --ice-cold: #aff9f5;
-  --ebony-clay: #1e2939;
-  --cyber-grape: #54537b;
-  --cyber-grape-2: #52537a33;   /* rgba(82,83,122,0.2) */
-  --curious-blue: #358de6;
-  --curious-blue-2: #358de61a;
+  /* Colors — from styleguide.css */
+  --black:            #000000;
+  --white:            #ffffff;
+  --white-2:          #ffffff1a;     /* rgba(255,255,255,0.10) */
+  --white-3:          #ffffffe6;     /* rgba(255,255,255,0.90) */
+  --mirage:           #101828;
+  --chathams-blue:    #1a4f85;
+  --chathams-blue-dk: #15436f;
+  --scarpa-flow:      #4a5565;
+  --oxford-blue:      #364153;
+  --ebony-clay:       #1e2939;
+  --santas-gray:      #99a1af;
+  --cod-gray:         #0a0a0a;
+  --pink-swan:        #bbbbbb;
+  --ice-cold:         #aff9f5;
+  --cyber-grape:      #54537b;
+  --cyber-grape-2:    #52537a33;     /* rgba(82,83,122,0.20) */
+  --curious-blue:     #358de6;
+  --curious-blue-2:   #358de61a;
 
   /* Section Backgrounds */
-  --bg-site: #f7f5fa;
-  --bg-hero-gradient: linear-gradient(180deg, #1a4f85 0%, #263238 100%);
-  --bg-info: #f1f1f1;
+  --bg-site:          #f7f5fa;
+  --bg-hero:          linear-gradient(180deg, #1a4f85 0%, #263238 100%);
+  --bg-info:          #f1f1f1;
 
-  /* ---- Font Sizes (원본 정확히 유지) ---- */
-  --fs-xs: 12px;     /* --font-size-s */
-  --fs-sm: 14px;     /* --font-size-m */
-  --fs-md: 16px;     /* --font-size-l */
-  --fs-lg: 18px;     /* --font-size-xl */
-  --fs-xl: 20px;     /* --font-size-xxl */
-  --fs-2xl: 24px;    /* --font-size-xxxl */
-  --fs-3xl: 32px;
-  --fs-4xl: 48px;    /* --font-size-xxxxl */
-  --fs-5xl: 56px;
-  --fs-6xl: 72px;
+  /* Font Sizes — from styleguide.css */
+  --font-size-s:      14px;
+  --font-size-m:      16px;
+  --font-size-l:      18px;
+  --font-size-xl:     20px;
+  --font-size-xxl:    24px;
+  --font-size-xxxl:   56px;
+  --font-size-xxxxl:  72px;
 
-  /* ---- Font Families (원본 정확히 유지) ---- */
-  --ff-bold: "Arial-Bold", Helvetica, sans-serif;
-  --ff-regular: "Arial-Regular", Helvetica, sans-serif;
-  --ff-abhaya: "Abhaya Libre SemiBold-Regular", Helvetica, serif;
-  --ff-baloo: "Baloo Da 2", Helvetica, sans-serif;
-  --ff-inter: "Inter", Helvetica, sans-serif;
+  /* Extra sizes used in design */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-md:   16px;
+  --fs-lg:   18px;
+  --fs-xl:   20px;
+  --fs-2xl:  24px;
+  --fs-3xl:  32px;
+  --fs-4xl:  48px;
+  --fs-5xl:  56px;
+  --fs-6xl:  72px;
 
-  /* ---- Layout ---- */
-  --max-width: 1200px;
-  --header-height: 80px;
-  --section-py: 80px;
-  --container-px: 32px;
+  /* Font Families — from styleguide.css */
+  --font-family-arial-bold:              "Arial-Bold",                    Helvetica, sans-serif;
+  --font-family-arial-regular:           "Arial-Regular",                 Helvetica, sans-serif;
+  --font-family-abhaya_libre_semibold-regular: "Abhaya Libre SemiBold-Regular", Helvetica, serif;
+  --font-family-baloo_da_2:              "Baloo Da 2",                    Helvetica, sans-serif;
 
-  /* ---- Effects ---- */
-  --shadow-card: 0 4px 4px rgba(0, 0, 0, 0.25);
-  --shadow-form: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Aliases used in page CSS */
+  --ff-bold:    var(--font-family-arial-bold);
+  --ff-regular: var(--font-family-arial-regular);
+  --ff-abhaya:  var(--font-family-abhaya_libre_semibold-regular);
+  --ff-baloo:   var(--font-family-baloo_da_2);
+  --ff-inter:   "Inter", Helvetica, sans-serif;
+
+  /* Layout */
+  --max-width:      1200px;
+  --header-height:  80px;
+  --section-py:     80px;
+  --container-px:   32px;
+
+  /* Effects */
+  --shadow-card:   0 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-form:   0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-header: 0 1px 2px -1px rgba(0, 0, 0, 0.1),
                    0 1px 3px rgba(0, 0, 0, 0.1);
-  --radius: 16px;
-  --radius-sm: 8px;
+  --radius:    16px;
+  --radius-sm:  8px;
   --radius-md: 12px;
   --transition: 0.3s ease;
 }
@@ -175,36 +192,44 @@ button {
 }
 
 /* ----------------------------------------------------------
-   5. BUTTONS
+   5. LOADING OVERLAY
+   — globals.css: .loading-overlay
    ---------------------------------------------------------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
+.loading-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 9999;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 36px;
-  border-radius: var(--radius-sm);
-  font-family: var(--ff-regular);
-  font-size: var(--fs-lg);
-  color: var(--white);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
+  align-items: center;
 }
 
-.btn-primary {
-  background: var(--chathams-blue);
+.loading-overlay.is-active {
+  display: flex;
 }
 
-.btn-primary:hover {
-  background: var(--chathams-blue-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(26, 79, 133, 0.35);
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-top-color: var(--curious-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ----------------------------------------------------------
    6. HEADER
+   — Functional HTML: .header  .header-inner  .header-left
+     .logo  .logo-icon  .logo-text  .logo-title  .logo-sub
+     .auth-links  .user-section  .user-info-header
+     .user-avatar-sm  .user-name-header  .btn-logout
+     .nav  .nav-link  .menu-toggle
+   — globals.css: .top-2  .logo-nav  .navigation  .login
    ---------------------------------------------------------- */
 .header {
   position: fixed;
@@ -277,6 +302,7 @@ button {
 /* Auth Links */
 .auth-links {
   display: flex;
+  align-items: center;
   gap: 24px;
   margin-left: 16px;
 }
@@ -292,14 +318,13 @@ button {
   opacity: 0.75;
 }
 
-/* User Section (로그인/비로그인 상태 전환) */
+/* User Section */
 .user-section {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-/* 로그인 상태: 프로필 표시 */
 .user-info-header {
   display: flex;
   align-items: center;
@@ -341,13 +366,12 @@ button {
   text-overflow: ellipsis;
 }
 
-/* 로그아웃 버튼 */
 .btn-logout {
   padding: 7px 14px;
   background: rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
+  color: var(--white) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-family: var(--ff-baloo);
   font-weight: 600;
   font-size: 12px;
@@ -356,10 +380,10 @@ button {
 }
 
 .btn-logout:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Navigation */
@@ -394,7 +418,7 @@ button {
   width: 100%;
 }
 
-/* Mobile Toggle */
+/* Mobile Menu Toggle */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -425,9 +449,14 @@ button {
 
 /* ----------------------------------------------------------
    7. RESERVATION HERO
+   — Functional HTML: .reservation-hero  .reservation-grid
+     .reservation-info  .reservation-title  .reservation-desc
+     .check-list  .check-item  .check-icon
+     .contact-row  .contact-mini  .contact-mini-icon
+     .contact-mini-label  .contact-mini-value
    ---------------------------------------------------------- */
 .reservation-hero {
-  background: var(--bg-hero-gradient);
+  background: var(--bg-hero);
   padding: calc(var(--header-height) + 80px) 0 80px;
   min-height: 100vh;
 }
@@ -443,7 +472,7 @@ button {
   align-items: start;
 }
 
-/* ---- Left: Reservation Info ---- */
+/* Left: Info */
 .reservation-info {
   padding-top: 53px;
 }
@@ -493,12 +522,14 @@ button {
   justify-content: center;
 }
 
-.check-icon img {
+.check-icon img,
+.check-icon image {
   width: 24px;
   height: 24px;
+  display: block;
 }
 
-.check-item span {
+.check-item > span {
   font-family: var(--ff-regular);
   font-size: var(--fs-lg);
   color: var(--white);
@@ -530,15 +561,15 @@ button {
 }
 
 .contact-mini-icon img {
+  display: block;
+}
+
+.contact-mini-icon img + img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.contact-mini-icon img:first-child {
-  position: relative;
 }
 
 .contact-mini-label {
@@ -555,8 +586,15 @@ button {
   line-height: 28px;
 }
 
+.contact-mini-value a {
+  color: inherit;
+}
+
 /* ----------------------------------------------------------
    8. RESERVATION FORM
+   — Functional HTML: .reservation-form  .form-title
+     .form-section  .form-section-header  .form-section-icon
+     .form-section-label
    ---------------------------------------------------------- */
 .reservation-form {
   background: var(--white);
@@ -575,7 +613,6 @@ button {
   margin-bottom: 40px;
 }
 
-/* Form Section Header (공통) */
 .form-section {
   margin-bottom: 32px;
 }
@@ -599,12 +636,15 @@ button {
 }
 
 .form-section-icon img {
-  position: absolute;
-  inset: 0;
+  display: block;
 }
 
-.form-section-icon img:first-child {
-  position: relative;
+.form-section-icon img + img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .form-section-label {
@@ -617,6 +657,11 @@ button {
 
 /* ----------------------------------------------------------
    9. CALENDAR
+   — Functional HTML: .calendar  .calendar-header
+     .calendar-nav  .calendar-prev  .calendar-next
+     .calendar-month  .calendar-weekdays  .calendar-grid
+     .cal-day  (JS adds: .is-today .is-past .is-closed
+                .is-selected .is-prev .is-next)
    ---------------------------------------------------------- */
 .calendar {
   border: 2px solid var(--cyber-grape-2);
@@ -624,7 +669,6 @@ button {
   padding: 18px;
 }
 
-/* Calendar Header */
 .calendar-header {
   display: flex;
   align-items: center;
@@ -640,6 +684,9 @@ button {
   align-items: center;
   justify-content: center;
   transition: var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .calendar-nav:hover {
@@ -659,7 +706,6 @@ button {
   line-height: 27px;
 }
 
-/* Calendar Weekdays */
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -676,13 +722,18 @@ button {
   line-height: 21px;
 }
 
-/* Calendar Day Grid */
+/* Sunday header red */
+.calendar-weekdays span:first-child { color: #e74c3c; }
+/* Saturday header blue */
+.calendar-weekdays span:last-child  { color: var(--curious-blue); }
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
 }
 
+/* Day cells */
 .cal-day {
   aspect-ratio: 1;
   max-width: 66px;
@@ -708,7 +759,17 @@ button {
 
 .cal-day.is-selected {
   background: var(--cyber-grape);
-  color: var(--white);
+  color: var(--white) !important;
+}
+
+.cal-day.is-today {
+  border: 2px solid var(--curious-blue);
+  font-weight: 700;
+  color: var(--curious-blue);
+}
+
+.cal-day.is-today.is-selected {
+  color: var(--white) !important;
 }
 
 .cal-day.is-prev,
@@ -717,29 +778,12 @@ button {
   cursor: default;
 }
 
-.cal-day:disabled {
-  cursor: default;
-}
-
-/* 오늘 날짜 강조 */
-.cal-day.is-today {
-  border: 2px solid var(--curious-blue);
-  font-weight: 700;
-  color: var(--curious-blue);
-}
-
-.cal-day.is-today.is-selected {
-  color: var(--white);
-}
-
-/* 지난 날짜 비활성화 */
 .cal-day.is-past {
   color: #d1d5db;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* 월요일(휴무) 비활성화 */
 .cal-day.is-closed {
   color: #d1d5db;
   text-decoration: line-through;
@@ -747,50 +791,26 @@ button {
   pointer-events: none;
 }
 
-/* 일요일 빨간색 */
-.calendar-weekdays span:first-child {
-  color: #e74c3c;
+.cal-day:disabled {
+  cursor: default;
 }
 
+/* Sunday cells red */
 .calendar-grid .cal-day:nth-child(7n+1):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
   color: #e74c3c;
 }
+.calendar-grid .cal-day:nth-child(7n+1).is-selected { color: var(--white) !important; }
 
-.calendar-grid .cal-day:nth-child(7n+1).is-selected {
-  color: var(--white);
-}
-
-/* 토요일 파란색 */
-.calendar-weekdays span:last-child {
-  color: var(--curious-blue);
-}
-
+/* Saturday cells blue */
 .calendar-grid .cal-day:nth-child(7n):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
   color: var(--curious-blue);
 }
-
-.calendar-grid .cal-day:nth-child(7n).is-selected {
-  color: var(--white);
-}
-
-/* First 8 days use --black instead of --cod-gray (원본 반영) */
-.cal-day[data-date$="-01"],
-.cal-day[data-date$="-02"],
-.cal-day[data-date$="-03"],
-.cal-day[data-date$="-04"],
-.cal-day[data-date$="-05"],
-.cal-day[data-date$="-06"],
-.cal-day[data-date$="-07"],
-.cal-day[data-date$="-08"] {
-  color: var(--black);
-}
-
-.cal-day.is-selected[data-date] {
-  color: var(--white);
-}
+.calendar-grid .cal-day:nth-child(7n).is-selected { color: var(--white) !important; }
 
 /* ----------------------------------------------------------
    10. TIME SLOTS
+   — Functional HTML: .time-slots  .time-slot  .slot-time
+     (JS adds: .is-selected  .is-full  .slot-remain)
    ---------------------------------------------------------- */
 .time-slots {
   display: grid;
@@ -810,9 +830,13 @@ button {
   line-height: 24px;
   transition: var(--transition);
   cursor: pointer;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.time-slot:hover {
+.time-slot:hover:not(:disabled):not(.is-full) {
   border-color: var(--cyber-grape);
   background: rgba(84, 83, 123, 0.08);
 }
@@ -823,7 +847,6 @@ button {
   border-color: var(--cyber-grape);
 }
 
-/* 시간 슬롯 마감 표시 */
 .time-slot.is-full {
   opacity: 0.4;
   cursor: not-allowed;
@@ -831,22 +854,7 @@ button {
   position: relative;
 }
 
-.time-slot.is-full::after {
-  content: '마감';
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #e74c3c;
-  color: var(--white);
-  font-family: var(--ff-regular);
-  font-size: 10px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 600;
-  line-height: 16px;
-}
-
-/* 잔여석 표시 */
+/* Dynamically injected by JS */
 .time-slot .slot-remain {
   display: block;
   font-family: var(--ff-regular);
@@ -867,6 +875,9 @@ button {
 
 /* ----------------------------------------------------------
    11. PEOPLE COUNTER
+   — Functional HTML: .people-counter  .counter-btn
+     .counter-minus  .counter-plus  .counter-value
+     .people-limit-info  (JS adds: .is-ok .is-warning .is-full)
    ---------------------------------------------------------- */
 .people-counter {
   display: flex;
@@ -888,15 +899,27 @@ button {
   transition: var(--transition);
   line-height: 1;
   cursor: pointer;
+  background: none;
 }
 
-.counter-btn:hover {
+.counter-btn:hover:not(:disabled) {
   background: rgba(84, 83, 123, 0.08);
   border-color: var(--cyber-grape);
 }
 
-.counter-btn:active {
+.counter-btn:active:not(:disabled) {
   transform: scale(0.95);
+}
+
+.counter-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.counter-btn:disabled:hover {
+  background: none;
+  border-color: var(--cyber-grape-2);
+  transform: none;
 }
 
 .counter-value {
@@ -909,19 +932,6 @@ button {
   line-height: 30px;
 }
 
-/* 인원 제한/비활성 상태 */
-.counter-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.counter-btn:disabled:hover {
-  background: none;
-  border-color: var(--cyber-grape-2);
-  transform: none;
-}
-
-/* 인원 제한 안내 메시지 */
 .people-limit-info {
   text-align: center;
   margin-top: 10px;
@@ -948,6 +958,8 @@ button {
 
 /* ----------------------------------------------------------
    12. RESERVE BUTTON
+   — Functional HTML: .btn-reserve  .btn-reserve-icon
+     (JS adds: .is-ready)
    ---------------------------------------------------------- */
 .btn-reserve {
   width: 100%;
@@ -966,6 +978,7 @@ button {
 .btn-reserve-icon {
   width: 20px;
   height: 20px;
+  display: block;
 }
 
 .btn-reserve span {
@@ -988,6 +1001,11 @@ button {
 
 /* ----------------------------------------------------------
    13. CUBE SERIES SECTION
+   — Functional HTML: .cube-series  .cube-grid  .cube-card
+     .cube-card-image  .cube-card-image--modern
+     .cube-card-image--luxury  .cube-card-image--industrial
+     .cube-badge  .cube-card-body  .cube-location
+     .cube-location-icon
    ---------------------------------------------------------- */
 .cube-series {
   padding: var(--section-py) 0;
@@ -1004,7 +1022,6 @@ button {
   gap: 32px;
 }
 
-/* Cube Card */
 .cube-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -1023,6 +1040,7 @@ button {
   position: relative;
   background-size: cover;
   background-position: center;
+  background-color: #d1d5db; /* fallback if image missing */
 }
 
 .cube-card-image--modern {
@@ -1087,12 +1105,15 @@ button {
 }
 
 .cube-location-icon img {
-  position: absolute;
-  inset: 0;
+  display: block;
 }
 
-.cube-location-icon img:first-child {
-  position: relative;
+.cube-location-icon img + img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .cube-location > span {
@@ -1104,6 +1125,10 @@ button {
 
 /* ----------------------------------------------------------
    14. VISIT INFO SECTION
+   — Functional HTML: .visit-info  .visit-info-title
+     .info-grid  .info-card  .info-card-header  .info-card-icon
+     .info-card-body  .info-card-note
+     .notice-card  .notice-list  .notice-bullet
    ---------------------------------------------------------- */
 .visit-info {
   padding: 0 0 var(--section-py);
@@ -1126,7 +1151,6 @@ button {
   margin-bottom: 32px;
 }
 
-/* Info Grid */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1154,12 +1178,15 @@ button {
 }
 
 .info-card-icon img {
-  position: absolute;
-  inset: 0;
+  display: block;
 }
 
-.info-card-icon img:first-child {
-  position: relative;
+.info-card-icon img + img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .info-card-header h3 {
@@ -1223,6 +1250,7 @@ button {
   height: 20px;
   flex-shrink: 0;
   margin-top: 2px;
+  display: block;
 }
 
 .notice-list li span {
@@ -1234,6 +1262,12 @@ button {
 
 /* ----------------------------------------------------------
    15. FOOTER
+   — Functional HTML: .footer  .footer-grid  .footer-brand
+     .footer-brand-top  .footer-logo-icon  .footer-brand-name
+     .brand-title  .brand-sub  .footer-brand-desc
+     .footer-links  .footer-bottom  .footer-social
+   — globals.css: .footer-content  .footer-column
+     .footer-column-1  .footer-bottom  .group-10
    ---------------------------------------------------------- */
 .footer {
   background: var(--mirage);
@@ -1251,7 +1285,7 @@ button {
   padding-bottom: 48px;
 }
 
-/* Footer Brand */
+/* Brand column */
 .footer-brand-top {
   display: flex;
   align-items: center;
@@ -1292,7 +1326,7 @@ button {
   line-height: 26px;
 }
 
-/* Footer Links */
+/* Link columns */
 .footer-links h4 {
   font-family: var(--ff-bold);
   font-size: var(--fs-lg);
@@ -1319,7 +1353,7 @@ button {
   color: var(--white);
 }
 
-/* Footer Bottom */
+/* Bottom bar */
 .footer-bottom {
   border-top: 1px solid var(--ebony-clay);
   padding: 33px 0 24px;
@@ -1341,40 +1375,7 @@ button {
 }
 
 /* ----------------------------------------------------------
-   16. LOADING OVERLAY
-   ---------------------------------------------------------- */
-.loading-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-
-.loading-overlay.is-active {
-  display: flex;
-}
-
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid rgba(255, 255, 255, 0.5);
-  border-top-color: var(--curious-blue);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ----------------------------------------------------------
-   17. SCROLL ANIMATIONS
+   16. SCROLL ANIMATION CLASSES (used by JS if added)
    ---------------------------------------------------------- */
 .fade-in {
   opacity: 0;
@@ -1388,7 +1389,7 @@ button {
 }
 
 /* ----------------------------------------------------------
-   18. RESPONSIVE — ≤ 1400px
+   17. RESPONSIVE — ≤ 1400px
    ---------------------------------------------------------- */
 @media (max-width: 1400px) {
   .reservation-grid {
@@ -1402,7 +1403,7 @@ button {
 }
 
 /* ----------------------------------------------------------
-   19. RESPONSIVE — ≤ 1200px
+   18. RESPONSIVE — ≤ 1200px
    ---------------------------------------------------------- */
 @media (max-width: 1200px) {
   .header-inner {
@@ -1429,7 +1430,7 @@ button {
 }
 
 /* ----------------------------------------------------------
-   20. RESPONSIVE — ≤ 1024px
+   19. RESPONSIVE — ≤ 1024px
    ---------------------------------------------------------- */
 @media (max-width: 1024px) {
   .nav,
@@ -1437,18 +1438,8 @@ button {
     display: none;
   }
 
-  /* 모바일에서 auth-links는 숨기되, is-open 시 nav 내부에서 보이도록 */
   .menu-toggle {
     display: flex;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
   }
 
   /* Mobile Nav Overlay */
@@ -1479,16 +1470,25 @@ button {
     from { opacity: 0; transform: translateY(-10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ----------------------------------------------------------
-   21. RESPONSIVE — ≤ 768px
+   20. RESPONSIVE — ≤ 768px
    ---------------------------------------------------------- */
 @media (max-width: 768px) {
   :root {
-    --section-py: 56px;
-    --container-px: 20px;
-    --header-height: 70px;
+    --section-py:     56px;
+    --container-px:   20px;
+    --header-height:  70px;
   }
 
   .header-inner {
@@ -1530,19 +1530,10 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* 시간 슬롯 잔여석 텍스트 모바일 */
   .time-slot .slot-remain {
     font-size: 10px;
   }
 
-  .time-slot.is-full::after {
-    font-size: 9px;
-    top: -5px;
-    right: -4px;
-    padding: 1px 4px;
-  }
-
-  /* 인원 제한 안내 모바일 */
   .people-limit-info {
     font-size: 12px;
   }
@@ -1578,14 +1569,13 @@ button {
     font-size: 12px;
   }
 
-  /* 오늘 날짜 테두리 모바일 */
   .cal-day.is-today {
     border-width: 1.5px;
   }
 }
 
 /* ----------------------------------------------------------
-   22. RESPONSIVE — ≤ 480px
+   21. RESPONSIVE — ≤ 480px
    ---------------------------------------------------------- */
 @media (max-width: 480px) {
   .logo-sub {
@@ -1606,12 +1596,13 @@ button {
     min-width: 36px;
   }
 
-  .check-icon img {
+  .check-icon img,
+  .check-icon image {
     width: 18px;
     height: 18px;
   }
 
-  .check-item span {
+  .check-item > span {
     font-size: var(--fs-md);
   }
 
@@ -1627,20 +1618,17 @@ button {
     padding: 12px;
   }
 
-  /* 캘린더 날짜 최소 터치 영역 확보 */
   .cal-day {
     min-width: 36px;
     min-height: 36px;
     font-size: 11px;
   }
 
-  /* 시간 슬롯 모바일 최소 크기 */
   .time-slot {
     padding: 12px 8px;
     font-size: var(--fs-sm);
   }
 
-  /* 인원 카운터 모바일 */
   .people-counter {
     justify-content: center;
   }
