@@ -1,320 +1,323 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>주문/결제</title>
-  <link rel="stylesheet" href="css/pay.css">
-</head>
-<body class="pay">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <title>주문/결제 | Container House</title>
+    <link rel="stylesheet" type="text/css" href="css/pay.css" />
+  </head>
+  <body style="margin: 0; background: #ffffff">
 
-  <!-- 상단 헤더 -->
-  <header class="page-header">
-    <button class="back-btn" onclick="history.back()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
-      장바구니로 돌아가기
-    </button>
-    <span class="page-title">주문/결제</span>
-  </header>
+    <div class="pay screen">
 
-  <div class="p-k">
-    <!-- ─────────────── 왼쪽 폼 영역 ─────────────── -->
-    <div class="left-col">
-
-      <div id="alertBox" class="alert"></div>
-
-      <!-- 주문자 정보 -->
-      <div class="card">
-        <div class="card-title">주문자 정보</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>이름 <span class="required">*</span></label>
-            <input type="text" id="ordererName" placeholder="이름을 입력하세요">
+      <!-- =============================================
+           HEADER / TOP NAVIGATION
+           ============================================= -->
+      <header class="top">
+        <nav class="logo-nav" aria-label="주요 메뉴">
+          <a href="/" aria-label="홈으로">
+            <img class="logo" src="imgs/logo.svg" alt="Container House 로고" />
+          </a>
+          <div class="navigation">
+            <div class="paragraph-5"><a class="text-21 balooda2-bold-eerie-black-14px" href="#">커스텀 큐브</a></div>
+            <div class="paragraph"><a class="text-21 balooda2-bold-eerie-black-14px" href="#">큐브 갤러리</a></div>
+            <div class="paragraph"><a class="text-21 balooda2-bold-eerie-black-14px" href="#">큐레이션 샵</a></div>
+            <div class="paragraph-6"><a class="qn-a balooda2-bold-eerie-black-14px" href="#">QnA 및 후기</a></div>
+            <div class="paragraph-7"><a class="text-216 balooda2-bold-eerie-black-14px" href="#">방문 예약</a></div>
           </div>
-          <div class="form-group">
-            <label>연락처 <span class="required">*</span></label>
-            <input type="tel" id="ordererPhone" placeholder="010-0000-0000">
+          <div class="login">
+            <div class="paragraph-8"><a class="text-217 balooda2-bold-eerie-black-14px" href="#">로그인</a></div>
+            <div class="paragraph-9"><a class="text-218 balooda2-bold-eerie-black-14px" href="#">회원가입</a></div>
           </div>
-        </div>
-        <div class="form-group">
-          <label>이메일 <span class="required">*</span></label>
-          <input type="email" id="ordererEmail" placeholder="example@email.com">
-        </div>
-      </div>
+        </nav>
+      </header>
 
-      <!-- 설치 장소 정보 -->
-      <div class="card">
-        <div class="card-title">설치 장소 정보</div>
-        <label class="same-as-orderer">
-          <input type="checkbox" id="sameAsOrderer">
-          주문자와 동일
-        </label>
-        <div class="form-row">
-          <div class="form-group">
-            <label>받는 사람 <span class="required">*</span></label>
-            <input type="text" id="receiverName" placeholder="받는 사람 이름">
+      <!-- =============================================
+           MAIN CONTENT
+           ============================================= -->
+      <div class="body">
+        <main class="p-k">
+
+          <!-- 페이지 타이틀 -->
+          <div class="container-4">
+            <div class="container-5">
+              <button class="button-1">
+                <div class="icon"><img class="vector" src="imgs/vector.svg" alt="" role="presentation" /></div>
+                <div class="text"><div class="text-156">장바구니로 돌아가기</div></div>
+              </button>
+              <div class="heading-1"><h1 class="text-157 arial-bold-mirage-28px">주문/결제</h1></div>
+              <div class="container-6"></div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>연락처 <span class="required">*</span></label>
-            <input type="tel" id="receiverPhone" placeholder="010-0000-0000">
+
+          <!-- 결제 폼 -->
+          <div class="form">
+            <div class="container-7">
+
+              <!-- 주문자 정보 -->
+              <section class="container-8" aria-labelledby="orderer-heading">
+                <div class="heading-2"><div class="text-1 arial-bold-mirage-22px" id="orderer-heading">주문자 정보</div></div>
+                <div class="container-9">
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">이름 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="text-160 notosanskr-normal-cod-gray-15px">이름을 입력하세요</div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">연락처 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="phone-2 notosanskr-normal-cod-gray-15px">010-0000-0000</div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">이메일 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="exampleemailcom notosanskr-normal-cod-gray-15px">example@email.com</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 설치 장소 정보 -->
+              <section class="container-10" aria-labelledby="address-heading">
+                <div class="container-11">
+                  <div class="heading-2-1"><div class="text-1 arial-bold-mirage-22px" id="address-heading">설치 장소 정보</div></div>
+                  <div class="label-3">
+                    <div class="checkbox"></div>
+                    <div class="text-2"><div class="text-164 notosanskr-normal-pale-sky-14px">주문자와 동일</div></div>
+                  </div>
+                </div>
+                <div class="container-12">
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">받는 사람 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="text-166 notosanskr-normal-cod-gray-15px">받는 사람 이름</div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">연락처 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="phone-2 notosanskr-normal-cod-gray-15px">010-0000-0000</div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">우편번호 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="container-13">
+                      <div class="text-input">
+                        <div class="text-169 notosanskr-normal-cod-gray-15px">우편번호</div>
+                      </div>
+                      <button class="button-2">
+                        <div class="text-170 notosanskr-medium-bright-gray-14px">주소 검색</div>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-white-14px">
+                        <span class="notosanskr-medium-bright-gray-14px">주소 </span><span class="notosanskr-medium-salmon-pearl-14px">*</span>
+                      </div>
+                    </div>
+                    <div class="x-input">
+                      <div class="text-172 notosanskr-normal-cod-gray-15px">기본 주소</div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-bright-gray-14px">상세 주소</div>
+                    </div>
+                    <div class="x-input">
+                      <div class="text-174 notosanskr-normal-cod-gray-15px">상세 주소를 입력하세요</div>
+                    </div>
+                  </div>
+                  <div class="container-14">
+                    <div class="label">
+                      <div class="text-1-1 text-1-5 notosanskr-medium-bright-gray-14px">배송 메시지</div>
+                    </div>
+                    <div class="text-area">
+                      <div class="text-1-2 text-1-5 notosanskr-normal-cod-gray-15px">배송 시 요청사항을 입력하세요</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 결제 방법 -->
+              <section class="container-15" aria-labelledby="payment-heading">
+                <div class="heading-2"><div class="text-1 arial-bold-mirage-22px" id="payment-heading">결제 방법</div></div>
+                <div class="container-16" role="radiogroup" aria-labelledby="payment-heading">
+                  <div class="label-4">
+                    <div class="radio-button">
+                      <img class="union" src="imgs/union.svg" alt="" role="presentation" />
+                      <div class="ellipse-2"></div>
+                    </div>
+                    <div class="container-1">
+                      <div class="paragraph-1"><div class="text-1-3 text-1-5 notosanskr-bold-mirage-16px">신용카드</div></div>
+                      <div class="paragraph-2"><p class="text-1-4 text-1-5 notosanskr-normal-pale-sky-13px">모든 카드사 무이자 할부 가능</p></div>
+                    </div>
+                  </div>
+                  <div class="label-1">
+                    <div class="radio-button-3"></div>
+                    <div class="container-1">
+                      <div class="paragraph-1"><div class="text-1-3 text-1-5 notosanskr-bold-mirage-16px">실시간 계좌이체</div></div>
+                      <div class="paragraph-2"><p class="text-1-4 text-1-5 notosanskr-normal-pale-sky-13px">은행 계좌를 통한 즉시 이체</p></div>
+                    </div>
+                  </div>
+                  <div class="label-1">
+                    <div class="radio-button-3"></div>
+                    <div class="container-1">
+                      <div class="paragraph-1"><div class="text-1-3 text-1-5 notosanskr-bold-mirage-16px">무통장 입금</div></div>
+                      <div class="paragraph-2"><div class="text-1-4 text-1-5 notosanskr-normal-pale-sky-13px">가상계좌 발급 후 입금</div></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 약관 동의 -->
+              <section class="container-17" aria-labelledby="terms-heading">
+                <div class="heading-2"><div class="text-1 arial-bold-mirage-22px" id="terms-heading">약관 동의</div></div>
+                <div class="container-18">
+                  <div class="label-2">
+                    <div class="container-19">
+                      <p class="text-185">
+                        <span class="span0">구매 조건 및 결제 대행 서비스 약관 동의 </span><span class="span1">*</span>
+                      </p>
+                      <button class="button"><div class="text-18">보기</div></button>
+                    </div>
+                  </div>
+                  <div class="label-2">
+                    <div class="container-20">
+                      <p class="text-187">
+                        <span class="span0">개인정보 수집 및 이용 동의 </span><span class="span1">*</span>
+                      </p>
+                      <button class="button"><div class="text-18">보기</div></button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label>우편번호 <span class="required">*</span></label>
-          <div class="postal-row">
-            <input type="text" id="postalCode" placeholder="우편번호" readonly>
-            <button class="search-btn" type="button" onclick="searchAddress()">주소 검색</button>
+
+          <!-- =============================================
+               FOOTER
+               ============================================= -->
+          <footer class="footer">
+            <div class="footer-content">
+              <div class="footer-column">
+                <div class="paragraph-11"><div class="text-202 arial-bold-white-18px">고객 지원</div></div>
+                <div class="container-3">
+                  <div class="paragraph-3"><a class="faq arial-regular-normal-santas-gray-16px" href="#">FAQ</a></div>
+                  <div class="paragraph-4"><a class="text-203 arial-regular-normal-santas-gray-16px" href="#">후기</a></div>
+                  <div class="paragraph-4"><a class="text-204 arial-regular-normal-santas-gray-16px" href="#">사용자 성향 파악</a></div>
+                  <div class="paragraph-4"><a class="text-205 arial-regular-normal-santas-gray-16px" href="#">방문 예약</a></div>
+                </div>
+              </div>
+              <div class="footer-column-1">
+                <div class="paragraph-12"><div class="text-206 arial-bold-white-18px">제품</div></div>
+                <div class="container-3 arial-regular-normal-santas-gray-16px">
+                  <div class="paragraph-3"><a class="text-20" href="#">커스텀 큐브</a></div>
+                  <div class="paragraph-4"><a class="text-20" href="#">큐브 갤러리</a></div>
+                  <div class="text-210">판매 페이지</div>
+                  <div class="paragraph-4">
+                    <div class="paragraph-13"><a class="text-209" href="#">중고 큐브마켓</a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-27">
+                <div class="container-28">
+                  <div class="paragraph-14">
+                    <div class="text-211 arial-regular-normal-santas-gray-16px">혁신적인 컨테이너 하우스로</div>
+                  </div>
+                  <div class="paragraph-15">
+                    <div class="text-212 arial-regular-normal-santas-gray-16px">새로운 주거 문화를 만들어갑니다</div>
+                  </div>
+                </div>
+                <img class="group-10" src="imgs/group-10@2x.png" alt="Container House" />
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <div class="container-29"></div>
+              <div class="container-30">
+                <div class="container-31">
+                  <div class="paragraph-16">
+                    <p class="x2026-container-hou arial-regular-normal-santas-gray-14px">
+                      © 2026 Container House. All rights reserved.
+                    </p>
+                  </div>
+                </div>
+                <img class="container-32" src="imgs/container.svg" alt="Container House" />
+              </div>
+            </div>
+          </footer>
+
+        </main>
+
+        <!-- =============================================
+             주문 상품 사이드바
+             ============================================= -->
+        <aside class="container-21" aria-label="주문 상품 요약">
+          <div class="heading-2-2"><div class="text-189 arial-bold-mirage-24px">주문 상품</div></div>
+          <div class="container-22">
+            <div class="container-23">
+              <div class="image" role="img" aria-label="프리미엄 주거형 상품 이미지"></div>
+              <div class="container-24">
+                <div class="heading-3"><div class="text-190">프리미엄 주거형</div></div>
+                <div class="paragraph-2">
+                  <div class="text-1-4 text-1-5 notosanskr-normal-pale-sky-13px">수량: 1개</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label>주소 <span class="required">*</span></label>
-          <input type="text" id="addressBase" placeholder="기본 주소" readonly>
-        </div>
-        <div class="form-group">
-          <label>상세 주소</label>
-          <input type="text" id="addressDetail" placeholder="상세 주소를 입력하세요">
-        </div>
-        <div class="form-group">
-          <label>배송 메시지</label>
-          <textarea id="deliveryMessage" placeholder="배송 시 요청사항을 입력하세요"></textarea>
-        </div>
-      </div>
-
-      <!-- 결제 방법 -->
-      <div class="card">
-        <div class="card-title">결제 방법</div>
-        <div class="payment-methods">
-          <input type="radio" name="payMethod" id="pm-card" class="payment-radio" value="card" checked>
-          <label class="payment-label" for="pm-card">
-            <span class="radio-dot"></span>
-            <span class="payment-info">
-              <span class="payment-name">신용카드</span>
-              <span class="payment-desc">모든 카드사 무이자 할부 가능</span>
-            </span>
-          </label>
-
-          <input type="radio" name="payMethod" id="pm-transfer" class="payment-radio" value="transfer">
-          <label class="payment-label" for="pm-transfer">
-            <span class="radio-dot"></span>
-            <span class="payment-info">
-              <span class="payment-name">실시간 계좌이체</span>
-              <span class="payment-desc">은행 계좌를 통한 즉시 이체</span>
-            </span>
-          </label>
-
-          <input type="radio" name="payMethod" id="pm-deposit" class="payment-radio" value="deposit">
-          <label class="payment-label" for="pm-deposit">
-            <span class="radio-dot"></span>
-            <span class="payment-info">
-              <span class="payment-name">무통장 입금</span>
-              <span class="payment-desc">가상계좌 발급 후 입금</span>
-            </span>
-          </label>
-        </div>
-      </div>
-
-      <!-- 약관 동의 -->
-      <div class="card">
-        <div class="card-title">약관 동의</div>
-        <div class="term-item">
-          <label class="term-left">
-            <input type="checkbox" id="termPayment">
-            <span class="term-text">구매 조건 및 결제 대행 서비스 약관 동의 <span class="required">*</span></span>
-          </label>
-          <button class="term-view-btn" onclick="openTermModal('payment')">보기</button>
-        </div>
-        <div class="term-item">
-          <label class="term-left">
-            <input type="checkbox" id="termPrivacy">
-            <span class="term-text">개인정보 수집 및 이용 동의 <span class="required">*</span></span>
-          </label>
-          <button class="term-view-btn" onclick="openTermModal('privacy')">보기</button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ─────────────── 오른쪽 주문 요약 ─────────────── -->
-    <div class="right-col">
-      <div class="card summary-card">
-        <div class="card-title">주문 상품</div>
-
-        <div class="product-row">
-          <div class="product-img">🏠</div>
-          <div>
-            <div class="product-name">프리미엄 주거형</div>
-            <div class="product-qty">수량: 1개</div>
+          <div class="container-25">
+            <div class="container-2">
+              <div class="text-3"><div class="text-1-2 text-1-5 notosanskr-normal-pale-sky-15px">상품 금액</div></div>
+              <div class="text-4"><div class="text-19">45,000,000원</div></div>
+            </div>
+            <div class="container-2">
+              <div class="text-5"><div class="text-194 notosanskr-normal-pale-sky-15px">배송비</div></div>
+              <div class="text-6"><div class="text-19">무료</div></div>
+            </div>
+            <div class="container-2">
+              <div class="text-7"><div class="text-196 notosanskr-normal-pale-sky-15px">할인</div></div>
+              <div class="text-8"><div class="text-197">-0원</div></div>
+            </div>
           </div>
-        </div>
-
-        <div class="price-rows">
-          <div class="price-row">
-            <span>상품 금액</span>
-            <span class="price-value">45,000,000원</span>
+          <div class="container-26">
+            <div class="text-9"><div class="text-198 arial-bold-mirage-20px">최종 결제 금액</div></div>
+            <div class="text-10"><p class="text-199">45,000,000원</p></div>
           </div>
-          <div class="price-row">
-            <span>배송비</span>
-            <span class="price-free">무료</span>
-          </div>
-          <div class="price-row">
-            <span>할인</span>
-            <span class="price-discount">-0원</span>
-          </div>
-        </div>
+          <button class="button-3"><div class="text-200 arial-bold-white-18px">45,000,000원 결제하기</div></button>
+          <div class="paragraph-10"><p class="text-201">결제 후 견적서가 이메일로 발송됩니다</p></div>
+        </aside>
 
-        <div class="total-row">
-          <span class="total-label">최종 결제 금액</span>
-          <span class="total-amount">45,000,000원</span>
-        </div>
+      </div><!-- /.body -->
 
-        <button class="pay-btn" id="payBtn" onclick="submitOrder()">
-          45,000,000원 결제하기
-        </button>
-
-        <p class="pay-notice">결제 후 견적서가 이메일로 발송됩니다</p>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    /* ── 알림 ── */
-    function showAlert(message, type) {
-      const box = document.getElementById('alertBox');
-      box.textContent = message;
-      box.className = `alert alert-${type} show`;
-      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      setTimeout(() => box.classList.remove('show'), 5000);
-    }
-
-    /* ── 주문자와 동일 ── */
-    document.getElementById('sameAsOrderer').addEventListener('change', function () {
-      if (this.checked) {
-        document.getElementById('receiverName').value  = document.getElementById('ordererName').value;
-        document.getElementById('receiverPhone').value = document.getElementById('ordererPhone').value;
-      } else {
-        document.getElementById('receiverName').value  = '';
-        document.getElementById('receiverPhone').value = '';
-      }
-    });
-
-    /* ── 주소 검색 (카카오 우편번호) ── */
-    function searchAddress() {
-      if (!window.daum || !window.daum.Postcode) {
-        showAlert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'info');
-        const script = document.createElement('script');
-        script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-        document.head.appendChild(script);
-        return;
-      }
-      new window.daum.Postcode({
-        oncomplete: function (data) {
-          document.getElementById('postalCode').value  = data.zonecode;
-          document.getElementById('addressBase').value = data.roadAddress || data.jibunAddress;
-          document.getElementById('addressDetail').focus();
-        }
-      }).open();
-    }
-
-    /* ── 약관 보기 ── */
-    function openTermModal(type) {
-      const msg = type === 'payment'
-        ? '구매 조건 및 결제 대행 서비스 약관 내용입니다.'
-        : '개인정보 수집 및 이용 약관 내용입니다.';
-      alert(msg);
-    }
-
-    /* ── 유효성 검사 ── */
-    function validate() {
-      const fields = [
-        ['ordererName',   '주문자 이름을 입력해주세요.'],
-        ['ordererPhone',  '주문자 연락처를 입력해주세요.'],
-        ['ordererEmail',  '주문자 이메일을 입력해주세요.'],
-        ['receiverName',  '받는 사람 이름을 입력해주세요.'],
-        ['receiverPhone', '받는 사람 연락처를 입력해주세요.'],
-        ['postalCode',    '우편번호를 입력해주세요.'],
-        ['addressBase',   '주소를 입력해주세요.'],
-      ];
-      for (const [id, msg] of fields) {
-        if (!document.getElementById(id).value.trim()) {
-          showAlert(msg, 'error');
-          document.getElementById(id).focus();
-          return false;
-        }
-      }
-      if (!document.getElementById('termPayment').checked) {
-        showAlert('구매 조건 및 결제 대행 서비스 약관에 동의해주세요.', 'error');
-        return false;
-      }
-      if (!document.getElementById('termPrivacy').checked) {
-        showAlert('개인정보 수집 및 이용에 동의해주세요.', 'error');
-        return false;
-      }
-      return true;
-    }
-
-    /* ── 주문 제출 ── */
-    async function submitOrder() {
-      if (!validate()) return;
-
-      const btn = document.getElementById('payBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span>결제 처리 중...';
-
-      const payload = {
-        orderer: {
-          name:  document.getElementById('ordererName').value.trim(),
-          phone: document.getElementById('ordererPhone').value.trim(),
-          email: document.getElementById('ordererEmail').value.trim(),
-        },
-        shipping: {
-          name:          document.getElementById('receiverName').value.trim(),
-          phone:         document.getElementById('receiverPhone').value.trim(),
-          postalCode:    document.getElementById('postalCode').value.trim(),
-          addressBase:   document.getElementById('addressBase').value.trim(),
-          addressDetail: document.getElementById('addressDetail').value.trim(),
-          message:       document.getElementById('deliveryMessage').value.trim(),
-        },
-        payMethod: document.querySelector('input[name="payMethod"]:checked').value,
-        items: [{ id: 'premium-residential', name: '프리미엄 주거형', qty: 1, price: 45000000 }],
-        totalAmount: 45000000,
-      };
-
-      try {
-        const response = await fetch('/api/order/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-
-        const responseText = await response.text();
-        let data;
-        try {
-          data = JSON.parse(responseText);
-        } catch {
-          throw new Error('서버 응답을 처리할 수 없습니다.');
-        }
-
-        if (data.success) {
-          showAlert('주문이 완료되었습니다. 결제 완료 페이지로 이동합니다...', 'success');
-          setTimeout(() => {
-            window.location.href = `/pay-result.html?orderId=${data.orderId}`;
-          }, 1000);
-        } else {
-          throw new Error(data.message || data.error || '주문 처리에 실패했습니다.');
-        }
-      } catch (err) {
-        console.error('주문 오류:', err);
-        showAlert(err.message || '주문 처리 중 오류가 발생했습니다.', 'error');
-        btn.disabled = false;
-        btn.innerHTML = '45,000,000원 결제하기';
-      }
-    }
-  </script>
-
-  <!-- 카카오 우편번호 -->
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
-</body>
+    </div><!-- /.pay.screen -->
+  </body>
 </html>

@@ -1,209 +1,215 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1676, maximum-scale=1.0">
-  <title>장바구니 - C.C.C</title>
-  <link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png">
-  <link rel="stylesheet" type="text/css" href="css/cart.css">
-</head>
-<body style="margin: 0; background: #ffffff">
-  <input type="hidden" id="anPageName" name="page" value="cart">
-  <div class="cart screen">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <title>장바구니 | Container House</title>
+    <link rel="stylesheet" type="text/css" href="css/cart.css" />
+  </head>
+  <body style="margin: 0; background: #ffffff">
 
-    <!-- ========== 좌측: 장바구니 상품 영역 ========== -->
-    <div class="p-k">
+    <div class="cart screen">
 
-      <!-- 상단 헤더 (뒤로가기 + 제목) -->
-      <div class="container-2">
+      <!-- =============================================
+           HEADER / TOP NAVIGATION
+           ============================================= -->
+      <header class="top">
+        <nav class="logo-nav" aria-label="주요 메뉴">
+          <a href="/" aria-label="홈으로">
+            <img class="logo" src="imgs/logo.svg" alt="Container House 로고" />
+          </a>
+          <div class="navigation">
+            <div class="paragraph-16"><a class="text-3 balooda2-bold-eerie-black-14px" href="#">커스텀 큐브</a></div>
+            <div class="paragraph-2"><a class="text-3 balooda2-bold-eerie-black-14px" href="#">큐브 갤러리</a></div>
+            <div class="paragraph-2"><a class="text-3 balooda2-bold-eerie-black-14px" href="#">큐레이션 샵</a></div>
+            <div class="paragraph-17"><a class="qn-a balooda2-bold-eerie-black-14px" href="#">QnA 및 후기</a></div>
+            <div class="paragraph-18"><a class="text-36 balooda2-bold-eerie-black-14px" href="#">방문 예약</a></div>
+          </div>
+          <div class="login">
+            <div class="paragraph-19"><a class="text-37 balooda2-bold-eerie-black-14px" href="#">로그인</a></div>
+            <div class="paragraph-20"><a class="text-38 balooda2-bold-eerie-black-14px" href="#">회원가입</a></div>
+          </div>
+        </nav>
+      </header>
+
+      <!-- =============================================
+           MAIN CONTENT
+           ============================================= -->
+      <main class="p-k">
+
+        <!-- 페이지 타이틀 영역 -->
         <div class="container-3">
-          <div class="button-1" id="backBtn" style="cursor: pointer;">
-            <div class="icon-2">
-              <img class="vector" src="img/vector.svg" alt="뒤로가기">
-            </div>
-            <div class="text-2">
-              <div class="text-1-1"><a href="/shop">쇼핑 계속하기</a></div>
-            </div>
+          <div class="container-4">
+            <button class="button-1">
+              <div class="icon-2"><img class="vector" src="imgs/vector.svg" alt="" role="presentation" /></div>
+              <div class="text-4"><div class="text-1-1">쇼핑 계속하기</div></div>
+            </button>
+            <div class="heading-1"><h1 class="text-2-1 arial-bold-mirage-28px">장바구니</h1></div>
+            <div class="container-5"></div>
           </div>
-          <div class="heading-1">
-            <div class="text-2-1 arial-bold-mirage-28px">장바구니</div>
-          </div>
-          <div class="container-4"></div>
         </div>
-      </div>
 
-      <!-- 상품 목록 -->
-      <div class="container-5">
+        <!-- 상품 목록 -->
         <div class="container-6">
-
-          <!-- 목록 헤더 -->
           <div class="container-7">
-            <div class="heading-2">
-              <div class="text-3">상품 목록 (<span id="cartItemCount">1</span>개)</div>
+            <div class="container-8">
+              <div class="heading-2"><div class="text-3-1">상품 목록 (1개)</div></div>
             </div>
-          </div>
-
-          <!-- 상품 카드 -->
-          <div class="container-8" id="cartItems">
-            <div class="container-9" data-item-id="1" data-price="45000000">
-
-              <!-- 상품 이미지 -->
-              <div class="image"></div>
-
-              <!-- 상품 정보 -->
-              <div class="container-10">
-
-                <!-- 상품명 + 삭제 버튼 -->
+            <div class="container-9">
+              <article class="container-10">
+                <div class="cartimg" role="img" aria-label="프리미엄 주거형 상품 이미지"></div>
                 <div class="container-11">
                   <div class="container-12">
-                    <div class="heading-3">
-                      <div class="text-4">프리미엄 주거형</div>
+                    <div class="container-13">
+                      <div class="heading-3"><div class="text-4-1 arial-bold-mirage-22px">프리미엄 주거형</div></div>
+                      <div class="paragraph-3">
+                        <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
+                      </div>
                     </div>
-                    <div class="paragraph">
-                      <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
-                    </div>
+                    <button class="button-2" aria-label="상품 삭제">
+                      <div class="icon-3"><img class="vector-1" src="imgs/vector-1.svg" alt="" role="presentation" /></div>
+                    </button>
                   </div>
-                  <div class="button-2 delete-btn" style="cursor: pointer;" title="삭제">
-                    <div class="icon-3">
-                      <img class="vector-1" src="img/vector-1.svg" alt="삭제">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 기본 가격 -->
-                <div class="container-13">
                   <div class="container-14">
-                    <div class="text-5">
-                      <div class="text-6 notosanskr-medium-pale-sky-15px">기본 가격</div>
-                    </div>
-                    <div class="text-7">
-                      <div class="text-7-1 arial-bold-mirage-17px" id="unitPrice">45,000,000원</div>
+                    <div class="container-15">
+                      <div class="text-5"><div class="text-6 notosanskr-medium-pale-sky-15px">기본 가격</div></div>
+                      <div class="text-7"><div class="text-7-1">45,000,000원</div></div>
                     </div>
                   </div>
-                </div>
-
-                <!-- 수량 + 소계 -->
-                <div class="container-15">
                   <div class="container-16">
-                    <div class="text-8">
-                      <div class="text-8-1">수량</div>
-                    </div>
                     <div class="container-17">
-                      <div class="button qty-btn qty-minus" style="cursor: pointer;">
-                        <div class="icon">
-                          <img class="vector-2" src="img/vector-2.svg" alt="감소">
-                        </div>
-                      </div>
-                      <div class="text-9">
-                        <div class="number arial-bold-mirage-16px" id="itemQty">1</div>
-                      </div>
-                      <div class="button qty-btn qty-plus" style="cursor: pointer;">
-                        <div class="icon">
-                          <img class="vector-3" src="img/vector-3.svg" alt="증가">
-                        </div>
+                      <div class="text-8"><div class="text-8-1">수량</div></div>
+                      <div class="container-18">
+                        <button class="button" aria-label="수량 감소">
+                          <div class="icon"><img class="vector-2" src="imgs/vector-2.svg" alt="" role="presentation" /></div>
+                        </button>
+                        <div class="text-9"><div class="number">1</div></div>
+                        <button class="button" aria-label="수량 증가">
+                          <div class="icon"><img class="vector-3" src="imgs/vector-3.svg" alt="" role="presentation" /></div>
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div class="container-18">
-                    <div class="paragraph-1">
-                      <div class="text-9-1">상품 금액</div>
-                    </div>
-                    <div class="paragraph-2">
-                      <div class="text-10" id="itemSubtotal">45,000,000원</div>
+                    <div class="container-19">
+                      <div class="paragraph-4"><div class="text-9-1">상품 금액</div></div>
+                      <div class="paragraph-5">
+                        <div class="text-10 arial-bold-chathams-blue-24px">45,000,000원</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-              </div>
+              </article>
             </div>
           </div>
-
         </div>
-      </div>
-    </div>
 
-    <!-- ========== 우측: 주문 요약 사이드바 ========== -->
-    <div class="container-19">
+        <!-- =============================================
+             FOOTER
+             ============================================= -->
+        <footer class="footer">
+          <div class="footer-content">
+            <div class="footer-column">
+              <div class="paragraph-6"><div class="text-11 arial-bold-white-18px">고객 지원</div></div>
+              <div class="container">
+                <div class="paragraph"><a class="faq arial-regular-normal-santas-gray-16px" href="#">FAQ</a></div>
+                <div class="paragraph-1"><a class="text-12 arial-regular-normal-santas-gray-16px" href="#">후기</a></div>
+                <div class="paragraph-1"><a class="text-13 arial-regular-normal-santas-gray-16px" href="#">사용자 성향 파악</a></div>
+                <div class="paragraph-1"><a class="text-14 arial-regular-normal-santas-gray-16px" href="#">방문 예약</a></div>
+              </div>
+            </div>
+            <div class="footer-column-1">
+              <div class="paragraph-7"><div class="text-15 arial-bold-white-18px">제품</div></div>
+              <div class="container arial-regular-normal-santas-gray-16px">
+                <div class="paragraph"><a class="text-1" href="#">커스텀 큐브</a></div>
+                <div class="paragraph-1"><a class="text-1" href="#">큐브 갤러리</a></div>
+                <div class="text-19">판매 페이지</div>
+                <div class="paragraph-1">
+                  <div class="paragraph-8"><a class="text-18" href="#">중고 큐브마켓</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="container-20">
+              <div class="container-21">
+                <div class="paragraph-9">
+                  <div class="text-20 arial-regular-normal-santas-gray-16px">혁신적인 컨테이너 하우스로</div>
+                </div>
+                <div class="paragraph-10">
+                  <div class="text-21 arial-regular-normal-santas-gray-16px">새로운 주거 문화를 만들어갑니다</div>
+                </div>
+              </div>
+              <img class="group-10" src="imgs/group-10@2x.png" alt="Container House" />
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <div class="container-22"></div>
+            <div class="container-23">
+              <div class="container-24">
+                <div class="paragraph-11">
+                  <p class="x2026-container-hou arial-regular-normal-santas-gray-14px">
+                    © 2026 Container House. All rights reserved.
+                  </p>
+                </div>
+              </div>
+              <img class="container-25" src="imgs/container.svg" alt="Container House" />
+            </div>
+          </div>
+        </footer>
 
-      <!-- 요약 제목 -->
-      <div class="heading-2-1">
-        <div class="text-11 arial-bold-mirage-24px">주문 요약</div>
-      </div>
+      </main>
 
-      <!-- 금액 상세 -->
-      <div class="container-20">
-        <div class="container">
-          <div class="text-12">
-            <div class="text notosanskr-normal-pale-sky-16px">상품 금액</div>
+      <!-- =============================================
+           주문 요약 사이드바
+           ============================================= -->
+      <aside class="container-26" aria-label="주문 요약">
+        <div class="heading-2-1"><div class="text-22 arial-bold-mirage-24px">주문 요약</div></div>
+        <div class="container-27">
+          <div class="container-1">
+            <div class="text-16"><div class="text notosanskr-normal-pale-sky-16px">상품 금액</div></div>
+            <div class="text-17"><div class="text-2">45,000,000원</div></div>
           </div>
-          <div class="text-13">
-            <div class="text-1" id="summaryProductPrice">45,000,000원</div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="text-14">
-            <div class="text-14-1 notosanskr-normal-pale-sky-16px">배송비</div>
-          </div>
-          <div class="text-15">
-            <div class="text-1" id="summaryShipping">무료</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 총 결제 금액 -->
-      <div class="container-21">
-        <div class="text-16">
-          <div class="text-16-1 arial-bold-mirage-20px">총 결제 금액</div>
-        </div>
-        <div class="text-17">
-          <h1 class="text-17-1" id="summaryTotal">45,000,000원</h1>
-        </div>
-      </div>
-
-      <!-- 결제 버튼 -->
-      <div class="button-3" id="checkoutBtn" style="cursor: pointer;">
-        <div class="text-18 arial-bold-white-18px">결제하기</div>
-      </div>
-
-      <!-- 안내 문구 -->
-      <div class="paragraph-3">
-        <p class="text-19">결제 후 상세 견적서를 받아보실 수 있습니다</p>
-      </div>
-
-      <!-- 추가 안내사항 -->
-      <div class="container-22">
-        <div class="container-1">
-          <div class="icon-1">
-            <img class="vector-4" src="img/vector-4.svg" alt="아이콘">
-            <img class="vector-5" src="img/vector-5.svg" alt="아이콘">
-          </div>
-          <div class="paragraph-4">
-            <p class="text-20 notosanskr-normal-pale-sky-13px">제작 기간은 결제 완료 후 약 4-6주 소요됩니다</p>
-          </div>
-        </div>
-        <div class="container-1">
-          <div class="icon-1">
-            <img class="vector-6" src="img/vector-6.svg" alt="아이콘">
-            <img class="vector-7" src="img/vector-7.svg" alt="아이콘">
-          </div>
-          <div class="paragraph-5">
-            <p class="text-21 notosanskr-normal-pale-sky-13px">설치 장소 사전 현장 답사가 필요합니다</p>
+          <div class="container-1">
+            <div class="text-23"><div class="text-25 notosanskr-normal-pale-sky-16px">배송비</div></div>
+            <div class="text-24"><div class="text-2">무료</div></div>
           </div>
         </div>
-        <div class="container-1">
-          <div class="icon-1">
-            <img class="vector-8" src="img/vector-8.svg" alt="아이콘">
-            <img class="vector-9" src="img/vector-8.svg" alt="아이콘">
-          </div>
-          <div class="paragraph-6">
-            <p class="as-2 notosanskr-normal-pale-sky-13px">A/S 및 품질 보증 2년 제공</p>
-          </div>
+        <div class="container-28">
+          <div class="text-26"><div class="text-27 arial-bold-mirage-20px">총 결제 금액</div></div>
+          <div class="text-28"><p class="text-28-1">45,000,000원</p></div>
         </div>
-      </div>
+        <button class="button-3"><div class="text-29 arial-bold-white-18px">결제하기</div></button>
+        <div class="paragraph-12"><p class="text-30">결제 후 상세 견적서를 받아보실 수 있습니다</p></div>
+        <ul class="container-29" aria-label="안내 사항">
+          <li class="container-2">
+            <div class="icon-1">
+              <img class="vector-4" src="imgs/vector-4.svg" alt="" role="presentation" />
+              <img class="vector-5" src="imgs/vector-5.svg" alt="" role="presentation" />
+            </div>
+            <div class="paragraph-13">
+              <p class="text-31 notosanskr-normal-pale-sky-13px">제작 기간은 결제 완료 후 약 4-6주 소요됩니다</p>
+            </div>
+          </li>
+          <li class="container-2">
+            <div class="icon-1">
+              <img class="vector-6" src="imgs/vector-6.svg" alt="" role="presentation" />
+              <img class="vector-7" src="imgs/vector-7.svg" alt="" role="presentation" />
+            </div>
+            <div class="paragraph-14">
+              <p class="text-32 notosanskr-normal-pale-sky-13px">설치 장소 사전 현장 답사가 필요합니다</p>
+            </div>
+          </li>
+          <li class="container-2">
+            <div class="icon-1">
+              <img class="vector-8" src="imgs/vector-8.svg" alt="" role="presentation" />
+              <img class="vector-9" src="imgs/vector-8.svg" alt="" role="presentation" />
+            </div>
+            <div class="paragraph-15">
+              <p class="as-2 notosanskr-normal-pale-sky-13px">A/S 및 품질 보증 2년 제공</p>
+            </div>
+          </li>
+        </ul>
+      </aside>
 
-    </div>
-  </div>
-
-  <script src="js/cart.js"></script>
-</body>
+    </div><!-- /.cart.screen -->
+  </body>
 </html>
