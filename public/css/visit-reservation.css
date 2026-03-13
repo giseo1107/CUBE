@@ -1638,268 +1638,336 @@ button {
   }
 }
 /* ==========================================================
-   MERGE PATCH — visit-reservation1 (Design ↔ Functional)
-   디자인 HTML의 container-*/button-* 클래스가
-   기능 JS 훅(cal-day, time-slot 등)과 함께 올바르게
-   동작하도록 보완하는 규칙만 추가합니다.
-   기존 visit-reservation.css의 비주얼 스타일은
-   일절 덮어쓰지 않습니다.
+/* ==========================================================
+   RESERVATION SECTION PATCH
+   HTML uses container-14 ~ container-23 + button-42 class names.
+   This single patch bridges them to the functional JS hooks.
    ========================================================== */
 
 /* ----------------------------------------------------------
-   M1. 캘린더 그리드 컨테이너
-   디자인: .container-19  →  JS: id="calendarGrid"
+   R1. 예약 폼 패널 (container-14)
    ---------------------------------------------------------- */
-.container-19 {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-/* ----------------------------------------------------------
-   M2. 월 네비게이션 버튼 (디자인 .button → 기능 button 태그)
-   container-17 내부의 .button은 이제 실제 <button>이므로
-   기본 버튼 스타일 초기화
-   ---------------------------------------------------------- */
-.container-17 .button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  transition: background 0.2s;
-  padding: 0;
-}
-.container-17 .button:hover {
-  background: rgba(84, 83, 123, 0.08);
-}
-
-/* ----------------------------------------------------------
-   M3. 시간 슬롯 컨테이너
-   디자인: .container-21  →  JS: id="timeSlots"
-   ---------------------------------------------------------- */
-.container-21 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-/* ----------------------------------------------------------
-   M4. 시간 슬롯 버튼 (디자인 .button-37~41 + 기능 .time-slot)
-   기능 CSS의 .time-slot 스타일이 이미 적용되므로
-   디자인 클래스에서 충돌하는 div 기반 스타일만 재정의
-   ---------------------------------------------------------- */
-.button-37.time-slot,
-.button-38.time-slot,
-.button-39.time-slot,
-.button-40.time-slot,
-.button-41.time-slot {
-  /* 기능 .time-slot이 이미 border/padding/cursor를 관리하므로
-     디자인 고유 스타일(폰트, 색상)만 유지 */
+.container-14 {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-form);
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* selected 상태일 때 내부 텍스트 색상 흰색으로 */
-.time-slot.is-selected .text-58,
-.time-slot.is-selected .text-59,
-.time-slot.is-selected .text-60,
-.time-slot.is-selected .text-61,
-.time-slot.is-selected .text-62 {
-  color: #ffffff !important;
-}
-
-/* ----------------------------------------------------------
-   M5. 인원 카운터 컨테이너
-   디자인: .container-23
-   ---------------------------------------------------------- */
-.container-23 {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* 디자인 .button-1 + 기능 .counter-btn 병합:
-   기능 CSS의 .counter-btn이 시각 스타일을 담당하므로
-   .button-1의 충돌 속성만 초기화 */
-.button-1.counter-btn {
-  background: none;
-  cursor: pointer;
-}
-
-/* counterValue는 div 구조 유지 */
-#counterValue {
-  min-width: 60px;
+/* 예약하기 타이틀 */
+.container-14 .text-47 {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-3xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 1.5;
   text-align: center;
 }
 
 /* ----------------------------------------------------------
-   M6. 예약하기 버튼
-   디자인: .button-42 + 기능: .btn-reserve
-   기능 CSS .btn-reserve가 배경/레이아웃을 담당
+   R2. 섹션 공통 — 아이콘+레이블 헤더 (container-4)
    ---------------------------------------------------------- */
-.button-42.btn-reserve {
-  /* <button> 태그 기본 스타일 초기화 */
-  border: none;
-  padding: 16px;
+.container-4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.container-4 .icon-2 {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.container-4 .icon-2 img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  cursor: pointer;
-  /* 나머지는 기능 CSS .btn-reserve에서 처리 */
+  height: 100%;
 }
 
-/* 내부 텍스트 색상 유지 */
-.button-42.btn-reserve .text-67 {
-  color: #ffffff;
+.container-4 .label .text {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 30px;
 }
 
 /* ----------------------------------------------------------
-   M7. people-limit-info 위치 보정
-   .container-22 하위에 직접 배치되므로 여백 추가
+   R3. 날짜 섹션 래퍼 (container-15)
    ---------------------------------------------------------- */
-.container-22 .people-limit-info {
-  margin-top: 10px;
+.container-15 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* ----------------------------------------------------------
-   M8. 로딩 오버레이 (디자인 HTML에 없던 요소)
-   기능 CSS에 이미 정의되어 있으므로 별도 규칙 불필요.
-   (이미 .loading-overlay, .loading-overlay.is-active 존재)
-   ---------------------------------------------------------- */
-/* ==========================================================
-   FIX PATCH — 예약 섹션 레이아웃 수정
-   대상: container-16/17/18/19 (캘린더), container-21 (시간),
-         container-23 (인원 카운터)
-   규칙: 예약 섹션 내부만 수정, 기존 스타일 덮어쓰기 최소화
-   ========================================================== */
-
-/* ----------------------------------------------------------
-   FIX-1. 캘린더 외곽 컨테이너 (container-16)
-   .calendar 클래스가 아닌 container-16에 동일한 박스 스타일 적용
+   R4. 캘린더 박스 (container-16)
    ---------------------------------------------------------- */
 .container-16 {
   border: 2px solid var(--cyber-grape-2);
   border-radius: var(--radius-md);
-  padding: 18px;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* ----------------------------------------------------------
-   FIX-2. 월 네비게이션 행 (container-17)
-   .calendar-header와 동일한 flex 레이아웃
+   R5. 월 네비게이션 행 (container-17)
    ---------------------------------------------------------- */
 .container-17 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+/* 이전/다음 달 버튼 */
+.container-17 .button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+.container-17 .button:hover {
+  background: rgba(84, 83, 123, 0.1);
+}
+.container-17 .button .icon-6,
+.container-17 .button .icon-7 {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container-17 .button img {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+/* 월 텍스트 */
+.container-17 .text-49 {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  line-height: 27px;
+  white-space: nowrap;
 }
 
 /* ----------------------------------------------------------
-   FIX-3. 요일 헤더 행 (container-18)
-   .calendar-weekdays와 동일한 7열 그리드
-   내부 div 래퍼(text-16~22)가 각 칸을 차지하도록
+   R6. 요일 헤더 행 (container-18)
+   7개 div 자식을 7열 그리드로 균등 배치
    ---------------------------------------------------------- */
 .container-18 {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
-
-/* container-18 내부의 div 래퍼들: 칸 전체를 채우고 텍스트 중앙 정렬 */
 .container-18 > div {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
+  padding: 8px 0;
 }
-
-/* 요일 헤더 텍스트 스타일 통일 */
 .container-18 > div > div {
   font-family: var(--ff-abhaya);
   font-size: var(--fs-sm);
-  font-weight: 400;
   color: var(--cyber-grape);
-  line-height: 21px;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
 }
-
-/* 일요일(첫 칸) 빨간색, 토요일(마지막 칸) 파란색 */
+/* 일(첫칸) 빨강, 토(마지막칸) 파랑 */
 .container-18 > div:first-child > div { color: #e74c3c; }
 .container-18 > div:last-child  > div { color: var(--curious-blue); }
 
 /* ----------------------------------------------------------
-   FIX-4. 날짜 그리드 (container-19 / id="calendarGrid")
-   이미 MERGE PATCH에서 정의되어 있으나, 명시적으로 강화
+   R7. 날짜 그리드 (container-19 / #calendarGrid)
+   JS가 .cal-day 버튼을 동적 주입
    ---------------------------------------------------------- */
 .container-19 {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 3px;
+  width: 100%;
+}
+
+/* .cal-day — JS 주입 버튼 */
+.container-19 .cal-day {
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-sm);
+  color: var(--cod-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: var(--transition);
+  line-height: 1;
+}
+.container-19 .cal-day:hover:not(:disabled):not(.is-prev):not(.is-next) {
+  background: rgba(84, 83, 123, 0.08);
+}
+.container-19 .cal-day.is-selected {
+  background: var(--cyber-grape) !important;
+  color: #fff !important;
+  border-radius: var(--radius-sm);
+}
+.container-19 .cal-day.is-today {
+  border: 2px solid var(--curious-blue);
+  font-weight: 700;
+  color: var(--curious-blue);
+}
+.container-19 .cal-day.is-today.is-selected {
+  color: #fff !important;
+}
+.container-19 .cal-day.is-prev,
+.container-19 .cal-day.is-next {
+  color: var(--pink-swan);
+  cursor: default;
+}
+.container-19 .cal-day.is-past,
+.container-19 .cal-day.is-closed {
+  color: #d1d5db;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+/* 일요일 열 빨강, 토요일 열 파랑 */
+.container-19 .cal-day:nth-child(7n+1):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
+  color: #e74c3c;
+}
+.container-19 .cal-day:nth-child(7n+1).is-selected { color: #fff !important; }
+.container-19 .cal-day:nth-child(7n):not(.is-prev):not(.is-next):not(.is-past):not(.is-closed) {
+  color: var(--curious-blue);
+}
+.container-19 .cal-day:nth-child(7n).is-selected { color: #fff !important; }
+
+/* ----------------------------------------------------------
+   R8. 시간 섹션 래퍼 (container-20)
+   ---------------------------------------------------------- */
+.container-20 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* ----------------------------------------------------------
-   FIX-5. 시간 슬롯 컨테이너 (container-21 / id="timeSlots")
-   이미 MERGE PATCH에서 정의됨 — slot-time span 스타일 추가
+   R9. 시간 슬롯 그리드 (container-21 / #timeSlots)
    ---------------------------------------------------------- */
 .container-21 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+  width: 100%;
 }
 
-/* 시간 슬롯 버튼 내 slot-time span 텍스트 스타일 */
-.time-slot .slot-time {
+/* 시간 슬롯 버튼 */
+.container-21 .time-slot {
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: var(--radius-sm);
+  padding: 14px 8px;
   font-family: var(--ff-abhaya);
   font-size: var(--fs-md);
-  font-weight: 400;
   color: var(--cod-gray);
-  line-height: 24px;
+  text-align: center;
+  background: var(--white);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.container-21 .time-slot:hover:not(.is-full) {
+  border-color: var(--cyber-grape);
+  background: rgba(84, 83, 123, 0.06);
+}
+.container-21 .time-slot.is-selected {
+  background: var(--cyber-grape) !important;
+  border-color: var(--cyber-grape) !important;
+  color: var(--white);
+}
+.container-21 .time-slot.is-full {
+  opacity: 0.4;
+  cursor: not-allowed;
   pointer-events: none;
 }
-
-/* selected 상태: span 텍스트도 흰색 */
-.time-slot.is-selected .slot-time {
-  color: #ffffff !important;
-}
-
-/* is-full 상태: slot-time 흐리게 */
-.time-slot.is-full .slot-time {
+.container-21 .time-slot .slot-time {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-md);
   color: inherit;
+  line-height: 1.5;
+  pointer-events: none;
 }
+.container-21 .time-slot.is-selected .slot-time { color: #fff; }
+.container-21 .time-slot .slot-remain {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+.container-21 .time-slot.is-selected .slot-remain { color: rgba(255,255,255,0.75); }
+.container-21 .time-slot.is-full    .slot-remain { color: #e74c3c; font-weight: 600; }
 
 /* ----------------------------------------------------------
-   FIX-6. 인원 카운터 행 (container-23)
-   이미 MERGE PATCH에서 flex 정의됨 — counter-value span 강화
+   R10. 인원 섹션 (container-22 / container-23)
    ---------------------------------------------------------- */
+.container-22 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  height: auto !important;          /* 고정 높이 제거 — 내용이 잘리지 않도록 */
+  overflow: visible !important;
+}
+
 .container-23 {
   display: flex;
   align-items: center;
   gap: 16px;
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
-/* counter-value가 이제 span#counterValue에 직접 적용 */
-span.counter-value,
-#counterValue {
-  font-family: var(--ff-abhaya);
-  font-size: var(--fs-xl);
-  font-weight: 400;
-  color: var(--cyber-grape);
-  text-align: center;
-  min-width: 60px;
-  line-height: 30px;
-  display: inline-block;
-}
-
-/* button-1 + counter-btn: 완전한 버튼 초기화 및 sizing */
-.button-1.counter-btn {
+/* 인원 -/+ 버튼 */
+.container-23 .counter-btn {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border: 2px solid var(--cyber-grape-2);
   border-radius: var(--radius-sm);
+  font-family: var(--ff-regular);
   font-size: var(--fs-xl);
   color: var(--cyber-grape);
   display: flex;
@@ -1912,13 +1980,111 @@ span.counter-value,
   transition: var(--transition);
   flex-shrink: 0;
 }
-
-.button-1.counter-btn:hover:not(:disabled) {
+.container-23 .counter-btn:hover:not(:disabled) {
   background: rgba(84, 83, 123, 0.08);
   border-color: var(--cyber-grape);
 }
-
-.button-1.counter-btn:disabled {
+.container-23 .counter-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.container-23 .counter-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
+}
+
+/* 인원 카운터 값 */
+.counter-value,
+#counterValue {
+  font-family: var(--ff-abhaya);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  color: var(--cyber-grape);
+  text-align: center;
+  min-width: 56px;
+  line-height: 30px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* 잔여석 안내 */
+.container-22 .people-limit-info {
+  font-family: var(--ff-regular);
+  font-size: 13px;
+  color: #888;
+  min-height: 18px;
+  line-height: 1.5;
+  width: 100%;
+}
+.people-limit-info.is-warning { color: #e67e22; font-weight: 600; }
+.people-limit-info.is-full    { color: #e74c3c; font-weight: 700; }
+.people-limit-info.is-ok      { color: #27ae60; }
+
+/* ----------------------------------------------------------
+   R11. 예약하기 버튼 (button-42 + btn-reserve)
+   ---------------------------------------------------------- */
+.button-42.btn-reserve {
+  width: 100%;
+  padding: 16px;
+  background: rgba(89, 83, 123, 0.3);
+  border: none;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.button-42.btn-reserve:hover {
+  background: #59537b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(84, 83, 123, 0.4);
+}
+.button-42.btn-reserve:active {
+  transform: translateY(0);
+  box-shadow: none;
+  background: #47406a;
+}
+.button-42.btn-reserve .btn-reserve-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+}
+.button-42.btn-reserve .text-67 {
+  font-family: var(--ff-abhaya);
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffffff;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* ----------------------------------------------------------
+   R12. 반응형 보정 (예약 섹션)
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .container-14 {
+    padding: 24px;
+    gap: 24px;
+  }
+  .container-21 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .container-16 {
+    padding: 12px;
+  }
+  .container-19 .cal-day {
+    font-size: 11px;
+  }
+  .container-21 .time-slot {
+    padding: 10px 6px;
+    font-size: var(--fs-sm);
+  }
+  .container-23 {
+    justify-content: center;
+  }
 }
