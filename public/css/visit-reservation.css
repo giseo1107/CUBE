@@ -1637,3 +1637,137 @@ button {
     font-size: 11px;
   }
 }
+/* ==========================================================
+   MERGE PATCH — visit-reservation1 (Design ↔ Functional)
+   디자인 HTML의 container-*/button-* 클래스가
+   기능 JS 훅(cal-day, time-slot 등)과 함께 올바르게
+   동작하도록 보완하는 규칙만 추가합니다.
+   기존 visit-reservation.css의 비주얼 스타일은
+   일절 덮어쓰지 않습니다.
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   M1. 캘린더 그리드 컨테이너
+   디자인: .container-19  →  JS: id="calendarGrid"
+   ---------------------------------------------------------- */
+.container-19 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* ----------------------------------------------------------
+   M2. 월 네비게이션 버튼 (디자인 .button → 기능 button 태그)
+   container-17 내부의 .button은 이제 실제 <button>이므로
+   기본 버튼 스타일 초기화
+   ---------------------------------------------------------- */
+.container-17 .button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  transition: background 0.2s;
+  padding: 0;
+}
+.container-17 .button:hover {
+  background: rgba(84, 83, 123, 0.08);
+}
+
+/* ----------------------------------------------------------
+   M3. 시간 슬롯 컨테이너
+   디자인: .container-21  →  JS: id="timeSlots"
+   ---------------------------------------------------------- */
+.container-21 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* ----------------------------------------------------------
+   M4. 시간 슬롯 버튼 (디자인 .button-37~41 + 기능 .time-slot)
+   기능 CSS의 .time-slot 스타일이 이미 적용되므로
+   디자인 클래스에서 충돌하는 div 기반 스타일만 재정의
+   ---------------------------------------------------------- */
+.button-37.time-slot,
+.button-38.time-slot,
+.button-39.time-slot,
+.button-40.time-slot,
+.button-41.time-slot {
+  /* 기능 .time-slot이 이미 border/padding/cursor를 관리하므로
+     디자인 고유 스타일(폰트, 색상)만 유지 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* selected 상태일 때 내부 텍스트 색상 흰색으로 */
+.time-slot.is-selected .text-58,
+.time-slot.is-selected .text-59,
+.time-slot.is-selected .text-60,
+.time-slot.is-selected .text-61,
+.time-slot.is-selected .text-62 {
+  color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------
+   M5. 인원 카운터 컨테이너
+   디자인: .container-23
+   ---------------------------------------------------------- */
+.container-23 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 디자인 .button-1 + 기능 .counter-btn 병합:
+   기능 CSS의 .counter-btn이 시각 스타일을 담당하므로
+   .button-1의 충돌 속성만 초기화 */
+.button-1.counter-btn {
+  background: none;
+  cursor: pointer;
+}
+
+/* counterValue는 div 구조 유지 */
+#counterValue {
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   M6. 예약하기 버튼
+   디자인: .button-42 + 기능: .btn-reserve
+   기능 CSS .btn-reserve가 배경/레이아웃을 담당
+   ---------------------------------------------------------- */
+.button-42.btn-reserve {
+  /* <button> 태그 기본 스타일 초기화 */
+  border: none;
+  padding: 16px;
+  width: 100%;
+  cursor: pointer;
+  /* 나머지는 기능 CSS .btn-reserve에서 처리 */
+}
+
+/* 내부 텍스트 색상 유지 */
+.button-42.btn-reserve .text-67 {
+  color: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   M7. people-limit-info 위치 보정
+   .container-22 하위에 직접 배치되므로 여백 추가
+   ---------------------------------------------------------- */
+.container-22 .people-limit-info {
+  margin-top: 10px;
+}
+
+/* ----------------------------------------------------------
+   M8. 로딩 오버레이 (디자인 HTML에 없던 요소)
+   기능 CSS에 이미 정의되어 있으므로 별도 규칙 불필요.
+   (이미 .loading-overlay, .loading-overlay.is-active 존재)
+   ---------------------------------------------------------- */
