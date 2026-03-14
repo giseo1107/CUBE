@@ -1,15 +1,22 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+
 /* ============================================================
    review.css
    Merged: globals.css + styleguide.css + reviewu95main.css
    ============================================================ */
 
 /* ---- 1. EXTERNAL IMPORTS ---- */
-@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
 
 /* ---- 2. GLOBALS ---- */
 /* The following line is used to measure usage of this code. You can remove it if you want. */
 
+@font-face {
+  font-family: "Baloo Da 2";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/BalooDa2-Bold.ttf") format("truetype");
+}
 @font-face {
   font-family: "Arial-Regular";
   font-style: normal;
@@ -1389,7 +1396,7 @@
    TEXT OVERFLOW FIXES
    ============================================================ */
 
-/* 푸터 브랜드 슬로건 (width 초과 위험) */
+/* 푸터 브랜드 슬로건 */
 .reviewu95main .text-51,
 .reviewu95main .text-52 {
   white-space: normal;
@@ -1397,7 +1404,7 @@
   overflow-wrap: break-word;
 }
 
-/* 리뷰 카드 내 텍스트 (width 초과 위험) */
+/* 리뷰 카드 내 텍스트 */
 .reviewu95main .text-10-1,
 .reviewu95main .text-17 {
   white-space: normal;
