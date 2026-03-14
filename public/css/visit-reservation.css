@@ -1,29 +1,32 @@
 /* ============================================================
-   globals.css
+   visit-reservation.css
+   Merged: globals.css + styleguide.css + visit-reservation.css
    ============================================================ */
 
+/* ---- 1. EXTERNAL IMPORTS ---- */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+
+/* ---- 2. GLOBALS ---- */
 /* The following line is used to measure usage of this code. You can remove it if you want. */
-@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.PKFqYbv.hcp.png");
 
 @font-face {
   font-family: "Arial-Bold";
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/ariblk.ttf") format("truetype");
+  src: url("./fonts/ariblk.ttf") format("truetype");
 }
 @font-face {
   font-family: "Arial-Regular";
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+  src: url("./fonts/Satoshi-Regular.ttf") format("truetype");
 }
 @font-face {
   font-family: "Abhaya Libre SemiBold-Regular";
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
+  src: url("./fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
 }
 
 .screen a {
@@ -232,10 +235,7 @@
   white-space: nowrap;
 }
 
-/* ============================================================
-   styleguide.css
-   ============================================================ */
-
+/* ---- 3. STYLEGUIDE ---- */
 :root { 
   --black: #000000;
   --chathams-blue: #1a4f85;
@@ -426,11 +426,7 @@
   font-weight: 700;
 }
 
-
-/* ============================================================
-   visit-reservation.css
-   ============================================================ */
-
+/* ---- 4. PAGE-SPECIFIC (visit-reservation) ---- */
 /* screen - visit-reservation */
 
 .visit-reservation {
@@ -2801,4 +2797,48 @@
 .visit-reservation .text-9-3 {
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+/* ============================================================
+   TEXT OVERFLOW FIXES
+   ============================================================ */
+
+/* 히어로 섹션 텍스트 */
+.visit-reservation .text-38,
+.visit-reservation .text-39,
+.visit-reservation .text-40 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 소개 섹션 긴 텍스트 */
+.visit-reservation .text-96,
+.visit-reservation .text-95 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 개인정보 / 설명 텍스트 */
+.visit-reservation .text-82,
+.visit-reservation .container-house,
+.visit-reservation .text-90 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 푸터 브랜드 슬로건 */
+.visit-reservation .text-112,
+.visit-reservation .text-113 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 저작권 표시 */
+.x2026-container-hou {
+  white-space: normal;
+  overflow-wrap: break-word;
 }
