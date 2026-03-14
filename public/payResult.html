@@ -1,256 +1,278 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>주문 완료</title>
-  <link rel="stylesheet" href="css/payresult.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <title>주문 완료 | Container House</title>
+    <link rel="stylesheet" type="text/css" href="css/payresult.css" />
+  </head>
+  <body style="margin: 0; background: #ffffff">
 
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-  </div>
+    <div class="payu95result screen">
 
-  <!-- 상단 헤더 -->
-  <header class="page-header">
-    <span class="page-title">주문 완료</span>
-  </header>
+      <!-- =============================================
+           HEADER / TOP NAVIGATION
+           ============================================= -->
+      <header class="top">
+        <nav class="logo-nav" aria-label="주요 메뉴">
+          <a href="/" aria-label="홈으로">
+            <img class="logo" src="imgs/logo.svg" alt="Container House 로고" />
+          </a>
+          <div class="navigation">
+            <div class="paragraph-21"><a class="text-15 balooda2-bold-eerie-black-14px" href="#">커스텀 큐브</a></div>
+            <div class="paragraph-5"><a class="text-15 balooda2-bold-eerie-black-14px" href="#">큐브 갤러리</a></div>
+            <div class="paragraph-5"><a class="text-15 balooda2-bold-eerie-black-14px" href="#">큐레이션 샵</a></div>
+            <div class="paragraph-22"><a class="qn-a balooda2-bold-eerie-black-14px" href="#">QnA 및 후기</a></div>
+            <div class="paragraph-23"><a class="text-153 balooda2-bold-eerie-black-14px" href="#">방문 예약</a></div>
+          </div>
+          <div class="login">
+            <div class="paragraph-24"><a class="text-154 balooda2-bold-eerie-black-14px" href="#">로그인</a></div>
+            <div class="paragraph-25"><a class="text-155 balooda2-bold-eerie-black-14px" href="#">회원가입</a></div>
+          </div>
+        </nav>
+      </header>
 
-  <div class="wrapper">
+      <!-- =============================================
+           MAIN CONTENT
+           ============================================= -->
+      <main class="p-k">
 
-    <!-- 완료 배너 -->
-    <div class="success-banner">
-      <div class="success-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </div>
-      <div class="success-title">주문이 완료되었습니다!</div>
-      <div class="success-desc">
-        <p>고객님의 주문을 성공적으로 접수했습니다.</p>
-        <p>상세 견적서가 이메일로 발송되었습니다.</p>
-      </div>
-      <div class="order-number-badge">
-        <span class="order-number-label">주문번호</span>
-        <span class="order-number-value" id="orderNumberDisplay">로딩 중...</span>
-      </div>
-    </div>
-
-    <!-- 주문 정보 -->
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-        주문 정보
-      </div>
-      <div class="info-row">
-        <span class="info-label">주문일시</span>
-        <span class="info-value" id="orderDate">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">결제수단</span>
-        <span class="info-value" id="payMethod">-</span>
-      </div>
-    </div>
-
-    <!-- 주문 상품 -->
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        주문 상품
-      </div>
-      <div class="product-item">
-        <div class="product-img">🏠</div>
-        <div>
-          <div class="product-name" id="productName">프리미엄 주거형</div>
-          <div class="product-qty" id="productQty">수량: 1개</div>
+        <!-- 페이지 타이틀 -->
+        <div class="container-4">
+          <div class="container-5">
+            <div class="heading-1"><h1 class="text-103 arial-bold-mirage-28px">주문 완료</h1></div>
+          </div>
         </div>
-        <div class="product-price" id="productPrice">45,000,000원</div>
-      </div>
-      <div class="total-row">
-        <span class="total-label">최종 결제 금액</span>
-        <span class="total-amount" id="totalAmount">45,000,000원</span>
-      </div>
-    </div>
 
-    <!-- 설치 장소 -->
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-        </svg>
-        설치 장소
-      </div>
-      <div class="info-row">
-        <span class="info-label">받는 사람</span>
-        <span class="info-value" id="receiverName">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">연락처</span>
-        <span class="info-value" id="receiverPhone">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">주소</span>
-        <span class="info-value" id="receiverAddress">-</span>
-      </div>
-    </div>
+        <div class="container-6">
 
-    <!-- 주문자 정보 -->
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-        </svg>
-        주문자 정보
-      </div>
-      <div class="info-row">
-        <span class="info-label">이름</span>
-        <span class="info-value" id="ordererName">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">연락처</span>
-        <span class="info-value" id="ordererPhone">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">이메일</span>
-        <span class="info-value" id="ordererEmail">-</span>
-      </div>
-    </div>
+          <!-- 주문 완료 상단 배너 -->
+          <div class="container-7">
+            <div class="container-8">
+              <div class="icon-1">
+                <img class="vector" src="imgs/vector-50.svg" alt="" role="presentation" />
+              </div>
+            </div>
+            <div class="heading-2"><p class="text-104">주문이 완료되었습니다!</p></div>
+            <div class="paragraph-6">
+              <div class="text-105">고객님의 주문을 성공적으로 접수했습니다.</div>
+              <div class="text-106">상세 견적서가 이메일로 발송되었습니다.</div>
+            </div>
+            <div class="container-9">
+              <div class="paragraph-7"><div class="text-107">주문번호</div></div>
+              <div class="paragraph-8">
+                <div class="ord-20260216-diq32-e arial-bold-chathams-blue-24px">ORD-20260216-DIQ32E</div>
+              </div>
+            </div>
+          </div>
 
-    <!-- 다음 단계 안내 -->
-    <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-        </svg>
-        다음 단계 안내
-      </div>
-      <div class="step-list">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-text">영업일 기준 1-2일 내로 담당자가 유선 연락을 드립니다.</div>
+          <!-- 주문 정보 -->
+          <section class="container-10" aria-labelledby="order-info-heading">
+            <div class="heading-3-1">
+              <div class="text-108 arial-bold-mirage-22px" id="order-info-heading">주문 정보</div>
+            </div>
+            <div class="container-11">
+              <div class="text"><div class="text-1 notosanskr-medium-pale-sky-15px">주문일시</div></div>
+              <div class="text-4"><p class="text-110 notosanskr-normal-mirage-15px">2026년 2월 16일 오전 09:23</p></div>
+            </div>
+            <div class="container-12">
+              <div class="text"><div class="text-1 notosanskr-medium-pale-sky-15px">결제수단</div></div>
+              <div class="text"><div class="text-1 notosanskr-normal-mirage-15px">신용카드</div></div>
+            </div>
+            <div class="heading-4"><div class="text-113">주문 상품</div></div>
+            <div class="container-13">
+              <div class="image" role="img" aria-label="프리미엄 주거형 상품 이미지"></div>
+              <div class="container-14">
+                <div class="heading-5"><div class="text-114">프리미엄 주거형</div></div>
+                <div class="paragraph"><div class="text-115 notosanskr-normal-pale-sky-14px">수량: 1개</div></div>
+              </div>
+              <div class="paragraph-9"><div class="text-116">45,000,000원</div></div>
+            </div>
+            <div class="container-15">
+              <div class="container-16">
+                <div class="text-5"><div class="text-1-1 arial-bold-mirage-20px">총 결제 금액</div></div>
+                <div class="text-6"><div class="text-118">45,000,000원</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 설치 장소 / 주문자 정보 -->
+          <div class="container-17">
+            <section class="container-18" aria-labelledby="install-heading">
+              <div class="heading-3">
+                <div class="text-1-1 arial-bold-mirage-20px" id="install-heading">설치 장소</div>
+              </div>
+              <div class="container-19">
+                <div class="container">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">받는 사람</div></div>
+                  <div class="paragraph-2"><div class="text-121 notosanskr-normal-mirage-15px">홍길동</div></div>
+                </div>
+                <div class="container">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">연락처</div></div>
+                  <div class="paragraph-2">
+                    <div class="phone phone-3 notosanskr-normal-mirage-15px">010-0000-0000</div>
+                  </div>
+                </div>
+                <div class="container-20">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">주소</div></div>
+                  <address class="paragraph-10 notosanskr-normal-mirage-15px">
+                    <div class="text-124">천안시 서북구 성환읍</div>
+                    <div class="text-125">남서울대 공학관</div>
+                  </address>
+                </div>
+              </div>
+            </section>
+            <section class="container-21" aria-labelledby="orderer-heading">
+              <div class="heading-3">
+                <div class="text-1-1 arial-bold-mirage-20px" id="orderer-heading">주문자 정보</div>
+              </div>
+              <div class="container-22">
+                <div class="container">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">이름</div></div>
+                  <div class="paragraph-2"><div class="text-128 notosanskr-normal-mirage-15px">홍길동</div></div>
+                </div>
+                <div class="container">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">연락처</div></div>
+                  <div class="paragraph-2">
+                    <div class="phone-1 phone-3 notosanskr-normal-mirage-15px">010-0000-0000</div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="paragraph-1"><div class="text-1-2 notosanskr-medium-pale-sky-13px">이메일</div></div>
+                  <div class="paragraph-2">
+                    <div class="exampleemailcom notosanskr-normal-mirage-15px">example@email.com</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- 다음 단계 안내 -->
+          <section class="container-23" aria-labelledby="next-steps-heading">
+            <div class="heading-3">
+              <div class="icon-2"><img class="vector-1" src="imgs/vector-51.svg" alt="" role="presentation" /></div>
+              <div class="text-131" id="next-steps-heading">다음 단계 안내</div>
+            </div>
+            <ol class="container-24" aria-label="처리 단계">
+              <li class="container-1">
+                <div class="container-2">
+                  <div class="text-2"><div class="number arial-bold-white-12px">1</div></div>
+                </div>
+                <div class="paragraph-11">
+                  <p class="text-132 notosanskr-normal-peanut-15px">영업일 기준 1-2일 내로 담당자가 유선 연락을 드립니다.</p>
+                </div>
+              </li>
+              <li class="container-1">
+                <div class="container-2">
+                  <div class="text-2"><div class="number arial-bold-white-12px">2</div></div>
+                </div>
+                <div class="paragraph-12">
+                  <p class="text-133 notosanskr-normal-peanut-15px">설치 장소 현장 답사 일정을 조율합니다.</p>
+                </div>
+              </li>
+              <li class="container-1">
+                <div class="container-2">
+                  <div class="text-2"><div class="number arial-bold-white-12px">3</div></div>
+                </div>
+                <div class="paragraph-13">
+                  <p class="text-134 notosanskr-normal-peanut-15px">현장 답사 후 최종 견적을 확정하고 제작에 착수합니다.</p>
+                </div>
+              </li>
+              <li class="container-1">
+                <div class="container-2">
+                  <div class="text-2"><div class="number arial-bold-white-12px">4</div></div>
+                </div>
+                <div class="paragraph-14">
+                  <p class="text-135 notosanskr-normal-peanut-15px">제작 완료 후 운송 및 설치가 진행됩니다. (약 4-6주 소요)</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          <!-- 버튼 그룹 -->
+          <div class="container-25">
+            <a class="button button-2" href="/"><div class="text-136 arial-bold-white-18px">홈으로 돌아가기</div></a>
+            <a class="button-1 button-2" href="#"><div class="text-137">주문 내역 확인</div></a>
+          </div>
+
+          <!-- 문의 링크 -->
+          <div class="container-26">
+            <div class="paragraph">
+              <div class="text-138 notosanskr-normal-pale-sky-14px">문의사항이 있으신가요?</div>
+            </div>
+            <div class="container-27">
+              <a class="link link-2" href="tel:15880000">
+                <div class="icon"><img class="vector-2" src="imgs/vector-52.svg" alt="" role="presentation" /></div>
+                <div class="text-3"><div class="phone-2 phone-3">1588-0000</div></div>
+              </a>
+              <a class="link-1 link-2" href="mailto:support@example.com">
+                <div class="icon">
+                  <img class="vector-3" src="imgs/vector-53.svg" alt="" role="presentation" />
+                  <img class="vector-4" src="imgs/vector-54.svg" alt="" role="presentation" />
+                </div>
+                <div class="text-3"><div class="supportexamplecom">support@example.com</div></div>
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /.container-6 -->
+
+      </main>
+
+      <!-- =============================================
+           FOOTER
+           ============================================= -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="paragraph-15"><div class="text-139 arial-bold-white-18px">고객 지원</div></div>
+            <div class="container-3">
+              <div class="paragraph-3"><a class="faq arial-regular-normal-santas-gray-16px" href="#">FAQ</a></div>
+              <div class="paragraph-4"><a class="text-140 arial-regular-normal-santas-gray-16px" href="#">후기</a></div>
+              <div class="paragraph-4"><a class="text-141 arial-regular-normal-santas-gray-16px" href="#">사용자 성향 파악</a></div>
+              <div class="paragraph-4"><a class="text-142 arial-regular-normal-santas-gray-16px" href="#">방문 예약</a></div>
+            </div>
+          </div>
+          <div class="footer-column-1">
+            <div class="paragraph-16"><div class="text-143 arial-bold-white-18px">제품</div></div>
+            <div class="container-3 arial-regular-normal-santas-gray-16px">
+              <div class="paragraph-3"><a class="text-14" href="#">커스텀 큐브</a></div>
+              <div class="paragraph-4"><a class="text-14" href="#">큐브 갤러리</a></div>
+              <div class="text-147">판매 페이지</div>
+              <div class="paragraph-4">
+                <div class="paragraph-17"><a class="text-146" href="#">중고 큐브마켓</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="container-28">
+            <div class="container-29">
+              <div class="paragraph-18">
+                <div class="text-148 arial-regular-normal-santas-gray-16px">혁신적인 컨테이너 하우스로</div>
+              </div>
+              <div class="paragraph-19">
+                <div class="text-149 arial-regular-normal-santas-gray-16px">새로운 주거 문화를 만들어갑니다</div>
+              </div>
+            </div>
+            <img class="group-10" src="imgs/group-10@2x.png" alt="Container House" />
+          </div>
         </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-text">설치 장소 현장 답사 일정을 조율합니다.</div>
+        <div class="footer-bottom">
+          <div class="container-30"></div>
+          <div class="container-31">
+            <div class="container-32">
+              <div class="paragraph-20">
+                <p class="x2026-container-hou arial-regular-normal-santas-gray-14px">
+                  © 2026 Container House. All rights reserved.
+                </p>
+              </div>
+            </div>
+            <img class="container-33" src="imgs/container.svg" alt="Container House" />
+          </div>
         </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-text">현장 답사 후 최종 견적을 확정하고 제작에 착수합니다.</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">4</div>
-          <div class="step-text">제작 완료 후 운송 및 설치가 진행됩니다. (약 4-6주 소요)</div>
-        </div>
-      </div>
-    </div>
+      </footer>
 
-    <!-- 버튼 -->
-    <div class="btn-row">
-      <a class="btn btn-secondary" href="/index.html">홈으로 돌아가기</a>
-      <a class="btn btn-primary" href="/orders.html" id="checkOrderBtn">주문 내역 확인</a>
-    </div>
-
-    <!-- 문의 -->
-    <div class="contact-card" style="margin-top: 20px;">
-      <p class="contact-label">문의사항이 있으신가요?</p>
-      <div class="contact-links">
-        <a href="tel:1588-0000" class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
-          1588-0000
-        </a>
-        <a href="mailto:support@example.com" class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-          </svg>
-          support@example.com
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    function getParam(key) {
-      return new URLSearchParams(window.location.search).get(key);
-    }
-
-    function formatDate(dateStr) {
-      const d = dateStr ? new Date(dateStr) : new Date();
-      return d.toLocaleString('ko-KR', {
-        year: 'numeric', month: 'long', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
-    }
-
-    function payMethodLabel(method) {
-      return { card: '신용카드', transfer: '실시간 계좌이체', deposit: '무통장 입금' }[method] || method || '-';
-    }
-
-    function formatMoney(n) {
-      return Number(n).toLocaleString('ko-KR') + '원';
-    }
-
-    function render(data) {
-      document.getElementById('orderNumberDisplay').textContent = data.orderId || '-';
-      document.getElementById('orderDate').textContent    = formatDate(data.createdAt);
-      document.getElementById('payMethod').textContent    = payMethodLabel(data.payMethod);
-
-      if (data.items && data.items[0]) {
-        const item = data.items[0];
-        document.getElementById('productName').textContent  = item.name  || '-';
-        document.getElementById('productQty').textContent   = `수량: ${item.qty || 1}개`;
-        document.getElementById('productPrice').textContent = formatMoney(item.price || 0);
-      }
-      document.getElementById('totalAmount').textContent = formatMoney(data.totalAmount || 0);
-
-      const s = data.shipping || {};
-      document.getElementById('receiverName').textContent  = s.name  || '-';
-      document.getElementById('receiverPhone').textContent = s.phone || '-';
-      const addr = [s.addressBase, s.addressDetail].filter(Boolean).join(' ');
-      document.getElementById('receiverAddress').textContent = addr || '-';
-
-      const o = data.orderer || {};
-      document.getElementById('ordererName').textContent  = o.name  || '-';
-      document.getElementById('ordererPhone').textContent = o.phone || '-';
-      document.getElementById('ordererEmail').textContent = o.email || '-';
-    }
-
-    async function loadOrderData() {
-      const orderId = getParam('orderId');
-      if (!orderId) {
-        render({ orderId: 'ORD-00000000-SAMPLE' });
-        return;
-      }
-
-      document.getElementById('loadingOverlay').classList.add('show');
-
-      try {
-        const res  = await fetch(`/api/order/${orderId}`);
-        const text = await res.text();
-        let data;
-        try { data = JSON.parse(text); } catch { throw new Error('응답 파싱 실패'); }
-
-        if (data.success && data.order) {
-          render(data.order);
-        } else {
-          throw new Error(data.message || '주문 정보를 불러올 수 없습니다.');
-        }
-      } catch (err) {
-        console.error('주문 조회 오류:', err);
-        render({ orderId });
-      } finally {
-        document.getElementById('loadingOverlay').classList.remove('show');
-      }
-    }
-
-    loadOrderData();
-  </script>
-</body>
+    </div><!-- /.payu95result.screen -->
+  </body>
 </html>
