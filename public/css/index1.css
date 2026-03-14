@@ -5,22 +5,27 @@
 
 /* ---- 1. EXTERNAL IMPORTS ---- */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
 
 /* ---- 2. GLOBALS ---- */
 /* The following line is used to measure usage of this code. You can remove it if you want. */
 
 @font-face {
+  font-family: "Baloo Da 2";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/BalooDa2-Bold.ttf") format("truetype");
+}
+@font-face {
   font-family: "Arial-Bold";
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/ariblk.ttf") format("truetype");
+  src: url("./fonts/ariblk.ttf") format("truetype");
 }
 @font-face {
   font-family: "Arial-Regular";
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+  src: url("./fonts/Satoshi-Regular.ttf") format("truetype");
 }
 
 .screen a {
