@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const path = require('path');
+const fs   = require('fs');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -20,6 +21,36 @@ const PORT = process.env.PORT || 3000;
 
 // Render 등 리버스 프록시 환경에서 HTTPS 인식 (세션 설정보다 위에 있어야 함)
 app.set('trust proxy', 1);
+
+// ──────────────────────────────────────────────────────────────
+// navbar.js 자동 주입 미들웨어 (express.static 보다 앞에 위치)
+// ──────────────────────────────────────────────────────────────
+const NAV_EXCLUDE = new Set([
+    '/login.html',
+    '/signup.html',
+    '/verify-email.html',
+]);
+
+app.use((req, res, next) => {
+    if (!req.path.endsWith('.html')) return next();
+    if (NAV_EXCLUDE.has(req.path))   return next();
+
+    const filePath = path.join(__dirname, 'public', req.path);
+    if (!fs.existsSync(filePath))    return next();
+
+    let html = fs.readFileSync(filePath, 'utf8');
+
+    if (!html.includes('navbar.js')) {
+        html = html.replace(
+            '</body>',
+            '  <script src="/js/navbar.js"></script>\n</body>'
+        );
+    }
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+});
+// ──────────────────────────────────────────────────────────────
 
 // 정적 파일 먼저 제공 (인증 불필요)
 app.use(express.static(path.join(__dirname, 'public')));

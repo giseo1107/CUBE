@@ -1,258 +1,115 @@
-/**
- * navbar.js — C.C.C 공통 네비게이션
- * 사용법: 각 HTML </body> 바로 위에 아래 한 줄 추가
- * <script src="/js/navbar.js"></script>
- */
-(function () {
+const express = require('express');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const path = require('path');
+const fs   = require('fs');
+require('dotenv').config();
 
-  // ── 메뉴 정의 ───────────────────────────────────────────
-  const NAV_ITEMS = [
-    { label: '커스텀 큐브',   href: 'editor.html' },
-    { label: '큐브 갤러리',   href: 'cubegallery.html' },
-    { label: '큐레이션 샵',   href: 'curation.html' },
-    { label: '방문 예약',     href: 'visit-reservation.html' },
-    { label: 'QnA 및 후기',  href: 'Qna.html' },
-  ];
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const designsRoutes = require('./routes/designs');
+const reservationRoutes = require('./routes/reservation');
+const usedItemsRoute = require('./routes/usedItems');
+const galleryRoutes = require('./routes/gallery');
+const reviewRoutes = require('./routes/review');
+const pool = require('./config/db');  // ← 기존 SSL 적용된 pool 가져오기
 
-  // ── 현재 페이지 판별 ────────────────────────────────────
-  const path = location.pathname;
-  function isActive(href) {
-    const page = href.replace('/', '').replace('.html', '');
-    return path === href || path.includes(page);
-  }
+const sessionStore = new MySQLStore({}, pool);  // ← pool 직접 전달 (SSL 옵션 불필요)
 
-  // ── 스타일 주입 ─────────────────────────────────────────
-  const style = document.createElement('style');
-  style.textContent = `
-    #g-nav {
-      width: 100%;
-      height: 80px;
-      background: rgba(26, 31, 46, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #364153;
-      display: flex;
-      align-items: center;
-      padding: 0 60px;
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 9999;
-      box-sizing: border-box;
-    }
-    #g-nav * { box-sizing: border-box; }
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    /* 내부 래퍼 */
-    #g-nav .gn-inner {
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+// Render 등 리버스 프록시 환경에서 HTTPS 인식 (세션 설정보다 위에 있어야 함)
+app.set('trust proxy', 1);
+
+// ──────────────────────────────────────────────────────────────
+// navbar.js 자동 주입 미들웨어 (express.static 보다 앞에 위치)
+// ──────────────────────────────────────────────────────────────
+const NAV_EXCLUDE = new Set([
+    '/login.html',
+    '/signup.html',
+    '/verify-email.html',
+]);
+
+app.use((req, res, next) => {
+    if (!req.path.endsWith('.html')) return next();
+    if (NAV_EXCLUDE.has(req.path))   return next();
+
+    const filePath = path.join(__dirname, 'public', req.path);
+    if (!fs.existsSync(filePath))    return next();
+
+    let html = fs.readFileSync(filePath, 'utf8');
+
+    if (!html.includes('navbar.js')) {
+        html = html.replace(
+            '</body>',
+            '  <script src="/js/navbar.js"></script>\n</body>'
+        );
     }
 
-    /* 로고 */
-    #g-nav .gn-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    #g-nav .gn-logo-img {
-      width: 54px;
-      height: 54px;
-      background-image: url('/main_img/logo.svg');
-      background-size: cover;
-      background-position: center;
-      flex-shrink: 0;
-    }
-    #g-nav .gn-logo-text { display: flex; flex-direction: column; }
-    #g-nav .gn-logo-title {
-      font-family: "Inter", Helvetica;
-      font-size: 34px;
-      font-weight: 400;
-      color: #aff9f5;
-      line-height: 1;
-      letter-spacing: 0;
-    }
-    #g-nav .gn-logo-sub {
-      font-family: "Inter", Helvetica;
-      font-size: 13px;
-      color: #aff9f5;
-      opacity: 0.75;
-      line-height: 1.4;
-    }
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+});
+// ──────────────────────────────────────────────────────────────
 
-    /* 메뉴 */
-    #g-nav .gn-menu {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      list-style: none;
-      flex: 1;
-      justify-content: center;
-      margin: 0;
-      padding: 0;
+// 정적 파일 먼저 제공 (인증 불필요)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 미들웨어 설정
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// 세션 설정
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7일
     }
-    #g-nav .gn-menu li a {
-      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 18px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      transition: color .15s;
-      white-space: nowrap;
-    }
-    #g-nav .gn-menu li a:hover { color: #aff9f5; }
-    #g-nav .gn-menu li.active a {
-      color: #aff9f5;
-      font-weight: 700;
-    }
+}));
 
-    /* 인증 영역 */
-    #g-nav .gn-auth {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-shrink: 0;
-    }
-    #g-nav .gn-auth a,
-    #g-nav .gn-auth button {
-      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: color .15s;
-    }
-    #g-nav .gn-auth a:hover,
-    #g-nav .gn-auth button:hover { color: #aff9f5; }
+// 라우트 설정
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/designs', designsRoutes);
+app.use('/api/reservation', reservationRoutes);
+app.use('/api/used-items', usedItemsRoute);
+app.use('/api/gallery', galleryRoutes);
+app.use('/api/reviews', reviewRoutes);
 
-    /* 로그인 상태: 유저 정보 */
-    #g-nav .gn-user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    #g-nav .gn-user-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      font-size: 18px;
-      flex-shrink: 0;
-      border: 2px solid rgba(175, 249, 245, 0.4);
-    }
-    #g-nav .gn-user-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    #g-nav .gn-user-name {
-      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-    }
-    #g-nav .gn-btn-logout {
-      padding: 6px 16px;
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .2s;
-      white-space: nowrap;
-    }
-    #g-nav .gn-btn-logout:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-1px);
-    }
+// 후기 상세 페이지 (깔끔한 URL)
+app.get('/review/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'reviewDetail.html'));
+});
 
-    /* 바디 여백 (navbar 높이만큼) */
-    body { padding-top: 80px !important; }
-  `;
-  document.head.appendChild(style);
+// 중고 큐브 상세 페이지 (깔끔한 URL)
+app.get('/used/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'used_cube1.html'));
+});
 
-  // ── navbar HTML 생성 ────────────────────────────────────
-  const menuHTML = NAV_ITEMS.map(item =>
-    `<li class="${isActive(item.href) ? 'active' : ''}">
-       <a href="${item.href}">${item.label}</a>
-     </li>`
-  ).join('');
+// 루트 경로는 로그인 페이지로
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
-  const nav = document.createElement('nav');
-  nav.id = 'g-nav';
-  nav.innerHTML = `
-    <div class="gn-inner">
-      <a href="/index.html" class="gn-logo">
-        <div class="gn-logo-img"></div>
-      </a>
-      <ul class="gn-menu">${menuHTML}</ul>
-      <div class="gn-auth" id="gn-auth">
-        <a href="/login.html">로그인</a>
-        <a href="/signup.html">회원가입</a>
-      </div>
-    </div>
-  `;
+// 404 에러 처리
+app.use((req, res) => {
+    res.status(404).json({ success: false, message: '요청한 리소스를 찾을 수 없습니다.' });
+});
 
-  // ── body 최상단에 삽입 ──────────────────────────────────
-  function mount() {
-    // 기존 navbar가 있으면 숨김 (충돌 방지)
-    document.querySelectorAll('.navbar, nav:not(#g-nav)').forEach(el => {
-      el.style.display = 'none';
-    });
-    document.body.insertBefore(nav, document.body.firstChild);
-    checkAuth();
-  }
+// 에러 핸들링
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
+});
 
-  document.body ? mount() : document.addEventListener('DOMContentLoaded', mount);
-
-  // ── 로그인 상태 반영 (index.html과 동일 방식) ──────────
-  async function checkAuth() {
-    const authEl = document.getElementById('gn-auth');
-    if (!authEl) return;
-
-    try {
-      const res  = await fetch('/api/user/info');
-      const data = await res.json();
-
-      if (data.success && data.user) {
-        const user = data.user;
-        const avatarHTML = user.profile_image
-          ? `<img src="${user.profile_image}" alt="프로필">`
-          : `<span>👤</span>`;
-
-        authEl.innerHTML = `
-          <div class="gn-user-info">
-            <div class="gn-user-avatar">${avatarHTML}</div>
-            <span class="gn-user-name">${user.nickname || user.email || '사용자'}</span>
-            <button class="gn-btn-logout" id="gn-logout">로그아웃</button>
-          </div>
-        `;
-
-        document.getElementById('gn-logout').addEventListener('click', async () => {
-          if (!confirm('로그아웃 하시겠습니까?')) return;
-          try {
-            await fetch('/api/auth/logout', { method: 'POST' });
-            location.reload();
-          } catch { location.href = '/login.html'; }
-        });
-      }
-    } catch { /* 기본 로그인/회원가입 유지 */ }
-  }
-
-})();
+// 서버 시작
+app.listen(PORT, () => {
+    console.log(`큐브 서버가 포트 ${PORT}에서 실행중입니다.`);
+    console.log(`http://localhost:${PORT}`);
+});
