@@ -8,7 +8,7 @@
   // ── 메뉴 정의 ───────────────────────────────────────────
   const NAV_ITEMS = [
     { label: '커스텀 큐브',   href: 'editor.html' },
-    { label: '큐브 갤러리',   href: 'cube_gallery.html' },
+    { label: '큐브 갤러리',   href: 'cubegallery.html' },
     { label: '큐레이션 샵',   href: 'curation.html' },
     { label: '방문 예약',     href: 'visit-reservation.html' },
     { label: 'QnA 및 후기',  href: 'Qna.html' },
