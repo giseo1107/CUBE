@@ -645,8 +645,9 @@
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  height: 77px;
-  overflow: hidden;
+  height: auto;
+  min-height: 77px;
+  overflow: visible;
   padding: 1px;
   position: relative;
   width: 100%;
@@ -1424,6 +1425,23 @@
   left: 0;
   position: absolute;
   width: 1920px;
+}
+
+
+/* ---- FAQ 답변 패널 ---- */
+.qu38a .faq-answer-panel {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 16px 32px 20px;
+  box-sizing: border-box;
+  color: #4a5565;
+  font-size: 16px;
+  line-height: 1.7;
+  border-top: 1px solid #e5e7eb;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* ============================================================
