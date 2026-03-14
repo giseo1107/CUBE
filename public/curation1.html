@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1920, maximum-scale=1.0" />
     <meta name="og:type" content="website" />
     <meta name="twitter:card" content="photo" />
+    <title>프리미엄 주거형 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/curation1.css" />
   </head>
   <body style="margin: 0; background: #ffffff">
-    <input type="hidden" id="anPageName" name="page" value="curation-shopu95detailed1" />
     <div class="curation-shopu95detailed1 screen">
       <div class="product-detail">
         <div class="container">
@@ -120,7 +120,7 @@
               </p>
             </div>
             <div class="container-21">
-              <div class="button">
+              <div class="button" data-price="3500000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <div class="container-6">
                     <div class="icon-1">
@@ -140,7 +140,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="2800000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <img class="container-10" src="curationimg/container.svg" alt="Container" />
                   <div class="container-7">
@@ -155,7 +155,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="8500000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <img class="container-10" src="curationimg/container-1.svg" alt="Container" />
                   <div class="container-7">
@@ -170,7 +170,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="1500000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <div class="container-6">
                     <div class="icon-1"><img class="vector-3" src="curationimg/vector-9.svg" alt="Vector" /></div>
@@ -187,7 +187,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="2200000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <div class="container-6">
                     <div class="icon-1"><img class="vector-4" src="curationimg/vector-10.svg" alt="Vector" /></div>
@@ -204,7 +204,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="4500000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <div class="container-6">
                     <div class="icon-1">
@@ -225,7 +225,7 @@
                   <div class="container-9"></div>
                 </div>
               </div>
-              <div class="button">
+              <div class="button" data-price="3200000" onclick="toggleOption(this)">
                 <div class="container-5">
                   <div class="container-6">
                     <div class="icon-1"><img class="vector-8" src="curationimg/vector-14.svg" alt="Vector" /></div>
@@ -250,11 +250,34 @@
               </div>
               <div class="container-23">
                 <div class="text-32"><div class="text-1 arial-bold-mirage-20px">총 예상 금액</div></div>
-                <div class="text-33"><div class="text-116 arial-bold-chathams-blue-32px">45,000,000원</div></div>
+                <div class="text-33"><div class="text-116 arial-bold-chathams-blue-32px" id="total-price-main">45,000,000원</div></div>
               </div>
             </div>
-            <div class="button-1">
-              <div class="text-34"><div class="text-117 arial-bold-white-18px">장바구니 담기</div></div>
+            <!-- 장바구니 담기 -->
+            <form id="cart-form" action="/api/cart/add" method="POST">
+              <input type="hidden" name="product_id" value="1" />
+              <input type="hidden" name="product_name" value="프리미엄 주거형" />
+              <input type="hidden" name="base_price" value="45000000" />
+              <input type="hidden" name="quantity" value="1" />
+              <input type="hidden" id="cart-total" name="total_amount" value="45000000" />
+              <input type="hidden" id="cart-options" name="selected_options" value="" />
+              <div class="button-1" onclick="submitCart(event)">
+                <div class="text-34"><div class="text-117 arial-bold-white-18px">장바구니 담기</div></div>
+              </div>
+            </form>
+
+            <!-- 바로 결제하기 -->
+            <form id="buy-form" action="/api/orders/prepare" method="POST">
+              <input type="hidden" name="product_id" value="1" />
+              <input type="hidden" name="product_name" value="프리미엄 주거형" />
+              <input type="hidden" name="base_price" value="45000000" />
+              <input type="hidden" name="quantity" value="1" />
+              <input type="hidden" id="buy-total" name="total_amount" value="45000000" />
+              <input type="hidden" id="buy-options" name="selected_options" value="" />
+              <input type="hidden" name="status" value="PAID" />
+            </form>
+            <div class="button-buy" onclick="submitBuy()">
+              <div class="text-buy">바로 결제하기</div>
             </div>
             <div class="paragraph-6">
               <div class="text-118 arial-regular-normal-santas-gray-13px">담당자가 24시간 내에 연락드립니다</div>
@@ -278,7 +301,7 @@
           </div>
           <div class="container-25">
             <div class="text-36"><div class="text-10 arial-regular-normal-pale-sky-14px">총 예상 금액:</div></div>
-            <div class="text-37"><div class="text-121 arial-bold-chathams-blue-28px">45,000,000원</div></div>
+            <div class="text-37"><div class="text-121 arial-bold-chathams-blue-28px" id="total-price-sticky">45,000,000원</div></div>
           </div>
         </div>
       </div>
@@ -353,5 +376,118 @@
         </div>
       </footer>
     </div>
-  </body>
+  
+  <script>
+    // ─── 기본 가격 ───────────────────────────────────────────
+    const BASE_PRICE = 45000000;
+
+    // ─── 선택된 옵션 관리 ────────────────────────────────────
+    const selectedOptions = new Set();
+
+    function toggleOption(btn) {
+      const price = parseInt(btn.dataset.price, 10);
+      const label = btn.querySelector('[class*="text-6"]')?.innerText?.trim() || '';
+
+      if (selectedOptions.has(price + '_' + label)) {
+        selectedOptions.delete(price + '_' + label);
+        btn.style.borderColor = '';
+        btn.style.backgroundColor = '';
+      } else {
+        selectedOptions.add(price + '_' + label);
+        btn.style.borderColor = 'var(--chathams-blue)';
+        btn.style.backgroundColor = '#f0f6ff';
+      }
+      updateTotal();
+    }
+
+    function updateTotal() {
+      let extra = 0;
+      selectedOptions.forEach(key => {
+        extra += parseInt(key.split('_')[0], 10);
+      });
+      const total = BASE_PRICE + extra;
+      const formatted = total.toLocaleString('ko-KR') + '원';
+
+      // 메인 총액 표시
+      const mainEl = document.getElementById('total-price-main');
+      if (mainEl) mainEl.textContent = total.toLocaleString('ko-KR') + '원';
+
+      // 상단 sticky 총액 표시
+      const stickyEl = document.getElementById('total-price-sticky');
+      if (stickyEl) stickyEl.textContent = formatted;
+
+      // hidden form inputs 업데이트
+      ['cart-total', 'buy-total'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = total;
+      });
+
+      // 선택된 옵션 이름 저장
+      const optionNames = [...selectedOptions].map(k => k.split('_').slice(1).join('_')).join(',');
+      ['cart-options', 'buy-options'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = optionNames;
+      });
+    }
+
+    // ─── 장바구니 담기 ───────────────────────────────────────
+    function submitCart(e) {
+      e.preventDefault();
+      const form = document.getElementById('cart-form');
+      const data = new FormData(form);
+
+      fetch('/api/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(data))
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          window.location.href = 'cart.html';
+        } else {
+          alert(result.message || '장바구니 담기에 실패했습니다.');
+        }
+      })
+      .catch(() => {
+        // 로그인 필요 등 에러 시 cart.html로 이동
+        window.location.href = 'cart.html';
+      });
+    }
+
+    // ─── 바로 결제하기 ───────────────────────────────────────
+    function submitBuy() {
+      const total = document.getElementById('buy-total')?.value || BASE_PRICE;
+      const options = document.getElementById('buy-options')?.value || '';
+
+      const payload = {
+        product_id: 1,
+        product_name: '프리미엄 주거형',
+        base_price: BASE_PRICE,
+        quantity: 1,
+        total_amount: parseInt(total, 10),
+        selected_options: options,
+        status: 'PAID'
+      };
+
+      fetch('/api/orders/prepare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          window.location.href = 'pay.html';
+        } else {
+          alert(result.message || '결제 준비에 실패했습니다.');
+        }
+      })
+      .catch(() => {
+        window.location.href = 'pay.html';
+      });
+    }
+  </script>
+
+</body>
 </html>

@@ -66,6 +66,27 @@
   box-sizing: border-box;
 }
 
+/* ---- TEXT OVERFLOW FIXES ---- */
+.curation-shop .text-1,
+.curation-shop [class*="text-"],
+.curation-shop p {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.curation-shop .x12m-3m-28m,
+.curation-shop .x12m-3m-28m-3,
+.curation-shop .x6m-3m-28m,
+.curation-shop .x6m-25m-25m,
+.curation-shop .x9m-3m-28m,
+.curation-shop .x9m-3m-28m-1,
+.curation-shop .x18m-6m-56m,
+.curation-shop .x18m-6m-56m-1 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+
 .screen a {
   display: contents;
   text-decoration: none;
@@ -725,7 +746,9 @@
   line-height: 24px;
   position: absolute;
   top: 0;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Card price row */

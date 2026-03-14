@@ -439,7 +439,7 @@
   height: 20px;
   left: 96px;
   position: absolute;
-  top: 1269px;
+  top: 1352px;
   width: 670px;
 }
 
@@ -1630,4 +1630,39 @@
   object-fit: cover;
   position: absolute;
   width: 638px;
+}
+/* ---- 바로 결제하기 버튼 ---- */
+.button-buy {
+  background-color: var(--mirage);
+  border-radius: 12px;
+  display: flex;
+  height: 67px;
+  left: calc(50.00% - 302px);
+  position: absolute;
+  top: calc(50.00% + 620px);
+  width: 670px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.button-buy .text-buy {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 27px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ---- TEXT OVERFLOW FIXES ---- */
+.curation-shopu95detailed1 [class*="text-"],
+.curation-shopu95detailed1 p,
+.curation-shopu95detailed1 div {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.curation-shopu95detailed1 .text-10 {
+  white-space: normal;
 }
