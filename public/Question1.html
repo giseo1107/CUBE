@@ -22,6 +22,7 @@
             </p>
           </div>
         </div>
+        <form id="inquiryForm" novalidate>
         <div class="container-2">
           <div class="container-3">
             <div class="label">
@@ -30,7 +31,15 @@
                 ><span class="arial-regular-normal-orange-red-16px">*</span>
               </div>
             </div>
-            <img class="container-4" src="qnaimg/container-2.svg" alt="Container" />
+            <select id="inqType" name="type" class="container-4" style="width:100%;height:52px;border:1px solid rgba(0,0,0,0.15);border-radius:10px;padding:0 16px;font-size:16px;background:#fff;cursor:pointer;appearance:auto;">
+              <option value="">유형을 선택해주세요</option>
+              <option value="product">제품 문의</option>
+              <option value="order">구매/결제 문의</option>
+              <option value="install">설치/시공 문의</option>
+              <option value="as">A/S 문의</option>
+              <option value="other">기타</option>
+            </select>
+            <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">문의 유형을 선택해주세요.</span>
           </div>
           <div class="container-5">
             <div class="container-6">
@@ -40,7 +49,11 @@
                   ><span class="arial-regular-normal-orange-red-16px">*</span>
                 </div>
               </div>
-              <div class="x-input"><div class="text-76 arial-regular-normal-santas-gray-16px-2">홍길동</div></div>
+              <div class="x-input">
+                <input type="text" id="inqName" name="name" placeholder="홍길동" maxlength="50"
+                  style="width:100%;height:100%;border:none;outline:none;background:transparent;font-size:16px;color:#101828;" />
+              </div>
+              <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">이름을 입력해주세요.</span>
             </div>
             <div class="container-7">
               <div class="label">
@@ -49,7 +62,11 @@
                   ><span class="arial-regular-normal-orange-red-16px">*</span>
                 </div>
               </div>
-              <div class="x-input"><div class="phone arial-regular-normal-santas-gray-16px-2">010-0000-0000</div></div>
+              <div class="x-input">
+                <input type="tel" id="inqPhone" name="phone" placeholder="010-0000-0000" maxlength="13"
+                  style="width:100%;height:100%;border:none;outline:none;background:transparent;font-size:16px;color:#101828;" />
+              </div>
+              <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">올바른 연락처를 입력해주세요.</span>
             </div>
           </div>
           <div class="container-8">
@@ -60,8 +77,10 @@
               </div>
             </div>
             <div class="x-input">
-              <div class="exampleemailcom arial-regular-normal-santas-gray-16px-2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ffae7fef2eff3fadffaf2fef6f3b1fcf0f2">[email&#160;protected]</a></div>
+              <input type="email" id="inqEmail" name="email" placeholder="example@email.com" maxlength="100"
+                style="width:100%;height:100%;border:none;outline:none;background:transparent;font-size:16px;color:#101828;" />
             </div>
+            <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">올바른 이메일 주소를 입력해주세요.</span>
           </div>
           <div class="container-9">
             <div class="label">
@@ -71,8 +90,10 @@
               </div>
             </div>
             <div class="x-input">
-              <div class="text-80 arial-regular-normal-santas-gray-16px-2">문의 제목을 입력해주세요</div>
+              <input type="text" id="inqTitle" name="title" placeholder="문의 제목을 입력해주세요" maxlength="200"
+                style="width:100%;height:100%;border:none;outline:none;background:transparent;font-size:16px;color:#101828;" />
             </div>
+            <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">제목을 입력해주세요.</span>
           </div>
           <div class="container-10">
             <div class="label-1">
@@ -81,15 +102,16 @@
                 ><span class="arial-regular-normal-orange-red-16px">*</span>
               </div>
             </div>
-            <div class="text-area">
-              <p class="text-82 arial-regular-normal-santas-gray-16px-2">
-                문의하실 내용을 자세히 입력해주세요. (최소 10자 이상)
-              </p>
+            <div class="text-area" style="position:relative;padding:0;">
+              <textarea id="inqContent" name="content" placeholder="문의하실 내용을 자세히 입력해주세요. (최소 10자 이상)"
+                maxlength="2000"
+                style="width:100%;height:100%;border:none;outline:none;background:transparent;resize:none;padding:14px 16px;font-size:16px;color:#101828;font-family:inherit;box-sizing:border-box;"></textarea>
             </div>
             <div class="container-11">
               <div class="text"></div>
-              <div class="text-1"><div class="text-83">0자</div></div>
+              <div class="text-1"><div class="text-83"><span id="charCount">0</span> / 2000자</div></div>
             </div>
+            <span class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:4px;">내용을 10자 이상 입력해주세요.</span>
           </div>
           <div class="container-12"></div>
           <div class="container-13">
@@ -106,13 +128,14 @@
               </div>
             </div>
             <div class="label-2">
-              <div class="container-15"></div>
+              <input type="checkbox" id="privacyAgree" name="agree" class="container-15" style="cursor:pointer;" />
               <div class="text-2">
                 <p class="text-88">
                   <span class="span0">개인정보 수집 및 이용에 동의합니다 </span><span class="span">*</span>
                 </p>
               </div>
             </div>
+            <span id="agreeError" class="error-msg" style="display:none;font-size:13px;color:#fb2c36;margin-top:6px;">개인정보 수집 및 이용에 동의해주세요.</span>
           </div>
           <div class="container-16">
             <a href="Qna.html" style="text-decoration:none;">
@@ -121,9 +144,10 @@
                 <div class="text-89 arial-regular-normal-scarpa-flow-16px">이전으로</div>
               </div>
             </a>
-            <div class="button-1"><div class="text-90">문의 접수하기</div></div>
+            <button type="submit" id="submitBtn" class="button-1" style="cursor:pointer;border:none;background:inherit;width:100%;height:100%;padding:0;"><div class="text-90">문의 접수하기</div></button>
           </div>
         </div>
+        </form>
       </div>
       <footer class="footer">
         <div class="footer-content">
@@ -213,5 +237,143 @@
         </div>
       </div>
     </div>
-  </body>
+  
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ── 로그인 사용자 정보 자동 입력 ──────────────────────
+    fetch('/api/auth/check').then(r => r.json()).then(data => {
+      if (data.authenticated && data.user) {
+        const u = data.user;
+        if (u.name)  document.getElementById('inqName').value  = u.name;
+        if (u.email) document.getElementById('inqEmail').value = u.email;
+        if (u.phone) document.getElementById('inqPhone').value = u.phone;
+      }
+    }).catch(() => {});
+
+    // ── 연락처 자동 하이픈 ────────────────────────────────
+    document.getElementById('inqPhone').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 7)      v = v.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+      else if (v.length > 3) v = v.replace(/(\d{3})(\d+)/, '$1-$2');
+      e.target.value = v;
+    });
+
+    // ── 글자 수 카운트 ────────────────────────────────────
+    const contentEl = document.getElementById('inqContent');
+    const charCount = document.getElementById('charCount');
+    contentEl.addEventListener('input', () => {
+      charCount.textContent = contentEl.value.length;
+    });
+
+    // ── 에러 표시 헬퍼 ───────────────────────────────────
+    // Page2 구조: 각 input 형제로 .error-msg span 삽입됨
+    function showError(inputId, msg) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      let errEl = input.closest('.x-input, select, textarea, div')
+                       ?.parentElement
+                       ?.querySelector('.error-msg');
+      // select의 경우 sibling을 직접 탐색
+      if (!errEl) {
+        const parent = input.parentElement;
+        errEl = parent ? parent.querySelector('.error-msg') : null;
+      }
+      if (errEl) { errEl.style.display = 'block'; if (msg) errEl.textContent = msg; }
+      if (input.style) input.style.outline = '2px solid #fb2c36';
+    }
+
+    function clearError(inputId) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const parent = input.closest('.container-3, .container-6, .container-7, .container-8, .container-9, .container-10')
+                  || input.parentElement?.parentElement;
+      if (parent) {
+        const errEl = parent.querySelector('.error-msg');
+        if (errEl) errEl.style.display = 'none';
+      }
+      if (input.style) input.style.outline = '';
+    }
+
+    function validate() {
+      let ok = true;
+      const type   = document.getElementById('inqType').value;
+      const name   = document.getElementById('inqName').value.trim();
+      const phone  = document.getElementById('inqPhone').value.trim();
+      const email  = document.getElementById('inqEmail').value.trim();
+      const title  = document.getElementById('inqTitle').value.trim();
+      const body   = document.getElementById('inqContent').value.trim();
+      const agreed = document.getElementById('privacyAgree').checked;
+      const phoneRe = /^01[0-9]-\d{3,4}-\d{4}$/;
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!type)              { showError('inqType',    '문의 유형을 선택해주세요.');           ok = false; }
+      if (!name)              { showError('inqName',    '이름을 입력해주세요.');                ok = false; }
+      if (!phoneRe.test(phone)){ showError('inqPhone', '올바른 연락처를 입력해주세요.');        ok = false; }
+      if (!emailRe.test(email)){ showError('inqEmail', '올바른 이메일 주소를 입력해주세요.');   ok = false; }
+      if (!title)             { showError('inqTitle',   '제목을 입력해주세요.');                ok = false; }
+      if (body.length < 10)   { showError('inqContent', '내용을 10자 이상 입력해주세요.');      ok = false; }
+
+      const agreeErr = document.getElementById('agreeError');
+      if (!agreed) { agreeErr.style.display = 'block'; ok = false; }
+      else          { agreeErr.style.display = 'none'; }
+
+      return ok;
+    }
+
+    // 실시간 에러 해제
+    ['inqType','inqName','inqPhone','inqEmail','inqTitle','inqContent'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input',  () => clearError(id));
+      el.addEventListener('change', () => clearError(id));
+    });
+    document.getElementById('privacyAgree').addEventListener('change', () => {
+      document.getElementById('agreeError').style.display = 'none';
+    });
+
+    // ── 폼 제출 ───────────────────────────────────────────
+    document.getElementById('inquiryForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.querySelector('.text-90').textContent = '접수 중...';
+
+      const payload = {
+        type:    document.getElementById('inqType').value,
+        name:    document.getElementById('inqName').value.trim(),
+        phone:   document.getElementById('inqPhone').value.trim(),
+        email:   document.getElementById('inqEmail').value.trim(),
+        title:   document.getElementById('inqTitle').value.trim(),
+        content: document.getElementById('inqContent').value.trim(),
+      };
+
+      try {
+        const res  = await fetch('/api/qna/inquiries', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          sessionStorage.setItem('inqEmail', payload.email);
+          location.href = '/QuestionSend.html';
+        } else {
+          alert(json.message || '접수 중 오류가 발생했습니다. 다시 시도해주세요.');
+          btn.disabled = false;
+          btn.querySelector('.text-90').textContent = '문의 접수하기';
+        }
+      } catch (err) {
+        alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        btn.disabled = false;
+        btn.querySelector('.text-90').textContent = '문의 접수하기';
+      }
+    });
+  });
+  </script>
+
+</body>
 </html>
