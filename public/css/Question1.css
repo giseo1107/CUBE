@@ -793,21 +793,27 @@
 .expandable-faq .container-16 {
   align-items: center;
   display: flex;
-  gap: 45px;
+  flex-direction: row;
+  gap: 16px;
   height: 60px;
   left: 607px;
   position: absolute;
   top: 1041px;
   width: 393px;
+  overflow: visible;
 }
 
 .expandable-faq .button {
   border: 1px solid;
   border-color: var(--black-3);
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 56px;
   position: relative;
   width: 158.89px;
+  flex-shrink: 0;
 }
 
 .expandable-faq .icon {
@@ -840,9 +846,13 @@
   background-color: var(--chathams-blue);
   border-radius: 10px;
   box-shadow: 0px 2px 8px #1a4f854c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 56px;
   position: relative;
   width: 188.77px;
+  flex-shrink: 0;
 }
 
 .expandable-faq .text-90 {
