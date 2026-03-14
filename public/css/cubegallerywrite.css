@@ -1,0 +1,1113 @@
+/* ============================================================
+   write_merged.css
+   Merged: globals.css + styleguide.css + write_merged.css.css
+   ============================================================ */
+
+/* ---- 1. EXTERNAL IMPORTS ---- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+
+/* ---- 2. GLOBALS (custom fonts, shared layout, footer) ---- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+
+@font-face {
+  font-family: "Arial-Black";
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/Arial Black.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Arial-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Arial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/ariblk.ttf") format("truetype");
+}
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.footer-content {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-rows: repeat(1,minmax(0,1fr));
+  height: 164px;
+  margin-left: 167px;
+  margin-top: 58px;
+  position: relative;
+  width: 1749px;
+}
+
+.footer-column {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.faq {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 33px;
+}
+
+.footer-column-1 {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.group-10 {
+  height: 80px;
+  left: 32px;
+  position: absolute;
+  top: 0;
+  width: 78px;
+}
+
+.footer-bottom {
+  height: 73px;
+  margin-left: 167px;
+  position: relative;
+  width: 1749px;
+}
+
+.x2026-container-hou {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.rectangle-20 {
+  height: 536px;
+  left: 952px;
+  position: absolute;
+  top: 0;
+  width: 968px;
+}
+
+.rectangle-20-1 {
+  height: 536px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 952px;
+}
+
+.cube-gallery {
+  letter-spacing: 0;
+  line-height: 21px;
+  margin-bottom: -4.00px;
+  margin-top: -1.00px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.heading-1 {
+  display: flex;
+  margin-top: 24px;
+  width: 658.25px;
+}
+
+.top-1 {
+  box-shadow: 0px 1px 2px -1px #0000001a , 0px 1px 3px #0000001a;
+  display: flex;
+  height: 80px;
+  left: calc(50.00% - 919px);
+  position: absolute;
+  top: calc(50.00% - 268px);
+  width: 1821px;
+}
+
+.logo-nav {
+  display: flex;
+  margin-left: 12px;
+  width: 1809px;
+}
+
+.logo {
+  height: 80px;
+  margin-left: 31px;
+  width: 78.42px;
+}
+
+.navigation {
+  display: flex;
+  margin-left: 452.6px;
+  margin-top: 30px;
+  width: 685.16px;
+}
+
+.qn-a {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 71px;
+}
+
+.login {
+  display: flex;
+  gap: 26px;
+  height: 64px;
+  margin-left: 337.8px;
+  margin-top: 8px;
+  width: 180px;
+}
+
+.icon-2 {
+  height: 20px;
+  left: 16px;
+  position: absolute;
+  top: 15px;
+  width: 20px;
+}
+
+.vector-9 {
+  height: 75.00%;
+  left: 8.33%;
+  position: absolute;
+  top: 8.34%;
+  width: 75.00%;
+}
+
+.span1 {
+  color: var(--science-blue);
+}
+
+.heading-3 {
+  align-self: stretch;
+  height: 28px;
+  position: relative;
+  width: 100%;
+}
+
+.text_label {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.vector-3 {
+  height: 25.00%;
+  left: 62.50%;
+  position: absolute;
+  top: 4.15%;
+  width: 8.33%;
+}
+
+.date {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.icon-1 {
+  height: 18px;
+  position: relative;
+  width: 18px;
+}
+
+.vector-6 {
+  height: 83.33%;
+  left: 4.17%;
+  position: absolute;
+  top: 8.33%;
+  width: 91.67%;
+}
+
+.number {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.vector-7 {
+  height: 66.67%;
+  left: 4.17%;
+  position: absolute;
+  top: 16.67%;
+  width: 91.67%;
+}
+
+.vector-8 {
+  height: 33.33%;
+  left: 33.33%;
+  position: absolute;
+  top: 33.33%;
+  width: 33.33%;
+}
+
+.date-6 {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* ---- 3. STYLEGUIDE (design tokens + utility classes) ---- */
+:root { 
+  --abbey: #4e4e4e;
+  --black: #000000;
+  --black-2: #020202;
+  --black-3: #010202;
+  --cararra: #ebebeb;
+  --coconut: #fffefee6;
+  --ebony-clay: #1e2939;
+  --eerie-black: #1e1e1e;
+  --eerie-black-2: #1f1f1f80;
+  --mercury: #e5e5e5;
+  --mirage: #101828;
+  --oxford-blue: #364153;
+  --oxford-blue-2: #36415380;
+  --santas-gray: #99a1af;
+  --science-blue: #0066cc;
+  --white: #ffffff;
+  --white-2: #ffffff33;
+ 
+  --font-size-l: 16px;
+  --font-size-m: 14px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 20px;
+  --font-size-xxxl: 24px;
+  --font-size-xxxxl: 48px;
+  --font-size-xxxxxl: 72px;
+ 
+  --font-family-arial-black: "Arial-Black", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+}
+.arial-regular-normal-santas-gray-16px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-abbey-16px {
+  color: var(--abbey);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.balooda2-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-abbey-14px {
+  color: var(--abbey);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-eerie-black-20px {
+  color: var(--eerie-black);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-black-14px {
+  color: var(--black-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-black-14px-2 {
+  color: var(--black-3);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-eerie-black-18px {
+  color: var(--eerie-black);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-white-16px {
+  color: var(--white);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-eerie-black-16px {
+  color: var(--eerie-black);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-regular-normal-santas-gray-14px {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.arial-bold-white-14px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-bold-white-72px {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: var(--font-size-xxxxxl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.arial-regular-normal-coconut-24px {
+  color: var(--coconut);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xxxl);
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ---- 4. PAGE-SPECIFIC STYLES ---- */
+/* screen - write */
+
+.write {
+  background-color: var(--white);
+  height: 2358px;
+  position: relative;
+  width: 1920px;
+}
+
+.write .container-1 {
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  height: 1959px;
+  left: 0;
+  position: absolute;
+  top: 399px;
+  width: 1920px;
+}
+
+.write .container-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 115px;
+  margin-top: 173px;
+}
+
+.write .container-item {
+  display: flex;
+  width: 1920px;
+}
+
+.write .text-1-1 {
+  color: var(--eerie-black);
+  font-family: var(--font-family-arial-black);
+  font-size: var(--font-size-xxxxl);
+  font-weight: 900;
+  height: 72px;
+  letter-spacing: 0;
+  line-height: 72px;
+  margin-left: 893px;
+  text-align: center;
+  white-space: nowrap;
+  width: 133px;
+}
+
+.write .text-2-1 {
+  color: var(--santas-gray);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-xl);
+  font-weight: 400;
+  height: 27px;
+  letter-spacing: 0;
+  line-height: 27px;
+  margin-left: 800.2px;
+  text-align: center;
+  white-space: nowrap;
+  width: 319px;
+}
+
+.write .form {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  height: 880px;
+  margin-left: 220px;
+  margin-top: 72px;
+  position: relative;
+  width: 1480px;
+}
+
+.write .container-3 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 94px;
+  position: relative;
+  width: 100%;
+}
+
+.write .label {
+  height: 24px;
+}
+
+.write .text {
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.write .text-input {
+  align-items: center;
+  align-self: stretch;
+  background-color: var(--mercury);
+  border: 1px solid;
+  border-color: var(--oxford-blue-2);
+  border-radius: 10px;
+  display: flex;
+  height: 58px;
+  overflow: hidden;
+  padding: 16px 24px;
+  position: relative;
+  width: 100%;
+}
+
+.write .text-4 {
+  color: var(--eerie-black-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: normal;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.write .container-4 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 316px;
+  position: relative;
+  width: 100%;
+}
+
+.write .text-area {
+  align-items: flex-start;
+  align-self: stretch;
+  background-color: var(--mercury);
+  border: 1px solid;
+  border-color: var(--oxford-blue-2);
+  border-radius: 10px;
+  display: flex;
+  height: 274px;
+  overflow: hidden;
+  padding: 16px 24px;
+  position: relative;
+  width: 100%;
+}
+
+.write .text-6 {
+  color: var(--eerie-black-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-top: -1.00px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.write .container-5 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 336px;
+  position: relative;
+  width: 100%;
+}
+
+.write .label-1 {
+  align-items: center;
+  background-color: var(--mercury);
+  border: 1px solid;
+  border-color: var(--oxford-blue-2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 300px;
+  justify-content: center;
+}
+
+.write .icon {
+  height: 48px;
+  position: relative;
+  width: 48px;
+}
+
+.write .vector {
+  height: 58.33%;
+  left: 45.83%;
+  position: absolute;
+  top: 8.33%;
+  width: 8.33%;
+}
+
+.write .vector-1 {
+  height: 29.17%;
+  left: 25.00%;
+  position: absolute;
+  top: 8.33%;
+  width: 50.00%;
+}
+
+.write .vector-2 {
+  height: 33.33%;
+  left: 8.33%;
+  position: absolute;
+  top: 58.33%;
+  width: 83.33%;
+}
+
+.write .paragraph-3 {
+  height: 24px;
+  position: relative;
+  width: 156.09px;
+}
+
+.write .paragraph-4 {
+  height: 21px;
+  position: relative;
+  width: 193.55px;
+}
+
+.write .png-jpg-webp-10-mb {
+  color: var(--eerie-black-2);
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 21px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.write .container-6 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  gap: 16px;
+  height: 90px;
+  justify-content: center;
+  margin-bottom: -52.00px;
+  padding: 32px 0px 0px;
+  position: relative;
+  width: 100%;
+}
+
+.write .button {
+  background-color: #252b3d;
+  border: 1px solid;
+  border-color: var(--oxford-blue);
+  width: 127.45px;
+}
+
+.write .text-9 {
+  left: 49px;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 17px;
+  white-space: nowrap;
+}
+
+.write .button-1 {
+  background-color: var(--science-blue);
+  width: 159.33px;
+}
+
+.write .text-10 {
+  left: 51px;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  text-align: center;
+  top: 17px;
+  white-space: nowrap;
+}
+
+.write .footer {
+  background-color: var(--mirage);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 381px;
+  margin-top: 338px;
+}
+
+.write .paragraph-5 {
+  display: flex;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  width: 71px;
+}
+
+.write .text-11 {
+  height: 28px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: 1px;
+  white-space: nowrap;
+  width: 72px;
+}
+
+.write .container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 120px;
+  left: 0;
+  position: absolute;
+  top: 44px;
+  width: 347px;
+}
+
+.write .paragraph {
+  display: flex;
+  margin-top: 1px;
+  width: 347.25px;
+}
+
+.write .paragraph-1 {
+  display: flex;
+  width: 347.25px;
+}
+
+.write .text-12 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 30px;
+}
+
+.write .text-13 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 112px;
+}
+
+.write .text-14 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 64px;
+}
+
+.write .paragraph-6 {
+  display: flex;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  width: 33px;
+}
+
+.write .text-15 {
+  height: 28px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: 1px;
+  white-space: nowrap;
+  width: 34px;
+}
+
+.write .text-1 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 79px;
+}
+
+.write .text-19 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-left: 0.2px;
+  white-space: nowrap;
+  width: 79px;
+}
+
+.write .paragraph-7 {
+  display: flex;
+  margin-left: 0.2px;
+  width: 347.25px;
+}
+
+.write .text-18 {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+  width: 93px;
+}
+
+.write .container-7 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.write .container-8 {
+  display: flex;
+  flex-direction: column;
+  height: 52px;
+  left: 0;
+  position: absolute;
+  top: 97px;
+  width: 347px;
+}
+
+.write .paragraph-8 {
+  display: flex;
+  margin-top: -2px;
+  width: 185.53px;
+}
+
+.write .text-20 {
+  height: 26px;
+  letter-spacing: 0;
+  line-height: 26px;
+  white-space: nowrap;
+  width: 186px;
+}
+
+.write .paragraph-9 {
+  display: flex;
+  width: 219.42px;
+}
+
+.write .text-21 {
+  height: 26px;
+  letter-spacing: 0;
+  line-height: 26px;
+  white-space: nowrap;
+  width: 220px;
+}
+
+.write .container-9 {
+  border-color: var(--ebony-clay);
+  border-top-style: solid;
+  border-top-width: 1px;
+  height: 73px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1533px;
+}
+
+.write .container-10 {
+  display: flex;
+  gap: 1094.1px;
+  height: 40px;
+  left: 0;
+  position: absolute;
+  top: 33px;
+  width: 1533px;
+}
+
+.write .container-11 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 20px;
+  margin-top: 10px;
+  padding: -1px -0.12px 0px 0px;
+  position: relative;
+  width: 286.88px;
+}
+
+.write .paragraph-10 {
+  align-self: stretch;
+  height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.write .container-12 {
+  height: 40px;
+  width: 152px;
+}
+
+.write .top {
+  height: 536px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1920px;
+}
+
+.write .container-13 {
+  display: flex;
+  height: 204px;
+  left: 110px;
+  position: absolute;
+  top: 114px;
+  width: 1681px;
+}
+
+.write .container-14 {
+  display: flex;
+  flex-direction: column;
+  height: 204px;
+  width: 658.25px;
+}
+
+.write .container-15 {
+  background-color: var(--white-2);
+  border-radius: 8px;
+  display: flex;
+  height: 40px;
+  width: 150px;
+}
+
+.write .text-3 {
+  align-items: flex-start;
+  display: flex;
+  height: 16px;
+  margin-left: 20px;
+  margin-top: 11px;
+  position: relative;
+  width: 110px;
+}
+
+.write .text-22 {
+  height: 84px;
+  letter-spacing: 0;
+  line-height: 84px;
+  margin-top: 1px;
+  white-space: nowrap;
+  width: 352px;
+}
+
+.write .paragraph-11 {
+  display: flex;
+  margin-top: 20px;
+  width: 658.25px;
+}
+
+.write .text-23 {
+  height: 36px;
+  letter-spacing: 0;
+  line-height: 36px;
+  white-space: nowrap;
+  width: 542px;
+}
+
+.write .paragraph-12 {
+  display: flex;
+  width: 68.3px;
+}
+
+.write .text-2 {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 68px;
+}
+
+.write .paragraph-2 {
+  display: flex;
+  margin-left: 78.7px;
+  width: 68.3px;
+}
+
+.write .paragraph-13 {
+  display: flex;
+  margin-left: 78.7px;
+  width: 73.67px;
+}
+
+.write .paragraph-14 {
+  display: flex;
+  margin-left: 79.3px;
+  width: 55.42px;
+}
+
+.write .text-27 {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 55px;
+}
+
+.write .paragraph-15 {
+  display: flex;
+  margin-left: 31.9px;
+  margin-top: 21.5px;
+  width: 38.64px;
+}
+
+.write .text-28 {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 39px;
+}
+
+.write .paragraph-16 {
+  display: flex;
+  margin-top: 21.5px;
+  width: 51.53px;
+}
+
+.write .text-29 {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 52px;
+}
+
+.write .button-2 {
+  border-radius: 10px;
+  height: 58px;
+  position: relative;
+}
+
+.write .label-2 {
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+}
+
+/* ============================================================
+   TEXT OVERFLOW FIXES — word-break & overflow-wrap
+   ============================================================ */
+.cubeu95gallery1-1 .text,
+.cubeu95gallery1-1 .text_label,
+.cubeu95gallery1-1 .text_label-1,
+.cubeu95gallery1-1 [class*="text-"],
+.cubeu95gallery1-1 p {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.cubeu95gallery1-1 .text-31,
+.cubeu95gallery1-1 .text-39 {
+  white-space: normal;
+  word-break: keep-all;
+}
+.cubeu95gallery1-1 .paragraph-1 {
+  white-space: normal;
+  overflow: visible;
+  height: auto;
+}
+.write [class*="text-"],
+.write p {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.write .text-4,
+.write .text-6 {
+  white-space: normal;
+}
+.write .text-2-1,
+.write .text-1-1 {
+  white-space: normal;
+  overflow-wrap: break-word;
+}

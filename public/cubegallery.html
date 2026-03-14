@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <title>큐브 갤러리 | Container House</title>
+    <link rel="stylesheet" type="text/css" href="css/cubegallery.css" />
+  </head>
+  <body style="margin: 0; background: #ffffff">
+
+    <div class="cubeu95gallery1-1 screen">
+
+      <!-- =============================================
+           TOP / HERO + NAVIGATION
+           ============================================= -->
+      <div class="top">
+        <img class="rectangle-20" src="galleryimg/rectangle-20.png" alt="" role="presentation" />
+        <img class="rectangle-20-1" src="galleryimg/rectangle-20-1.png" alt="" role="presentation" />
+        <div class="container-11">
+          <div class="container-12">
+            <div class="container-13">
+              <div class="text-4"><div class="cube-gallery arial-bold-white-14px">CUBE GALLERY</div></div>
+            </div>
+            <div class="heading-1"><h1 class="text-30 arial-bold-white-72px">큐브 갤러리</h1></div>
+            <div class="paragraph-4">
+              <p class="text-31 arial-regular-normal-coconut-24px">
+                커스텀 컨테이너 하우스의 다양한 디자인을 만나보세요
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="top-1">
+          <div class="logo-nav">
+            <a href="/" aria-label="홈으로">
+              <img class="logo" src="galleryimg/logo.svg" alt="Container House 로고" />
+            </a>
+            <nav class="navigation" aria-label="주요 메뉴">
+              <div class="paragraph-5"><a class="text-3 balooda2-bold-white-14px" href="#">커스텀 큐브</a></div>
+              <div class="paragraph"><a class="text-3 balooda2-bold-white-14px" href="#">큐브 갤러리</a></div>
+              <div class="paragraph"><a class="text-3 balooda2-bold-white-14px" href="#">큐레이션 샵</a></div>
+              <div class="paragraph-6"><a class="qn-a balooda2-bold-white-14px" href="#">QnA 및 후기</a></div>
+              <div class="paragraph-7"><a class="text-35 balooda2-bold-white-14px" href="#">방문 예약</a></div>
+            </nav>
+            <div class="login">
+              <div class="paragraph-8"><a class="text-36 balooda2-bold-white-14px" href="#">로그인</a></div>
+              <div class="paragraph-9"><a class="text-37 balooda2-bold-white-14px" href="#">회원가입</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           SEARCH BAR + 글쓰기 BUTTON
+           ============================================= -->
+      <div class="container-14">
+        <div class="container-15">
+          <div class="text-input">
+            <div class="text-39">검색어를 입력하세요...</div>
+          </div>
+          <div class="icon-2">
+            <img class="vector-9" src="galleryimg/vector-3.svg" alt="" role="presentation" />
+            <img class="vector-10" src="galleryimg/vector-4.svg" alt="" role="presentation" />
+          </div>
+        </div>
+        <a href="write.html" style="text-decoration:none;">
+          <div class="button"><div class="text-38 arial-regular-normal-white-16px">글쓰기</div></div>
+        </a>
+      </div>
+
+      <!-- =============================================
+           POST LIST
+           — DB fields mapped per card:
+             data-post-id   → post_id
+             data-user-id   → user_id
+             .post-title    → title
+             .post-content  → content
+             .post-thumb    → image_url  (background-image)
+             .post-author   → user_id (display name via JOIN)
+             .post-date     → created_at
+             .post-likes    → like_count
+             .post-views    → view_count
+           ============================================= -->
+      <div class="container-16">
+        <div class="paragraph-10">
+          <div class="text-40">
+            <span class="arial-regular-normal-abbey-16px">총 </span>
+            <span class="span1" id="post-count">6</span>
+            <span class="arial-regular-normal-abbey-16px"> 개의 작품</span>
+          </div>
+        </div>
+
+        <div class="container-17" id="post-list">
+
+          <!-- ── POST CARD 1 ── -->
+          <div class="container" data-post-id="1" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">모던 블랙 컨테이너 하우스</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text_label arial-regular-normal-abbey-14px post-content">
+                    심플하고 세련된 디자인의 모던 스타일 컨테이너 하우스입니다. 넓은 창을 통해 자연광이 가득합니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-42 arial-regular-normal-black-14px post-author">김현수</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date arial-regular-normal-black-14px post-date">2026.02.10</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">142</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">2341</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cg_main1 post-thumb"></div>
+          </div>
+
+          <!-- ── POST CARD 2 ── -->
+          <div class="container" data-post-id="2" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">인더스트리얼 스타일 컨테이너</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text_label-1 arial-regular-normal-abbey-14px post-content">
+                    철골 구조가 드러나는 인더스트리얼 감성의 컨테이너 하우스입니다. 넓은 작업 공간이 특징입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-44 arial-regular-normal-black-14px post-author">이지은</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.08</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">231</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">3892</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cg_main2 post-thumb"></div>
+          </div>
+
+          <!-- ── POST CARD 3 ── -->
+          <div class="container" data-post-id="3" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">미니멀 화이트 컨테이너</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text-46 arial-regular-normal-abbey-14px post-content">
+                    깔끔한 화이트 톤의 미니멀 디자인. 작은 공간을 효율적으로 활용한 사례입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-47 arial-regular-normal-black-14px post-author">박서준</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.05</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">189</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">2876</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cg_main3 post-thumb"></div>
+          </div>
+
+          <!-- ── POST CARD 4 ── -->
+          <div class="container" data-post-id="4" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">럭셔리 2층 컨테이너 하우스</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text-49 arial-regular-normal-abbey-14px post-content">
+                    2층 구조의 프리미엄 컨테이너 하우스. 고급스러운 마감과 넓은 공간이 특징입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-50 arial-regular-normal-black-14px post-author">최민지</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.03</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">456</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">5234</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cg_main4 post-thumb"></div>
+          </div>
+
+          <!-- ── POST CARD 5 ── -->
+          <div class="container" data-post-id="5" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">친환경 에코 컨테이너</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text-52 arial-regular-normal-abbey-14px post-content">
+                    태양광 패널과 친환경 소재를 활용한 지속가능한 컨테이너 하우스입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-53 arial-regular-normal-black-14px post-author">정우성</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.01.30</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">298</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">4123</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-18 post-thumb"></div>
+          </div>
+
+          <!-- ── POST CARD 6 ── -->
+          <div class="container-19" data-post-id="6" data-user-id="">
+            <div class="container-1">
+              <div class="container-2">
+                <div class="heading-3">
+                  <div class="text arial-regular-normal-eerie-black-20px post-title">컬러풀 아트 스튜디오 컨테이너</div>
+                </div>
+                <div class="paragraph-1">
+                  <p class="text-55 arial-regular-normal-abbey-14px post-content">
+                    화려한 색상과 독특한 구조의 아티스트를 위한 작업 공간입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="container-3">
+                <div class="container-4">
+                  <div class="container-5">
+                    <div class="icon">
+                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="text-56 arial-regular-normal-black-14px post-author">안혜진</div></div>
+                  </div>
+                  <div class="container-6">
+                    <div class="icon">
+                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
+                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
+                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
+                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.01.28</div></div>
+                  </div>
+                </div>
+                <div class="container-7">
+                  <div class="container-8">
+                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">367</div></div>
+                  </div>
+                  <div class="container-9">
+                    <div class="icon-1">
+                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                    </div>
+                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">3654</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cg_main6 post-thumb"></div>
+          </div>
+
+        </div><!-- /#post-list -->
+      </div><!-- /.container-16 -->
+
+      <!-- =============================================
+           FOOTER
+           ============================================= -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="paragraph-11"><div class="text-57 arial-bold-white-18px">고객 지원</div></div>
+            <div class="container-10">
+              <div class="paragraph-2"><a class="faq arial-regular-normal-santas-gray-16px" href="#">FAQ</a></div>
+              <div class="paragraph-3"><a class="text-58 arial-regular-normal-santas-gray-16px" href="#">후기</a></div>
+              <div class="paragraph-3"><a class="text-59 arial-regular-normal-santas-gray-16px" href="#">사용자 성향 파악</a></div>
+              <div class="paragraph-3"><a class="text-60 arial-regular-normal-santas-gray-16px" href="#">방문 예약</a></div>
+            </div>
+          </div>
+          <div class="footer-column-1">
+            <div class="paragraph-12"><div class="text-61 arial-bold-white-18px">제품</div></div>
+            <div class="container-10 arial-regular-normal-santas-gray-16px">
+              <div class="paragraph-2"><a class="text-6" href="#">커스텀 큐브</a></div>
+              <div class="paragraph-3"><a class="text-6" href="#">큐브 갤러리</a></div>
+              <div class="text-65">판매 페이지</div>
+              <div class="paragraph-3">
+                <div class="paragraph-13"><a class="text-64" href="#">중고 큐브마켓</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="container-20">
+            <div class="container-21">
+              <div class="paragraph-14">
+                <div class="text-66 arial-regular-normal-santas-gray-16px">혁신적인 컨테이너 하우스로</div>
+              </div>
+              <div class="paragraph-15">
+                <div class="text-67 arial-regular-normal-santas-gray-16px">새로운 주거 문화를 만들어갑니다</div>
+              </div>
+            </div>
+            <img class="group-10" src="galleryimg/group-10-1@2x.png" alt="Container House" />
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container-22"></div>
+          <div class="container-23">
+            <div class="container-24">
+              <div class="paragraph-1">
+                <p class="x2026-container-hou arial-regular-normal-santas-gray-14px">
+                  © 2026 Container House. All rights reserved.
+                </p>
+              </div>
+            </div>
+            <img class="container-25" src="galleryimg/container.svg" alt="Container House" />
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /.cubeu95gallery1-1.screen -->
+  </body>
+</html>

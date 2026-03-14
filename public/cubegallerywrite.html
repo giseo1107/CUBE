@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <title>글쓰기 | Container House</title>
+    <link rel="stylesheet" type="text/css" href="css/write_merged.css" />
+  </head>
+  <body style="margin: 0; background: #ffffff">
+
+    <div class="write screen">
+
+      <!-- =============================================
+           TOP / HERO + NAVIGATION
+           ============================================= -->
+      <div class="top">
+        <img class="rectangle-20" src="galleryimg/rectangle-20.png" alt="" role="presentation" />
+        <img class="rectangle-20-1" src="galleryimg/rectangle-20-1.png" alt="" role="presentation" />
+        <div class="container-13">
+          <div class="container-14">
+            <div class="container-15">
+              <div class="text-3"><div class="cube-gallery arial-bold-white-14px">CUBE GALLERY</div></div>
+            </div>
+            <div class="heading-1"><h1 class="text-22 arial-bold-white-72px">큐브 갤러리</h1></div>
+            <div class="paragraph-11">
+              <p class="text-23 arial-regular-normal-coconut-24px">
+                커스텀 컨테이너 하우스의 다양한 디자인을 만나보세요
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="top-1">
+          <div class="logo-nav">
+            <a href="/" aria-label="홈으로">
+              <img class="logo" src="galleryimg/logo.svg" alt="Container House 로고" />
+            </a>
+            <nav class="navigation" aria-label="주요 메뉴">
+              <div class="paragraph-12"><a class="text-2 balooda2-bold-white-14px" href="#">커스텀 큐브</a></div>
+              <div class="paragraph-2"><a class="text-2 balooda2-bold-white-14px" href="#">큐브 갤러리</a></div>
+              <div class="paragraph-2"><a class="text-2 balooda2-bold-white-14px" href="#">큐레이션 샵</a></div>
+              <div class="paragraph-13"><a class="qn-a balooda2-bold-white-14px" href="#">QnA 및 후기</a></div>
+              <div class="paragraph-14"><a class="text-27 balooda2-bold-white-14px" href="#">방문 예약</a></div>
+            </nav>
+            <div class="login">
+              <div class="paragraph-15"><a class="text-28 balooda2-bold-white-14px" href="#">로그인</a></div>
+              <div class="paragraph-16"><a class="text-29 balooda2-bold-white-14px" href="#">회원가입</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================================
+           MAIN CONTENT
+           ============================================= -->
+      <div class="container-1">
+        <div class="container-2">
+          <div class="container-item"><div class="text-1-1">글쓰기</div></div>
+          <div class="container-item"><p class="text-2-1">큐브 갤러리에 새로운 작품을 공유해보세요</p></div>
+        </div>
+
+        <!--
+          FORM — POST /api/gallery/write
+          DB columns:
+            user_id    → hidden (세션에서 서버가 주입하거나 hidden input으로 전달)
+            title      → name="title"
+            content    → name="content"
+            image_url  → 업로드 후 서버가 저장한 URL; multipart name="image"
+            like_count → DEFAULT 0 (서버 처리)
+            view_count → DEFAULT 0 (서버 처리)
+            created_at → CURRENT_TIMESTAMP (서버 처리)
+        -->
+        <form
+          id="write-form"
+          class="form"
+          action="/api/gallery/write"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <!-- hidden: user_id는 서버 세션에서 처리 (필요 시 아래 주석 해제 후 값 주입) -->
+          <!-- <input type="hidden" name="user_id" value="" /> -->
+
+          <!-- 제목 -->
+          <div class="container-3">
+            <div class="label label-2">
+              <label for="input-title" class="text arial-regular-normal-eerie-black-16px">제목</label>
+            </div>
+            <div class="text-input">
+              <input
+                id="input-title"
+                type="text"
+                name="title"
+                placeholder="작품 제목을 입력하세요"
+                required
+                style="
+                  background: transparent;
+                  border: none;
+                  outline: none;
+                  width: 100%;
+                  font-family: var(--font-family-arial-regular);
+                  font-size: var(--font-size-l);
+                  color: var(--eerie-black);
+                "
+              />
+            </div>
+          </div>
+
+          <!-- 내용 -->
+          <div class="container-4">
+            <div class="label label-2">
+              <label for="input-content" class="text arial-regular-normal-eerie-black-16px">내용</label>
+            </div>
+            <div class="text-area">
+              <textarea
+                id="input-content"
+                name="content"
+                placeholder="작품에 대한 설명을 입력하세요"
+                required
+                style="
+                  background: transparent;
+                  border: none;
+                  outline: none;
+                  width: 100%;
+                  height: 100%;
+                  resize: none;
+                  font-family: var(--font-family-arial-regular);
+                  font-size: var(--font-size-l);
+                  color: var(--eerie-black);
+                  line-height: 24px;
+                "
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- 이미지 업로드 (image_url) -->
+          <div class="container-5">
+            <div class="label label-2">
+              <label for="input-image" class="text arial-regular-normal-eerie-black-16px">이미지</label>
+            </div>
+            <div class="label-1 label-2" onclick="document.getElementById('input-image').click()" style="cursor:pointer;">
+              <div class="icon">
+                <img class="vector" src="galleryimg/vector.svg" alt="" role="presentation" />
+                <img class="vector-1" src="galleryimg/vector-1.svg" alt="" role="presentation" />
+                <img class="vector-2" src="galleryimg/vector-2.svg" alt="" role="presentation" />
+              </div>
+              <div class="paragraph-3">
+                <div class="text arial-regular-normal-santas-gray-16px" id="upload-label">클릭하여 이미지 업로드</div>
+              </div>
+              <div class="paragraph-4"><p class="png-jpg-webp-10-mb">PNG, JPG, WEBP (최대 10MB)</p></div>
+            </div>
+            <!-- 실제 file input (숨김) — name="image" → 서버에서 저장 후 image_url 컬럼에 기록 -->
+            <input
+              id="input-image"
+              type="file"
+              name="image"
+              accept="image/png,image/jpeg,image/webp"
+              style="display:none;"
+              onchange="handleFileSelect(this)"
+            />
+          </div>
+
+          <!-- 버튼 -->
+          <div class="container-6">
+            <button type="button" class="button button-2" onclick="window.location.href='cubegallery.html'">
+              <div class="text-9 arial-regular-normal-white-16px">취소</div>
+            </button>
+            <button type="submit" class="button-1 button-2">
+              <div class="text-10 arial-regular-normal-white-16px">게시하기</div>
+            </button>
+          </div>
+
+        </form>
+
+        <!-- =============================================
+             FOOTER
+             ============================================= -->
+        <footer class="footer">
+          <div class="footer-content">
+            <div class="footer-column">
+              <div class="paragraph-5"><div class="text-11 arial-bold-white-18px">고객 지원</div></div>
+              <div class="container">
+                <div class="paragraph"><a class="faq arial-regular-normal-santas-gray-16px" href="#">FAQ</a></div>
+                <div class="paragraph-1"><a class="text-12 arial-regular-normal-santas-gray-16px" href="#">후기</a></div>
+                <div class="paragraph-1"><a class="text-13 arial-regular-normal-santas-gray-16px" href="#">사용자 성향 파악</a></div>
+                <div class="paragraph-1"><a class="text-14 arial-regular-normal-santas-gray-16px" href="#">방문 예약</a></div>
+              </div>
+            </div>
+            <div class="footer-column-1">
+              <div class="paragraph-6"><div class="text-15 arial-bold-white-18px">제품</div></div>
+              <div class="container arial-regular-normal-santas-gray-16px">
+                <div class="paragraph"><a class="text-1" href="#">커스텀 큐브</a></div>
+                <div class="paragraph-1"><a class="text-1" href="#">큐브 갤러리</a></div>
+                <div class="text-19">판매 페이지</div>
+                <div class="paragraph-1">
+                  <div class="paragraph-7"><a class="text-18" href="#">중고 큐브마켓</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="container-7">
+              <div class="container-8">
+                <div class="paragraph-8">
+                  <div class="text-20 arial-regular-normal-santas-gray-16px">혁신적인 컨테이너 하우스로</div>
+                </div>
+                <div class="paragraph-9">
+                  <div class="text-21 arial-regular-normal-santas-gray-16px">새로운 주거 문화를 만들어갑니다</div>
+                </div>
+              </div>
+              <img class="group-10" src="galleryimg/group-10@2x.png" alt="Container House" />
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <div class="container-9"></div>
+            <div class="container-10">
+              <div class="container-11">
+                <div class="paragraph-10">
+                  <p class="x2026-container-hou arial-regular-normal-santas-gray-14px">
+                    © 2026 Container House. All rights reserved.
+                  </p>
+                </div>
+              </div>
+              <img class="container-12" src="galleryimg/container.svg" alt="Container House" />
+            </div>
+          </div>
+        </footer>
+
+      </div><!-- /.container-1 -->
+
+    </div><!-- /.write.screen -->
+
+    <script>
+      // 파일 선택 시 라벨 업데이트
+      function handleFileSelect(input) {
+        const label = document.getElementById('upload-label');
+        if (input.files && input.files[0]) {
+          const file = input.files[0];
+          // 10MB 체크
+          if (file.size > 10 * 1024 * 1024) {
+            alert('파일 크기는 최대 10MB까지 업로드 가능합니다.');
+            input.value = '';
+            label.textContent = '클릭하여 이미지 업로드';
+            return;
+          }
+          label.textContent = file.name;
+        }
+      }
+
+      // 폼 제출 처리
+      document.getElementById('write-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/api/gallery/write', {
+          method: 'POST',
+          body: formData   // multipart/form-data — Content-Type 헤더는 fetch가 자동 설정
+        })
+        .then(res => res.json())
+        .then(result => {
+          if (result.success) {
+            window.location.href = 'cubegallery.html';
+          } else {
+            alert(result.message || '게시 중 오류가 발생했습니다.');
+          }
+        })
+        .catch(() => {
+          alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+        });
+      });
+    </script>
+  </body>
+</html>
