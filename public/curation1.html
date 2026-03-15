@@ -431,27 +431,54 @@
     // ─── 장바구니 담기 ───────────────────────────────────────
     function submitCart(e) {
       e.preventDefault();
-      const form = document.getElementById('cart-form');
-      const data = new FormData(form);
+
+      const total   = parseInt(document.getElementById('cart-total')?.value || BASE_PRICE, 10);
+      const options = document.getElementById('cart-options')?.value || '';
+
+      const payload = {
+        product_id:       1,
+        product_name:     '프리미엄 주거형',
+        base_price:       BASE_PRICE,
+        quantity:         1,
+        total_amount:     total,
+        selected_options: options || null
+      };
 
       fetch('/api/cart/add', {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(data))
+        body:    JSON.stringify(payload)
       })
       .then(res => res.json())
       .then(result => {
         if (result.success) {
-          window.location.href = 'cart.html';
+          showCartModal();
         } else {
           alert(result.message || '장바구니 담기에 실패했습니다.');
         }
       })
       .catch(() => {
-        // 로그인 필요 등 에러 시 cart.html로 이동
-        window.location.href = 'cart.html';
+        // 네트워크 오류 시에도 모달 표시
+        showCartModal();
       });
     }
+
+    // ─── 장바구니 담기 완료 모달 ─────────────────────────────
+    function showCartModal() {
+      document.getElementById('cart-modal').style.display = 'flex';
+    }
+    function closeCartModal() {
+      document.getElementById('cart-modal').style.display = 'none';
+    }
+    // 모달 바깥 클릭 시 닫기
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('cart-modal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeCartModal();
+        });
+      }
+    });
 
     // ─── 바로 결제하기 ───────────────────────────────────────
     function submitBuy() {
@@ -486,6 +513,41 @@
       });
     }
   </script>
+
+<!-- =============================================
+     장바구니 담기 완료 모달
+     ============================================= -->
+<div id="cart-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:420px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.18);text-align:center;position:relative;">
+    <!-- 체크 아이콘 -->
+    <div style="width:56px;height:56px;border-radius:50%;background:#e8f4e8;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2 style="font-size:20px;font-weight:700;color:#101828;margin:0 0 8px;">장바구니에 담겼습니다!</h2>
+    <p style="font-size:15px;color:#6b7280;margin:0 0 28px;line-height:1.6;">어떻게 진행하시겠습니까?</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <!-- 선택지 1: 장바구니 보러가기 -->
+      <a href="/cart.html"
+         style="display:block;background:#1a4f85;color:#fff;font-size:16px;font-weight:700;padding:14px 0;border-radius:10px;text-decoration:none;transition:background .2s;"
+         onmouseover="this.style.background='#153e6a'"
+         onmouseout="this.style.background='#1a4f85'">
+        🛒 장바구니 보러가기
+      </a>
+      <!-- 선택지 2: 더 다양한 큐레이션 보러가기 -->
+      <a href="/curation.html"
+         style="display:block;background:#fff;color:#1a4f85;font-size:16px;font-weight:700;padding:14px 0;border-radius:10px;text-decoration:none;border:2px solid #1a4f85;transition:background .2s,color .2s;"
+         onmouseover="this.style.background='#f0f6ff'"
+         onmouseout="this.style.background='#fff'">
+        🏠 더 다양한 큐레이션 보러가기
+      </a>
+    </div>
+    <!-- 닫기 버튼 -->
+    <button onclick="closeCartModal()"
+            style="position:absolute;top:14px;right:16px;background:none;border:none;cursor:pointer;font-size:20px;color:#9ca3af;line-height:1;">✕</button>
+  </div>
+</div>
 
 </body>
 </html>
