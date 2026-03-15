@@ -159,6 +159,17 @@
       align-items: center;
       gap: 12px;
     }
+
+    /* 아바타 래퍼 — 링크로 감싸기 */
+    #g-nav .gn-avatar-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
     #g-nav .gn-user-avatar {
       width: 36px;
       height: 36px;
@@ -171,11 +182,51 @@
       font-size: 18px;
       flex-shrink: 0;
       border: 2px solid rgba(175, 249, 245, 0.4);
+      transition: border-color 0.2s, opacity 0.2s;
     }
     #g-nav .gn-user-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* hover 시 아바타 어둡게 */
+    #g-nav .gn-avatar-wrap:hover .gn-user-avatar {
+      border-color: #aff9f5;
+      opacity: 0.75;
+    }
+
+    /* hover 툴팁 */
+    #g-nav .gn-avatar-tooltip {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 24, 40, 0.92);
+      color: #fff;
+      font-family: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10000;
+    }
+    /* 툴팁 화살표 */
+    #g-nav .gn-avatar-tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-bottom-color: rgba(16, 24, 40, 0.92);
+    }
+    #g-nav .gn-avatar-wrap:hover .gn-avatar-tooltip {
+      opacity: 1;
     }
     #g-nav .gn-user-name {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
@@ -275,7 +326,10 @@
 
         authEl.innerHTML = `
           <div class="gn-user-info">
-            <div class="gn-user-avatar">${avatarHTML}</div>
+            <a href="/mypage.html" class="gn-avatar-wrap">
+              <div class="gn-user-avatar">${avatarHTML}</div>
+              <span class="gn-avatar-tooltip">프로필 이미지를 클릭하면 마이페이지로 이동합니다</span>
+            </a>
             <span class="gn-user-name">${user.nickname || user.email || '사용자'}</span>
             <button class="gn-btn-logout" id="gn-logout">로그아웃</button>
           </div>
