@@ -54,9 +54,9 @@
   --font-size-xxl: 48px;
   --font-size-xxs: 14px;
  
-  --font-family-arial-bold: "Arial-Bold", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-arial-regular: "Arial-Regular", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-baloo_da_2: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
 }
 .arial-regular-normal-santas-gray-16px {
   color: var(--santas-gray);
@@ -152,7 +152,8 @@
 }
 
 .index .wording {
-  height: 565px;
+  height: auto;
+  min-height: 565px;
   left: 154px;
   position: absolute;
   top: 298px;
@@ -161,15 +162,17 @@
 
 .index .main_-word {
   align-items: flex-start;
-  height: 96px;
-  padding: -5px 412.03px 0px 0px;
+  height: auto;
+  min-height: 96px;
+  padding: 0px 0px 0px 0px;
   position: relative;
   width: 734.5px;
 }
 
 .index .paragraph {
   align-self: stretch;
-  height: 48px;
+  height: auto;
+  min-height: 48px;
   position: relative;
   width: 100%;
 }
@@ -180,8 +183,8 @@
   font-size: 64px;
   font-weight: 700;
   left: 0;
-  line-height: 48px;
-  top: -20px;
+  line-height: 1.2;
+  top: 0;
 }
 
 .index .text-2-1 {
@@ -198,16 +201,18 @@
 }
 
 .index .wording1 {
-  height: 65px;
+  height: auto;
+  min-height: 65px;
   margin-top: 24px;
   width: 734.5px;
 }
 
 .index .paragraph-7 {
   display: flex;
-  height: 32.5px;
-  margin-top: -3px;
-  width: 311.08px;
+  height: auto;
+  min-height: 32.5px;
+  margin-top: 0;
+  width: auto;
 }
 
 .index .text-8 {
@@ -215,17 +220,18 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: 33px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 32.5px;
-  white-space: nowrap;
-  width: 374px;
+  line-height: 1.5;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-8 {
   display: flex;
-  height: 32.5px;
-  width: 438.14px;
+  height: auto;
+  min-height: 32.5px;
+  width: auto;
 }
 
 .index .text-9 {
@@ -233,16 +239,17 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: 33px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 32.5px;
-  white-space: nowrap;
-  width: 526px;
+  line-height: 1.5;
+  white-space: normal;
+  width: auto;
 }
 
 .index .wording2 {
   gap: 16px;
-  height: 248px;
+  height: auto;
+  min-height: 248px;
   margin-top: 32px;
   width: 734.5px;
 }
@@ -262,91 +269,91 @@
 .index .paragraph-9 {
   display: flex;
   margin-top: -1px;
-  width: 314.45px;
+  width: auto;
 }
 
 .index .text-3-1 {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 350px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-10 {
   display: flex;
   margin-top: -1px;
-  width: 324.55px;
+  width: auto;
 }
 
 .index .x3-d {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 361px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-11 {
   display: flex;
   margin-top: -1px;
-  width: 283.42px;
+  width: auto;
 }
 
 .index .text-4 {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 315px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-12 {
   display: flex;
   margin-top: -1px;
-  width: 251.86px;
+  width: auto;
 }
 
 .index .text-5-1 {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 280px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-13 {
   display: flex;
   margin-top: -1px;
-  width: 243.75px;
+  width: auto;
 }
 
 .index .text-6 {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 271px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .paragraph-14 {
   display: flex;
   margin-top: -1px;
-  width: 235.3px;
+  width: auto;
 }
 
 .index .text-7 {
-  height: 28px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 28px;
+  line-height: 1.5;
   margin-top: 1px;
-  white-space: nowrap;
-  width: 262px;
+  white-space: normal;
+  width: auto;
 }
 
 .index .button {
@@ -615,22 +622,23 @@
 
 .index .paragraph-17 {
   display: flex;
-  height: 26px;
+  height: auto;
+  min-height: 26px;
   left: 100px;
   position: absolute;
   top: 504px;
   transform: rotate(-0.06deg);
-  width: 271px;
+  width: auto;
 }
 
 .index .text-21 {
-  height: 26px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 26px;
-  margin-left: -53.0px;
-  margin-top: -12.7px;
-  white-space: nowrap;
-  width: 378px;
+  line-height: 1.5;
+  margin-left: 0;
+  margin-top: 0;
+  white-space: normal;
+  width: auto;
 }
 
 .index .text-2 {
@@ -1346,7 +1354,8 @@
 }
 
 .index .wording1-1 {
-  height: 180px;
+  height: auto;
+  min-height: 180px;
 }
 
 .index .paragraph-24 {
@@ -1360,9 +1369,9 @@
   font-family: var(--font-family-arial-bold);
   font-size: 72px;
   font-weight: 700;
-  height: 90px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 90px;
+  line-height: 1.25;
   margin-top: 1px;
   white-space: nowrap;
   width: 352px;
@@ -1378,9 +1387,9 @@
   font-family: var(--font-family-arial-bold);
   font-size: 72px;
   font-weight: 700;
-  height: 90px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 90px;
+  line-height: 1.25;
   margin-top: 1px;
   white-space: nowrap;
   width: 484px;
