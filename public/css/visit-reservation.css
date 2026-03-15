@@ -260,9 +260,9 @@
   --font-size-xxxxl: 72px;
 
   --font-family-abhaya_libre_semibold-regular: "Abhaya Libre SemiBold-Regular", Helvetica;
-  --font-family-arial-bold: "Arial-Bold", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-arial-regular: "Arial-Regular", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-baloo_da_2: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-family-arial-bold: "Arial-Bold", Helvetica;
+  --font-family-arial-regular: "Arial-Regular", Helvetica;
+  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
 }
 
 .arial-regular-normal-santas-gray-16px {
@@ -1028,23 +1028,22 @@
 
 .visit-reservation .container-19 {
   align-self: stretch;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  height: 344.59px;
+  position: relative;
   width: 100%;
-  gap: 4px;
-  padding: 8px 0;
 }
 
 .visit-reservation .button-2 {
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  height: 44px;
-  position: relative;
-  width: 100%;
-  cursor: default;
+  height: 66px;
+  left: 0;
+  padding: 26.36px 29.94px 0px 29.92px;
+  position: absolute;
+  top: 0;
+  width: 66px;
 }
 
 .visit-reservation .text-1 {
