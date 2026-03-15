@@ -34,7 +34,7 @@ const NAV_EXCLUDE = new Set([
 
 // ← 이 목록에 있는 페이지는 기존 nav를 제거하지 않음
 const NAV_KEEP = new Set([
-    '/visit-reservation.html',
+    '/example.html',
 ]);
 
 app.use((req, res, next) => {
