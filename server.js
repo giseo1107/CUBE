@@ -32,10 +32,14 @@ const NAV_EXCLUDE = new Set([
     '/verify-email.html',
 ]);
 
-// ← 이 목록에 있는 페이지는 기존 nav를 제거하지 않음
-const NAV_KEEP = new Set([
-    '/example.html',
-]);
+// ── 페이지별 제거할 선택자를 직접 지정 ──────────────────────
+// 기본: nav, div.top-1, div.logo-nav, div.login 제거
+// 특정 페이지만 다르게 처리하고 싶으면 여기에 추가
+// ex) '/some-page.html': 'div.my-nav, div.my-header'
+const NAV_CUSTOM = {
+    '/visit-reservation.html': 'div.top-2',
+};
+// ─────────────────────────────────────────────────────────────
 
 app.use((req, res, next) => {
     if (!req.path.endsWith('.html')) return next();
@@ -46,13 +50,19 @@ app.use((req, res, next) => {
 
     let html = fs.readFileSync(filePath, 'utf8');
 
-    // ── NAV_KEEP 목록에 없는 페이지만 기존 nav 제거 ──────
-    if (!NAV_KEEP.has(req.path)) {
-        const $ = cheerio.load(html, { decodeEntities: false });
+    // ── cheerio로 네비게이션 제거 ─────────────────────────
+    const $ = cheerio.load(html, { decodeEntities: false });
+
+    if (NAV_CUSTOM[req.path]) {
+        // 커스텀 선택자가 지정된 페이지: 해당 요소만 제거
+        $(NAV_CUSTOM[req.path]).remove();
+    } else {
+        // 그 외 페이지: 기본 nav 요소 제거
         $('nav').remove();
         $('div.top-1, div.logo-nav, div.login').remove();
-        html = $.html();
     }
+
+    html = $.html();
     // ─────────────────────────────────────────────────────
 
     if (!html.includes('navbar.js')) {
