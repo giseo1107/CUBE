@@ -33,7 +33,7 @@
             <div class="paragraph-4">
               <div class="text-1 arial-regular-normal-pale-sky-20px">럭셔리 디자인의 컨테이너 하우스</div>
             </div>
-            <div class="container-item">
+            <div class="container-item price-row">
               <div class="text-14"><h1 class="text-72 arial-bold-chathams-blue-52px">45,000,000</h1></div>
               <div class="text-15"><div class="text-73 arial-regular-normal-scarpa-flow-24px">원</div></div>
             </div>
@@ -378,23 +378,23 @@
     </div>
   
   <script>
-    // ─── 기본 가격 ───────────────────────────────────────────
+    // ─── 기본 가격 (고정, 변경 불가) ─────────────────────────
     const BASE_PRICE = 45000000;
 
-    // ─── 선택된 옵션 관리 ────────────────────────────────────
-    const selectedOptions = new Set();
+    // ─── 선택된 옵션 관리 (버튼 자체를 키로 사용) ───────────
+    const selectedButtons = new Set();
 
     function toggleOption(btn) {
-      const price = parseInt(btn.dataset.price, 10);
-      const label = btn.querySelector('[class*="text-6"]')?.innerText?.trim() || '';
-
-      if (selectedOptions.has(price + '_' + label)) {
-        selectedOptions.delete(price + '_' + label);
+      if (selectedButtons.has(btn)) {
+        // 이미 선택된 옵션 → 해제
+        selectedButtons.delete(btn);
         btn.style.borderColor = '';
         btn.style.backgroundColor = '';
+        btn.style.border = '';
       } else {
-        selectedOptions.add(price + '_' + label);
-        btn.style.borderColor = 'var(--chathams-blue)';
+        // 새로 선택
+        selectedButtons.add(btn);
+        btn.style.border = '2px solid var(--chathams-blue)';
         btn.style.backgroundColor = '#f0f6ff';
       }
       updateTotal();
@@ -402,15 +402,19 @@
 
     function updateTotal() {
       let extra = 0;
-      selectedOptions.forEach(key => {
-        extra += parseInt(key.split('_')[0], 10);
+      const optionNames = [];
+      selectedButtons.forEach(btn => {
+        extra += parseInt(btn.dataset.price, 10);
+        const label = btn.querySelector('.text-6')?.innerText?.trim() || '';
+        if (label) optionNames.push(label);
       });
+
       const total = BASE_PRICE + extra;
       const formatted = total.toLocaleString('ko-KR') + '원';
 
-      // 메인 총액 표시
+      // 메인 총액 표시 (기본가격 표시는 건드리지 않음)
       const mainEl = document.getElementById('total-price-main');
-      if (mainEl) mainEl.textContent = total.toLocaleString('ko-KR') + '원';
+      if (mainEl) mainEl.textContent = formatted;
 
       // 상단 sticky 총액 표시
       const stickyEl = document.getElementById('total-price-sticky');
@@ -421,12 +425,9 @@
         const el = document.getElementById(id);
         if (el) el.value = total;
       });
-
-      // 선택된 옵션 이름 저장
-      const optionNames = [...selectedOptions].map(k => k.split('_').slice(1).join('_')).join(',');
       ['cart-options', 'buy-options'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.value = optionNames;
+        if (el) el.value = optionNames.join(',');
       });
     }
 

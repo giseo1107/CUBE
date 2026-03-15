@@ -1666,3 +1666,103 @@
 .curation-shopu95detailed1 .text-10 {
   white-space: normal;
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   금액 표시 클리핑·겹침 수정
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* 메인 가격 행 (45,000,000 + 원) */
+.curation-shopu95detailed1 .price-row {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  height: auto !important;
+  min-height: 60px !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed1 .price-row .text-14 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed1 .price-row .text-72 {
+  width: auto !important;
+  height: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+.curation-shopu95detailed1 .price-row .text-15 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed1 .price-row .text-73 {
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+
+/* 옵션 가격 (+X,XXX,XXX원) */
+.curation-shopu95detailed1 .text-8 {
+  width: auto !important;
+  min-width: 140px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed1 .text-9 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+
+/* 기본 가격 행 */
+.container-2 {
+  height: auto !important;
+}
+.curation-shopu95detailed1 .text-31 {
+  width: auto !important;
+  height: auto !important;
+  min-width: 140px !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed1 .text-114 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+
+/* 총 예상 금액 */
+.curation-shopu95detailed1 .text-33 {
+  width: auto !important;
+  height: auto !important;
+  min-width: 240px !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed1 .text-116 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
+
+/* Sticky 바 총액 */
+.curation-shopu95detailed1 .text-121 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+}
