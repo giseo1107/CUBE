@@ -32,6 +32,11 @@ const NAV_EXCLUDE = new Set([
     '/verify-email.html',
 ]);
 
+// ← 이 목록에 있는 페이지는 기존 nav를 제거하지 않음
+const NAV_KEEP = new Set([
+    '/visit-reservation.html',
+]);
+
 app.use((req, res, next) => {
     if (!req.path.endsWith('.html')) return next();
     if (NAV_EXCLUDE.has(req.path))   return next();
@@ -41,17 +46,13 @@ app.use((req, res, next) => {
 
     let html = fs.readFileSync(filePath, 'utf8');
 
-    // ── cheerio로 네비게이션 영역만 정확히 제거 ──────────
-    const $ = cheerio.load(html, { decodeEntities: false });
-
-    // 1) <nav> 태그만 제거 (로고·히어로 등 주변 콘텐츠는 유지)
-    $('nav').remove();
-
-    // 2) 네비게이션을 감싸는 wrapper div만 제거
-    //    (logo-nav, top-1, login 등 nav 전용 컨테이너)
-    $('div.top-1, div.logo-nav, div.login').remove();
-
-    html = $.html();
+    // ── NAV_KEEP 목록에 없는 페이지만 기존 nav 제거 ──────
+    if (!NAV_KEEP.has(req.path)) {
+        const $ = cheerio.load(html, { decodeEntities: false });
+        $('nav').remove();
+        $('div.top-1, div.logo-nav, div.login').remove();
+        html = $.html();
+    }
     // ─────────────────────────────────────────────────────
 
     if (!html.includes('navbar.js')) {
