@@ -51,7 +51,7 @@ exports.addToCart = async (req, res) => {
             if (existing.length > 0) {
                 const newQty = existing[0].quantity + Number(quantity);
                 await db.query(
-                    `UPDATE cart SET quantity = ?, total_amount = ?, updated_at = NOW()
+                    `UPDATE cart SET quantity = ?, total_amount = ?
                      WHERE cart_id = ?`,
                     [newQty, total_amount, existing[0].cart_id]
                 );
