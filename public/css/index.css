@@ -54,9 +54,9 @@
   --font-size-xxl: 48px;
   --font-size-xxs: 14px;
  
-  --font-family-arial-bold: "Arial-Bold", Helvetica;
-  --font-family-arial-regular: "Arial-Regular", Helvetica;
-  --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+  --font-family-arial-bold: "Arial-Bold", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-family-arial-regular: "Arial-Regular", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-family-baloo_da_2: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
 }
 .arial-regular-normal-santas-gray-16px {
   color: var(--santas-gray);
