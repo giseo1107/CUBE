@@ -3,6 +3,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const path = require('path');
 const fs   = require('fs');
+const cheerio = require('cheerio');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -39,6 +40,23 @@ app.use((req, res, next) => {
     if (!fs.existsSync(filePath))    return next();
 
     let html = fs.readFileSync(filePath, 'utf8');
+
+    // ── cheerio로 기존 네비게이션 제거 ───────────────────
+    const $ = cheerio.load(html, { decodeEntities: false });
+
+    // <nav>, <header> 태그 전체 제거
+    $('nav, header').remove();
+
+    // class에 nav 관련 키워드가 포함된 div 제거
+    $('div[class]').each((_, el) => {
+        const cls = $(el).attr('class') || '';
+        if (/\b(top|navbar|nav-wrap|nav-bar|gnb|g-nav)\b/.test(cls)) {
+            $(el).remove();
+        }
+    });
+
+    html = $.html();
+    // ─────────────────────────────────────────────────────
 
     if (!html.includes('navbar.js')) {
         html = html.replace(
