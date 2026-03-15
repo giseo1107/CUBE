@@ -3,6 +3,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const path = require('path');
 const fs   = require('fs');
+const cheerio = require('cheerio');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -39,6 +40,19 @@ app.use((req, res, next) => {
     if (!fs.existsSync(filePath))    return next();
 
     let html = fs.readFileSync(filePath, 'utf8');
+
+    // ── cheerio로 네비게이션 영역만 정확히 제거 ──────────
+    const $ = cheerio.load(html, { decodeEntities: false });
+
+    // 1) <nav> 태그만 제거 (로고·히어로 등 주변 콘텐츠는 유지)
+    $('nav').remove();
+
+    // 2) 네비게이션을 감싸는 wrapper div만 제거
+    //    (logo-nav, top-1, login 등 nav 전용 컨테이너)
+    $('div.top-1, div.logo-nav, div.login').remove();
+
+    html = $.html();
+    // ─────────────────────────────────────────────────────
 
     if (!html.includes('navbar.js')) {
         html = html.replace(
