@@ -321,9 +321,14 @@
 
 .expandable-faq {
   background-color: #ededed;
-  height: 2300px;
+  height: auto;
+  min-height: 100vh;
   position: relative;
-  width: 1920px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 80px 20px 60px;
+  box-sizing: border-box;
 }
 
 .expandable-faq .form {
@@ -335,13 +340,15 @@
   box-shadow: 0px 4px 24px #0000000f;
   display: flex;
   flex-direction: column;
-  height: 1246px;
-  left: 162px;
-  overflow: hidden;
+  height: auto;
+  left: auto;
+  overflow: visible;
   padding: 1px;
-  position: absolute;
-  top: 603px;
-  width: 1596px;
+  position: relative;
+  top: auto;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .expandable-faq .container-1 {
@@ -674,7 +681,7 @@
   display: flex;
   margin-left: 21px;
   margin-top: 21px;
-  width: 672px;
+  width: auto;
 }
 
 .expandable-faq .text-84 {
@@ -697,68 +704,79 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  height: 100px;
+  height: auto;
   margin-left: 21px;
   margin-top: 10px;
-  overflow: hidden;
-  padding: 15px 30px 1px 15px;
+  margin-right: 21px;
+  overflow: visible;
+  padding: 15px 20px;
   position: relative;
-  width: 672px;
+  width: calc(100% - 42px);
 }
 
 .expandable-faq .paragraph-6 {
   align-self: stretch;
-  height: 110px;
-  margin-bottom: -1.00px;
+  height: auto;
+  margin-bottom: 0;
   position: relative;
   width: 100%;
 }
 
 .expandable-faq .text-85 {
-  left: 0;
   letter-spacing: 0;
   line-height: 22px;
-  position: absolute;
-  top: -1px;
-  white-space: nowrap;
+  position: relative;
+  left: auto;
+  top: auto;
+  white-space: normal;
+  word-break: keep-all;
+  display: block;
 }
 
 .expandable-faq .text-86 {
-  left: 0;
   letter-spacing: 0;
   line-height: 22px;
-  position: absolute;
-  top: 21px;
-  white-space: nowrap;
+  position: relative;
+  left: auto;
+  top: auto;
+  white-space: normal;
+  word-break: keep-all;
+  display: block;
 }
 
 .expandable-faq .text-87 {
-  left: 0;
   letter-spacing: 0;
   line-height: 22px;
-  position: absolute;
-  top: 43px;
-  white-space: nowrap;
+  position: relative;
+  left: auto;
+  top: auto;
+  white-space: normal;
+  word-break: keep-all;
+  display: block;
 }
 
 .expandable-faq .text_label {
-  left: 0;
   letter-spacing: 0;
   line-height: 22px;
-  position: absolute;
-  top: 65px;
-  width: 616px;
+  position: relative;
+  left: auto;
+  top: auto;
+  width: auto;
+  white-space: normal;
+  word-break: keep-all;
+  display: block;
 }
 
 .expandable-faq .label-2 {
   align-items: center;
   display: flex;
   gap: 10px;
-  height: 22px;
+  height: auto;
   margin-left: 21px;
   margin-top: 14px;
+  margin-bottom: 21px;
   position: relative;
-  width: 672px;
+  width: calc(100% - 42px);
 }
 
 .expandable-faq .container-15 {
@@ -798,12 +816,14 @@
   align-items: center;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 16px;
-  height: 60px;
-  left: 607px;
-  position: absolute;
-  top: 1041px;
-  width: 393px;
+  height: auto;
+  left: auto;
+  position: relative;
+  top: auto;
+  width: 100%;
+  padding: 20px 0;
   overflow: visible;
 }
 
@@ -837,12 +857,12 @@
 }
 
 .expandable-faq .text-89 {
-  left: 63px;
+  left: auto;
   letter-spacing: 0;
   line-height: 24px;
-  position: absolute;
+  position: relative;
   text-align: center;
-  top: 16px;
+  top: auto;
   white-space: nowrap;
 }
 
@@ -864,12 +884,12 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-m);
   font-weight: 400;
-  left: 48px;
+  left: auto;
   letter-spacing: 0;
   line-height: 24px;
-  position: absolute;
+  position: relative;
   text-align: center;
-  top: 16px;
+  top: auto;
   white-space: nowrap;
 }
 

@@ -388,14 +388,11 @@
       if (selectedButtons.has(btn)) {
         // 이미 선택된 옵션 → 해제
         selectedButtons.delete(btn);
-        btn.style.borderColor = '';
-        btn.style.backgroundColor = '';
-        btn.style.border = '';
+        btn.classList.remove('selected');
       } else {
         // 새로 선택
         selectedButtons.add(btn);
-        btn.style.border = '2px solid var(--chathams-blue)';
-        btn.style.backgroundColor = '#f0f6ff';
+        btn.classList.add('selected');
       }
       updateTotal();
     }

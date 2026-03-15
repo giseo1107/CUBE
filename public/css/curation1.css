@@ -1766,3 +1766,38 @@
   white-space: nowrap !important;
   overflow-wrap: normal !important;
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   옵션 버튼 선택 상태 (체크 표시)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.curation-shopu95detailed1 .button.selected {
+  border: 2px solid var(--chathams-blue) !important;
+  background-color: #eef5ff !important;
+  transition: border 0.15s, background-color 0.15s;
+}
+
+/* 체크박스 박스 → 선택 시 파란 배경으로 채움 */
+.curation-shopu95detailed1 .button.selected .container-9 {
+  background-color: var(--chathams-blue) !important;
+  border-color: var(--chathams-blue) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 체크 표시 (✓) */
+.curation-shopu95detailed1 .button.selected .container-9::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 6px;
+  border-left: 2.5px solid #ffffff;
+  border-bottom: 2.5px solid #ffffff;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* 미선택 상태 기본 커서 */
+.curation-shopu95detailed1 .button {
+  cursor: pointer;
+  transition: border 0.15s, background-color 0.15s;
+}
