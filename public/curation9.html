@@ -42,7 +42,7 @@
           </div>
           <div class="container-25">
             <div class="text-33"><div class="text-9 arial-regular-normal-pale-sky-14px">총 예상 금액:</div></div>
-            <div class="text-34"><div class="text-52 arial-bold-chathams-blue-28px">58,000,000원</div></div>
+            <div class="text-34"><div class="text-52 arial-bold-chathams-blue-28px" id="total-price-sticky">58,000,000원</div></div>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
             <div class="paragraph-4">
               <div class="text-1 arial-regular-normal-pale-sky-20px">많은 공간이 있는 모델</div>
             </div>
-            <div class="container-item">
+            <div class="container-item price-row">
               <div class="text-11"><h1 class="text-3-1 arial-bold-chathams-blue-52px">58,000,000</h1></div>
               <div class="text-12"><div class="text-4-1 arial-regular-normal-scarpa-flow-24px">원</div></div>
             </div>
@@ -286,7 +286,7 @@
               </div>
               <div class="container-23">
                 <div class="text-29"><div class="text-1 arial-bold-mirage-20px">총 예상 금액</div></div>
-                <div class="text-30"><div class="text-47 arial-bold-chathams-blue-32px">58,000,000원</div></div>
+                <div class="text-30"><div class="text-47 arial-bold-chathams-blue-32px" id="total-price-main">58,000,000원</div></div>
               </div>
             </div>
             <div class="button-1">
@@ -352,5 +352,30 @@
       </footer>
 
     </div>
+  <script src="js/navbar.js"></script>
+  <script>
+    const BASE_PRICE = 58000000;
+    const OPTION_PRICES = [3500000, 2800000, 8500000, 1500000, 2200000, 4500000, 3200000];
+    const selectedButtons = new Set();
+    document.querySelectorAll('.container-21 .button').forEach(function(btn, i) {
+      btn.dataset.price = OPTION_PRICES[i];
+      btn.addEventListener('click', function() { toggleOption(btn); });
+    });
+    function toggleOption(btn) {
+      if (selectedButtons.has(btn)) { selectedButtons.delete(btn); btn.classList.remove('selected'); }
+      else { selectedButtons.add(btn); btn.classList.add('selected'); }
+      updateTotal();
+    }
+    function updateTotal() {
+      let extra = 0;
+      selectedButtons.forEach(function(btn) { extra += parseInt(btn.dataset.price, 10); });
+      const total = BASE_PRICE + extra;
+      const formatted = total.toLocaleString('ko-KR') + '원';
+      const mainEl = document.getElementById('total-price-main');
+      if (mainEl) mainEl.textContent = formatted;
+      const stickyEl = document.getElementById('total-price-sticky');
+      if (stickyEl) stickyEl.textContent = formatted;
+    }
+  </script>
   </body>
 </html>
