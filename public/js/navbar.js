@@ -281,19 +281,6 @@
     </div>
   `;
 
-  // ── body 최상단에 삽입 ──────────────────────────────────
-  function mount() {
-    // 기존 navbar가 있으면 숨김 (충돌 방지)
-    document.querySelectorAll('.navbar, nav:not(#g-nav)').forEach(el => {
-      el.style.display = 'none';
-    });
-    document.body.insertBefore(nav, document.body.firstChild);
-    checkAuth();
-    initScroll();
-  }
-
-  document.body ? mount() : document.addEventListener('DOMContentLoaded', mount);
-
   // ── 스크롤 이벤트 → frosted glass 전환 ─────────────────
   const SCROLL_THRESHOLD = 60; // px — 이 이상 내려가면 효과 적용
 
@@ -308,6 +295,19 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll(); // 초기 상태 즉시 적용
   }
+
+  // ── body 최상단에 삽입 ──────────────────────────────────
+  function mount() {
+    // 기존 navbar가 있으면 숨김 (충돌 방지)
+    document.querySelectorAll('.navbar, nav:not(#g-nav)').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.body.insertBefore(nav, document.body.firstChild);
+    checkAuth();
+    initScroll();
+  }
+
+  document.body ? mount() : document.addEventListener('DOMContentLoaded', mount);
 
   // ── 로그인 상태 반영 ────────────────────────────────────
   async function checkAuth() {

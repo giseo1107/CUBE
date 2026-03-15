@@ -13,6 +13,7 @@ const reservationRoutes = require('./routes/reservation');
 const usedItemsRoute = require('./routes/usedItems');
 const galleryRoutes = require('./routes/gallery');
 const reviewRoutes = require('./routes/review');
+const cartRoutes = require('./routes/cart');
 const pool = require('./config/db');  // ← 기존 SSL 적용된 pool 가져오기
 
 const sessionStore = new MySQLStore({}, pool);  // ← pool 직접 전달 (SSL 옵션 불필요)
@@ -111,6 +112,7 @@ app.use('/api/reservation', reservationRoutes);
 app.use('/api/used-items', usedItemsRoute);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/cart', cartRoutes);
 
 // 후기 상세 페이지 (깔끔한 URL)
 app.get('/review/:id', (req, res) => {
