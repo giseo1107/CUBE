@@ -194,9 +194,9 @@
   font-weight: 700;
   left: 0;
   letter-spacing: 0;
-  line-height: 48px;
-  position: absolute;
-  top: 0;
+  line-height: 1.2;
+  position: relative;
+  top: auto;
   white-space: nowrap;
 }
 
@@ -1346,7 +1346,8 @@
 
 .index .main_-wording {
   gap: 24px;
-  height: 376px;
+  height: auto;
+  min-height: 376px;
   left: 94px;
   position: absolute;
   top: 324px;
@@ -1396,7 +1397,8 @@
 }
 
 .index .wording2-1 {
-  height: 78px;
+  height: auto;
+  min-height: 78px;
 }
 
 .index .paragraph-26 {
@@ -1410,11 +1412,12 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: 39px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 39px;
-  white-space: nowrap;
-  width: 330px;
+  line-height: 1.5;
+  white-space: normal;
+  word-break: keep-all;
+  width: auto;
 }
 
 .index .paragraph-27 {
@@ -1427,11 +1430,12 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: 39px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 39px;
-  white-space: nowrap;
-  width: 425px;
+  line-height: 1.5;
+  white-space: normal;
+  word-break: keep-all;
+  width: auto;
 }
 
 .index .wording3 {
