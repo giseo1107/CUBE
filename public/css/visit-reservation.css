@@ -966,22 +966,27 @@
 
 .visit-reservation .container-19 {
   align-self: stretch;
-  height: 344.59px;
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   width: 100%;
+  gap: 4px;
+  padding: 8px 0;
+  height: auto;
+  position: relative;
 }
 
 .visit-reservation .button-2 {
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  height: 66px;
-  left: 0;
-  padding: 26.36px 29.94px 0px 29.92px;
-  position: absolute;
-  top: 0;
-  width: 66px;
+  height: 44px;
+  left: auto;
+  padding: 0;
+  position: relative;
+  top: auto;
+  width: 100%;
 }
 
 .visit-reservation .text-1 {
@@ -2363,24 +2368,31 @@
 
 .visit-reservation .list-item {
   align-self: stretch;
-  height: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  height: auto;
+  min-height: 24px;
   position: relative;
   width: 100%;
 }
 
 .visit-reservation .icon-5 {
   height: 20px;
-  left: 0;
-  position: absolute;
-  top: 2px;
+  position: relative;
+  left: auto;
+  top: auto;
+  flex-shrink: 0;
   width: 20px;
 }
 
 .visit-reservation .text-9-1 {
-  left: 28px;
-  line-height: 24px;
-  position: absolute;
-  top: -2px;
+  left: auto;
+  line-height: 1.6;
+  position: relative;
+  top: auto;
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .visit-reservation .top {
@@ -2713,15 +2725,22 @@
 }
 
 .visit-reservation .heading-4-3 {
-  align-self: stretch;
-  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: auto;
+  min-height: 30px;
   position: relative;
   width: 100%;
 }
 
 .visit-reservation .list-item-4 {
   align-self: stretch;
-  height: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  height: auto;
+  min-height: 24px;
   position: relative;
   width: 100%;
 }
@@ -2741,10 +2760,10 @@
   position: relative;
   left: auto;
   top: auto;
-}
   letter-spacing: 0;
-  position: absolute;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: keep-all;
+  line-height: 1.5;
 }
 
 .visit-reservation .text-9-3 {
@@ -2752,78 +2771,5 @@
   white-space: nowrap;
 }
 /* ============================================================
-   TEXT OVERFLOW & LAYOUT FIXES
+   TEXT OVERFLOW & LAYOUT FIXES (정리 완료)
    ============================================================ */
-
-/* 요일 헤더 텍스트 마진 초기화 */
-.visit-reservation .text-5 {
-  letter-spacing: 0;
-  line-height: 1.5;
-  margin: 0;
-  position: relative;
-  text-align: center;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-/* 방문안내 텍스트 줄바꿈 허용 */
-.visit-reservation .text-9-3 {
-  white-space: normal !important;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-  line-height: 1.6;
-}
-
-/* heading-4-3 flex 정렬 */
-.visit-reservation .heading-4-3 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: auto;
-  min-height: 30px;
-  position: relative;
-  width: 100%;
-}
-
-/* list-item, list-item-4 flex 정렬 */
-.visit-reservation .list-item,
-.visit-reservation .list-item-4 {
-  align-self: stretch;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  height: auto;
-  min-height: 24px;
-  position: relative;
-  width: 100%;
-}
-
-/* list icon 절대위치 해제 */
-.visit-reservation .icon-5 {
-  height: 20px;
-  position: relative;
-  left: auto;
-  top: auto;
-  flex-shrink: 0;
-  width: 20px;
-}
-
-/* list 텍스트 절대위치 해제 */
-.visit-reservation .text-9-1 {
-  left: auto !important;
-  top: auto !important;
-  position: relative !important;
-  line-height: 1.6;
-  white-space: normal;
-  word-break: keep-all;
-}
-
-/* paragraph-9 내 텍스트 정렬 */
-.visit-reservation .paragraph-9 > * {
-  position: relative;
-  left: auto;
-  top: auto;
-  line-height: 1.6;
-  white-space: normal;
-  word-break: keep-all;
-}
