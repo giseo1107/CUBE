@@ -48,12 +48,17 @@ app.use((req, res, next) => {
     }
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.send(html);
+    return res.send(html);  // ← return 명시
 });
 // ──────────────────────────────────────────────────────────────
 
-// 정적 파일 먼저 제공 (인증 불필요)
-app.use(express.static(path.join(__dirname, 'public')));
+// 정적 파일 제공 (HTML 제외 — navbar 미들웨어가 처리)
+// index:false       → 루트 접근 시 index.html 자동 서빙 방지
+// extensions:[]     → .html 확장자 자동 매핑 방지
+app.use(express.static(path.join(__dirname, 'public'), {
+    index: false,
+    extensions: [],
+}));
 
 // 미들웨어 설정
 app.use(express.json());
