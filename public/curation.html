@@ -68,17 +68,26 @@
       <div class="curation-shop-1">
         <div class="container-16">
           <div class="text-25"><div class="text-92 notosanskr-medium-pale-sky-15px">필터:</div></div>
-          <div class="button-2"><div class="text-93">전체</div></div>
-          <div class="button"><div class="text-9 notosanskr-medium-bright-gray-14px">주거용</div></div>
-          <div class="button"><div class="text-9 notosanskr-medium-bright-gray-14px">상업용</div></div>
-          <div class="button"><div class="text-9 notosanskr-medium-bright-gray-14px">사무용</div></div>
+          <div class="button-2 filter-btn active" data-filter="전체" onclick="filterCards(this)">
+            <div class="text-93">전체</div>
+          </div>
+          <div class="button filter-btn" data-filter="주거용" onclick="filterCards(this)">
+            <div class="text-9 notosanskr-medium-bright-gray-14px">주거용</div>
+          </div>
+          <div class="button filter-btn" data-filter="상업용" onclick="filterCards(this)">
+            <div class="text-9 notosanskr-medium-bright-gray-14px">상업용</div>
+          </div>
+          <div class="button filter-btn" data-filter="사무용" onclick="filterCards(this)">
+            <div class="text-9 notosanskr-medium-bright-gray-14px">사무용</div>
+          </div>
           <div class="container-17">
             <div class="text-26"><div class="text-97">정렬:</div></div>
-            <div class="dropdown">
-              <div class="option"></div>
-              <div class="option"></div>
-              <div class="option"></div>
-            </div>
+            <select class="sort-select" onchange="sortCards(this.value)">
+              <option value="default">기본순</option>
+              <option value="asc">낮은 가격순</option>
+              <option value="desc">높은 가격순</option>
+              <option value="name">이름순</option>
+            </select>
           </div>
         </div>
       </div>
@@ -89,7 +98,7 @@
       <div class="container-18">
 
         <!-- Card 1: 프리미엄 주거형 -->
-        <div class="product-card">
+        <div class="product-card" data-category="주거용" data-price="45000000" data-name="프리미엄 주거형">
           <img class="container" src="curationimg/container-10.svg" alt="Container" />
           <div class="container-1">
             <div class="container-2">
@@ -121,7 +130,7 @@
         </div>
 
         <!-- Card 2: 카페형 큐브 (할인) -->
-        <div class="product-card-1 product-card-9">
+        <div class="product-card-1 product-card-9" data-category="상업용" data-price="18500000" data-name="카페형 큐브">
           <div class="container-6">
             <div class="cs_1"></div>
             <div class="container-7">
@@ -160,7 +169,7 @@
         </div>
 
         <!-- Card 3: 오피스 베이직 -->
-        <div class="product-card-2 product-card-9">
+        <div class="product-card-2 product-card-9" data-category="사무용" data-price="8900000" data-name="오피스 베이직">
           <img class="container" src="curationimg/container-12.svg" alt="Container" />
           <div class="container-1">
             <div class="container-2">
@@ -192,7 +201,7 @@
         </div>
 
         <!-- Card 4: 스튜디오 컴팩트 -->
-        <div class="product-card-3 product-card-9">
+        <div class="product-card-3 product-card-9" data-category="사무용" data-price="12500000" data-name="스튜디오 컴팩트">
           <img class="container" src="curationimg/container-13.svg" alt="Container" />
           <div class="container-1">
             <div class="container-2">
@@ -224,7 +233,7 @@
         </div>
 
         <!-- Card 5: 모던 레지던스 -->
-        <div class="product-card-4 product-card-9">
+        <div class="product-card-4 product-card-9" data-category="주거용" data-price="32000000" data-name="모던 레지던스">
           <img class="container" src="curationimg/container-14.svg" alt="Container" />
           <div class="container-1">
             <div class="container-2">
@@ -256,7 +265,7 @@
         </div>
 
         <!-- Card 6: 다중 공간 모듈 -->
-        <div class="product-card-5 product-card-9">
+        <div class="product-card-5 product-card-9" data-category="상업용" data-price="58000000" data-name="다중 공간 모듈">
           <img class="container" src="curationimg/container-15.svg" alt="Container" />
           <div class="container-1">
             <div class="container-2">
@@ -290,7 +299,7 @@
         </div>
 
         <!-- Card 7: 대여식 2단 컨테이너 (신규) -->
-        <div class="product-card-6 product-card-9">
+        <div class="product-card-6 product-card-9" data-category="상업용" data-price="3500000" data-name="대여식 2단 컨테이너">
           <div class="container-6">
             <div class="cs_4">
               <div class="container-19">
@@ -329,7 +338,7 @@
         </div>
 
         <!-- Card 8: 일반 주거형 (신규) -->
-        <div class="product-card-7 product-card-9">
+        <div class="product-card-7 product-card-9" data-category="주거용" data-price="5900000" data-name="일반 주거형">
           <div class="container-6">
             <img
               class="ac6013-a6-8-fc2-4-f7"
@@ -374,7 +383,7 @@
         </div>
 
         <!-- Card 9: 멀티 유닛 (신규) -->
-        <div class="product-card-8 product-card-9">
+        <div class="product-card-8 product-card-9" data-category="상업용" data-price="75000000" data-name="멀티 유닛">
           <div class="container-6">
             <div class="cs_6">
               <div class="container-22">
@@ -492,5 +501,81 @@
 
     </div><!-- /.curation-shop.screen -->
     <script src="js/navbar.js"></script>
+    <script>
+      (function () {
+        var grid = document.querySelector('.container-18');
+        var currentFilter = '전체';
+        var currentSort   = 'default';
+
+        // 모든 카드 수집 (data-category가 있는 직접 자식)
+        function getCards() {
+          return Array.from(grid.querySelectorAll('[data-category]'));
+        }
+
+        // 필터 적용
+        window.filterCards = function (btn) {
+          currentFilter = btn.getAttribute('data-filter');
+
+          // 버튼 active 상태 전환
+          document.querySelectorAll('.filter-btn').forEach(function (b) {
+            b.classList.remove('active');
+            var inner = b.querySelector('.text-93, .text-9');
+            if (inner) {
+              inner.style.color = '';
+            }
+          });
+          btn.classList.add('active');
+          var activeInner = btn.querySelector('.text-93, .text-9');
+          if (activeInner) activeInner.style.color = '#fff';
+
+          applyFilterSort();
+        };
+
+        // 정렬 적용
+        window.sortCards = function (value) {
+          currentSort = value;
+          applyFilterSort();
+        };
+
+        function applyFilterSort() {
+          var cards = getCards();
+
+          // 필터
+          cards.forEach(function (card) {
+            var cat = card.getAttribute('data-category');
+            if (currentFilter === '전체' || cat === currentFilter) {
+              card.removeAttribute('hidden');
+            } else {
+              card.setAttribute('hidden', '');
+            }
+          });
+
+          // 정렬 (표시 순서 변경)
+          var visible = cards.filter(function (c) { return !c.hasAttribute('hidden'); });
+
+          if (currentSort === 'asc') {
+            visible.sort(function (a, b) {
+              return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+            });
+          } else if (currentSort === 'desc') {
+            visible.sort(function (a, b) {
+              return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+            });
+          } else if (currentSort === 'name') {
+            visible.sort(function (a, b) {
+              return a.dataset.name.localeCompare(b.dataset.name, 'ko');
+            });
+          } else {
+            // 기본순: 원래 DOM 순서 복원
+            visible.sort(function (a, b) {
+              return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+            });
+          }
+
+          // 그리드에 재삽입
+          visible.forEach(function (card) { grid.appendChild(card); });
+        }
+      })();
+    </script>
   </body>
 </html>

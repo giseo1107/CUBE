@@ -182,9 +182,11 @@
   font-family: var(--font-family-arial-bold);
   font-size: 64px;
   font-weight: 700;
-  left: 0;
+  left: auto;
   line-height: 1.2;
-  top: 0;
+  position: relative;
+  top: auto;
+  white-space: nowrap;
 }
 
 .index .text-2-1 {
@@ -192,7 +194,7 @@
   font-family: var(--font-family-arial-bold);
   font-size: 64px;
   font-weight: 700;
-  left: 0;
+  left: auto;
   letter-spacing: 0;
   line-height: 1.2;
   position: relative;
@@ -1346,8 +1348,7 @@
 
 .index .main_-wording {
   gap: 24px;
-  height: auto;
-  min-height: 376px;
+  height: 376px;
   left: 94px;
   position: absolute;
   top: 324px;
@@ -1397,8 +1398,7 @@
 }
 
 .index .wording2-1 {
-  height: auto;
-  min-height: 78px;
+  height: 78px;
 }
 
 .index .paragraph-26 {
@@ -1412,12 +1412,11 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: auto;
+  height: 39px;
   letter-spacing: 0;
-  line-height: 1.5;
-  white-space: normal;
-  word-break: keep-all;
-  width: auto;
+  line-height: 39px;
+  white-space: nowrap;
+  width: 330px;
 }
 
 .index .paragraph-27 {
@@ -1430,12 +1429,11 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-xl);
   font-weight: 400;
-  height: auto;
+  height: 39px;
   letter-spacing: 0;
-  line-height: 1.5;
-  white-space: normal;
-  word-break: keep-all;
-  width: auto;
+  line-height: 39px;
+  white-space: nowrap;
+  width: 425px;
 }
 
 .index .wording3 {
@@ -1765,4 +1763,10 @@
   white-space: normal;
   word-break: keep-all;
   overflow-wrap: break-word;
+}
+/* ── text-1-2 position override (text-1-3 absolute 덮어쓰기) ── */
+.index .text-1-2.text-1-3 {
+  position: relative;
+  top: auto;
+  left: auto;
 }

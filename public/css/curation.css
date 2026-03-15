@@ -1544,6 +1544,118 @@
   white-space: nowrap;
 }
 
+/* ============================================================
+   금액 표시 겹침 수정 & 필터 UI 개선
+   ============================================================ */
+
+/* 가격 행 전체 flex 정렬 통일 */
+.curation-shop .container-3,
+.curation-shop .container-21 {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  height: auto !important;
+  position: absolute;
+  left: 76px;
+  top: 120px;
+  width: auto !important;
+  max-width: 400px;
+}
+
+/* 숫자 wrapper: absolute 해제 → flex 항목으로 */
+.curation-shop .text-2,
+.curation-shop .text-28,
+.curation-shop .text-30 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  display: flex;
+  align-items: baseline;
+}
+
+/* 숫자 텍스트 자체 */
+.curation-shop .text-3,
+.curation-shop .text-20 {
+  height: auto !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+  width: auto !important;
+}
+
+/* "원" wrapper: absolute 해제 → flex 항목으로 */
+.curation-shop .text-4,
+.curation-shop .text-32 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  display: flex;
+  align-items: baseline;
+}
+
+/* "원" 텍스트 */
+.curation-shop .text-5 {
+  height: auto !important;
+  width: auto !important;
+  line-height: 1.4 !important;
+}
+
+/* 할인가 행 정렬: 원본가격(취소선) + 할인가 + 원 */
+.curation-shop .text-27 {
+  position: relative !important;
+  margin-top: 0 !important;
+  display: flex;
+  align-items: baseline;
+}
+
+/* ── 필터 버튼 인터랙션 ── */
+.curation-shop .filter-btn {
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  user-select: none;
+}
+.curation-shop .filter-btn.active,
+.curation-shop .button-2 {
+  background-color: var(--chathams-blue) !important;
+  color: var(--white) !important;
+}
+.curation-shop .filter-btn.active .text-93,
+.curation-shop .filter-btn.active .text-9 {
+  color: var(--white) !important;
+}
+
+/* ── 정렬 드롭다운 (<select> 교체) ── */
+.curation-shop .sort-select {
+  height: 40px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: var(--font-size-s);
+  color: var(--pale-sky);
+  background: var(--white);
+  cursor: pointer;
+  outline: none;
+  min-width: 130px;
+  appearance: auto;
+}
+
+/* ── 카드 숨김 (필터링) ── */
+.product-card[hidden],
+.product-card-1[hidden],
+.product-card-2[hidden],
+.product-card-3[hidden],
+.product-card-4[hidden],
+.product-card-5[hidden],
+.product-card-6[hidden],
+.product-card-7[hidden],
+.product-card-8[hidden] {
+  display: none !important;
+}
+
 .curation-shop .container-29 {
   height: 40px;
   width: 152px;
