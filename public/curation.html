@@ -146,7 +146,7 @@
               </div>
             </div>
             <div class="container-3">
-              <div class="text-27"><div class="text-26-1">22,000,000원</div></div>
+              <div class="text-27"><div class="text-26-1">22,000,000</div></div>
               <div class="text-2"><div class="text-3 arial-bold-chathams-blue-36px">18,500,000</div></div>
               <div class="text-4"><div class="text-5 arial-regular-normal-scarpa-flow-20px">원</div></div>
             </div>
@@ -431,7 +431,7 @@
       <div class="container-23">
         <div class="heading-2"><div class="text-1-1">맞춤 제작 권유</div></div>
         <div class="paragraph-18"><p class="text-2-1">원하는 모델이 없으신가요? 직접 제작해보세요!</p></div>
-        <div class="button-3"><div class="text-3-1">커스텀 큐브</div></div>
+        <a href="editor.html" style="text-decoration:none;"><div class="button-3"><div class="text-3-1">커스텀 큐브</div></div></a>
       </div>
 
       <!-- =====================================================
@@ -507,23 +507,38 @@
         var currentFilter = '전체';
         var currentSort   = 'default';
 
-        // 모든 카드 수집 (data-category가 있는 직접 자식)
+        // 원래 카드 순서 저장 (기본순 복원용)
+        var originalOrder = Array.from(grid.querySelectorAll('[data-category]'));
+
         function getCards() {
           return Array.from(grid.querySelectorAll('[data-category]'));
+        }
+
+        // 전체 버튼 활성/비활성 토글
+        function setAllBtnActive(isActive) {
+          var allBtn = document.querySelector('.button-2');
+          if (!allBtn) return;
+          if (isActive) {
+            allBtn.classList.remove('inactive');
+          } else {
+            allBtn.classList.add('inactive');
+          }
         }
 
         // 필터 적용
         window.filterCards = function (btn) {
           currentFilter = btn.getAttribute('data-filter');
 
-          // 버튼 active 상태 전환
+          // 모든 버튼 초기화
           document.querySelectorAll('.filter-btn').forEach(function (b) {
             b.classList.remove('active');
             var inner = b.querySelector('.text-93, .text-9');
-            if (inner) {
-              inner.style.color = '';
-            }
+            if (inner) inner.style.color = '';
           });
+
+          // 전체 버튼 색상: 전체 선택 시 활성(파랑), 아니면 비활성(회색)
+          setAllBtnActive(currentFilter === '전체');
+
           btn.classList.add('active');
           var activeInner = btn.querySelector('.text-93, .text-9');
           if (activeInner) activeInner.style.color = '#fff';
@@ -566,13 +581,13 @@
               return a.dataset.name.localeCompare(b.dataset.name, 'ko');
             });
           } else {
-            // 기본순: 원래 DOM 순서 복원
+            // 기본순: 초기 DOM 순서 기준으로 복원
             visible.sort(function (a, b) {
-              return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+              return originalOrder.indexOf(a) - originalOrder.indexOf(b);
             });
           }
 
-          // 그리드에 재삽입
+          // 그리드에 재삽입 (실제 DOM 순서 변경)
           visible.forEach(function (card) { grid.appendChild(card); });
         }
       })();

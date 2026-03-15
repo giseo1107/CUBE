@@ -1617,14 +1617,21 @@
   transition: background 0.15s, color 0.15s;
   user-select: none;
 }
-.curation-shop .filter-btn.active,
-.curation-shop .button-2 {
+.curation-shop .filter-btn.active {
   background-color: var(--chathams-blue) !important;
   color: var(--white) !important;
 }
 .curation-shop .filter-btn.active .text-93,
 .curation-shop .filter-btn.active .text-9 {
   color: var(--white) !important;
+}
+
+/* 전체 버튼이 비활성 상태일 때 (다른 카테고리 선택됨) */
+.curation-shop .button-2.inactive {
+  background-color: var(--wild-sand) !important;
+}
+.curation-shop .button-2.inactive .text-93 {
+  color: var(--bright-gray) !important;
 }
 
 /* ── 정렬 드롭다운 (<select> 교체) ── */
@@ -1659,4 +1666,19 @@
 .curation-shop .container-29 {
   height: 40px;
   width: 152px;
+}
+
+/* ── CTA 맞춤 제작 버튼 호버 ── */
+.curation-shop .button-3 {
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  align-items: center;
+  justify-content: center;
+}
+.curation-shop .button-3:hover {
+  background-color: var(--chathams-blue);
+  box-shadow: 0 4px 16px rgba(26, 79, 133, 0.35);
+}
+.curation-shop .button-3:hover .text-3-1 {
+  color: var(--white);
 }
