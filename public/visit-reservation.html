@@ -404,11 +404,11 @@
     </div>
     <script>
     (function () {
-      const MIN_MONTH = 0;  // 1월 (0-indexed)
-      const MAX_MONTH = 11; // 12월 (0-indexed)
+      const MIN_MONTH = 0;  // 1월
+      const MAX_MONTH = 11; // 12월
       const YEAR = 2026;
 
-      let currentMonth = 0; // 1월부터 시작
+      let currentMonth = 0;
 
       const titleEl = document.getElementById('cal-title');
       const daysEl  = document.getElementById('cal-days');
@@ -416,55 +416,48 @@
       const nextBtn = document.getElementById('cal-next');
 
       function renderCalendar(month) {
-        // 타이틀 업데이트
         titleEl.textContent = YEAR + '년 ' + (month + 1) + '월';
 
-        // 버튼 활성/비활성
         prevBtn.style.opacity = month <= MIN_MONTH ? '0.3' : '1';
         prevBtn.style.pointerEvents = month <= MIN_MONTH ? 'none' : 'auto';
         nextBtn.style.opacity = month >= MAX_MONTH ? '0.3' : '1';
         nextBtn.style.pointerEvents = month >= MAX_MONTH ? 'none' : 'auto';
 
-        // 해당 달의 1일 요일, 마지막 날 계산
-        const firstDay  = new Date(YEAR, month, 1).getDay(); // 0=일 ~ 6=토
-        const lastDate  = new Date(YEAR, month + 1, 0).getDate();
-        const prevLast  = new Date(YEAR, month, 0).getDate();
+        const firstDay = new Date(YEAR, month, 1).getDay();
+        const lastDate = new Date(YEAR, month + 1, 0).getDate();
+        const prevLast = new Date(YEAR, month, 0).getDate();
 
         let html = '';
 
-        // 이전 달 날짜 (회색)
+        // 이전 달 (회색)
         for (let i = firstDay - 1; i >= 0; i--) {
-          html += '<div class="button-2"><div class="text-1"><div class="number-24 abhayalibresemibold-regular-normal-pink-swan-14px">' + (prevLast - i) + '</div></div></div>';
+          html += '<div class="button-2"><div class="text-1"><span style="color:#c8c8c8;font-size:14px;">' + (prevLast - i) + '</span></div></div>';
         }
 
-        // 이번 달 날짜
+        // 이번 달
         for (let d = 1; d <= lastDate; d++) {
-          html += '<div class="button-2 cal-day" style="cursor:pointer;" data-date="' + d + '"><div class="text-1"><div class="number-24 abhayalibresemibold-regular-normal-cod-gray-14px">' + d + '</div></div></div>';
+          html += '<div class="button-2 cal-day" data-date="' + d + '" style="cursor:pointer;"><div class="text-1"><span class="cal-num" style="font-size:14px;color:#333;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s,color .15s;">' + d + '</span></div></div>';
         }
 
-        // 다음 달 날짜 (42칸 채우기)
+        // 다음 달 채우기
         const total = firstDay + lastDate;
         const remain = total % 7 === 0 ? 0 : 7 - (total % 7);
         for (let d = 1; d <= remain; d++) {
-          html += '<div class="button-2"><div class="text-1"><div class="number-24 abhayalibresemibold-regular-normal-pink-swan-14px">' + d + '</div></div></div>';
+          html += '<div class="button-2"><div class="text-1"><span style="color:#c8c8c8;font-size:14px;">' + d + '</span></div></div>';
         }
 
         daysEl.innerHTML = html;
 
-        // 날짜 클릭 선택 효과
+        // 날짜 선택 효과
         daysEl.querySelectorAll('.cal-day').forEach(function (el) {
           el.addEventListener('click', function () {
-            daysEl.querySelectorAll('.cal-day').forEach(function (d) {
-              d.querySelector('.number-24').style.background = '';
-              d.querySelector('.number-24').style.borderRadius = '';
-              d.querySelector('.number-24').style.color = '';
-              d.querySelector('.number-24').style.padding = '';
+            daysEl.querySelectorAll('.cal-num').forEach(function (n) {
+              n.style.background = '';
+              n.style.color = '#333';
             });
-            var numEl = this.querySelector('.number-24');
+            var numEl = this.querySelector('.cal-num');
             numEl.style.background = '#3b4a7a';
-            numEl.style.borderRadius = '50%';
             numEl.style.color = '#fff';
-            numEl.style.padding = '4px 8px';
           });
         });
       }
@@ -473,17 +466,10 @@
       nextBtn.style.cursor = 'pointer';
 
       prevBtn.addEventListener('click', function () {
-        if (currentMonth > MIN_MONTH) {
-          currentMonth--;
-          renderCalendar(currentMonth);
-        }
+        if (currentMonth > MIN_MONTH) { currentMonth--; renderCalendar(currentMonth); }
       });
-
       nextBtn.addEventListener('click', function () {
-        if (currentMonth < MAX_MONTH) {
-          currentMonth++;
-          renderCalendar(currentMonth);
-        }
+        if (currentMonth < MAX_MONTH) { currentMonth++; renderCalendar(currentMonth); }
       });
 
       renderCalendar(currentMonth);
