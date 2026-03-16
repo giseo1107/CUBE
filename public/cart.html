@@ -55,52 +55,20 @@
         <div class="container-6">
           <div class="container-7">
             <div class="container-8">
-              <div class="heading-2"><div class="text-3-1">상품 목록 (1개)</div></div>
+              <div class="heading-2"><div class="text-3-1" id="cart-count-label">상품 목록 (0개)</div></div>
             </div>
-            <div class="container-9">
-              <article class="container-10">
-                <div class="cartimg" role="img" aria-label="프리미엄 주거형 상품 이미지"></div>
-                <div class="container-11">
-                  <div class="container-12">
-                    <div class="container-13">
-                      <div class="heading-3"><div class="text-4-1 arial-bold-mirage-22px">프리미엄 주거형</div></div>
-                      <div class="paragraph-3">
-                        <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
-                      </div>
-                    </div>
-                    <button class="button-2" aria-label="상품 삭제">
-                      <div class="icon-3"><img class="vector-1" src="imgs/vector-1.svg" alt="" role="presentation" /></div>
-                    </button>
-                  </div>
-                  <div class="container-14">
-                    <div class="container-15">
-                      <div class="text-5"><div class="text-6 notosanskr-medium-pale-sky-15px">기본 가격</div></div>
-                      <div class="text-7"><div class="text-7-1">45,000,000원</div></div>
-                    </div>
-                  </div>
-                  <div class="container-16">
-                    <div class="container-17">
-                      <div class="text-8"><div class="text-8-1">수량</div></div>
-                      <div class="container-18">
-                        <button class="button" aria-label="수량 감소">
-                          <div class="icon"><img class="vector-2" src="imgs/vector-2.svg" alt="" role="presentation" /></div>
-                        </button>
-                        <div class="text-9"><div class="number">1</div></div>
-                        <button class="button" aria-label="수량 증가">
-                          <div class="icon"><img class="vector-3" src="imgs/vector-3.svg" alt="" role="presentation" /></div>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="container-19">
-                      <div class="paragraph-4"><div class="text-9-1">상품 금액</div></div>
-                      <div class="paragraph-5">
-                        <div class="text-10 arial-bold-chathams-blue-24px">45,000,000원</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+            <!-- 로딩 상태 -->
+            <div id="cart-loading" style="padding:40px;text-align:center;color:#6b7280;font-size:16px;">
+              장바구니를 불러오는 중...
             </div>
+            <!-- 빈 장바구니 -->
+            <div id="cart-empty" style="display:none;padding:60px;text-align:center;color:#6b7280;">
+              <div style="font-size:48px;margin-bottom:16px;">🛒</div>
+              <div style="font-size:18px;font-weight:700;color:#101828;margin-bottom:8px;">장바구니가 비어있습니다</div>
+              <a href="/curation.html" style="display:inline-block;margin-top:16px;padding:12px 24px;background:#1a4f85;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">큐레이션 둘러보기</a>
+            </div>
+            <!-- 상품 목록 -->
+            <div class="container-9" id="cart-items" style="display:none;"></div>
           </div>
         </div>
 
@@ -166,7 +134,7 @@
         <div class="container-27">
           <div class="container-1">
             <div class="text-16"><div class="text notosanskr-normal-pale-sky-16px">상품 금액</div></div>
-            <div class="text-17"><div class="text-2">45,000,000원</div></div>
+            <div class="text-17"><div class="text-2" id="summary-product">0원</div></div>
           </div>
           <div class="container-1">
             <div class="text-23"><div class="text-25 notosanskr-normal-pale-sky-16px">배송비</div></div>
@@ -175,9 +143,11 @@
         </div>
         <div class="container-28">
           <div class="text-26"><div class="text-27 arial-bold-mirage-20px">총 결제 금액</div></div>
-          <div class="text-28"><p class="text-28-1">45,000,000원</p></div>
+          <div class="text-28"><p class="text-28-1" id="summary-total">0원</p></div>
         </div>
-        <button class="button-3"><div class="text-29 arial-bold-white-18px">결제하기</div></button>
+        <button class="button-3" id="checkout-btn" onclick="goCheckout()" disabled style="opacity:0.5;cursor:not-allowed;">
+          <div class="text-29 arial-bold-white-18px">결제하기</div>
+        </button>
         <div class="paragraph-12"><p class="text-30">결제 후 상세 견적서를 받아보실 수 있습니다</p></div>
         <ul class="container-29" aria-label="안내 사항">
           <li class="container-2">
@@ -211,5 +181,168 @@
       </aside>
 
     </div><!-- /.cart.screen -->
+
+  <script>
+    // ── 상품별 이미지 경로 매핑 ──────────────────────────
+    const PRODUCT_IMG = {
+      1: '/curationimg/main1-1.png',
+      2: '/curationimg/main2-1.png',
+      3: '/curationimg/main3-1.png',
+      4: '/curationimg/main4-1.png',
+      5: '/curationimg/main5-1.png',
+      6: '/curationimg/main6-1.png',
+      7: '/curationimg/main7-1.png',
+      8: '/curationimg/main8-1.png',
+      9: '/curationimg/main9-1.png',
+    };
+
+    // ── 금액 포맷 헬퍼 ────────────────────────────────────
+    function fmt(n) {
+      return Number(n).toLocaleString('ko-KR') + '원';
+    }
+
+    // ── 요약 사이드바 업데이트 ────────────────────────────
+    function updateSummary(items) {
+      const total = items.reduce((sum, item) => sum + Number(item.total_amount) * Number(item.quantity), 0);
+      document.getElementById('summary-product').textContent = fmt(total);
+      document.getElementById('summary-total').textContent   = fmt(total);
+
+      const btn = document.getElementById('checkout-btn');
+      if (items.length > 0) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor  = 'pointer';
+      }
+    }
+
+    // ── 상품 카드 HTML 생성 ───────────────────────────────
+    function renderItem(item) {
+      const totalAmt = Number(item.total_amount) * Number(item.quantity);
+      const imgSrc   = PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png';
+      const options  = item.selected_options
+        ? `<div style="margin-top:6px;font-size:13px;color:#6b7280;">추가 옵션: ${item.selected_options}</div>`
+        : '';
+
+      return `
+        <article class="container-10" data-cart-id="${item.cart_id}">
+          <div class="cartimg" role="img" aria-label="${item.product_name} 상품 이미지"
+               style="background-image:url('${imgSrc}');"></div>
+          <div class="container-11">
+            <div class="container-12">
+              <div class="container-13">
+                <div class="heading-3">
+                  <div class="text-4-1 arial-bold-mirage-22px">${item.product_name}</div>
+                </div>
+                <div class="paragraph-3">
+                  <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
+                </div>
+                ${options}
+              </div>
+              <button class="button-2" aria-label="상품 삭제" onclick="deleteItem(${item.cart_id})">
+                <div class="icon-3"><img class="vector-1" src="imgs/vector-1.svg" alt="" role="presentation" /></div>
+              </button>
+            </div>
+            <div class="container-14">
+              <div class="container-15">
+                <div class="text-5"><div class="text-6 notosanskr-medium-pale-sky-15px">기본 가격</div></div>
+                <div class="text-7"><div class="text-7-1">${fmt(item.base_price)}</div></div>
+              </div>
+            </div>
+            <div class="container-16">
+              <div class="container-17">
+                <div class="text-8"><div class="text-8-1">수량</div></div>
+                <div class="container-18">
+                  <button class="button" aria-label="수량 감소" onclick="changeQty(${item.cart_id}, -1)">
+                    <div class="icon"><img class="vector-2" src="imgs/vector-2.svg" alt="" role="presentation" /></div>
+                  </button>
+                  <div class="text-9"><div class="number" id="qty-${item.cart_id}">${item.quantity}</div></div>
+                  <button class="button" aria-label="수량 증가" onclick="changeQty(${item.cart_id}, 1)">
+                    <div class="icon"><img class="vector-3" src="imgs/vector-3.svg" alt="" role="presentation" /></div>
+                  </button>
+                </div>
+              </div>
+              <div class="container-19">
+                <div class="paragraph-4"><div class="text-9-1">상품 금액</div></div>
+                <div class="paragraph-5">
+                  <div class="text-10 arial-bold-chathams-blue-24px" id="amount-${item.cart_id}">${fmt(totalAmt)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    // ── 장바구니 불러오기 ─────────────────────────────────
+    let cartItems = [];
+
+    async function loadCart() {
+      try {
+        const res  = await fetch('/api/cart');
+        const data = await res.json();
+
+        document.getElementById('cart-loading').style.display = 'none';
+
+        if (!data.success || !data.items || data.items.length === 0) {
+          document.getElementById('cart-empty').style.display = 'block';
+          document.getElementById('cart-count-label').textContent = '상품 목록 (0개)';
+          return;
+        }
+
+        cartItems = data.items;
+        document.getElementById('cart-count-label').textContent = `상품 목록 (${cartItems.length}개)`;
+        document.getElementById('cart-items').style.display = 'block';
+        document.getElementById('cart-items').innerHTML = cartItems.map(renderItem).join('');
+        updateSummary(cartItems);
+
+      } catch (err) {
+        document.getElementById('cart-loading').textContent = '장바구니를 불러오지 못했습니다.';
+      }
+    }
+
+    // ── 상품 삭제 ─────────────────────────────────────────
+    async function deleteItem(cartId) {
+      if (!confirm('상품을 삭제하시겠습니까?')) return;
+      try {
+        const res  = await fetch(`/api/cart/${cartId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) loadCart();
+        else alert(data.message || '삭제에 실패했습니다.');
+      } catch { alert('삭제 중 오류가 발생했습니다.'); }
+    }
+
+    // ── 수량 변경 ─────────────────────────────────────────
+    async function changeQty(cartId, delta) {
+      const item = cartItems.find(i => i.cart_id === cartId);
+      if (!item) return;
+      const newQty = Math.max(1, Number(item.quantity) + delta);
+
+      try {
+        const res  = await fetch(`/api/cart/${cartId}`, {
+          method:  'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ quantity: newQty })
+        });
+        const data = await res.json();
+        if (data.success) {
+          item.quantity = newQty;
+          document.getElementById(`qty-${cartId}`).textContent    = newQty;
+          document.getElementById(`amount-${cartId}`).textContent = fmt(Number(item.total_amount) * newQty);
+          updateSummary(cartItems);
+        } else {
+          alert(data.message || '수량 변경에 실패했습니다.');
+        }
+      } catch { alert('수량 변경 중 오류가 발생했습니다.'); }
+    }
+
+    // ── 결제하기 (바로 결제하기는 별도 구현 대기) ─────────
+    function goCheckout() {
+      // TODO: 결제하기 구현 예정
+      alert('결제 기능은 준비 중입니다.');
+    }
+
+    // ── 초기 로드 ─────────────────────────────────────────
+    loadCart();
+  </script>
+
   </body>
 </html>
