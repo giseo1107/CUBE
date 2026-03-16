@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <!--<meta name=description content="This site was generated with Anima. www.animaapp.com"/>-->
     <!-- <link rel="shortcut icon" type=image/png href="https://animaproject.s3.amazonaws.com/home/favicon.png" /> -->
-    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png" />
     <meta name="og:type" content="website" />
     <meta name="twitter:card" content="photo" />
@@ -257,5 +257,24 @@
         </div>
       </div>
     </div>
+    <script>
+      (function () {
+        var DESIGN_WIDTH = 1920;
+        function applyScale() {
+          var vw = window.innerWidth || document.documentElement.clientWidth;
+          var scale = vw / DESIGN_WIDTH;
+          var el = document.querySelector('.index.screen');
+          if (!el) return;
+          el.style.transformOrigin = 'top left';
+          el.style.transform = scale < 1 ? 'scale(' + scale + ')' : '';
+          /* body 높이를 스케일에 맞게 보정하여 스크롤이 잘리지 않게 함 */
+          document.body.style.height = scale < 1
+            ? Math.ceil(el.scrollHeight * scale) + 'px'
+            : '';
+        }
+        applyScale();
+        window.addEventListener('resize', applyScale);
+      })();
+    </script>
   </body>
 </html>
