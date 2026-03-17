@@ -1740,17 +1740,38 @@
 }
 
 /* 주요 특징 줄 맞춤 */
+.curation-shopu95detailed2 .container-18 {
+  height: auto !important;
+}
+.curation-shopu95detailed2 .container-19 {
+  height: auto !important;
+}
 .curation-shopu95detailed2 .container-3 {
   height: auto !important;
   min-height: 24px !important;
 }
+/* 텍스트 wrapper: 절대 위치 자식이 있어 height auto 시 collapse → min-height 고정 */
 .curation-shopu95detailed2 .text-17,
 .curation-shopu95detailed2 .text-18,
 .curation-shopu95detailed2 .text-21,
 .curation-shopu95detailed2 .text-22,
 .curation-shopu95detailed2 .text-23 {
-  width: auto !important;
+  min-height: 24px !important;
   height: auto !important;
+  width: auto !important;
+  overflow: visible !important;
+}
+/* 내부 텍스트: absolute → relative 로 전환해 부모 높이에 기여 */
+.curation-shopu95detailed2 .text-154,
+.curation-shopu95detailed2 .text-155,
+.curation-shopu95detailed2 .text-156,
+.curation-shopu95detailed2 .text-157,
+.curation-shopu95detailed2 .text-158 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: normal !important;
+  line-height: 1.5 !important;
 }
 
 /* 기본 가격 "18,500,000원" 줄바꿈 수정 */
@@ -1808,6 +1829,17 @@
   left: calc(50.00% - 302px) !important;
   width: 670px !important;
   height: auto !important;
+}
+
+/* sticky bar — 총 예상 금액 라벨 줄바꿈 방지 */
+.curation-shopu95detailed2 .text-32 {
+  width: auto !important;
+  min-width: 90px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed2 .text-32 .arial-regular-normal-pale-sky-14px {
+  white-space: nowrap !important;
 }
 
 /* sticky bar 총액 */
