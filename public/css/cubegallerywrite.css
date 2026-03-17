@@ -499,11 +499,13 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  height: 880px;
+  height: auto;
+  min-height: 880px;
   margin-left: 220px;
   margin-top: 72px;
   position: relative;
   width: 1480px;
+  padding-bottom: 60px;
 }
 
 .write .container-3 {
@@ -1074,6 +1076,39 @@
   align-self: stretch;
   position: relative;
   width: 100%;
+}
+
+/* 이름/날짜 2열 행 */
+.write .container-meta {
+  display: flex;
+  gap: 24px;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+}
+.write .container-meta-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.write .container-meta-item .text-input {
+  height: 58px;
+}
+
+/* 한줄 소개 */
+.write .container-short-intro {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  width: 100%;
+}
+.write .container-short-intro .text-input {
+  height: 58px;
+  align-self: stretch;
 }
 
 /* ============================================================

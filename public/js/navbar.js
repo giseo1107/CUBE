@@ -80,8 +80,8 @@
       flex-shrink: 0;
     }
     #g-nav .gn-logo-img {
-      width: 54px;
-      height: 54px;
+      width: 64px;
+      height: 64px;
       background-image: url('/main_img/group-10@2x.png');
       background-size: cover;
       background-position: center;
@@ -117,7 +117,7 @@
     }
     #g-nav .gn-menu li a {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       color: rgba(255,255,255,0.85);
       text-decoration: none;
@@ -140,7 +140,7 @@
     #g-nav .gn-auth a,
     #g-nav .gn-auth button {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       color: #fff;
       text-decoration: none;

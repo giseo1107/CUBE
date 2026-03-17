@@ -8,7 +8,7 @@
     <title>글쓰기 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/cubegallerywrite.css" />
   </head>
-  <body style="margin: 0; background: #ffffff">
+  <body data-nav="hero" style="margin: 0; background: #ffffff">
 
     <div class="write screen">
 
@@ -74,12 +74,38 @@
         <form
           id="write-form"
           class="form"
-          action="/api/gallery/write"
-          method="POST"
           enctype="multipart/form-data"
         >
-          <!-- hidden: user_id는 서버 세션에서 처리 (필요 시 아래 주석 해제 후 값 주입) -->
-          <!-- <input type="hidden" name="user_id" value="" /> -->
+          <!-- 이름 / 날짜 -->
+          <div class="container-meta">
+            <div class="container-meta-item">
+              <div class="label label-2">
+                <label for="input-author" class="text arial-regular-normal-eerie-black-16px">이름</label>
+              </div>
+              <div class="text-input">
+                <input
+                  id="input-author"
+                  type="text"
+                  name="author_name"
+                  placeholder="작성자 이름을 입력하세요"
+                  style="background:transparent;border:none;outline:none;width:100%;font-family:var(--font-family-arial-regular);font-size:var(--font-size-l);color:var(--eerie-black);"
+                />
+              </div>
+            </div>
+            <div class="container-meta-item">
+              <div class="label label-2">
+                <label class="text arial-regular-normal-eerie-black-16px">날짜</label>
+              </div>
+              <div class="text-input">
+                <input
+                  id="input-date"
+                  type="text"
+                  readonly
+                  style="background:transparent;border:none;outline:none;width:100%;font-family:var(--font-family-arial-regular);font-size:var(--font-size-l);color:var(--eerie-black);cursor:default;"
+                />
+              </div>
+            </div>
+          </div>
 
           <!-- 제목 -->
           <div class="container-3">
@@ -93,42 +119,40 @@
                 name="title"
                 placeholder="작품 제목을 입력하세요"
                 required
-                style="
-                  background: transparent;
-                  border: none;
-                  outline: none;
-                  width: 100%;
-                  font-family: var(--font-family-arial-regular);
-                  font-size: var(--font-size-l);
-                  color: var(--eerie-black);
-                "
+                style="background:transparent;border:none;outline:none;width:100%;font-family:var(--font-family-arial-regular);font-size:var(--font-size-l);color:var(--eerie-black);"
               />
             </div>
           </div>
 
-          <!-- 내용 -->
+          <!-- 한줄 소개 -->
+          <div class="container-short-intro">
+            <div class="label label-2">
+              <label for="input-short-intro" class="text arial-regular-normal-eerie-black-16px">한줄 소개</label>
+            </div>
+            <div class="text-input">
+              <input
+                id="input-short-intro"
+                type="text"
+                name="short_intro"
+                placeholder="작품을 한 줄로 소개해주세요"
+                maxlength="100"
+                style="background:transparent;border:none;outline:none;width:100%;font-family:var(--font-family-arial-regular);font-size:var(--font-size-l);color:var(--eerie-black);"
+              />
+            </div>
+          </div>
+
+          <!-- 상세 설명 -->
           <div class="container-4">
             <div class="label label-2">
-              <label for="input-content" class="text arial-regular-normal-eerie-black-16px">내용</label>
+              <label for="input-content" class="text arial-regular-normal-eerie-black-16px">상세 설명</label>
             </div>
             <div class="text-area">
               <textarea
                 id="input-content"
                 name="content"
-                placeholder="작품에 대한 설명을 입력하세요"
+                placeholder="작품에 대한 상세한 설명을 입력하세요"
                 required
-                style="
-                  background: transparent;
-                  border: none;
-                  outline: none;
-                  width: 100%;
-                  height: 100%;
-                  resize: none;
-                  font-family: var(--font-family-arial-regular);
-                  font-size: var(--font-size-l);
-                  color: var(--eerie-black);
-                  line-height: 24px;
-                "
+                style="background:transparent;border:none;outline:none;width:100%;height:100%;resize:none;font-family:var(--font-family-arial-regular);font-size:var(--font-size-l);color:var(--eerie-black);line-height:24px;"
               ></textarea>
             </div>
           </div>
@@ -229,12 +253,31 @@
     </div><!-- /.write.screen -->
 
     <script>
+      // 오늘 날짜 자동 입력
+      (function() {
+        const d = new Date();
+        const fmt = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+        document.getElementById('input-date').value = fmt;
+      })();
+
+      // 로그인 유저 이름 자동 입력
+      fetch('/api/user/info')
+        .then(r => r.json())
+        .then(data => {
+          if (data.success && data.user) {
+            const nameInput = document.getElementById('input-author');
+            if (!nameInput.value) {
+              nameInput.value = data.user.nickname || '';
+            }
+          }
+        })
+        .catch(() => {});
+
       // 파일 선택 시 라벨 업데이트
       function handleFileSelect(input) {
         const label = document.getElementById('upload-label');
         if (input.files && input.files[0]) {
           const file = input.files[0];
-          // 10MB 체크
           if (file.size > 10 * 1024 * 1024) {
             alert('파일 크기는 최대 10MB까지 업로드 가능합니다.');
             input.value = '';
@@ -245,14 +288,16 @@
         }
       }
 
-      // 폼 제출 처리
+      // 폼 제출
       document.getElementById('write-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
+        const submitBtn = this.querySelector('[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.text-10').textContent = '게시 중...';
 
-        fetch('/api/gallery/write', {
+        fetch('/api/gallery', {
           method: 'POST',
-          body: formData   // multipart/form-data — Content-Type 헤더는 fetch가 자동 설정
+          body: new FormData(this)
         })
         .then(res => res.json())
         .then(result => {
@@ -260,12 +305,17 @@
             window.location.href = 'cubegallery.html';
           } else {
             alert(result.message || '게시 중 오류가 발생했습니다.');
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.text-10').textContent = '게시하기';
           }
         })
         .catch(() => {
           alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+          submitBtn.disabled = false;
+          submitBtn.querySelector('.text-10').textContent = '게시하기';
         });
       });
     </script>
+    <script src="/js/navbar.js"></script>
   </body>
 </html>

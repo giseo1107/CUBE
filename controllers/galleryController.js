@@ -17,6 +17,10 @@ db.execute(`
   )
 `).catch(e => console.error('[gallery] gallery_likes 테이블 생성 실패:', e));
 
+// gallery_posts 컬럼 추가 (없으면)
+db.execute(`ALTER TABLE gallery_posts ADD COLUMN author_name VARCHAR(100) DEFAULT NULL`).catch(() => {});
+db.execute(`ALTER TABLE gallery_posts ADD COLUMN short_intro VARCHAR(500) DEFAULT NULL`).catch(() => {});
+
 // [GET] /api/gallery
 exports.getPosts = async (req, res) => {
   try {
@@ -39,7 +43,7 @@ exports.getPosts = async (req, res) => {
     const total = countRows[0].total;
 
     const [rows] = await db.execute(
-      `SELECT gp.*, u.nickname AS author_name
+      `SELECT gp.*, COALESCE(gp.author_name, u.nickname) AS author_name
        FROM gallery_posts gp
        LEFT JOIN user u ON gp.user_id = u.user_id
        ${where} ORDER BY gp.created_at DESC LIMIT ${limit} OFFSET ${offset}`,
@@ -65,7 +69,7 @@ exports.getPostDetail = async (req, res) => {
       [req.params.id]
     );
     const [rows] = await db.execute(
-      `SELECT gp.*, u.nickname AS author_name
+      `SELECT gp.*, COALESCE(gp.author_name, u.nickname) AS author_name
        FROM gallery_posts gp
        LEFT JOIN user u ON gp.user_id = u.user_id
        WHERE gp.post_id = ?`,
@@ -123,7 +127,7 @@ exports.toggleLike = async (req, res) => {
 // [POST] /api/gallery
 exports.createPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, author_name, short_intro } = req.body;
     if (!title || !content) {
       return res.status(400).json({ success: false, message: '제목과 내용을 입력해주세요.' });
     }
@@ -132,8 +136,8 @@ exports.createPost = async (req, res) => {
     const imageUrl = req.file ? req.file.path : null;
 
     const [result] = await db.execute(
-      'INSERT INTO gallery_posts (user_id, title, content, image_url) VALUES (?, ?, ?, ?)',
-      [userId, title, content, imageUrl]
+      'INSERT INTO gallery_posts (user_id, title, content, image_url, author_name, short_intro) VALUES (?, ?, ?, ?, ?, ?)',
+      [userId, title, content, imageUrl, author_name || null, short_intro || null]
     );
 
     res.json({ success: true, postId: result.insertId });
