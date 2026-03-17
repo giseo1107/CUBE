@@ -1427,3 +1427,21 @@
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
+
+/* 동적 카드 폰트 크기 */
+.cubeu95gallery1-1 .container .post-title {
+  font-size: 26px !important;
+  line-height: 34px !important;
+}
+.cubeu95gallery1-1 .container .post-content {
+  font-size: 18px !important;
+  line-height: 26px !important;
+}
+.cubeu95gallery1-1 .container .post-author,
+.cubeu95gallery1-1 .container .post-date {
+  font-size: 16px !important;
+}
+.cubeu95gallery1-1 .container .post-likes,
+.cubeu95gallery1-1 .container .post-views {
+  font-size: 18px !important;
+}
