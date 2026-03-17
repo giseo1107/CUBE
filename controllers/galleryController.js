@@ -41,7 +41,7 @@ exports.getPosts = async (req, res) => {
     const [rows] = await db.execute(
       `SELECT gp.*, u.nickname AS author_name
        FROM gallery_posts gp
-       LEFT JOIN users u ON gp.user_id = u.id
+       LEFT JOIN user u ON gp.user_id = u.user_id
        ${where} ORDER BY gp.created_at DESC LIMIT ${limit} OFFSET ${offset}`,
       params
     );
@@ -67,7 +67,7 @@ exports.getPostDetail = async (req, res) => {
     const [rows] = await db.execute(
       `SELECT gp.*, u.nickname AS author_name
        FROM gallery_posts gp
-       LEFT JOIN users u ON gp.user_id = u.id
+       LEFT JOIN user u ON gp.user_id = u.user_id
        WHERE gp.post_id = ?`,
       [req.params.id]
     );
@@ -76,7 +76,7 @@ exports.getPostDetail = async (req, res) => {
     }
 
     let liked = false;
-    const userId = req.session?.user?.id;
+    const userId = req.session?.userId;
     if (userId) {
       const [likeRows] = await db.execute(
         'SELECT 1 FROM gallery_likes WHERE user_id = ? AND post_id = ?',
@@ -95,7 +95,7 @@ exports.getPostDetail = async (req, res) => {
 // [POST] /api/gallery/:id/like  — 좋아요 토글
 exports.toggleLike = async (req, res) => {
   try {
-    const userId = req.session?.user?.id;
+    const userId = req.session?.userId;
     if (!userId) return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
 
     const postId = req.params.id;
@@ -128,7 +128,7 @@ exports.createPost = async (req, res) => {
       return res.status(400).json({ success: false, message: '제목과 내용을 입력해주세요.' });
     }
 
-    const userId   = req.session?.user?.id || 1;
+    const userId   = req.session?.userId || 1;
     const imageUrl = req.file ? req.file.path : null;
 
     const [result] = await db.execute(
