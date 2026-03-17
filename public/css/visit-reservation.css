@@ -2436,11 +2436,11 @@
 .visit-reservation .top {
   height: 614px;
   left: 0;
-  padding-top: 80px;
   box-sizing: border-box;
-  position: absolute;
+  position: relative;
   top: 0;
   width: 1920px;
+  overflow: hidden;
 }
 
 /* ── 히어로 텍스트 (curation.html 동일 스타일) ── */
@@ -2450,8 +2450,9 @@
   height: 204px;
   left: 119px;
   position: absolute;
-  top: 134px;
+  top: 214px;
   width: 1681px;
+  z-index: 10;
 }
 .visit-reservation .vr-hero-inner {
   height: 204px;
