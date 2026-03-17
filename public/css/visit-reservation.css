@@ -1782,10 +1782,38 @@
   align-items: center;
   align-self: stretch;
   display: flex;
-  gap: 16px;
-  height: 40px;
+  gap: 10px;
+  height: auto;
+  min-height: 40px;
   position: relative;
   width: 100%;
+  flex-wrap: nowrap;
+}
+
+/* 인원 선택 버튼 */
+.visit-reservation .people-btn {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  border: 2px solid var(--cyber-grape-2);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--cyber-grape);
+  font-family: var(--font-family-abhaya_libre_semibold-regular);
+  font-size: var(--font-size-m);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.visit-reservation .people-btn:hover:not(.active) {
+  border-color: var(--cyber-grape);
+  background: #f5f4fb;
+}
+.visit-reservation .people-btn.active {
+  background: #3b4a7a;
+  border-color: #3b4a7a;
+  color: #fff;
 }
 
 .visit-reservation .button-1 {
@@ -2597,6 +2625,7 @@
   position: absolute;
   top: 3288px;
   width: 1920px;
+  z-index: 2;
 }
 
 .visit-reservation .text-103 {
@@ -2612,11 +2641,13 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  height: 120px;
-  left: 0;
-  position: absolute;
-  top: 44px;
-  width: 347px;
+  height: auto;
+  min-height: 120px;
+  left: auto;
+  position: relative;
+  top: auto;
+  width: 100%;
+  margin-top: 16px;
 }
 
 .visit-reservation .paragraph-2 {
@@ -2699,11 +2730,12 @@
 .visit-reservation .container-45 {
   display: flex;
   flex-direction: column;
-  height: 52px;
-  left: 0;
-  position: absolute;
-  top: 97px;
-  width: 347px;
+  height: auto;
+  left: auto;
+  position: relative;
+  top: auto;
+  width: 100%;
+  margin-top: 16px;
 }
 
 .visit-reservation .text-112 {

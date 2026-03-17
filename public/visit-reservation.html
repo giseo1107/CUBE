@@ -163,15 +163,10 @@
                 </div>
               </div>
               <div class="container-23">
-                <div class="button-1">
-                  <div class="text-23"><div class="text-6 arial-regular-normal-cyber-grape-20px">-</div></div>
-                </div>
-                <div class="text-24">
-                  <div class="text-65 abhayalibresemibold-regular-normal-cyber-grape-20px">1명</div>
-                </div>
-                <div class="button-1">
-                  <div class="text-25"><div class="text-6 arial-regular-normal-cyber-grape-20px">+</div></div>
-                </div>
+                <button class="people-btn active" data-count="1">1명</button>
+                <button class="people-btn" data-count="2">2명</button>
+                <button class="people-btn" data-count="3">3명</button>
+                <button class="people-btn" data-count="4">4명</button>
               </div>
             </div>
             <div class="button-42">
@@ -435,9 +430,7 @@
       });
 
       // 인원 버튼
-      const minusBtn  = document.querySelector('.button-1:first-child');
-      const plusBtn   = document.querySelector('.button-1:last-child');
-      const countEl   = document.querySelector('.text-65');
+      const peopleBtns = document.querySelectorAll('.people-btn');
 
       // 예약하기 버튼
       const submitBtn = document.querySelector('.button-42');
@@ -594,25 +587,14 @@
         });
       });
 
-      // ── 인원 +/- ──────────────────────────────────────────
-      if (minusBtn) {
-        minusBtn.style.cursor = 'pointer';
-        minusBtn.addEventListener('click', function () {
-          if (peopleCount > 1) {
-            peopleCount--;
-            if (countEl) countEl.textContent = peopleCount + '명';
-          }
+      // ── 인원 버튼 선택 ────────────────────────────────────────
+      peopleBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          peopleBtns.forEach(function (b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          peopleCount = parseInt(this.dataset.count, 10);
         });
-      }
-      if (plusBtn) {
-        plusBtn.style.cursor = 'pointer';
-        plusBtn.addEventListener('click', function () {
-          if (peopleCount < 4) {
-            peopleCount++;
-            if (countEl) countEl.textContent = peopleCount + '명';
-          }
-        });
-      }
+      });
 
       // ── 예약하기 버튼 ─────────────────────────────────────
       if (submitBtn) {
