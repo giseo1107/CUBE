@@ -1711,3 +1711,21 @@
   height: auto !important;
   overflow: visible !important;
 }
+
+/* ── 2D / 3D 평면도 이미지 ── */
+.curation-shopu95detailed7 .x7_2-dimg {
+  height: 478px;
+  left: 79px;
+  object-fit: cover;
+  position: absolute;
+  top: 887px;
+  width: 638px;
+}
+.curation-shopu95detailed7 .x7_3-dimg {
+  height: 478px;
+  left: 79px;
+  object-fit: cover;
+  position: absolute;
+  top: 1479px;
+  width: 638px;
+}
