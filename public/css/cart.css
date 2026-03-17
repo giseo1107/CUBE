@@ -609,25 +609,31 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  height: 65px;
+  min-height: 65px;
+  height: auto;
   position: relative;
-  width: 219.53px;
+  width: auto;
+  flex: 1;
+  overflow: visible;
 }
 
 .cart .heading-3 {
   align-self: stretch;
-  height: 33px;
+  height: auto;
+  min-height: 33px;
   position: relative;
   width: 100%;
 }
 
 .cart .text-4-1 {
-  left: 0;
   letter-spacing: 0;
-  line-height: 33px;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
+  line-height: 1.3;
+  position: relative;
+  left: auto;
+  top: auto;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .cart .paragraph-3 {
@@ -644,8 +650,10 @@
   line-height: 24px;
   margin-top: -1.00px;
   position: relative;
-  white-space: nowrap;
-  width: fit-content;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  width: auto;
 }
 
 .cart .button-2 {
@@ -680,8 +688,9 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 57.5px;
-  padding: 16px 16px 0px;
+  height: auto;
+  min-height: 57.5px;
+  padding: 16px 16px 12px;
   position: relative;
   width: 100%;
 }
@@ -714,9 +723,10 @@
 }
 
 .cart .text-7 {
-  height: 25.5px;
+  height: auto;
+  min-height: 25.5px;
   position: relative;
-  width: 100.73px;
+  width: auto;
 }
 
 .cart .text-7-1 {
@@ -724,11 +734,11 @@
   font-family: var(--font-family-arial-bold);
   font-size: 17px;
   font-weight: 700;
-  left: 0;
   letter-spacing: 0;
   line-height: 25.5px;
-  position: absolute;
-  top: 0;
+  position: relative;
+  left: auto;
+  top: auto;
   white-space: nowrap;
 }
 
@@ -823,13 +833,14 @@
   font-family: var(--font-family-arial-bold);
   font-size: var(--font-size-s);
   font-weight: 700;
-  left: 20px;
   letter-spacing: 0;
   line-height: 24px;
-  position: absolute;
+  position: relative;
+  left: auto;
+  top: auto;
   text-align: center;
-  top: 0;
   white-space: nowrap;
+  width: 100%;
 }
 
 .cart .vector-3 {
@@ -845,9 +856,11 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  height: 58px;
+  height: auto;
+  min-height: 58px;
   position: relative;
-  width: 142.22px;
+  width: auto;
+  min-width: 142px;
 }
 
 .cart .paragraph-4 {
@@ -874,18 +887,19 @@
 
 .cart .paragraph-5 {
   align-self: stretch;
-  height: 36px;
+  height: auto;
+  min-height: 36px;
   position: relative;
   width: 100%;
 }
 
 .cart .text-10 {
-  left: 0;
   letter-spacing: 0;
   line-height: 36px;
-  position: absolute;
+  position: relative;
+  left: auto;
+  top: auto;
   text-align: right;
-  top: 0;
   white-space: nowrap;
 }
 
@@ -1232,9 +1246,11 @@
 }
 
 .cart .text-28 {
-  height: 48px;
+  height: auto;
+  min-height: 48px;
   position: relative;
-  width: 189.61px;
+  width: auto;
+  max-width: 240px;
 }
 
 .cart .text-28-1 {
@@ -1242,12 +1258,13 @@
   font-family: var(--font-family-arial-bold);
   font-size: 32px;
   font-weight: 700;
-  left: 0;
   letter-spacing: 0;
   line-height: 48px;
-  position: absolute;
-  top: 1px;
+  position: relative;
+  left: auto;
+  top: auto;
   white-space: nowrap;
+  text-align: right;
 }
 
 .cart .text-29 {
@@ -1496,4 +1513,78 @@
   line-height: 20px;
   white-space: nowrap;
   width: 52px;
+}
+
+/* ── 추가 옵션 토글 ──────────────────────────────────────── */
+
+.cart .options-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--pale-sky);
+  font-family: var(--font-family-noto_sans_kr);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 0 0;
+  margin-top: 4px;
+  border-top: 1px solid var(--mercury);
+  width: 100%;
+  text-align: left;
+  transition: color 0.15s;
+}
+
+.cart .options-toggle:hover {
+  color: var(--chathams-blue);
+}
+
+.cart .toggle-arrow {
+  font-size: 10px;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.cart .options-list {
+  display: none;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.cart .option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-top: 1px solid var(--mercury);
+}
+
+.cart .option-row .text-6 {
+  margin-top: 0;
+}
+
+/* 카드 높이 자동 확장 (고정 높이 제거) */
+.cart .container-9 {
+  height: auto !important;
+  min-height: 277.5px;
+  padding-bottom: 24px;
+}
+
+.cart .container-10 {
+  height: auto !important;
+  min-height: 229.5px;
+}
+
+.cart .container-11 {
+  height: auto !important;
+  min-height: 229.5px;
+}
+
+.cart .container-6 {
+  height: auto !important;
+}
+
+.cart .container-7 {
+  height: auto !important;
 }

@@ -219,9 +219,27 @@
     function renderItem(item) {
       const totalAmt = Number(item.total_amount) * Number(item.quantity);
       const imgSrc   = PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png';
-      const options  = item.selected_options
-        ? `<div style="margin-top:6px;font-size:13px;color:#6b7280;">추가 옵션: ${item.selected_options}</div>`
-        : '';
+
+      // 추가 옵션 파싱 (콤마 구분 문자열)
+      let optionRowsHtml = '';
+      if (item.selected_options) {
+        const opts = item.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+        if (opts.length > 0) {
+          optionRowsHtml = opts.map(opt => `
+            <div class="option-row">
+              <div class="text-6 notosanskr-medium-pale-sky-15px">${opt}</div>
+            </div>`).join('');
+        }
+      }
+
+      const optionsBlock = optionRowsHtml ? `
+        <button class="options-toggle" onclick="toggleOptions(this)" aria-expanded="false">
+          <span class="toggle-arrow">▼</span>
+          <span>추가 옵션 보기</span>
+        </button>
+        <div class="options-list">
+          ${optionRowsHtml}
+        </div>` : '';
 
       return `
         <article class="container-10" data-cart-id="${item.cart_id}">
@@ -236,7 +254,6 @@
                 <div class="paragraph-3">
                   <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
                 </div>
-                ${options}
               </div>
               <button class="button-2" aria-label="상품 삭제" onclick="deleteItem(${item.cart_id})">
                 <div class="icon-3"><img class="vector-1" src="imgs/vector-1.svg" alt="" role="presentation" /></div>
@@ -247,6 +264,7 @@
                 <div class="text-5"><div class="text-6 notosanskr-medium-pale-sky-15px">기본 가격</div></div>
                 <div class="text-7"><div class="text-7-1">${fmt(item.base_price)}</div></div>
               </div>
+              ${optionsBlock}
             </div>
             <div class="container-16">
               <div class="container-17">
@@ -270,6 +288,16 @@
             </div>
           </div>
         </article>`;
+    }
+
+    // ── 추가 옵션 토글 ────────────────────────────────────
+    function toggleOptions(btn) {
+      const list    = btn.nextElementSibling;
+      const arrow   = btn.querySelector('.toggle-arrow');
+      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      list.style.display = isOpen ? 'none' : 'block';
+      arrow.textContent  = isOpen ? '▼' : '▲';
     }
 
     // ── 장바구니 불러오기 ─────────────────────────────────
