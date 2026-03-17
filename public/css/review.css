@@ -1422,70 +1422,140 @@
   overflow-wrap: break-word;
 }
 
-/* ── 동적 후기 그리드 ── */
+/* ── 동적 후기 레이아웃 높이 오버라이드 ── */
+.reviewu95main.screen {
+  height: auto !important;
+  min-height: 2277px;
+}
+.reviewu95main .section {
+  height: auto !important;
+}
+.reviewu95main .section-1 {
+  height: auto !important;
+}
 .reviewu95main .container-12 {
   height: auto !important;
+  width: 1469px;
   display: grid !important;
-  grid-template-columns: repeat(2, 718px) !important;
+  grid-template-columns: repeat(2, 1fr) !important;
   gap: 30px !important;
   position: relative !important;
+  margin-left: 0 !important;
 }
 
-.review-loading {
-  grid-column: 1 / -1;
-  padding: 40px;
-  color: #888;
-  font-size: 15px;
-}
-
-.review-dyn-card {
-  background-color: var(--white);
-  border: 1px solid var(--black-2);
+/* ── 동적 카드 ── */
+.rv-card {
+  background-color: #fff;
+  border: 1px solid #e0e4ea;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 718px;
   cursor: pointer;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, transform 0.15s;
 }
-.review-dyn-card:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+.rv-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+  transform: translateY(-2px);
 }
 
-.review-dyn-thumb {
+.rv-thumb {
   height: 240px;
   position: relative;
-  background-color: var(--aqua-squeeze);
+  background-color: #e8f1f7;
+  background-size: cover;
+  background-position: 50% 50%;
+  flex-shrink: 0;
 }
 
-.review-dyn-badge {
+.rv-badge {
   position: absolute;
   bottom: 12px;
-  left: 16px;
+  left: 14px;
   display: flex;
   align-items: center;
-  background: rgba(0,0,0,0.45);
+  gap: 4px;
+  background: rgba(0,0,0,0.48);
   border-radius: 20px;
   padding: 4px 10px;
 }
+.rv-badge img { height: 12px; }
+.rv-badge span { color: #fff; font-size: 12px; letter-spacing: 0; }
 
-.review-dyn-rating {
+.rv-rating {
   position: absolute;
   bottom: 12px;
-  right: 16px;
+  right: 14px;
   display: flex;
   align-items: center;
-  background: var(--white);
+  gap: 4px;
+  background: #fff;
   border-radius: 20px;
   padding: 4px 10px;
 }
+.rv-rating img { height: 14px; }
+.rv-rating span { font-size: 13px; color: #1a4f85; font-weight: 600; }
 
-.reviewu95main .review-dyn-summary {
-  letter-spacing: 0;
-  line-height: 26px;
-  height: auto;
-  width: 100%;
-  overflow-wrap: break-word;
+.rv-body {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.rv-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rv-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rv-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #1a4f85;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.rv-author-info { display: flex; flex-direction: column; }
+.rv-author-name { font-size: 15px; color: #1d2b3a; font-weight: 600; }
+.rv-author-region { font-size: 12px; color: #7a8a99; }
+.rv-date { font-size: 13px; color: #a0aab4; }
+
+.rv-divider {
+  border: none;
+  border-top: 1px solid #eef0f3;
+  margin: 0;
+}
+
+.rv-title { font-size: 18px; font-weight: 700; color: #1d2b3a; line-height: 1.4; }
+.rv-summary {
+  font-size: 15px;
+  color: #5a6a7a;
+  line-height: 1.7;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
   word-break: keep-all;
+}
+
+.review-loading,
+.review-empty {
+  grid-column: 1 / -1;
+  padding: 48px;
+  color: #999;
+  font-size: 15px;
+  text-align: center;
 }
