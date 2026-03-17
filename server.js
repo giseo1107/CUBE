@@ -116,10 +116,6 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/payment', paymentRoutes);
 
-// 후기 상세 페이지 (깔끔한 URL)
-app.get('/review/:id', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'reviewDetail.html'));
-});
 
 // 중고 큐브 상세 페이지 (깔끔한 URL)
 app.get('/used/:id', (req, res) => {

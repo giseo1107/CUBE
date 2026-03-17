@@ -18,7 +18,7 @@
     <header class="hero-header">
       <div class="hero-bg" id="heroBg"></div>
       <div class="hero-inner">
-        <button class="btn-back" onclick="location.href='/review.html'">
+        <button class="btn-back" onclick="location.href='review.html'">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
           고객 후기 목록으로 돌아가기
         </button>
@@ -67,7 +67,7 @@
         </div>
 
         <!-- 목록으로 -->
-        <button class="btn-to-list" onclick="location.href='/review.html'">
+        <button class="btn-to-list" onclick="location.href='review.html'">
           ← 후기 목록으로 돌아가기
         </button>
       </div>
@@ -94,8 +94,8 @@
         <div class="cta-card" id="ctaCard">
           <h3 id="ctaTitle"></h3>
           <p id="ctaDesc"></p>
-          <button class="btn-cta-primary"   onclick="location.href='/reservation.html'">방문 예약하기</button>
-          <button class="btn-cta-secondary" onclick="location.href='#'">제품 상세 보기</button>
+          <button class="btn-cta-primary"   onclick="location.href='/visit-reservation.html'">방문 예약하기</button>
+          <button class="btn-cta-secondary" onclick="location.href='/curation.html'">더 많은 큐레이션 보러가기</button>
         </div>
 
       </aside>
@@ -112,7 +112,7 @@
   <script>
   document.addEventListener('DOMContentLoaded', async () => {
     // ── URL에서 id 파싱 ──────────────────────────────────
-    const reviewId = location.pathname.split('/').pop();
+    const reviewId = new URLSearchParams(location.search).get('id');
 
     if (!reviewId) {
       document.getElementById('loadingState').textContent = '잘못된 접근입니다.';
@@ -238,7 +238,7 @@
     el.innerHTML = list.map(r => {
       const avg = calcAvg(r);
       return `
-        <div class="other-card" onclick="location.href='/reviewDetail.html?id=${r.review_id}'">
+        <div class="other-card" onclick="location.href='reviewDetail.html?id=${r.review_id}'">
           <div class="other-card-header">
             <div class="other-author">
               <span class="name">${esc(r.author_name || '익명')}</span>
