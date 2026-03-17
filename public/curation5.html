@@ -256,8 +256,21 @@
                 <div class="text-29"><div class="text-185 arial-bold-chathams-blue-32px" id="total-price-main">32,000,000원</div></div>
               </div>
             </div>
-            <div class="button-1">
-              <div class="text-30"><div class="text-186 arial-bold-white-18px">장바구니 담기</div></div>
+            <form id="cart-form" action="/api/cart/add" method="POST">
+              <input type="hidden" name="product_id" value="5" />
+              <input type="hidden" name="product_name" value="모던 레지던스" />
+              <input type="hidden" name="base_price" value="32000000" />
+              <input type="hidden" name="quantity" value="1" />
+              <input type="hidden" id="cart-total" name="total_amount" value="32000000" />
+              <input type="hidden" id="cart-options" name="selected_options" value="" />
+              <div class="button-1" onclick="submitCart(event)">
+                <div class="text-34"><div class="text-117 arial-bold-white-18px">장바구니 담기</div></div>
+              </div>
+            </form>
+
+            <!-- 바로 결제하기 -->
+            <div class="button-buy" onclick="submitBuy()">
+              <div class="text-buy">바로 결제하기</div>
             </div>
             <div class="paragraph-6">
               <div class="text-187 arial-regular-normal-santas-gray-13px">담당자가 24시간 내에 연락드립니다</div>
@@ -381,7 +394,105 @@
       if (mainEl) mainEl.textContent = formatted;
       const stickyEl = document.getElementById('total-price-sticky');
       if (stickyEl) stickyEl.textContent = formatted;
+      // 히든 입력값 업데이트 (옵션 변경 시 최신 금액 반영)
+      ['cart-total', 'buy-total'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) el.value = total;
+      });
+      const optionEntries = [];
+      selectedButtons.forEach(function(btn) {
+        const p = parseInt(btn.dataset.price, 10);
+        const label = btn.querySelector('.text-6')?.innerText?.trim() || '';
+        if (label) optionEntries.push(label + ':' + p);
+      });
+      ['cart-options', 'buy-options'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) el.value = optionEntries.join(',');
+      });
+    }
+
+    // ─── 장바구니 담기 ───────────────────────────────────────
+    function submitCart(e) {
+      e.preventDefault();
+      const total   = parseInt(document.getElementById('cart-total')?.value || 32000000, 10);
+      const options = document.getElementById('cart-options')?.value || '';
+      const payload = {
+        product_id:       5,
+        product_name:     '모던 레지던스',
+        base_price:       32000000,
+        quantity:         1,
+        total_amount:     total,
+        selected_options: options || null
+      };
+      fetch('/api/cart/add', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) { showCartModal(); }
+        else { alert(result.message || '장바구니 담기에 실패했습니다.'); }
+      })
+      .catch(() => { showCartModal(); });
+    }
+
+    // ─── 장바구니 담기 완료 모달 ─────────────────────────────
+    function showCartModal() {
+      document.getElementById('cart-modal').style.display = 'flex';
+    }
+    function closeCartModal() {
+      document.getElementById('cart-modal').style.display = 'none';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('cart-modal');
+      if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeCartModal(); });
+    });
+
+    // ─── 바로 결제하기 ───────────────────────────────────────
+    function submitBuy() {
+      const total   = parseInt(document.getElementById('buy-total')?.value || 32000000, 10);
+      const options = document.getElementById('buy-options')?.value || '';
+      requestKakaoPay({
+        item_name:        '모던 레지던스',
+        total_amount:     total,
+        quantity:         1,
+        selected_options: options || null,
+      });
     }
   </script>
-  </body>
+  <script src="/js/payment.js"></script>
+  
+<!-- =============================================
+     장바구니 담기 완료 모달
+     ============================================= -->
+<div id="cart-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:420px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.18);text-align:center;position:relative;">
+    <div style="width:56px;height:56px;border-radius:50%;background:#e8f4e8;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2 style="font-size:20px;font-weight:700;color:#101828;margin:0 0 8px;">장바구니에 담겼습니다!</h2>
+    <p style="font-size:15px;color:#6b7280;margin:0 0 28px;line-height:1.6;">어떻게 진행하시겠습니까?</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <a href="/cart.html"
+         style="display:block;background:#1a4f85;color:#fff;font-size:16px;font-weight:700;padding:14px 0;border-radius:10px;text-decoration:none;transition:background .2s;"
+         onmouseover="this.style.background='#153e6a'"
+         onmouseout="this.style.background='#1a4f85'">
+        🛒 장바구니 보러가기
+      </a>
+      <a href="/curation.html"
+         style="display:block;background:#fff;color:#1a4f85;font-size:16px;font-weight:700;padding:14px 0;border-radius:10px;text-decoration:none;border:2px solid #1a4f85;transition:background .2s,color .2s;"
+         onmouseover="this.style.background='#f0f6ff'"
+         onmouseout="this.style.background='#fff'">
+        🏠 더 다양한 큐레이션 보러가기
+      </a>
+    </div>
+    <button onclick="closeCartModal()"
+            style="position:absolute;top:14px;right:16px;background:none;border:none;cursor:pointer;font-size:20px;color:#9ca3af;line-height:1;">✕</button>
+  </div>
+</div>
+
+</body>
 </html>

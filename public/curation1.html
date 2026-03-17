@@ -483,37 +483,18 @@
 
     // ─── 바로 결제하기 ───────────────────────────────────────
     function submitBuy() {
-      const total = document.getElementById('buy-total')?.value || BASE_PRICE;
+      const total   = parseInt(document.getElementById('buy-total')?.value || BASE_PRICE, 10);
       const options = document.getElementById('buy-options')?.value || '';
 
-      const payload = {
-        product_id: 1,
-        product_name: '프리미엄 주거형',
-        base_price: BASE_PRICE,
-        quantity: 1,
-        total_amount: parseInt(total, 10),
-        selected_options: options,
-        status: 'PAID'
-      };
-
-      fetch('/api/orders/prepare', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(result => {
-        if (result.success) {
-          window.location.href = 'pay.html';
-        } else {
-          alert(result.message || '결제 준비에 실패했습니다.');
-        }
-      })
-      .catch(() => {
-        window.location.href = 'pay.html';
+      requestKakaoPay({
+        item_name:        '프리미엄 주거형',
+        total_amount:     total,
+        quantity:         1,
+        selected_options: options || null,
       });
     }
   </script>
+  <script src="/js/payment.js"></script>
 
 <!-- =============================================
      장바구니 담기 완료 모달

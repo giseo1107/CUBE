@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>결제 완료 | Container House</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f7f8fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 60px 48px;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+      text-align: center;
+    }
+    .check-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: #e8f4e8;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #101828;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-primary {
+      display: block;
+      background: #1a4f85;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 0;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: #153e6a; }
+    .btn-secondary {
+      display: block;
+      background: #fff;
+      color: #1a4f85;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 0;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 2px solid #1a4f85;
+      transition: background .2s;
+    }
+    .btn-secondary:hover { background: #f0f6ff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="check-circle">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+        <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h1>결제가 완료되었습니다!</h1>
+    <p>주문해 주셔서 감사합니다.<br>담당자가 24시간 내에 연락드리겠습니다.</p>
+    <div class="btn-group">
+      <a href="/curation.html" class="btn-primary">🏠 큐레이션 샵으로 돌아가기</a>
+      <a href="/cart.html" class="btn-secondary">🛒 장바구니 보기</a>
+    </div>
+  </div>
+</body>
+</html>

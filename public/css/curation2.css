@@ -1647,3 +1647,26 @@
 .curation-shopu95detailed2 .button.selected { border: 2px solid var(--chathams-blue) !important; background-color: #eef5ff !important; }
 .curation-shopu95detailed2 .button.selected .container-9 { background-color: var(--chathams-blue) !important; border-color: var(--chathams-blue) !important; display: flex; align-items: center; justify-content: center; }
 .curation-shopu95detailed2 .button.selected .container-9::after { content: ''; display: block; width: 10px; height: 6px; border-left: 2.5px solid #ffffff; border-bottom: 2.5px solid #ffffff; transform: rotate(-45deg) translate(1px, -1px); }
+.button-buy {
+  background-color: var(--mirage);
+  border-radius: 12px;
+  display: flex;
+  height: 67px;
+  left: calc(50.00% - 302px);
+  position: absolute;
+  top: calc(50.00% + 620px);
+  width: 670px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.button-buy .text-buy {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 27px;
+  text-align: center;
+  white-space: nowrap;
+}
