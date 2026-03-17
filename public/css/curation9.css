@@ -1722,3 +1722,152 @@
   height: auto !important;
   overflow: visible !important;
 }
+
+/* ============================================================
+   LAYOUT FIX OVERRIDES — curation9
+   ============================================================ */
+
+/* ── 1. 75,000,000 원 — 원이 아래로 내려가는 문제 ── */
+.curation-shopu95detailed9 .price-row {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  height: auto !important;
+  min-height: 60px !important;
+}
+.curation-shopu95detailed9 .price-row .text-11 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed9 .price-row .text-12 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed9 .text-4-1 {
+  margin-left: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+/* ── 2. sticky bar "총 예상 금액:" 두 줄 깨짐 ── */
+.curation-shopu95detailed9 .text-33 {
+  width: auto !important;
+  min-width: 90px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed9 .text-9 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+}
+
+/* ── 3. 장바구니 담기 버튼 텍스트 중앙 정렬 ── */
+.curation-shopu95detailed9 .button-1 {
+  align-items: center !important;
+  justify-content: center !important;
+}
+.curation-shopu95detailed9 .text-34 {
+  position: relative !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: unset !important;
+}
+.curation-shopu95detailed9 .text-117 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+/* ── 4. 주요 특징 높이 짤림 ── */
+.curation-shopu95detailed9 .container-18,
+.curation-shopu95detailed9 .container-19 {
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed9 .container-3 {
+  height: auto !important;
+  min-height: 24px !important;
+}
+.curation-shopu95detailed9 .text-20,
+.curation-shopu95detailed9 .text-21,
+.curation-shopu95detailed9 .text-22,
+.curation-shopu95detailed9 .text-23,
+.curation-shopu95detailed9 .text-24 {
+  min-height: 24px !important;
+  height: auto !important;
+  width: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed9 .text-16-1,
+.curation-shopu95detailed9 .text-17-1,
+.curation-shopu95detailed9 .text-18-1,
+.curation-shopu95detailed9 .text-19-1,
+.curation-shopu95detailed9 .text-20-1 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  line-height: 24px !important;
+}
+
+/* ── 5. 기본 가격 줄바꿈 수정 ── */
+.curation-shopu95detailed9 .text-28 {
+  width: auto !important;
+  min-width: 140px !important;
+  height: auto !important;
+}
+.curation-shopu95detailed9 .text-45 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+/* ── 6. 총 예상 금액 숫자 줄바꿈 수정 ── */
+.curation-shopu95detailed9 .text-30 {
+  width: auto !important;
+  min-width: 220px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed9 .text-47 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+/* ── 7. 담당자 24시간 — button-buy 아래 위치 ── */
+.curation-shopu95detailed9 .paragraph-6 {
+  top: calc(50.00% + 700px) !important;
+  left: calc(50.00% - 302px) !important;
+  width: 670px !important;
+  height: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+.curation-shopu95detailed9 .text-49 {
+  white-space: nowrap !important;
+  text-align: center !important;
+  margin-left: 0 !important;
+}
