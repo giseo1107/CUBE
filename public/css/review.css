@@ -435,12 +435,9 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-l);
   font-weight: 400;
-  height: 27px;
   line-height: 27px;
-  margin-left: 48px;
-  margin-top: 16px;
   text-align: center;
-  width: 105px;
+  white-space: nowrap;
 }
 
 .reviewu95main .container-12 {
@@ -1423,4 +1420,72 @@
 .x2026-container-hou {
   white-space: normal;
   overflow-wrap: break-word;
+}
+
+/* ── 동적 후기 그리드 ── */
+.reviewu95main .container-12 {
+  height: auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 718px) !important;
+  gap: 30px !important;
+  position: relative !important;
+}
+
+.review-loading {
+  grid-column: 1 / -1;
+  padding: 40px;
+  color: #888;
+  font-size: 15px;
+}
+
+.review-dyn-card {
+  background-color: var(--white);
+  border: 1px solid var(--black-2);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 718px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.review-dyn-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.review-dyn-thumb {
+  height: 240px;
+  position: relative;
+  background-color: var(--aqua-squeeze);
+}
+
+.review-dyn-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.45);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.review-dyn-rating {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.reviewu95main .review-dyn-summary {
+  letter-spacing: 0;
+  line-height: 26px;
+  height: auto;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }

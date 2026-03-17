@@ -153,8 +153,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  height: 342px;
-  padding: 32px 32px 0px;
+  height: auto;
+  padding: 32px 32px 32px;
   position: relative;
   width: 670.5px;
 }
@@ -172,7 +172,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 224px;
+  height: auto;
   position: relative;
   width: 100%;
 }
@@ -410,6 +410,18 @@
   width: 670px;
 }
 
+/* ── 기본가격 / 총 예상금액 라인 수정 ── */
+.container-2 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  height: auto;
+  min-height: 24px;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
 .container-23 {
   align-items: center;
   align-self: stretch;
@@ -424,6 +436,52 @@
   justify-content: space-between;
   position: relative;
   width: 100%;
+}
+
+/* 기본가격 텍스트 래퍼 */
+.curation-shopu95detailed3 .text-27,
+.curation-shopu95detailed3 .text-28 {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* 기본가격 실제 텍스트 */
+.curation-shopu95detailed3 .text-44,
+.curation-shopu95detailed3 .text-45 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.5 !important;
+  width: auto !important;
+}
+
+/* 총 예상금액 텍스트 래퍼 */
+.curation-shopu95detailed3 .text-29,
+.curation-shopu95detailed3 .text-30 {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* 총 예상금액 라벨 (text-1 클래스 오버라이드) */
+.container-23 .text-1 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.5 !important;
+}
+
+/* 총 예상금액 숫자 */
+.curation-shopu95detailed3 .text-47 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.5 !important;
+  width: auto !important;
 }
 
 .button-1 {
@@ -1517,9 +1575,11 @@
 }
 
 .curation-shopu95detailed3 .text-34 {
-  flex: 1;
-  flex-grow: 1;
-  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   position: relative;
 }
 
@@ -1729,4 +1789,140 @@
 .curation-shopu95detailed3 .text-22 {
   height: auto !important;
   overflow: visible !important;
+}
+
+/* ============================================================
+   LAYOUT FIX OVERRIDES
+   ============================================================ */
+
+/* ── 1. 주요 특징 높이 짤림 fix ── */
+.container-16,
+.container-17,
+.container-18,
+.container-19 {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.curation-shopu95detailed3 .container-3 {
+  height: auto !important;
+}
+
+/* 주요특징 텍스트들 absolute → relative */
+.curation-shopu95detailed3 .text-16-1,
+.curation-shopu95detailed3 .text-17-1,
+.curation-shopu95detailed3 .text-18-1,
+.curation-shopu95detailed3 .text-19-1,
+.curation-shopu95detailed3 .text-20-1 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 24px !important;
+}
+
+.curation-shopu95detailed3 .text-20,
+.curation-shopu95detailed3 .text-21,
+.curation-shopu95detailed3 .text-22,
+.curation-shopu95detailed3 .text-23,
+.curation-shopu95detailed3 .text-24 {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* ── 2. 기본가격 / 총 예상금액 일자 정렬 fix ── */
+.container-2 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: auto !important;
+  min-height: 24px !important;
+  width: 100% !important;
+}
+
+.container-23 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: auto !important;
+  min-height: 60px !important;
+  width: 100% !important;
+  padding-top: 16px !important;
+}
+
+/* 기본가격 텍스트 래퍼 */
+.curation-shopu95detailed3 .text-27,
+.curation-shopu95detailed3 .text-28 {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* 기본가격 실제 텍스트 */
+.curation-shopu95detailed3 .text-44,
+.curation-shopu95detailed3 .text-45 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 24px !important;
+  display: block !important;
+}
+
+/* 총 예상금액 텍스트 래퍼 */
+.curation-shopu95detailed3 .text-29,
+.curation-shopu95detailed3 .text-30 {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+/* 총 예상금액 라벨 (전역 .text-1 오버라이드) */
+.container-23 .text-1 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 30px !important;
+  display: block !important;
+}
+
+/* 총 예상금액 숫자 */
+.curation-shopu95detailed3 .text-47 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 48px !important;
+  display: block !important;
+}
+
+/* ── 3. 장바구니 담기 중앙 정렬 fix ── */
+.button-1 {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.curation-shopu95detailed3 .text-34 {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+.curation-shopu95detailed3 .text-117 {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  white-space: nowrap !important;
+  line-height: 27px !important;
+  text-align: center !important;
 }
