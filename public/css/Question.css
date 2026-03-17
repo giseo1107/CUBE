@@ -327,7 +327,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 80px 20px 60px;
+  padding: 0 20px 60px;
   box-sizing: border-box;
 }
 
@@ -342,6 +342,7 @@
   flex-direction: column;
   height: auto;
   left: auto;
+  margin-top: 480px;
   overflow: visible;
   padding: 1px;
   position: relative;
