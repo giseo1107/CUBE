@@ -7,6 +7,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// gallery_likes 테이블 자동 생성
+db.execute(`
+  CREATE TABLE IF NOT EXISTS gallery_likes (
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, post_id)
+  )
+`).catch(e => console.error('[gallery] gallery_likes 테이블 생성 실패:', e));
+
 // [GET] /api/gallery
 exports.getPosts = async (req, res) => {
   try {
@@ -19,17 +29,20 @@ exports.getPosts = async (req, res) => {
     let params = [];
 
     if (search) {
-      where += ' AND (title LIKE ? OR content LIKE ?)';
+      where += ' AND (gp.title LIKE ? OR gp.content LIKE ?)';
       params.push(`%${search}%`, `%${search}%`);
     }
 
     const [countRows] = await db.execute(
-      `SELECT COUNT(*) AS total FROM gallery_posts ${where}`, params
+      `SELECT COUNT(*) AS total FROM gallery_posts gp ${where}`, params
     );
     const total = countRows[0].total;
 
     const [rows] = await db.execute(
-      `SELECT * FROM gallery_posts ${where} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`,
+      `SELECT gp.*, u.nickname AS author_name
+       FROM gallery_posts gp
+       LEFT JOIN users u ON gp.user_id = u.id
+       ${where} ORDER BY gp.created_at DESC LIMIT ${limit} OFFSET ${offset}`,
       params
     );
 
@@ -52,15 +65,57 @@ exports.getPostDetail = async (req, res) => {
       [req.params.id]
     );
     const [rows] = await db.execute(
-      'SELECT * FROM gallery_posts WHERE post_id = ?',
+      `SELECT gp.*, u.nickname AS author_name
+       FROM gallery_posts gp
+       LEFT JOIN users u ON gp.user_id = u.id
+       WHERE gp.post_id = ?`,
       [req.params.id]
     );
     if (rows.length === 0) {
       return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
     }
-    res.json({ success: true, data: rows[0] });
+
+    let liked = false;
+    const userId = req.session?.user?.id;
+    if (userId) {
+      const [likeRows] = await db.execute(
+        'SELECT 1 FROM gallery_likes WHERE user_id = ? AND post_id = ?',
+        [userId, req.params.id]
+      );
+      liked = likeRows.length > 0;
+    }
+
+    res.json({ success: true, data: { ...rows[0], liked } });
   } catch (err) {
     console.error('[gallery] 상세 조회 실패:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [POST] /api/gallery/:id/like  — 좋아요 토글
+exports.toggleLike = async (req, res) => {
+  try {
+    const userId = req.session?.user?.id;
+    if (!userId) return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+
+    const postId = req.params.id;
+    const [existing] = await db.execute(
+      'SELECT 1 FROM gallery_likes WHERE user_id = ? AND post_id = ?',
+      [userId, postId]
+    );
+
+    if (existing.length > 0) {
+      await db.execute('DELETE FROM gallery_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
+      await db.execute('UPDATE gallery_posts SET like_count = GREATEST(0, like_count - 1) WHERE post_id = ?', [postId]);
+    } else {
+      await db.execute('INSERT INTO gallery_likes (user_id, post_id) VALUES (?, ?)', [userId, postId]);
+      await db.execute('UPDATE gallery_posts SET like_count = like_count + 1 WHERE post_id = ?', [postId]);
+    }
+
+    const [updated] = await db.execute('SELECT like_count FROM gallery_posts WHERE post_id = ?', [postId]);
+    res.json({ success: true, liked: existing.length === 0, likeCount: updated[0].like_count });
+  } catch (err) {
+    console.error('[gallery] 좋아요 처리 실패:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 };

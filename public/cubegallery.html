@@ -8,7 +8,7 @@
     <title>큐브 갤러리 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/cubegallery.css" />
   </head>
-  <body style="margin: 0; background: #ffffff">
+  <body data-nav="hero" style="margin: 0; background: #ffffff">
 
     <div class="cubeu95gallery1-1 screen">
 
@@ -57,9 +57,10 @@
       <div class="container-14">
         <div class="container-15">
           <div class="text-input">
-            <div class="text-39">검색어를 입력하세요...</div>
+            <input type="text" id="gallery-search" placeholder="검색어를 입력하세요..."
+              style="width:100%;height:100%;border:none;outline:none;background:transparent;font-family:'Arial-Regular',Arial,sans-serif;font-size:16px;color:#374151;" />
           </div>
-          <div class="icon-2">
+          <div class="icon-2" id="search-btn" style="cursor:pointer;">
             <img class="vector-9" src="galleryimg/vector-3.svg" alt="" role="presentation" />
             <img class="vector-10" src="galleryimg/vector-4.svg" alt="" role="presentation" />
           </div>
@@ -92,307 +93,7 @@
         </div>
 
         <div class="container-17" id="post-list">
-
-          <!-- ── POST CARD 1 ── -->
-          <div class="container" data-post-id="1" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">모던 블랙 컨테이너 하우스</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text_label arial-regular-normal-abbey-14px post-content">
-                    심플하고 세련된 디자인의 모던 스타일 컨테이너 하우스입니다. 넓은 창을 통해 자연광이 가득합니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-42 arial-regular-normal-black-14px post-author">김현수</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date arial-regular-normal-black-14px post-date">2026.02.10</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">142</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">2341</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cg_main1 post-thumb"></div>
-          </div>
-
-          <!-- ── POST CARD 2 ── -->
-          <div class="container" data-post-id="2" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">인더스트리얼 스타일 컨테이너</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text_label-1 arial-regular-normal-abbey-14px post-content">
-                    철골 구조가 드러나는 인더스트리얼 감성의 컨테이너 하우스입니다. 넓은 작업 공간이 특징입니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-44 arial-regular-normal-black-14px post-author">이지은</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.08</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">231</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">3892</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cg_main2 post-thumb"></div>
-          </div>
-
-          <!-- ── POST CARD 3 ── -->
-          <div class="container" data-post-id="3" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">미니멀 화이트 컨테이너</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text-46 arial-regular-normal-abbey-14px post-content">
-                    깔끔한 화이트 톤의 미니멀 디자인. 작은 공간을 효율적으로 활용한 사례입니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-47 arial-regular-normal-black-14px post-author">박서준</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.05</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">189</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">2876</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cg_main3 post-thumb"></div>
-          </div>
-
-          <!-- ── POST CARD 4 ── -->
-          <div class="container" data-post-id="4" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">럭셔리 2층 컨테이너 하우스</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text-49 arial-regular-normal-abbey-14px post-content">
-                    2층 구조의 프리미엄 컨테이너 하우스. 고급스러운 마감과 넓은 공간이 특징입니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-50 arial-regular-normal-black-14px post-author">최민지</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.02.03</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">456</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">5234</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cg_main4 post-thumb"></div>
-          </div>
-
-          <!-- ── POST CARD 5 ── -->
-          <div class="container" data-post-id="5" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">친환경 에코 컨테이너</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text-52 arial-regular-normal-abbey-14px post-content">
-                    태양광 패널과 친환경 소재를 활용한 지속가능한 컨테이너 하우스입니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-53 arial-regular-normal-black-14px post-author">정우성</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.01.30</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">298</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">4123</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="container-18 post-thumb"></div>
-          </div>
-
-          <!-- ── POST CARD 6 ── -->
-          <div class="container-19" data-post-id="6" data-user-id="">
-            <div class="container-1">
-              <div class="container-2">
-                <div class="heading-3">
-                  <div class="text arial-regular-normal-eerie-black-20px post-title">컬러풀 아트 스튜디오 컨테이너</div>
-                </div>
-                <div class="paragraph-1">
-                  <p class="text-55 arial-regular-normal-abbey-14px post-content">
-                    화려한 색상과 독특한 구조의 아티스트를 위한 작업 공간입니다.
-                  </p>
-                </div>
-              </div>
-              <div class="container-3">
-                <div class="container-4">
-                  <div class="container-5">
-                    <div class="icon">
-                      <img class="vector" src="galleryimg/vector-5.svg" alt="" role="presentation" />
-                      <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="text-56 arial-regular-normal-black-14px post-author">안혜진</div></div>
-                  </div>
-                  <div class="container-6">
-                    <div class="icon">
-                      <img class="vector-2" src="galleryimg/vector-7.svg" alt="" role="presentation" />
-                      <img class="vector-3" src="galleryimg/vector-8.svg" alt="" role="presentation" />
-                      <img class="vector-4" src="galleryimg/vector-9.svg" alt="" role="presentation" />
-                      <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-1"><div class="date-6 arial-regular-normal-black-14px post-date">2026.01.28</div></div>
-                  </div>
-                </div>
-                <div class="container-7">
-                  <div class="container-8">
-                    <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">367</div></div>
-                  </div>
-                  <div class="container-9">
-                    <div class="icon-1">
-                      <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
-                      <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
-                    </div>
-                    <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">3654</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cg_main6 post-thumb"></div>
-          </div>
-
+          <div class="gallery-loading">불러오는 중...</div>
         </div><!-- /#post-list -->
       </div><!-- /.container-16 -->
 
@@ -449,5 +150,242 @@
       </footer>
 
     </div><!-- /.cubeu95gallery1-1.screen -->
+
+  <!-- ── 게시글 상세 모달 ── -->
+  <div id="gallery-modal" class="gallery-modal-overlay">
+    <div class="gallery-modal-box">
+      <button class="gallery-modal-close" id="modal-close-btn">✕</button>
+      <img id="modal-img" class="gallery-modal-img" src="" alt="" />
+      <div class="gallery-modal-body">
+        <h2 class="gallery-modal-title" id="modal-title"></h2>
+        <div class="gallery-modal-meta">
+          <span>👤 <span id="modal-author"></span></span>
+          <span>📅 <span id="modal-date"></span></span>
+        </div>
+        <p class="gallery-modal-content" id="modal-content"></p>
+        <div class="gallery-modal-stats">
+          <button class="gallery-modal-like-btn" id="modal-like-btn">
+            <span class="like-heart">🤍</span>
+            <span id="modal-likes">0</span>
+          </button>
+          <span class="gallery-modal-views">
+            👁 <span id="modal-views">0</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    let currentPostId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPosts();
+
+      // 검색
+      const searchInput = document.getElementById('gallery-search');
+      const searchBtn   = document.getElementById('search-btn');
+      function doSearch() { loadPosts(1, searchInput.value.trim()); }
+      searchBtn.addEventListener('click', doSearch);
+      searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+      // 모달 닫기
+      document.getElementById('gallery-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+      document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+      document.getElementById('modal-like-btn').addEventListener('click', toggleLike);
+
+      // ESC 닫기
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    });
+
+    async function loadPosts(page = 1, q = '') {
+      const list = document.getElementById('post-list');
+      list.innerHTML = '<div class="gallery-loading">불러오는 중...</div>';
+      try {
+        const res  = await fetch(`/api/gallery?page=${page}&limit=6&q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+
+        document.getElementById('post-count').textContent = data.pagination.total;
+
+        if (data.data.length === 0) {
+          list.innerHTML = '<div class="gallery-empty">등록된 게시물이 없습니다.</div>';
+          return;
+        }
+
+        list.innerHTML = data.data.map(renderCard).join('');
+        list.querySelectorAll('[data-post-id]').forEach(card => {
+          card.addEventListener('click', () => openModal(card.dataset.postId));
+        });
+      } catch (err) {
+        list.innerHTML = '<div class="gallery-empty">게시물을 불러오지 못했습니다.</div>';
+        console.error('[gallery] loadPosts:', err);
+      }
+    }
+
+    function renderCard(post) {
+      const thumbStyle = post.image_url
+        ? `background-image:url('${esc(post.image_url)}');background-size:cover;background-position:center;`
+        : '';
+      const date = fmtDate(post.created_at);
+      return `
+        <div class="container" data-post-id="${post.post_id}" style="cursor:pointer;">
+          <div class="container-1">
+            <div class="container-2">
+              <div class="heading-3">
+                <div class="text arial-regular-normal-eerie-black-20px post-title">${esc(post.title)}</div>
+              </div>
+              <div class="paragraph-1">
+                <p class="text_label arial-regular-normal-abbey-14px post-content">${esc(post.content)}</p>
+              </div>
+            </div>
+            <div class="container-3">
+              <div class="container-4">
+                <div class="container-5">
+                  <div class="icon">
+                    <img class="vector"   src="galleryimg/vector-5.svg" alt="" role="presentation" />
+                    <img class="vector-1" src="galleryimg/vector-6.svg" alt="" role="presentation" />
+                  </div>
+                  <div class="text-1"><div class="arial-regular-normal-black-14px post-author">${esc(post.author_name || '익명')}</div></div>
+                </div>
+                <div class="container-6">
+                  <div class="icon">
+                    <img class="vector-2" src="galleryimg/vector-7.svg"  alt="" role="presentation" />
+                    <img class="vector-3" src="galleryimg/vector-8.svg"  alt="" role="presentation" />
+                    <img class="vector-4" src="galleryimg/vector-9.svg"  alt="" role="presentation" />
+                    <img class="vector-5" src="galleryimg/vector-10.svg" alt="" role="presentation" />
+                  </div>
+                  <div class="text-1"><div class="arial-regular-normal-black-14px post-date">${date}</div></div>
+                </div>
+              </div>
+              <div class="container-7">
+                <div class="container-8">
+                  <div class="icon-1"><img class="vector-6" src="galleryimg/vector-11.svg" alt="좋아요" /></div>
+                  <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-likes">${post.like_count || 0}</div></div>
+                </div>
+                <div class="container-9">
+                  <div class="icon-1">
+                    <img class="vector-7" src="galleryimg/vector-12.svg" alt="조회수" />
+                    <img class="vector-8" src="galleryimg/vector-13.svg" alt="" role="presentation" />
+                  </div>
+                  <div class="text-2"><div class="number arial-regular-normal-abbey-16px post-views">${post.view_count || 0}</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="post-thumb" style="${thumbStyle}"></div>
+        </div>`;
+    }
+
+    async function openModal(postId) {
+      currentPostId = postId;
+      const modal = document.getElementById('gallery-modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      // 로딩 상태
+      document.getElementById('modal-title').textContent   = '불러오는 중...';
+      document.getElementById('modal-content').textContent = '';
+      document.getElementById('modal-author').textContent  = '';
+      document.getElementById('modal-date').textContent    = '';
+      document.getElementById('modal-img').classList.add('hidden');
+
+      try {
+        const res  = await fetch(`/api/gallery/${postId}`);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+
+        const post = data.data;
+        const img  = document.getElementById('modal-img');
+        if (post.image_url) {
+          img.src = post.image_url;
+          img.classList.remove('hidden');
+        } else {
+          img.classList.add('hidden');
+        }
+
+        document.getElementById('modal-title').textContent   = post.title;
+        document.getElementById('modal-author').textContent  = post.author_name || '익명';
+        document.getElementById('modal-date').textContent    = fmtDate(post.created_at);
+        document.getElementById('modal-content').textContent = post.content;
+        document.getElementById('modal-likes').textContent   = post.like_count || 0;
+        document.getElementById('modal-views').textContent   = post.view_count || 0;
+
+        const likeBtn = document.getElementById('modal-like-btn');
+        const heart   = likeBtn.querySelector('.like-heart');
+        if (post.liked) {
+          likeBtn.classList.add('liked');
+          heart.textContent = '❤️';
+        } else {
+          likeBtn.classList.remove('liked');
+          heart.textContent = '🤍';
+        }
+
+        // 카드 조회수 실시간 반영
+        const viewEl = document.querySelector(`[data-post-id="${postId}"] .post-views`);
+        if (viewEl) viewEl.textContent = post.view_count || 0;
+
+      } catch (err) {
+        document.getElementById('modal-title').textContent = '불러오기 실패';
+        console.error('[gallery] openModal:', err);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('gallery-modal').classList.remove('open');
+      document.body.style.overflow = '';
+      currentPostId = null;
+    }
+
+    async function toggleLike() {
+      if (!currentPostId) return;
+      try {
+        const res  = await fetch(`/api/gallery/${currentPostId}/like`, { method: 'POST' });
+        const data = await res.json();
+
+        if (res.status === 401) {
+          alert('로그인이 필요합니다.');
+          return;
+        }
+        if (!data.success) throw new Error(data.message);
+
+        const likeBtn = document.getElementById('modal-like-btn');
+        const heart   = likeBtn.querySelector('.like-heart');
+        document.getElementById('modal-likes').textContent = data.likeCount;
+
+        if (data.liked) {
+          likeBtn.classList.add('liked');
+          heart.textContent = '❤️';
+        } else {
+          likeBtn.classList.remove('liked');
+          heart.textContent = '🤍';
+        }
+
+        // 카드 좋아요 수 실시간 반영
+        const likeEl = document.querySelector(`[data-post-id="${currentPostId}"] .post-likes`);
+        if (likeEl) likeEl.textContent = data.likeCount;
+
+      } catch (err) {
+        console.error('[gallery] toggleLike:', err);
+      }
+    }
+
+    function fmtDate(str) {
+      if (!str) return '';
+      const d = new Date(str);
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function esc(str) {
+      return String(str || '')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+  })();
+  </script>
+  <script src="/js/navbar.js"></script>
   </body>
 </html>

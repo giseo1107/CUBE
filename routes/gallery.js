@@ -15,9 +15,10 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
-router.get('/',      controller.getPosts);
-router.get('/:id',   controller.getPostDetail);
-router.post('/',     upload.single('image'), controller.createPost);
-router.delete('/:id', controller.deletePost);
+router.get('/',        controller.getPosts);
+router.get('/:id',     controller.getPostDetail);
+router.post('/',       upload.single('image'), controller.createPost);
+router.post('/:id/like', controller.toggleLike);
+router.delete('/:id',  controller.deletePost);
 
 module.exports = router;
