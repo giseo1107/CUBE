@@ -197,6 +197,14 @@
     // ========================================
     // 탭 전환
     // ========================================
+    // URL hash로 탭 직접 이동 (#tabReservation 등)
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'tabReservation' || hash === 'tabPayment' || hash === 'tabProfile') {
+        switchTab(hash);
+      }
+    });
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.toggle('is-active', btn.dataset.tab === tabId);

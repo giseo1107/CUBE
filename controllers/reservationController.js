@@ -291,7 +291,7 @@ exports.getMyReservations = async (req, res) => {
         }
 
         const [rows] = await db.query(
-            `SELECT res_id, visit_date, visit_time, people_count, status, memo, created_at
+            `SELECT res_id, visit_date, visit_time, people_count, visitor_name, phone, email, status, memo, created_at
              FROM reservation
              WHERE user_id = ?
              ORDER BY visit_date DESC, visit_time DESC`,
