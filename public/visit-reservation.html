@@ -71,7 +71,7 @@
                     <img class="vector-8" src="image/vector-15.svg" alt="Vector" />
                   </div>
                   <div class="container-2"><div class="text-46">이메일</div></div>
-                  <div class="container-3"><div class="infocontainerhousecom">info@containerhouse.com</div></div>
+                  <div class="container-3"><div class="infocontainerhousecom"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c0c7cfc6e9cac6c7ddc8c0c7ccdbc1c6dcdacc87cac6c4">[email&#160;protected]</a></div></div>
                 </div>
               </div>
             </div>
@@ -408,7 +408,7 @@
       /* 구 Anima 정적 navbar 숨김 — navbar.js가 대체 */
       .top-2 { display: none !important; }
     </style>
-    <script src="/js/navbar.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/js/navbar.js"></script>
     <script>
     (function () {
       // ── 상수 ──────────────────────────────────────────────
@@ -639,11 +639,8 @@
             const data = await res.json();
 
             if (data.success) {
-              alert('✅ 예약이 완료되었습니다!\n예약 번호: ' + data.res_id);
-              // 예약 완료 페이지로 이동 (있는 경우)
-              if (typeof data.res_id !== 'undefined') {
-                location.href = '/reservation-completion.html?res_id=' + data.res_id;
-              }
+              // 예약 완료 페이지로 바로 이동
+              location.href = '/reservation-completion.html?res_id=' + data.res_id;
             } else {
               alert('❌ ' + (data.message || '예약에 실패했습니다.'));
             }
@@ -664,12 +661,3 @@
         if (currentMonth > MIN_MONTH) { currentMonth--; renderCalendar(currentMonth); }
       });
       nextBtn.addEventListener('click', function () {
-        if (currentMonth < MAX_MONTH) { currentMonth++; renderCalendar(currentMonth); }
-      });
-
-      updateTimeButtons(null); // 초기엔 시간 버튼 비활성
-      renderCalendar(currentMonth);
-    })();
-    </script>
-</body>
-</html>

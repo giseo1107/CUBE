@@ -131,7 +131,7 @@
 
 /* 기존 top-bar가 있다면 위치 조정 */
 .top-bar {
-    top: 90px !important; /* 유저 헤더 아래로 */
+    top: 75px !important; /* 유저 헤더 아래로 */
 }
 
 /* info-panel과 properties-panel도 조정 */
