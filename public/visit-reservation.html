@@ -163,10 +163,15 @@
                 </div>
               </div>
               <div class="container-23">
-                <button class="people-btn active" data-count="1">1명</button>
-                <button class="people-btn" data-count="2">2명</button>
-                <button class="people-btn" data-count="3">3명</button>
-                <button class="people-btn" data-count="4">4명</button>
+                <div class="people-minus">
+                  <span class="arial-regular-normal-cyber-grape-20px">-</span>
+                </div>
+                <div class="people-count">
+                  <span class="people-count-text">1명</span>
+                </div>
+                <div class="people-plus">
+                  <span class="arial-regular-normal-cyber-grape-20px">+</span>
+                </div>
               </div>
             </div>
             <div class="button-42">
@@ -313,15 +318,17 @@
         <img class="rectangle-19" src="image/rectangle-19.png" alt="Rectangle 19" />
         <img class="rectangle-19-1" src="image/rectangle-19-1.png" alt="Rectangle 19" />
         <div class="top-1">
-          <div class="container-41">
-            <div class="container-42">
-              <div class="container-43">
-                <div class="text-28">
-                  <div class="visit-reservation-1 arial-bold-white-14px">VISIT RESERVATION</div>
-                </div>
+          <div class="vr-hero">
+            <div class="vr-hero-inner">
+              <div class="vr-hero-badge">
+                <span class="arial-bold-white-14px">VISIT RESERVATION</span>
               </div>
-              <div class="heading-1"><h1 class="text-95">방문 예약</h1></div>
-              <div class="paragraph-12"><p class="text-96">실제 컨테이너 하우스를 직접 체험해보세요.</p></div>
+              <div class="vr-hero-title">
+                <h1>방문 예약</h1>
+              </div>
+              <div class="vr-hero-desc">
+                <p>실제 컨테이너 하우스를 직접 체험해보세요.</p>
+              </div>
             </div>
           </div>
           <div class="top-2">
@@ -429,8 +436,10 @@
         btn.style.cursor = 'pointer';
       });
 
-      // 인원 버튼
-      const peopleBtns = document.querySelectorAll('.people-btn');
+      // 인원 +/- 버튼
+      const minusBtn  = document.querySelector('.people-minus');
+      const plusBtn   = document.querySelector('.people-plus');
+      const countEl   = document.querySelector('.people-count-text');
 
       // 예약하기 버튼
       const submitBtn = document.querySelector('.button-42');
@@ -587,14 +596,25 @@
         });
       });
 
-      // ── 인원 버튼 선택 ────────────────────────────────────────
-      peopleBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          peopleBtns.forEach(function (b) { b.classList.remove('active'); });
-          this.classList.add('active');
-          peopleCount = parseInt(this.dataset.count, 10);
+      // ── 인원 +/- ──────────────────────────────────────────────
+      if (minusBtn) {
+        minusBtn.style.cursor = 'pointer';
+        minusBtn.addEventListener('click', function () {
+          if (peopleCount > 1) {
+            peopleCount--;
+            if (countEl) countEl.textContent = peopleCount + '명';
+          }
         });
-      });
+      }
+      if (plusBtn) {
+        plusBtn.style.cursor = 'pointer';
+        plusBtn.addEventListener('click', function () {
+          if (peopleCount < 4) {
+            peopleCount++;
+            if (countEl) countEl.textContent = peopleCount + '명';
+          }
+        });
+      }
 
       // ── 예약하기 버튼 ─────────────────────────────────────
       if (submitBtn) {
