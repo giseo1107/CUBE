@@ -661,3 +661,13 @@
         if (currentMonth > MIN_MONTH) { currentMonth--; renderCalendar(currentMonth); }
       });
       nextBtn.addEventListener('click', function () {
+        if (currentMonth < MAX_MONTH) { currentMonth++; renderCalendar(currentMonth); }
+      });
+
+      updateTimeButtons(null); // 초기엔 시간 버튼 비활성
+      renderCalendar(currentMonth);
+    })();
+    </script>
+
+</body>
+</html>

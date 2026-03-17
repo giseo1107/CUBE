@@ -171,15 +171,15 @@
     }
 
     #g-nav .gn-user-avatar {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 18px;
+      font-size: 22px;
       flex-shrink: 0;
       border: 2px solid rgba(175, 249, 245, 0.4);
       transition: border-color 0.2s, opacity 0.2s;
@@ -230,7 +230,7 @@
     }
     #g-nav .gn-user-name {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
