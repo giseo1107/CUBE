@@ -7,86 +7,334 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f7f8fc;
+      font-family: 'Arial', 'Apple SD Gothic Neo', sans-serif;
+      background: #f4f6fb;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      padding: 24px;
     }
     .card {
       background: #fff;
       border-radius: 20px;
-      padding: 60px 48px;
-      max-width: 480px;
-      width: 90%;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+      padding: 48px 44px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.09);
+    }
+
+    /* 헤더 */
+    .header {
       text-align: center;
+      margin-bottom: 32px;
     }
     .check-circle {
-      width: 72px; height: 72px;
+      width: 68px; height: 68px;
       border-radius: 50%;
-      background: #e8f4e8;
+      background: #e6f4ea;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
+      margin: 0 auto 18px;
     }
-    h1 {
-      font-size: 24px;
+    .header h1 {
+      font-size: 22px;
       font-weight: 700;
       color: #101828;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
-    p {
-      font-size: 15px;
+    .header .subtitle {
+      font-size: 14px;
       color: #6b7280;
-      line-height: 1.7;
-      margin-bottom: 36px;
     }
+    .header .nickname {
+      font-weight: 700;
+      color: #1a4f85;
+    }
+
+    /* 구분선 */
+    .divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 24px 0;
+    }
+
+    /* 주문 정보 섹션 */
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #9ca3af;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+    .info-label {
+      font-size: 14px;
+      color: #6b7280;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .info-value {
+      font-size: 14px;
+      color: #111827;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* 옵션 태그 */
+    .options-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .option-tag {
+      background: #f0f6ff;
+      color: #1a4f85;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* 총 결제 금액 강조 */
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8faff;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+    .total-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+    }
+    .total-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a4f85;
+    }
+
+    /* 결제 방법 배지 */
+    .method-badge {
+      display: inline-block;
+      background: #fff8e1;
+      color: #b45309;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      vertical-align: middle;
+    }
+
+    /* 버튼 */
     .btn-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      margin-top: 28px;
     }
     .btn-primary {
       display: block;
       background: #1a4f85;
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      padding: 16px 0;
+      padding: 15px 0;
       border-radius: 12px;
       text-decoration: none;
+      text-align: center;
       transition: background .2s;
     }
     .btn-primary:hover { background: #153e6a; }
     .btn-secondary {
       display: block;
       background: #fff;
-      color: #1a4f85;
-      font-size: 16px;
-      font-weight: 700;
-      padding: 16px 0;
+      color: #374151;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 0;
       border-radius: 12px;
       text-decoration: none;
-      border: 2px solid #1a4f85;
+      text-align: center;
+      border: 1.5px solid #e5e7eb;
       transition: background .2s;
     }
-    .btn-secondary:hover { background: #f0f6ff; }
+    .btn-secondary:hover { background: #f9fafb; }
+
+    /* 로딩 / 에러 */
+    .loading {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 15px;
+      padding: 40px 0;
+    }
+    .error-msg {
+      text-align: center;
+      color: #ef4444;
+      font-size: 14px;
+      padding: 20px 0;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="check-circle">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-        <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h1>결제가 완료되었습니다!</h1>
-    <p>주문해 주셔서 감사합니다.<br>담당자가 24시간 내에 연락드리겠습니다.</p>
-    <div class="btn-group">
-      <a href="/curation.html" class="btn-primary">🏠 큐레이션 샵으로 돌아가기</a>
-      <a href="/cart.html" class="btn-secondary">🛒 장바구니 보기</a>
-    </div>
+  <div class="card" id="card">
+    <div class="loading" id="loading">결제 정보를 불러오는 중...</div>
+    <div id="content" style="display:none;"></div>
   </div>
+
+  <script>
+    async function loadSuccessInfo() {
+      try {
+        const res  = await fetch('/api/payment/success-info');
+        const data = await res.json();
+
+        document.getElementById('loading').style.display = 'none';
+
+        if (!data.success) {
+          document.getElementById('content').style.display = 'block';
+          document.getElementById('content').innerHTML = `
+            <div class="header">
+              <div class="check-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h1>결제가 완료되었습니다!</h1>
+              <p class="subtitle">담당자가 24시간 내에 연락드리겠습니다.</p>
+            </div>
+            <div class="btn-group">
+              <a href="/curation.html" class="btn-primary">큐레이션 샵으로 돌아가기</a>
+            </div>`;
+          return;
+        }
+
+        // 금액 포맷
+        const fmt = n => Number(n).toLocaleString('ko-KR') + '원';
+
+        // 결제 방법 한글 변환
+        const methodLabel = {
+          'CARD':   '신용/체크카드',
+          'MONEY':  '카카오머니',
+          'POINT':  '카카오포인트',
+        }[data.payment_method_type] || data.payment_method_type || '카카오페이';
+
+        // 승인 시각 포맷
+        const approvedAt = data.approved_at
+          ? new Date(data.approved_at).toLocaleString('ko-KR', {
+              year: 'numeric', month: 'long', day: 'numeric',
+              hour: '2-digit', minute: '2-digit'
+            })
+          : '';
+
+        // 옵션 파싱 (name:price 형식)
+        let optionsHtml = '';
+        if (data.selected_options) {
+          const tags = data.selected_options.split(',').map(s => s.trim()).filter(Boolean).map(opt => {
+            const colonIdx = opt.lastIndexOf(':');
+            if (colonIdx > 0 && /^\d+$/.test(opt.slice(colonIdx + 1))) {
+              const name  = opt.slice(0, colonIdx).trim();
+              const price = parseInt(opt.slice(colonIdx + 1), 10);
+              return `<span class="option-tag">${name} +${price.toLocaleString('ko-KR')}원</span>`;
+            }
+            return `<span class="option-tag">${opt}</span>`;
+          });
+          if (tags.length > 0) {
+            optionsHtml = `
+              <div class="info-row">
+                <span class="info-label">추가 옵션</span>
+                <div class="options-wrap">${tags.join('')}</div>
+              </div>`;
+          }
+        }
+
+        // 장바구니 결제 여부 안내
+        const cartNotice = data.from_cart
+          ? `<p style="font-size:13px;color:#6b7280;text-align:center;margin-top:8px;">장바구니의 결제 완료된 상품이 자동으로 삭제되었습니다.</p>`
+          : '';
+
+        document.getElementById('content').style.display = 'block';
+        document.getElementById('content').innerHTML = `
+          <div class="header">
+            <div class="check-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h1>결제가 완료되었습니다!</h1>
+            <p class="subtitle"><span class="nickname">${data.nickname}</span>님, 주문해 주셔서 감사합니다.<br>담당자가 24시간 내에 연락드리겠습니다.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="section-title">주문 정보</div>
+          <div class="info-row">
+            <span class="info-label">주문 번호</span>
+            <span class="info-value">#${data.order_id}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">상품명</span>
+            <span class="info-value">${data.item_name}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">수량</span>
+            <span class="info-value">${data.quantity}개</span>
+          </div>
+          ${optionsHtml}
+
+          <hr class="divider" />
+
+          <div class="section-title">결제 정보</div>
+          <div class="info-row">
+            <span class="info-label">결제 방법</span>
+            <span class="info-value"><span class="method-badge">${methodLabel}</span></span>
+          </div>
+          ${approvedAt ? `<div class="info-row">
+            <span class="info-label">결제 일시</span>
+            <span class="info-value">${approvedAt}</span>
+          </div>` : ''}
+
+          <div class="total-row">
+            <span class="total-label">총 결제 금액</span>
+            <span class="total-value">${fmt(data.total_amount)}</span>
+          </div>
+
+          ${cartNotice}
+
+          <div class="btn-group">
+            <a href="/curation.html" class="btn-primary">큐레이션 샵으로 돌아가기</a>
+            <a href="/cart.html" class="btn-secondary">장바구니 보기</a>
+          </div>`;
+
+      } catch (err) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        document.getElementById('content').innerHTML = `
+          <div class="header">
+            <div class="check-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="#2d7a2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h1>결제가 완료되었습니다!</h1>
+            <p class="subtitle">담당자가 24시간 내에 연락드리겠습니다.</p>
+          </div>
+          <div class="btn-group">
+            <a href="/curation.html" class="btn-primary">큐레이션 샵으로 돌아가기</a>
+          </div>`;
+      }
+    }
+
+    loadSuccessInfo();
+  </script>
 </body>
 </html>

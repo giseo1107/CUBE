@@ -190,14 +190,62 @@ exports.approve = async (req, res) => {
             ]
         );
 
-        // 세션 정리
+        // 결제 완료 정보를 세션에 저장 (success.html에서 표시용)
+        req.session.lastPayment = {
+            order_id:            orderId,
+            item_name:           pending.item_name,
+            total_amount:        pending.total_amount,
+            quantity:            pending.quantity,
+            selected_options:    pending.selected_options || null,
+            payment_method_type: kakaoData.payment_method_type || 'CARD',
+            approved_at:         kakaoData.approved_at || new Date().toISOString(),
+            from_cart:           Array.isArray(pending.cart_ids) && pending.cart_ids.length > 0,
+        };
         delete req.session.pendingPayment;
+
+        await new Promise((resolve, reject) => {
+            req.session.save(err => err ? reject(err) : resolve());
+        });
 
         return res.redirect(`${baseUrl()}/success.html`);
 
     } catch (err) {
         console.error('[approve] 예외 발생:', err.message, err.stack);
         return res.redirect(`${baseUrl()}/api/payment/fail`);
+    }
+};
+
+// ──────────────────────────────────────────────────────────────
+// GET /api/payment/success-info
+// success.html에서 호출 → 결제 정보 반환 후 세션 정리
+// ──────────────────────────────────────────────────────────────
+exports.successInfo = async (req, res) => {
+    try {
+        const userId = req.session?.userId;
+        const last   = req.session?.lastPayment;
+
+        if (!userId || !last) {
+            return res.status(404).json({ success: false, message: '결제 정보를 찾을 수 없습니다.' });
+        }
+
+        // 사용자 닉네임 조회
+        const [rows] = await db.query(
+            'SELECT nickname FROM user WHERE user_id = ?', [userId]
+        );
+        const nickname = rows[0]?.nickname || '고객';
+
+        // 세션 정리
+        delete req.session.lastPayment;
+
+        return res.json({
+            success: true,
+            nickname,
+            ...last,
+        });
+
+    } catch (err) {
+        console.error('successInfo error:', err);
+        return res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
     }
 };
 
