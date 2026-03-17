@@ -80,42 +80,45 @@
           return (sum / vals.length).toFixed(1);
         }
 
-        function buildCard(r) {
-          const initial = (r.author_name || '?').charAt(0);
-          const rating  = avgRating(r);
-          const date    = formatDate(r.created_at);
-          const thumbStyle = r.image_url
-            ? 'background-image:url(' + r.image_url + ');background-size:cover;background-position:50% 50%;'
-            : 'background-color:var(--aqua-squeeze);';
+        function esc(s) {
+          var d = document.createElement('div');
+          d.textContent = s || '';
+          return d.innerHTML;
+        }
 
-          return '<div class="review-dyn-card" onclick="location.href=\'/review/' + r.review_id + '\'">'
-            + '<div class="review-dyn-thumb" style="' + thumbStyle + '">'
-            + '<div class="review-dyn-badge">'
-            + '<img src="visitimg/vector.svg" style="height:12px;margin-right:2px;" />'
-            + '<span class="arial-regular-normal-white-12px">' + (r.model_name || '') + '</span>'
+        function buildCard(r) {
+          var initial  = (r.author_name || '?').charAt(0);
+          var rating   = avgRating(r);
+          var date     = formatDate(r.created_at);
+          var thumbStyle = r.image_url
+            ? 'background-image:url(' + r.image_url + ');'
+            : '';
+
+          return '<div class="rv-card" onclick="location.href=\'/review/' + r.review_id + '\'">'
+            + '<div class="rv-thumb" style="' + thumbStyle + '">'
+            + '<div class="rv-badge">'
+            + '<img src="visitimg/vector.svg" />'
+            + '<span>' + esc(r.model_name) + '</span>'
             + '</div>'
-            + '<div class="review-dyn-rating">'
-            + '<img class="vector-2" src="visitimg/vector-2.svg" alt="★" style="height:14px;margin-right:4px;" />'
-            + '<span class="arial-regular-normal-chathams-blue-13px">' + rating + '</span>'
-            + '</div>'
-            + '</div>'
-            + '<div class="container-1">'
-            + '<div class="container-2">'
-            + '<div class="container-3">'
-            + '<div class="container-4"><div class="text-4"><div class="text-5 arial-regular-normal-white-14px">' + initial + '</div></div></div>'
-            + '<div class="container-5">'
-            + '<div class="paragraph"><div class="text-6 arial-regular-normal-mirage-15px">' + (r.author_name || '') + '</div></div>'
-            + '<div class="container-6">'
-            + '<div class="icon-2"><img class="vector-3" src="visitimg/vector-3.svg" /><img class="vector-4" src="visitimg/vector-4.svg" /></div>'
-            + '<div class="text-7"><div class="text-8 arial-regular-normal-scarpa-flow-12px">' + (r.region || '') + '</div></div>'
+            + '<div class="rv-rating">'
+            + '<img src="visitimg/vector-2.svg" />'
+            + '<span>' + rating + '</span>'
             + '</div>'
             + '</div>'
+            + '<div class="rv-body">'
+            + '<div class="rv-meta">'
+            + '<div class="rv-author">'
+            + '<div class="rv-avatar">' + esc(initial) + '</div>'
+            + '<div class="rv-author-info">'
+            + '<span class="rv-author-name">' + esc(r.author_name) + '</span>'
+            + '<span class="rv-author-region">' + esc(r.region) + '</span>'
             + '</div>'
-            + '<div class="paragraph-7"><div class="text-9 arial-regular-normal-santas-gray-13px">' + date + '</div></div>'
             + '</div>'
-            + '<img class="container-7" src="visitimg/container.svg" />'
-            + '<div class="heading-4"><div class="arial-regular-normal-mirage-18px">' + (r.title || '') + '</div></div>'
-            + '<div class="paragraph-1"><p class="arial-regular-normal-scarpa-flow-15px review-dyn-summary">' + (r.summary || '') + '</p></div>'
+            + '<span class="rv-date">' + date + '</span>'
+            + '</div>'
+            + '<hr class="rv-divider" />'
+            + '<div class="rv-title">' + esc(r.title) + '</div>'
+            + '<p class="rv-summary">' + esc(r.summary) + '</p>'
             + '</div>'
             + '</div>';
         }
@@ -126,7 +129,7 @@
             var grid  = document.getElementById('review-grid');
             var count = document.getElementById('review-count');
             if (!json.success || !json.data.length) {
-              grid.innerHTML = '<p style="padding:40px;color:#888;">등록된 후기가 없습니다.</p>';
+              grid.innerHTML = '<div class="review-empty">등록된 후기가 없습니다.</div>';
               if (count) count.textContent = '전체 후기 0개';
               return;
             }
@@ -135,7 +138,7 @@
           })
           .catch(function () {
             document.getElementById('review-grid').innerHTML =
-              '<p style="padding:40px;color:#888;">후기를 불러오지 못했습니다.</p>';
+              '<div class="review-empty">후기를 불러오지 못했습니다.</div>';
           });
       })();
       </script>
