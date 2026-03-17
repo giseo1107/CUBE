@@ -5,7 +5,7 @@
 
 /* --- Reset & Fonts (from globals.css) --- */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@700&family=Noto+Sans+KR:wght@400;700&display=swap");
 
 @font-face {
   font-family: "Arial-Bold";
@@ -19,11 +19,12 @@
   font-weight: 400;
   src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
 }
+/* AbhayaLibre-SemiBold.ttf 파일 없음 → Noto Sans KR로 대체 */
 @font-face {
   font-family: "Abhaya Libre SemiBold-Regular";
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/AbhayaLibre-SemiBold.ttf") format("truetype");
+  src: local("Noto Sans KR");
 }
 
 .screen a {
@@ -259,10 +260,10 @@
   --font-size-xxxl: 56px;
   --font-size-xxxxl: 72px;
 
-  --font-family-abhaya_libre_semibold-regular: "Abhaya Libre SemiBold-Regular", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-arial-bold: "Arial-Bold", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-arial-regular: "Arial-Regular", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --font-family-baloo_da_2: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-family-abhaya_libre_semibold-regular: "Abhaya Libre SemiBold-Regular", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-family-arial-bold: "Arial-Bold", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-family-arial-regular: "Arial-Regular", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-family-baloo_da_2: "Baloo Da 2", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
 .arial-regular-normal-santas-gray-16px {

@@ -12,7 +12,7 @@
     
     <link rel="stylesheet" href="css/visit-reservation.css">
   </head>
-  <body style="margin: 0; background: #ffffff">
+  <body data-nav="hero" style="margin: 0; background: #ffffff">
     <input type="hidden" id="anPageName" name="page" value="visit-reservation" />
     <div class="visit-reservation screen">
       <div class="app">
@@ -71,7 +71,7 @@
                     <img class="vector-8" src="image/vector-15.svg" alt="Vector" />
                   </div>
                   <div class="container-2"><div class="text-46">이메일</div></div>
-                  <div class="container-3"><div class="infocontainerhousecom"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f161119103f1c10110b1e16111a0d17100a0c1a511c1012">[email&#160;protected]</a></div></div>
+                  <div class="container-3"><div class="infocontainerhousecom">info@containerhouse.com</div></div>
                 </div>
               </div>
             </div>
@@ -402,6 +402,11 @@
         </div>
       </footer>
     </div>
+    <style>
+      /* 구 Anima 정적 navbar 숨김 — navbar.js가 대체 */
+      .top-2 { display: none !important; }
+    </style>
+    <script src="/js/navbar.js"></script>
     <script>
     (function () {
       // ── 상수 ──────────────────────────────────────────────
