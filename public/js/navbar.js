@@ -285,6 +285,16 @@
   const SCROLL_THRESHOLD = 60; // px — 이 이상 내려가면 효과 적용
 
   function initScroll() {
+    // data-nav="hero" 가 있는 페이지만 투명 시작 → 스크롤 시 frosted glass
+    // 그 외 페이지는 항상 불투명 (밝은 배경에서도 navbar가 보이도록)
+    const isHero = document.body.dataset.nav === 'hero';
+
+    if (!isHero) {
+      // 비히어로 페이지: 처음부터 scrolled 상태 고정
+      nav.classList.add('scrolled');
+      return;
+    }
+
     function onScroll() {
       if (window.scrollY > SCROLL_THRESHOLD) {
         nav.classList.add('scrolled');
