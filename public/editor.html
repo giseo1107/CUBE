@@ -94,11 +94,11 @@
         <select id="templateSelect" class="template-select" onchange="loadTemplate(this.value)">
             <option value="">📁 템플릿...</option>
             <optgroup label="성향별 추천">
-                <option value="shortterm">1️⃣ 단기 투자형</option>
-                <option value="longterm">2️⃣ 장기 투자형</option>
-                <option value="residential">3️⃣ 실거주형</option>
-                <option value="newlywed">4️⃣ 신혼부부형</option>
-                <option value="officetel">5️⃣ 오피스텔형</option>
+                <option value="shortterm">1️⃣ 팝업창업형</option>
+                <option value="longterm">2️⃣ 안정정착형</option>
+                <option value="residential">3️⃣ 홈라이프형</option>
+                <option value="newlywed">4️⃣ 간편스타터형</option>
+                <option value="officetel">5️⃣ 스마트워크형</option>
             </optgroup>
         </select>
         
@@ -435,9 +435,9 @@ const PRICING = {
         'WELCOME10': { rate: 0.10, condition: () => true, message: '🎉 신규 고객 10% 할인!' },
         'PREMIUM20': { rate: 0.20, condition: () => getFurnitureCount() >= 5, message: '✨ 가구 5개 이상 20% 할인!' },
         'VIP30': { rate: 0.30, condition: () => getSubtotal() >= 10000000, message: '👑 VIP 30% 할인!' },
-        'SHORTTERM': { rate: 0.15, condition: () => true, message: '⚡ 단기투자형 특별 할인!' },
-        'LONGTERM': { rate: 0.20, condition: () => true, message: '🏆 장기투자형 프리미엄 할인!' },
-        'NEWLYWED': { rate: 0.25, condition: () => true, message: '💕 신혼부부 축하 할인!' }
+        'SHORTTERM': { rate: 0.15, condition: () => true, message: '⚡ 팝업창업형 특별 할인!' },
+        'LONGTERM': { rate: 0.20, condition: () => true, message: '🏆 안정정착형 프리미엄 할인!' },
+        'NEWLYWED': { rate: 0.25, condition: () => true, message: '💕 간편스타터형 축하 할인!' }
     }
 };
 

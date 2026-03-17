@@ -1169,3 +1169,202 @@
   top: 0;
   white-space: nowrap;
 }
+/* ============================================================
+   LAYOUT FIX OVERRIDES — reservation-completion
+   ============================================================ */
+
+/* ── 1. 이미지 두 개 나란히 (좌우로 붙게) ── */
+.reservation-completion .top {
+  position: relative;
+  height: 533.5px;
+  overflow: hidden;
+}
+.reservation-completion .top .rectangle-19-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+.reservation-completion .top .rectangle-19 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── 2. 헤더 텍스트 (VISIT RESERVATION / 방문 예약 / 설명) 이미지 위에 표시 ── */
+.reservation-completion .top-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* ── 3. "예약이 완료되었습니다!" 제목 — absolute 고정 위치 → 중앙 정렬 ── */
+.reservation-completion .text-9 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  text-align: center !important;
+  white-space: normal !important;
+  width: 100% !important;
+  line-height: 1.3 !important;
+}
+.reservation-completion .heading-1-1 {
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── 4. 본문 설명 텍스트 깨짐 ── */
+.reservation-completion .text-10,
+.reservation-completion .text-11 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  text-align: center !important;
+  white-space: normal !important;
+  width: 100% !important;
+  line-height: 1.6 !important;
+  display: block !important;
+}
+.reservation-completion .paragraph-11 {
+  height: auto !important;
+  margin-bottom: 0 !important;
+  text-align: center !important;
+}
+
+/* ── 5. 예약 상세 카드 — 고정 높이 해제 ── */
+.reservation-completion .reservation-details {
+  height: auto !important;
+  padding-bottom: 48px !important;
+}
+.reservation-completion .container-10 {
+  height: auto !important;
+}
+.reservation-completion .container-11 {
+  height: auto !important;
+}
+.reservation-completion .container-12 {
+  height: auto !important;
+}
+.reservation-completion .container-22 {
+  height: auto !important;
+  padding-bottom: 24px !important;
+}
+.reservation-completion .container-23 {
+  height: auto !important;
+}
+.reservation-completion .container-24 {
+  height: auto !important;
+  width: auto !important;
+}
+
+/* 예약 상세 텍스트들 absolute → relative */
+.reservation-completion .text-12,
+.reservation-completion .text-14,
+.reservation-completion .text-16,
+.reservation-completion .phone,
+.reservation-completion .customeremailcom,
+.reservation-completion .ccc,
+.reservation-completion .x123-ccc-1 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  display: block !important;
+}
+.reservation-completion .res-2026-0205-001 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  display: block !important;
+}
+.reservation-completion .paragraph-1,
+.reservation-completion .paragraph-2,
+.reservation-completion .paragraph-12,
+.reservation-completion .paragraph-13,
+.reservation-completion .paragraph-14 {
+  height: auto !important;
+}
+.reservation-completion .container-15,
+.reservation-completion .container-17,
+.reservation-completion .container-19,
+.reservation-completion .container-21 {
+  height: auto !important;
+  width: auto !important;
+}
+.reservation-completion .text-1 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  display: block !important;
+}
+
+/* ── 6. 다음 단계 카드 — 고정 높이 해제 ── */
+.reservation-completion .next-steps {
+  height: auto !important;
+  padding-bottom: 32px !important;
+}
+.reservation-completion .text-20 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+  display: block !important;
+  line-height: 1.5 !important;
+}
+.reservation-completion .heading-3 {
+  height: auto !important;
+}
+.reservation-completion .container-25 {
+  height: auto !important;
+}
+.reservation-completion .container-1 {
+  height: auto !important;
+}
+.reservation-completion .paragraph-15,
+.reservation-completion .paragraph-16,
+.reservation-completion .paragraph-17 {
+  height: auto !important;
+  width: auto !important;
+}
+.reservation-completion .text-21,
+.reservation-completion .text-22,
+.reservation-completion .text-23 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: normal !important;
+  line-height: 1.6 !important;
+  display: block !important;
+}
+.reservation-completion .text-2 {
+  height: auto !important;
+  width: auto !important;
+}
+.reservation-completion .number,
+.reservation-completion .number-3 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  white-space: nowrap !important;
+}
+
+/* ── 7. 전체 컨테이너 높이 고정 해제 ── */
+.reservation-completion .container-7 {
+  height: auto !important;
+}
+.reservation-completion .container-8 {
+  height: auto !important;
+  width: auto !important;
+  max-width: 1792px !important;
+}

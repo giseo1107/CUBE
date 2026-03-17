@@ -625,7 +625,7 @@
 
         // ==================== 결과 유형 정의 (템플릿 키 매핑 포함) ====================
         const resultTypes = {
-            '단기투자형': {
+            '팝업창업형': {
                 templateKey: 'shortterm',
                 labelEng: 'SHORT-TERM INVESTMENT',
                 spaceType: '팝업/프로모션',
@@ -636,7 +636,7 @@
                 duration: '1 - 3개월',
                 image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80'
             },
-            '장기투자형': {
+            '안정정착형': {
                 templateKey: 'longterm',
                 labelEng: 'LONG-TERM INVESTMENT',
                 spaceType: '비즈니스 공간',
@@ -647,7 +647,7 @@
                 duration: '1년 이상',
                 image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'
             },
-            '실 거주형': {
+            '홈라이프형': {
                 templateKey: 'residential',
                 labelEng: 'RESIDENTIAL LIVING',
                 spaceType: '1인 생활 공간',
@@ -658,7 +658,7 @@
                 duration: '6개월 - 1년',
                 image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80'
             },
-            '신혼부부형': {
+            '간편스타터형': {
                 templateKey: 'newlywed',
                 labelEng: 'NEWLYWED COUPLE',
                 spaceType: '신혼 생활 공간',
@@ -669,7 +669,7 @@
                 duration: '1년 이상',
                 image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80'
             },
-            '오피스텔형': {
+            '스마트워크형': {
                 templateKey: 'officetel',
                 labelEng: 'HOME OFFICE',
                 spaceType: '복합 업무 공간',
@@ -897,126 +897,126 @@
         // ==================== 결과 계산 ====================
         function calculateResult() {
             const scores = {
-                '단기투자형': 0, '장기투자형': 0, '실 거주형': 0, '신혼부부형': 0, '오피스텔형': 0
+                '팝업창업형': 0, '안정정착형': 0, '홈라이프형': 0, '간편스타터형': 0, '스마트워크형': 0
             };
 
             // Q1: 용도
             if (answers.q1) {
-                if (answers.q1.includes('popup') || answers.q1.includes('studio')) scores['단기투자형'] += 3;
+                if (answers.q1.includes('popup') || answers.q1.includes('studio')) scores['팝업창업형'] += 3;
                 if (answers.q1.includes('cafe') || answers.q1.includes('office')) {
-                    scores['장기투자형'] += 2;
-                    scores['오피스텔형'] += 2;
+                    scores['안정정착형'] += 2;
+                    scores['스마트워크형'] += 2;
                 }
-                if (answers.q1.includes('stay') || answers.q1.includes('camping')) scores['실 거주형'] += 3;
-                if (answers.q1.includes('office') && answers.q1.includes('stay')) scores['오피스텔형'] += 2;
+                if (answers.q1.includes('stay') || answers.q1.includes('camping')) scores['홈라이프형'] += 3;
+                if (answers.q1.includes('office') && answers.q1.includes('stay')) scores['스마트워크형'] += 2;
             }
 
             // Q2: 장소 고정 여부
-            if (answers.q2 === 'mobile') scores['단기투자형'] += 2;
+            if (answers.q2 === 'mobile') scores['팝업창업형'] += 2;
             else if (answers.q2 === 'fixed') {
-                scores['장기투자형'] += 2;
-                scores['실 거주형'] += 1;
-                scores['오피스텔형'] += 1;
+                scores['안정정착형'] += 2;
+                scores['홈라이프형'] += 1;
+                scores['스마트워크형'] += 1;
             }
 
             // Q3: 이동 빈도
-            if (answers.q3 === 'regular') scores['단기투자형'] += 2;
-            else if (answers.q3 === 'once') scores['장기투자형'] += 1;
+            if (answers.q3 === 'regular') scores['팝업창업형'] += 2;
+            else if (answers.q3 === 'once') scores['안정정착형'] += 1;
 
             // Q4: 사용 기간
-            if (answers.q4 === 'short' || answers.q4 === 'medium') scores['단기투자형'] += 2;
+            if (answers.q4 === 'short' || answers.q4 === 'medium') scores['팝업창업형'] += 2;
             else if (answers.q4 === 'long' || answers.q4 === 'verylong') {
-                scores['장기투자형'] += 2;
-                scores['실 거주형'] += 2;
-                scores['오피스텔형'] += 1;
+                scores['안정정착형'] += 2;
+                scores['홈라이프형'] += 2;
+                scores['스마트워크형'] += 1;
             }
 
             // Q5: 방식
-            if (answers.q5 === 'rental') scores['단기투자형'] += 2;
+            if (answers.q5 === 'rental') scores['팝업창업형'] += 2;
             else if (answers.q5 === 'purchase') {
-                scores['장기투자형'] += 2;
-                scores['실 거주형'] += 1;
+                scores['안정정착형'] += 2;
+                scores['홈라이프형'] += 1;
             }
 
             // Q6: 예산
-            if (answers.q6 === 'budget1' || answers.q6 === 'budget2') scores['단기투자형'] += 1;
+            if (answers.q6 === 'budget1' || answers.q6 === 'budget2') scores['팝업창업형'] += 1;
             else if (answers.q6 === 'budget3' || answers.q6 === 'budget4') {
-                scores['장기투자형'] += 1;
-                scores['실 거주형'] += 1;
-                scores['오피스텔형'] += 1;
+                scores['안정정착형'] += 1;
+                scores['홈라이프형'] += 1;
+                scores['스마트워크형'] += 1;
             }
 
             // Q7: 핵심 시설
             if (answers.q7) {
-                if (answers.q7.includes('basic')) scores['단기투자형'] += 3;
+                if (answers.q7.includes('basic')) scores['팝업창업형'] += 3;
                 if (answers.q7.includes('office_facility')) {
-                    scores['오피스텔형'] += 3;
-                    scores['장기투자형'] += 1;
+                    scores['스마트워크형'] += 3;
+                    scores['안정정착형'] += 1;
                 }
                 if (answers.q7.includes('full_option')) {
-                    scores['실 거주형'] += 4;
-                    scores['신혼부부형'] += 4;
+                    scores['홈라이프형'] += 4;
+                    scores['간편스타터형'] += 4;
                 }
                 if (answers.q7.includes('premium')) {
-                    scores['단기투자형'] += 2;
-                    scores['신혼부부형'] += 1;
+                    scores['팝업창업형'] += 2;
+                    scores['간편스타터형'] += 1;
                 }
                 if (answers.q7.includes('rest')) {
-                    scores['실 거주형'] += 1;
-                    scores['오피스텔형'] += 1;
+                    scores['홈라이프형'] += 1;
+                    scores['스마트워크형'] += 1;
                 }
             }
 
             // Q8: 가치
             if (answers.q8 === 'profit' || answers.q8 === 'asset') {
-                scores['단기투자형'] += 2;
-                scores['장기투자형'] += 2;
+                scores['팝업창업형'] += 2;
+                scores['안정정착형'] += 2;
             } else if (answers.q8 === 'romance') {
-                scores['신혼부부형'] += 3;
-                scores['실 거주형'] += 1;
+                scores['간편스타터형'] += 3;
+                scores['홈라이프형'] += 1;
             } else if (answers.q8 === 'cost_save' || answers.q8 === 'efficiency') {
-                scores['실 거주형'] += 2;
-                scores['오피스텔형'] += 2;
+                scores['홈라이프형'] += 2;
+                scores['스마트워크형'] += 2;
             }
 
             // Q9: 토지 상태
             if (answers.q9 === 'urban' || answers.q9 === 'hotplace') {
-                scores['단기투자형'] += 2;
-                scores['오피스텔형'] += 1;
+                scores['팝업창업형'] += 2;
+                scores['스마트워크형'] += 1;
             } else if (answers.q9 === 'rural') {
-                scores['실 거주형'] += 3;
-                scores['장기투자형'] += 2;
-            } else if (answers.q9 === 'rooftop') scores['오피스텔형'] += 2;
+                scores['홈라이프형'] += 3;
+                scores['안정정착형'] += 2;
+            } else if (answers.q9 === 'rooftop') scores['스마트워크형'] += 2;
 
             // Q10: 인테리어 스타일
-            if (answers.q10 === 'unique') scores['단기투자형'] += 3;
-            else if (answers.q10 === 'modern') scores['오피스텔형'] += 3;
+            if (answers.q10 === 'unique') scores['팝업창업형'] += 3;
+            else if (answers.q10 === 'modern') scores['스마트워크형'] += 3;
             else if (answers.q10 === 'cozy') {
-                scores['신혼부부형'] += 3;
-                scores['실 거주형'] += 1;
+                scores['간편스타터형'] += 3;
+                scores['홈라이프형'] += 1;
             } else if (answers.q10 === 'practical') {
-                scores['실 거주형'] += 3;
-                scores['장기투자형'] += 1;
+                scores['홈라이프형'] += 3;
+                scores['안정정착형'] += 1;
             }
 
             // Q11: 처분 계획
-            if (answers.q11 === 'resell' || answers.q11 === 'return') scores['단기투자형'] += 3;
+            if (answers.q11 === 'resell' || answers.q11 === 'return') scores['팝업창업형'] += 3;
             else if (answers.q11 === 'keep' || answers.q11 === 'convert') {
-                scores['장기투자형'] += 3;
-                scores['실 거주형'] += 2;
+                scores['안정정착형'] += 3;
+                scores['홈라이프형'] += 2;
             }
 
-            // 신혼부부형 특별 조건
+            // 간편스타터형 특별 조건
             if (answers.q1 && answers.q1.includes('stay') && 
                 (answers.q4 === 'long' || answers.q4 === 'verylong') &&
                 answers.q2 === 'fixed' && answers.q8 === 'romance') {
-                scores['신혼부부형'] += 3;
+                scores['간편스타터형'] += 3;
             }
 
             allScores = { ...scores };
 
             let maxScore = 0;
-            let resultType = '오피스텔형';
+            let resultType = '스마트워크형';
             for (let type in scores) {
                 if (scores[type] > maxScore) {
                     maxScore = scores[type];
