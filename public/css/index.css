@@ -1440,6 +1440,7 @@
   display: flex;
   gap: 16px;
   width: 789px;
+  margin-top: 20px;
 }
 
 .index .button-3 {
