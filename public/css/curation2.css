@@ -1701,3 +1701,121 @@
   height: auto !important;
   overflow: visible !important;
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   curation2 레이아웃 수정
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* container-20 높이 자동 */
+.curation-shopu95detailed2 .container-20 {
+  height: auto !important;
+  min-height: 1380px !important;
+  padding-bottom: 60px !important;
+}
+
+/* 가격 행 — "원" 내려가는 문제 수정 */
+.curation-shopu95detailed2 .price-row .text-7 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed2 .price-row .text-141 {
+  height: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+.curation-shopu95detailed2 .price-row .text-8 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.curation-shopu95detailed2 .price-row .text-142 {
+  height: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+/* 주요 특징 줄 맞춤 */
+.curation-shopu95detailed2 .container-3 {
+  height: auto !important;
+  min-height: 24px !important;
+}
+.curation-shopu95detailed2 .text-17,
+.curation-shopu95detailed2 .text-18,
+.curation-shopu95detailed2 .text-21,
+.curation-shopu95detailed2 .text-22,
+.curation-shopu95detailed2 .text-23 {
+  width: auto !important;
+  height: auto !important;
+}
+
+/* 기본 가격 "18,500,000원" 줄바꿈 수정 */
+.curation-shopu95detailed2 .text-27 {
+  width: auto !important;
+  min-width: 140px !important;
+  height: auto !important;
+}
+.curation-shopu95detailed2 .text-183 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+/* 총 예상 금액 줄바꿈 수정 */
+.curation-shopu95detailed2 .text-29 {
+  width: auto !important;
+  min-width: 220px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.curation-shopu95detailed2 .text-185 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+/* 장바구니 담기 버튼 텍스트 센터링 */
+.curation-shopu95detailed2 .button-1 {
+  align-items: center !important;
+  justify-content: center !important;
+}
+.curation-shopu95detailed2 .text-34 {
+  position: relative !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.curation-shopu95detailed2 .text-117 {
+  white-space: nowrap !important;
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+/* 담당자 24시간 — button-buy 아래에 위치 */
+.curation-shopu95detailed2 .paragraph-6 {
+  top: calc(50.00% + 697px) !important;
+  left: calc(50.00% - 302px) !important;
+  width: 670px !important;
+  height: auto !important;
+}
+
+/* sticky bar 총액 */
+.curation-shopu95detailed2 .text-190 {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
