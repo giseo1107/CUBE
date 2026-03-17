@@ -76,7 +76,7 @@ exports.ready = async (req, res) => {
             return res.status(502).json({ success: false, message: '카카오페이 결제 준비에 실패했습니다.', detail: kakaoData });
         }
 
-        // 세션에 결제 정보 임시 저장
+        // 세션에 결제 정보 임시 저장 (세션 저장 완료 후 응답)
         req.session.pendingPayment = {
             tid:             kakaoData.tid,
             partner_order_id,
@@ -87,6 +87,10 @@ exports.ready = async (req, res) => {
             cart_ids,
             selected_options,
         };
+
+        await new Promise((resolve, reject) => {
+            req.session.save(err => err ? reject(err) : resolve());
+        });
 
         return res.json({
             success:                    true,
@@ -109,12 +113,20 @@ exports.approve = async (req, res) => {
         const userId = req.session?.userId;
         const pending = req.session?.pendingPayment;
 
-        if (!userId || !pending) {
+        console.log('[approve] userId:', userId, '| pending:', !!pending, '| pg_token:', req.query.pg_token);
+
+        if (!userId) {
+            console.error('[approve] 실패: userId 없음 (세션 만료?)');
+            return res.redirect(`${baseUrl()}/api/payment/fail`);
+        }
+        if (!pending) {
+            console.error('[approve] 실패: pendingPayment 없음 (세션 저장 실패?)');
             return res.redirect(`${baseUrl()}/api/payment/fail`);
         }
 
         const { pg_token } = req.query;
         if (!pg_token) {
+            console.error('[approve] 실패: pg_token 없음');
             return res.redirect(`${baseUrl()}/api/payment/fail`);
         }
 
@@ -135,9 +147,11 @@ exports.approve = async (req, res) => {
         const kakaoData = await kakaoRes.json();
 
         if (!kakaoRes.ok) {
-            console.error('KakaoPay approve error:', kakaoData);
+            console.error('[approve] 카카오 승인 API 실패:', kakaoData);
             return res.redirect(`${baseUrl()}/api/payment/fail`);
         }
+
+        console.log('[approve] 카카오 승인 성공, DB 저장 시작');
 
         // DB에 주문 저장
         const [orderResult] = await db.query(
@@ -188,7 +202,7 @@ exports.approve = async (req, res) => {
         return res.redirect(`${baseUrl()}/success.html`);
 
     } catch (err) {
-        console.error('payment approve error:', err);
+        console.error('[approve] 예외 발생:', err.message, err.stack);
         return res.redirect(`${baseUrl()}/api/payment/fail`);
     }
 };
