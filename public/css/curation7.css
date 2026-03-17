@@ -1689,3 +1689,25 @@
   word-break: keep-all;
   overflow-wrap: break-word;
 }
+/* 설명/본문 텍스트 줄바꿈 허용 */
+.curation-shopu95detailed7 .arial-regular-normal-pale-sky-14px,
+.curation-shopu95detailed7 .arial-regular-normal-bright-gray-16px,
+.curation-shopu95detailed7 .arial-regular-normal-pale-sky-15px,
+.curation-shopu95detailed7 .arial-regular-normal-pale-sky-20px {
+  white-space: normal !important;
+  height: auto !important;
+  width: auto !important;
+}
+/* 설명/본문 컨테이너 높이 자동 */
+.curation-shopu95detailed7 .paragraph,
+.curation-shopu95detailed7 .paragraph-4,
+.curation-shopu95detailed7 .paragraph-5,
+.curation-shopu95detailed7 .text-23,
+.curation-shopu95detailed7 .text-24,
+.curation-shopu95detailed7 .text-17,
+.curation-shopu95detailed7 .text-18,
+.curation-shopu95detailed7 .text-21,
+.curation-shopu95detailed7 .text-22 {
+  height: auto !important;
+  overflow: visible !important;
+}
