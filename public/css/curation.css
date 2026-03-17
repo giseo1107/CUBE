@@ -1244,14 +1244,10 @@
   font-family: var(--font-family-arial-bold);
   font-size: var(--font-size-l);
   font-weight: 700;
-  height: 24px;
   letter-spacing: 0;
   line-height: 24px;
-  margin-left: 47px;
-  margin-top: 16px;
   text-align: center;
   white-space: nowrap;
-  width: 79px;
 }
 
 /* ------------------------------------------------------------
