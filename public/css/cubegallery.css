@@ -1414,7 +1414,16 @@
   width: 100%;
 }
 
-/* 동적 카드 썸네일 기본 배경 */
+/* 동적 카드 썸네일 */
 .post-thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 380px;
+  height: 200px;
   background-color: #e5e7eb;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
 }
