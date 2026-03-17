@@ -1678,3 +1678,12 @@
   text-align: center;
   white-space: nowrap;
 }
+
+
+/* ---- TEXT OVERFLOW FIXES ---- */
+.curation-shopu95detailed5 [class*="text-"],
+.curation-shopu95detailed5 p,
+.curation-shopu95detailed5 div {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}

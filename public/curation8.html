@@ -304,6 +304,15 @@
             </form>
 
             <!-- 바로 결제하기 -->
+            <form id="buy-form" action="/api/orders/prepare" method="POST">
+              <input type="hidden" name="product_id" value="8" />
+              <input type="hidden" name="product_name" value="일반 주거용" />
+              <input type="hidden" name="base_price" value="32000000" />
+              <input type="hidden" name="quantity" value="1" />
+              <input type="hidden" id="buy-total" name="total_amount" value="32000000" />
+              <input type="hidden" id="buy-options" name="selected_options" value="" />
+              <input type="hidden" name="status" value="PAID" />
+            </form>
             <div class="button-buy" onclick="submitBuy()">
               <div class="text-buy">바로 결제하기</div>
             </div>
