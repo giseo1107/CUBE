@@ -37,7 +37,7 @@
 
 /* --- Global layout helpers (from globals.css) --- */
 .rectangle-19 {
-  height: 534px;
+  height: 614px;
   left: 962px;
   position: absolute;
   top: 0;
@@ -45,7 +45,7 @@
 }
 
 .rectangle-19-1 {
-  height: 534px;
+  height: 614px;
   left: 0;
   position: absolute;
   top: 0;
@@ -53,7 +53,7 @@
 }
 
 .top-1 {
-  height: 534px;
+  height: 614px;
   left: 0;
   position: absolute;
   top: 0;
@@ -499,44 +499,54 @@
   font-family: var(--font-family-arial-bold);
   font-size: var(--font-size-xxxl);
   font-weight: 700;
-  height: 68px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 67.2px;
-  margin-top: -6px;
-  white-space: nowrap;
-  width: 511px;
+  line-height: 1.25;
+  margin-top: 0;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .paragraph-4 {
   display: flex;
   flex-direction: column;
-  height: 96px;
+  height: auto;
   margin-top: 24px;
+
+  min-height: 96px;
 }
 
 .visit-reservation .text-38 {
-  height: 32px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 32px;
-  margin-top: -3px;
-  white-space: nowrap;
-  width: 360px;
+  line-height: 1.5;
+  margin-top: 0;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .text-39 {
-  height: 32px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 32px;
-  white-space: nowrap;
-  width: 372px;
+  line-height: 1.5;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .text-40 {
-  height: 32px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 32px;
-  white-space: nowrap;
-  width: 317px;
+  line-height: 1.5;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .container-10 {
@@ -544,10 +554,12 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 252px;
+  height: auto;
   margin-top: 32px;
   position: relative;
   width: 840px;
+
+  min-height: 252px;
 }
 
 .visit-reservation .container {
@@ -671,12 +683,14 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-s);
   font-weight: 400;
-  height: 21px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 21px;
+  line-height: auto;
   margin-top: -1px;
-  white-space: nowrap;
-  width: 56px;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .container-3 {
@@ -730,12 +744,14 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-s);
   font-weight: 400;
-  height: 21px;
+  height: auto;
   letter-spacing: 0;
-  line-height: 21px;
+  line-height: auto;
   margin-top: -1px;
-  white-space: nowrap;
-  width: 39px;
+  white-space: normal;
+  width: auto;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .infocontainerhousecom {
@@ -779,10 +795,14 @@
   font-weight: 400;
   left: 0;
   letter-spacing: 0;
-  line-height: 48px;
+  line-height: auto;
   position: absolute;
   top: 5px;
-  white-space: nowrap;
+  white-space: normal;
+
+  word-break: keep-all;
+
+  width: auto;
 }
 
 .visit-reservation .container-15 {
@@ -924,10 +944,14 @@
   font-weight: 400;
   left: 0;
   letter-spacing: 0;
-  line-height: 27px;
+  line-height: auto;
   position: absolute;
   top: 3px;
-  width: 88px;
+  width: auto;
+
+  white-space: normal;
+
+  word-break: keep-all;
 }
 
 .visit-reservation .icon-7 {
@@ -1601,7 +1625,7 @@
   margin-top: -1.00px;
   position: relative;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   width: fit-content;
 }
 
@@ -1628,7 +1652,7 @@
   margin-top: -1.00px;
   position: relative;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   width: fit-content;
 }
 
@@ -1655,7 +1679,7 @@
   margin-top: -1.00px;
   position: relative;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   width: fit-content;
 }
 
@@ -1682,7 +1706,7 @@
   margin-top: -1.00px;
   position: relative;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   width: fit-content;
 }
 
@@ -1708,7 +1732,7 @@
   margin-top: -1.00px;
   position: relative;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   width: fit-content;
 }
 
@@ -2398,8 +2422,10 @@
 }
 
 .visit-reservation .top {
-  height: 534px;
+  height: 614px;
   left: 0;
+  padding-top: 80px;
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   width: 1920px;

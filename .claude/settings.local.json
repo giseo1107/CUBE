@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"cart_id\\\\|product_id\\\\|selected_options\" /Users/giseo/Desktop/gongkisik/apache-tomcat-9.0.105/webapps/ROOT/joljak --include=*.js --include=*.html)"
+    ]
+  }
+}

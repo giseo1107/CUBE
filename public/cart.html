@@ -220,15 +220,28 @@
       const totalAmt = Number(item.total_amount) * Number(item.quantity);
       const imgSrc   = PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png';
 
-      // 추가 옵션 파싱 (콤마 구분 문자열)
+      // 추가 옵션 파싱 ("이름:가격" 또는 "이름" 콤마 구분)
       let optionRowsHtml = '';
       if (item.selected_options) {
         const opts = item.selected_options.split(',').map(s => s.trim()).filter(Boolean);
         if (opts.length > 0) {
-          optionRowsHtml = opts.map(opt => `
+          optionRowsHtml = opts.map(opt => {
+            const colonIdx = opt.lastIndexOf(':');
+            let name, priceHtml;
+            if (colonIdx > 0 && /^\d+$/.test(opt.slice(colonIdx + 1))) {
+              name  = opt.slice(0, colonIdx).trim();
+              const p = parseInt(opt.slice(colonIdx + 1), 10);
+              priceHtml = `<span class="option-price">+${p.toLocaleString('ko-KR')}원</span>`;
+            } else {
+              name      = opt;
+              priceHtml = '';
+            }
+            return `
             <div class="option-row">
-              <div class="text-6 notosanskr-medium-pale-sky-15px">${opt}</div>
-            </div>`).join('');
+              <div class="text-6 notosanskr-medium-pale-sky-15px">${name}</div>
+              ${priceHtml}
+            </div>`;
+          }).join('');
         }
       }
 

@@ -399,11 +399,12 @@
 
     function updateTotal() {
       let extra = 0;
-      const optionNames = [];
+      const optionEntries = [];
       selectedButtons.forEach(btn => {
-        extra += parseInt(btn.dataset.price, 10);
+        const price = parseInt(btn.dataset.price, 10);
+        extra += price;
         const label = btn.querySelector('.text-6')?.innerText?.trim() || '';
-        if (label) optionNames.push(label);
+        if (label) optionEntries.push(`${label}:${price}`);
       });
 
       const total = BASE_PRICE + extra;
@@ -424,7 +425,7 @@
       });
       ['cart-options', 'buy-options'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.value = optionNames.join(',');
+        if (el) el.value = optionEntries.join(',');
       });
     }
 
