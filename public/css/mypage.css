@@ -635,3 +635,115 @@ body {
   color: #999;
   font-size: 14px;
 }
+/* ================================================
+   결제 확인 카드
+   ================================================ */
+.pay-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.pay-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.pay-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #1a4f85 0%, #2d7dd2 100%);
+}
+.pay-card-number {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.pay-card-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+}
+.pay-card-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.pay-card-table tr {
+  border-bottom: 1px solid #f3f4f6;
+}
+.pay-card-table tr:last-child {
+  border-bottom: none;
+}
+.pay-label {
+  padding: 11px 16px;
+  width: 90px;
+  color: #6b7280;
+  font-size: 12px;
+  vertical-align: top;
+  font-weight: 500;
+}
+.pay-value {
+  padding: 11px 16px;
+  color: #1e3a5f;
+  font-size: 13px;
+  font-weight: 600;
+}
+.pay-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: #f0f6ff;
+  border-top: 1px solid #e0ecff;
+}
+.pay-total-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+.pay-total-value {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a4f85;
+}
+.pay-options-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.pay-option-tag {
+  background: #eff6ff;
+  color: #1a4f85;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.pay-empty {
+  text-align: center;
+  padding: 48px 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+.pay-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.pay-empty-text {
+  color: #999;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+.pay-goto-btn {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 12px 32px !important;
+  text-decoration: none;
+  font-size: 14px !important;
+}

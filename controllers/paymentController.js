@@ -250,6 +250,35 @@ exports.successInfo = async (req, res) => {
 };
 
 // ──────────────────────────────────────────────────────────────
+// GET /api/payment/history
+// 내 결제 내역 목록
+// ──────────────────────────────────────────────────────────────
+exports.history = async (req, res) => {
+    try {
+        const userId = req.session?.userId;
+        if (!userId) {
+            return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+        }
+
+        const [rows] = await db.query(
+            `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
+                    p.tid, p.payment_method_type, p.item_name, p.approved_at
+             FROM orders o
+             LEFT JOIN payments p ON o.order_id = p.order_id
+             WHERE o.user_id = ?
+             ORDER BY o.ordered_at DESC`,
+            [userId]
+        );
+
+        return res.json({ success: true, payments: rows });
+
+    } catch (err) {
+        console.error('history error:', err);
+        return res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
+    }
+};
+
+// ──────────────────────────────────────────────────────────────
 // GET /api/payment/cancel
 // ──────────────────────────────────────────────────────────────
 exports.cancel = (req, res) => {

@@ -16,6 +16,9 @@ router.get('/approve', paymentController.approve);
 // GET   /api/payment/success-info — 결제 완료 정보 조회 (success.html용)
 router.get('/success-info', paymentController.successInfo);
 
+// GET   /api/payment/history      — 내 결제 내역
+router.get('/history', paymentController.history);
+
 // GET   /api/payment/cancel       — 결제 취소 (카카오 리다이렉트)
 router.get('/cancel', paymentController.cancel);
 
