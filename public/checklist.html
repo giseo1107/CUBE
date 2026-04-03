@@ -7,6 +7,7 @@
     <meta name="twitter:card" content="photo" />
     <title>설치 체크리스트 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/checklist.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" />
     <style>
       /* ── 결제 금액 배너 ── */
       #cl-pay-banner {
@@ -74,15 +75,16 @@
       #cl-pay-btn:not(:disabled):hover { transform: translateY(-2px); }
       #cl-pay-btn img { height: 22px; }
 
-      /* ── 제출하기 / 수정하기 버튼 ── */
+      /* ── 제출하기 / 수정하기 버튼 — button-2와 동일 규격(52px) ── */
       .cl-submit-btn {
-        padding: 10px 24px;
+        flex: 1;
+        height: 52px;
         background: #1a4f85;
         color: #fff;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         border: none;
-        border-radius: 10px;
+        border-radius: 14px;
         cursor: pointer;
         transition: background .15s, transform .15s;
         font-family: "Arial-Bold", Helvetica;
@@ -90,13 +92,14 @@
       }
       .cl-submit-btn:hover { background: #163f6e; transform: translateY(-1px); }
       .cl-edit-btn {
-        padding: 10px 20px;
+        width: 134px;
+        height: 52px;
         background: #f3f4f6;
         color: #374151;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 700;
         border: 1.5px solid #d1d5db;
-        border-radius: 10px;
+        border-radius: 14px;
         cursor: pointer;
         transition: background .15s;
         font-family: "Arial-Bold", Helvetica;
@@ -721,10 +724,15 @@
 </div>
 
 <style>
+  /* ── 모달 공통 폰트 변수 ── */
+  .cl-modal, .cl-modal * {
+    font-family: "Noto Serif KR", "Noto Sans KR", serif;
+  }
+
   /* ── 모달 오버레이 ── */
   .cl-modal-overlay {
     position: fixed; inset: 0;
-    background: rgba(16, 24, 40, 0.6);
+    background: rgba(16, 24, 40, 0.65);
     backdrop-filter: blur(4px);
     z-index: 99999;
     display: flex;
@@ -736,7 +744,7 @@
     background: #fff;
     border-radius: 20px;
     width: 100%;
-    max-width: 640px;
+    max-width: 660px;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 24px 64px rgba(0,0,0,0.22);
@@ -752,19 +760,19 @@
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    padding: 32px 32px 24px;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 32px 36px 24px;
+    border-bottom: 1px solid #e5e7eb;
     position: relative;
   }
-  .cl-modal-icon { font-size: 36px; line-height: 1; flex-shrink: 0; }
+  .cl-modal-icon { font-size: 38px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
   .cl-modal-title {
-    font-size: 22px; font-weight: 700; color: #101828;
-    margin: 0 0 4px; font-family: "Arial-Bold", Helvetica;
+    font-size: 26px; font-weight: 700; color: #101828;
+    margin: 0 0 6px; letter-spacing: -0.3px;
   }
-  .cl-modal-subtitle { font-size: 14px; color: #6b7280; margin: 0; }
+  .cl-modal-subtitle { font-size: 15px; color: #6b7280; margin: 0; font-weight: 400; }
   .cl-modal-close {
     position: absolute; top: 20px; right: 20px;
-    background: none; border: none; font-size: 18px;
+    background: none; border: none; font-size: 20px;
     color: #9ca3af; cursor: pointer; padding: 4px 8px;
     border-radius: 6px; transition: background .15s, color .15s;
   }
@@ -774,62 +782,76 @@
   .cl-modal-notice {
     display: flex; align-items: flex-start; gap: 10px;
     background: #eff6ff; border-left: 4px solid #3b82f6;
-    padding: 14px 20px; margin: 0 32px 24px;
+    padding: 16px 24px; margin: 0 36px 28px;
     border-radius: 0 8px 8px 0;
-    font-size: 13px; color: #1e40af; line-height: 1.5;
+    font-size: 15px; color: #1e40af; line-height: 1.7;
+    font-weight: 400;
   }
-  .cl-notice-icon { flex-shrink: 0; }
+  .cl-notice-icon { flex-shrink: 0; margin-top: 1px; }
 
   /* ── 폼 ── */
-  .cl-modal-form { padding: 0 32px 32px; }
-  .cl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .cl-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-  .cl-label { font-size: 14px; font-weight: 600; color: #374151; }
-  .cl-required { color: #ef4444; }
-  .cl-optional { color: #9ca3af; font-weight: 400; font-size: 12px; }
-  .cl-input {
-    padding: 10px 14px; border: 1.5px solid #d1d5db; border-radius: 10px;
-    font-size: 15px; color: #111827; outline: none;
-    transition: border-color .15s, box-shadow .15s;
-    font-family: inherit; background: #fff;
+  .cl-modal-form { padding: 0 36px 36px; }
+  .cl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .cl-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .cl-label {
+    font-size: 16px; font-weight: 700; color: #1e2939;
+    letter-spacing: -0.1px;
   }
+  .cl-required { color: #ef4444; }
+  .cl-optional { color: #9ca3af; font-weight: 400; font-size: 13px; }
+  .cl-input {
+    padding: 13px 16px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 17px;
+    color: #111827;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    font-family: "Noto Serif KR", "Noto Sans KR", serif;
+    background: #fff;
+    letter-spacing: -0.1px;
+  }
+  .cl-input::placeholder { color: #b0b8c1; font-size: 15px; font-weight: 400; }
   .cl-input:focus { border-color: #1a4f85; box-shadow: 0 0 0 3px rgba(26,79,133,0.12); }
   .cl-input.invalid { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
-  .cl-textarea { resize: vertical; min-height: 80px; }
+  .cl-textarea { resize: vertical; min-height: 90px; }
 
   /* ── 파일 첨부 ── */
   .cl-file-wrap { display: flex; align-items: center; gap: 12px; }
   .cl-file-btn {
-    padding: 9px 18px; background: #f3f4f6; border: 1.5px solid #d1d5db;
-    border-radius: 8px; font-size: 14px; font-weight: 600; color: #374151;
+    padding: 11px 20px; background: #f3f4f6; border: 1.5px solid #d1d5db;
+    border-radius: 8px; font-size: 15px; font-weight: 700; color: #374151;
     cursor: pointer; transition: background .15s;
+    font-family: "Noto Serif KR", serif;
   }
   .cl-file-btn:hover { background: #e5e7eb; }
-  .cl-file-name { font-size: 13px; color: #9ca3af; }
-  .cl-file-hint { font-size: 12px; color: #9ca3af; margin: 4px 0 0; }
+  .cl-file-name { font-size: 14px; color: #9ca3af; }
+  .cl-file-hint { font-size: 13px; color: #9ca3af; margin: 5px 0 0; }
 
   /* ── 확인 체크 ── */
   .cl-confirm-check {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 16px; background: #fafafa; border-radius: 10px;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 18px; background: #fafafa; border-radius: 10px;
     border: 1.5px solid #e5e7eb; cursor: pointer;
-    font-size: 13px; color: #374151; line-height: 1.5;
-    margin-bottom: 24px;
+    font-size: 15px; color: #374151; line-height: 1.7;
+    margin-bottom: 28px; font-weight: 400;
   }
-  .cl-confirm-check input { flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px; accent-color: #1a4f85; }
+  .cl-confirm-check input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 3px; accent-color: #1a4f85; }
 
   /* ── 하단 버튼 ── */
   .cl-modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
   .cl-btn-cancel {
-    padding: 12px 28px; background: #f3f4f6; border: none;
-    border-radius: 10px; font-size: 15px; font-weight: 600;
+    padding: 14px 32px; background: #f3f4f6; border: none;
+    border-radius: 10px; font-size: 16px; font-weight: 600;
     color: #374151; cursor: pointer; transition: background .15s;
+    font-family: "Noto Serif KR", serif;
   }
   .cl-btn-cancel:hover { background: #e5e7eb; }
   .cl-btn-submit {
-    padding: 12px 32px; background: #1a4f85; border: none;
-    border-radius: 10px; font-size: 15px; font-weight: 700;
+    padding: 14px 36px; background: #1a4f85; border: none;
+    border-radius: 10px; font-size: 16px; font-weight: 700;
     color: #fff; cursor: pointer; transition: background .15s, transform .15s;
+    font-family: "Noto Serif KR", serif; letter-spacing: 0.3px;
   }
   .cl-btn-submit:hover { background: #163f6e; transform: translateY(-1px); }
 </style>
