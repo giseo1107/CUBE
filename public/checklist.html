@@ -7,6 +7,88 @@
     <meta name="twitter:card" content="photo" />
     <title>설치 체크리스트 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/checklist.css" />
+    <style>
+      /* ── 결제 금액 배너 ── */
+      #cl-pay-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(135deg, #1a4f85 0%, #2d6ba8 100%);
+        border-radius: 16px;
+        padding: 24px 40px;
+        margin: 0 167px 40px;
+        color: #fff;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      #cl-pay-banner .banner-left { display: flex; flex-direction: column; gap: 4px; }
+      #cl-pay-banner .banner-label { font-size: 14px; opacity: 0.8; }
+      #cl-pay-banner .banner-name  { font-size: 20px; font-weight: 700; }
+      #cl-pay-banner .banner-amount { font-size: 32px; font-weight: 700; color: #aff9f5; }
+
+      /* ── 체크리스트 버튼 상태 ── */
+      .checklist .button-2.is-active-submit {
+        background-color: #dcfce7 !important;
+        border: 2px solid #16a34a;
+      }
+      .checklist .button-2.is-active-submit .text-4 { color: #15803d !important; }
+      .checklist .button-2.is-active-missing {
+        background-color: #fee2e2 !important;
+        border: 2px solid #dc2626;
+      }
+      .checklist .button-2.is-active-missing .text-5 { color: #dc2626 !important; }
+      .checklist .button-2 { cursor: pointer; transition: background .2s, border .2s; }
+
+      /* ── 결제 버튼 ── */
+      #cl-pay-section {
+        margin: 32px 167px 0;
+        padding: 32px 40px;
+        background: #f9fafb;
+        border-radius: 16px;
+        border: 2px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      #cl-pay-section .pay-msg { font-size: 16px; color: #6b7280; }
+      #cl-pay-section .pay-msg.complete { color: #15803d; font-weight: 700; }
+      #cl-pay-btn {
+        padding: 16px 48px;
+        background: #fee500;
+        color: #000;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+        border-radius: 12px;
+        cursor: not-allowed;
+        opacity: 0.45;
+        transition: opacity .2s, transform .15s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      #cl-pay-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+      #cl-pay-btn:not(:disabled):hover { transform: translateY(-2px); }
+      #cl-pay-btn img { height: 22px; }
+
+      /* ── 프로그레스 바 동적 제어 ── */
+      .checklist .container-13 {
+        padding: 0 !important;
+        display: block !important;
+        position: relative;
+      }
+      .checklist .container-14 {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 0%;
+        transition: width 0.4s ease;
+        margin-right: 0 !important;
+        align-self: unset !important;
+      }
+    </style>
   </head>
   <body style="margin: 0">
 
@@ -39,6 +121,15 @@
            ============================================= -->
       <main class="container-9">
 
+        <!-- 결제 금액 배너 -->
+        <div id="cl-pay-banner" style="display:none;">
+          <div class="banner-left">
+            <span class="banner-label">결제 예정 상품</span>
+            <span class="banner-name" id="cl-item-name">—</span>
+          </div>
+          <div class="banner-amount" id="cl-amount">—</div>
+        </div>
+
         <!-- 페이지 헤더 -->
         <div class="container-10">
           <div class="heading-1 heading"><h1 class="text-45">컨테이너하우스 설치 체크리스트</h1></div>
@@ -60,7 +151,7 @@
         <ul class="container-15" aria-label="제출 서류 목록">
 
           <!-- 1. 건축 신고서 -->
-          <li class="container">
+          <li class="container" data-item="1">
             <div class="container-1">
               <img class="container-2" src="imgs/container-1.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -75,14 +166,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="건축 신고서 제출 완료">
+                    <button class="button button-2" aria-label="건축 신고서 제출 완료" onclick="markItem(1, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="건축 신고서 미제출">
+                    <button class="button-1 button-2" aria-label="건축 신고서 미제출" onclick="markItem(1, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -97,7 +188,7 @@
           </li>
 
           <!-- 2. 토지 사용 승인서 -->
-          <li class="container">
+          <li class="container" data-item="2">
             <div class="container-1">
               <img class="container-2" src="imgs/container-2.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -112,14 +203,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="토지 사용 승인서 제출 완료">
+                    <button class="button button-2" aria-label="토지 사용 승인서 제출 완료" onclick="markItem(2, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="토지 사용 승인서 미제출">
+                    <button class="button-1 button-2" aria-label="토지 사용 승인서 미제출" onclick="markItem(2, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -134,7 +225,7 @@
           </li>
 
           <!-- 3. 상수도 사용 신청서 -->
-          <li class="container">
+          <li class="container" data-item="3">
             <div class="container-1">
               <img class="container-2" src="imgs/container-3.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -149,14 +240,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="상수도 사용 신청서 제출 완료">
+                    <button class="button button-2" aria-label="상수도 사용 신청서 제출 완료" onclick="markItem(3, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="상수도 사용 신청서 미제출">
+                    <button class="button-1 button-2" aria-label="상수도 사용 신청서 미제출" onclick="markItem(3, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -171,7 +262,7 @@
           </li>
 
           <!-- 4. 하수도 연결 허가서 -->
-          <li class="container">
+          <li class="container" data-item="4">
             <div class="container-1">
               <img class="container-2" src="imgs/container-4.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -186,14 +277,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="하수도 연결 허가서 제출 완료">
+                    <button class="button button-2" aria-label="하수도 연결 허가서 제출 완료" onclick="markItem(4, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="하수도 연결 허가서 미제출">
+                    <button class="button-1 button-2" aria-label="하수도 연결 허가서 미제출" onclick="markItem(4, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -208,7 +299,7 @@
           </li>
 
           <!-- 5. 전기 설비 신고서 -->
-          <li class="container">
+          <li class="container" data-item="5">
             <div class="container-1">
               <img class="container-2" src="imgs/container-5.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -223,14 +314,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="전기 설비 신고서 제출 완료">
+                    <button class="button button-2" aria-label="전기 설비 신고서 제출 완료" onclick="markItem(5, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="전기 설비 신고서 미제출">
+                    <button class="button-1 button-2" aria-label="전기 설비 신고서 미제출" onclick="markItem(5, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -245,7 +336,7 @@
           </li>
 
           <!-- 6. 소방 안전 확인서 -->
-          <li class="container">
+          <li class="container" data-item="6">
             <div class="container-1">
               <img class="container-2" src="imgs/container-6.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -260,14 +351,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="소방 안전 확인서 제출 완료">
+                    <button class="button button-2" aria-label="소방 안전 확인서 제출 완료" onclick="markItem(6, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="소방 안전 확인서 미제출">
+                    <button class="button-1 button-2" aria-label="소방 안전 확인서 미제출" onclick="markItem(6, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -282,7 +373,7 @@
           </li>
 
           <!-- 7. 건물 배치도 -->
-          <li class="container">
+          <li class="container" data-item="7">
             <div class="container-1">
               <img class="container-2" src="imgs/container-9.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -297,14 +388,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="건물 배치도 제출 완료">
+                    <button class="button button-2" aria-label="건물 배치도 제출 완료" onclick="markItem(7, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="건물 배치도 미제출">
+                    <button class="button-1 button-2" aria-label="건물 배치도 미제출" onclick="markItem(7, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -319,7 +410,7 @@
           </li>
 
           <!-- 8. 환경 영향 평가서 -->
-          <li class="container">
+          <li class="container" data-item="8">
             <div class="container-1">
               <img class="container-2" src="imgs/container-7.svg" alt="" role="presentation" />
               <div class="container-3">
@@ -334,14 +425,14 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="환경 영향 평가서 제출 완료">
+                    <button class="button button-2" aria-label="환경 영향 평가서 제출 완료" onclick="markItem(8, true, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
                       </div>
                       <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
                     </button>
-                    <button class="button-1 button-2" aria-label="환경 영향 평가서 미제출">
+                    <button class="button-1 button-2" aria-label="환경 영향 평가서 미제출" onclick="markItem(8, false, this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
@@ -362,13 +453,22 @@
           <div class="container-29">
             <div class="container-30">
               <div class="heading-3 heading"><div class="text-89">제출 현황 요약</div></div>
-              <div class="paragraph-10"><p class="text-90">모든 서류가 제출되면 설치 절차를 진행할 수 있습니다</p></div>
+              <div class="paragraph-10"><p class="text-90" id="cl-summary-msg">모든 서류가 제출되면 설치 절차를 진행할 수 있습니다</p></div>
             </div>
             <div class="container-31">
-              <div class="container-32"><div class="percent">0%</div></div>
+              <div class="container-32"><div class="percent" id="cl-percent">0%</div></div>
               <div class="container-33"><div class="text-91">완료</div></div>
             </div>
           </div>
+        </div>
+
+        <!-- 카카오페이 결제 섹션 -->
+        <div id="cl-pay-section">
+          <p class="pay-msg" id="cl-pay-msg">모든 서류(8/8)를 제출 완료로 표시하면 결제 버튼이 활성화됩니다.</p>
+          <button id="cl-pay-btn" disabled onclick="doPay()">
+            <img src="https://developers.kakaopay.com/img/pay-button-Y-medium.png" alt="카카오페이" onerror="this.style.display='none'">
+            카카오페이로 결제하기
+          </button>
         </div>
 
         <!-- =============================================
@@ -426,5 +526,95 @@
       </main>
 
     </div><!-- /.checklist.screen -->
+
+  <script>
+    // ── sessionStorage에서 결제 데이터 읽기 ─────────────────
+    const payData = JSON.parse(sessionStorage.getItem('checklistPayData') || 'null');
+
+    if (payData) {
+      const banner = document.getElementById('cl-pay-banner');
+      if (banner) banner.style.display = 'flex';
+      const nameEl   = document.getElementById('cl-item-name');
+      const amountEl = document.getElementById('cl-amount');
+      if (nameEl)   nameEl.textContent   = payData.item_name || '—';
+      if (amountEl) amountEl.textContent = Number(payData.total_amount).toLocaleString('ko-KR') + '원';
+    }
+
+    // ── 체크리스트 상태 관리 ────────────────────────────────
+    const TOTAL   = 8;
+    const checked = new Set(); // 제출 완료된 항목 번호
+
+    function markItem(itemNum, isSubmit, clickedBtn) {
+      const li     = document.querySelector(`[data-item="${itemNum}"]`);
+      const btns   = li.querySelectorAll('.button-2');
+      const submitBtn  = li.querySelector('.button.button-2');
+      const missingBtn = li.querySelector('.button-1.button-2');
+
+      // 활성 클래스 초기화
+      submitBtn.classList.remove('is-active-submit');
+      missingBtn.classList.remove('is-active-missing');
+
+      if (isSubmit) {
+        checked.add(itemNum);
+        submitBtn.classList.add('is-active-submit');
+      } else {
+        checked.delete(itemNum);
+        missingBtn.classList.add('is-active-missing');
+      }
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const count = checked.size;
+      const pct   = Math.round(count / TOTAL * 100);
+
+      // 진행률 텍스트
+      const counterEl = document.querySelector('.text-2.arial-bold-chathams-blue-24px');
+      if (counterEl) counterEl.textContent = `${count} / ${TOTAL}`;
+
+      // 프로그레스 바
+      const bar = document.querySelector('.container-14');
+      if (bar) bar.style.width = pct + '%';
+
+      // % 텍스트
+      const pctEl = document.getElementById('cl-percent');
+      if (pctEl) pctEl.textContent = pct + '%';
+
+      // 결제 버튼 활성화
+      const btn    = document.getElementById('cl-pay-btn');
+      const msgEl  = document.getElementById('cl-pay-msg');
+      const sumMsg = document.getElementById('cl-summary-msg');
+
+      if (count === TOTAL) {
+        btn.disabled = false;
+        if (msgEl) {
+          msgEl.textContent = '모든 서류 제출이 완료되었습니다. 카카오페이로 결제를 진행하세요.';
+          msgEl.classList.add('complete');
+        }
+        if (sumMsg) sumMsg.textContent = '모든 서류 제출이 완료되었습니다. 결제를 진행하세요.';
+      } else {
+        btn.disabled = true;
+        if (msgEl) {
+          msgEl.textContent = `모든 서류(8/8)를 제출 완료로 표시하면 결제 버튼이 활성화됩니다. (현재 ${count}/8)`;
+          msgEl.classList.remove('complete');
+        }
+        if (sumMsg) sumMsg.textContent = '모든 서류가 제출되면 설치 절차를 진행할 수 있습니다';
+      }
+    }
+
+    // ── 카카오페이 결제 실행 ────────────────────────────────
+    function doPay() {
+      if (!payData) {
+        alert('결제 정보가 없습니다. 장바구니 또는 상품 페이지로 돌아가 주세요.');
+        return;
+      }
+      sessionStorage.removeItem('checklistPayData');
+      requestKakaoPay(payData);
+    }
+  </script>
+  <script src="/js/payment.js"></script>
+  <script src="/js/navbar.js"></script>
+
   </body>
 </html>

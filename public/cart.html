@@ -385,12 +385,13 @@
         ? cartItems[0].product_name
         : `${cartItems[0].product_name} 외 ${cartItems.length - 1}건`;
 
-      requestKakaoPay({
+      sessionStorage.setItem('checklistPayData', JSON.stringify({
         item_name:    itemName,
         total_amount: total,
         quantity:     cartItems.reduce((sum, item) => sum + Number(item.quantity), 0),
         cart_ids:     cartIds,
-      });
+      }));
+      location.href = '/checklist.html';
     }
 
     // ── 초기 로드 ─────────────────────────────────────────

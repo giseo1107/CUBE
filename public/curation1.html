@@ -485,13 +485,15 @@
     function submitBuy() {
       const total   = parseInt(document.getElementById('buy-total')?.value || BASE_PRICE, 10);
       const options = document.getElementById('buy-options')?.value || '';
+      const itemName = document.querySelector('#buy-form [name="product_name"]')?.value || '상품';
 
-      requestKakaoPay({
-        item_name:        '프리미엄 주거형',
+      sessionStorage.setItem('checklistPayData', JSON.stringify({
+        item_name:        itemName,
         total_amount:     total,
         quantity:         1,
         selected_options: options || null,
-      });
+      }));
+      location.href = '/checklist.html';
     }
   </script>
   <script src="/js/payment.js"></script>

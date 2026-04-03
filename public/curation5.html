@@ -460,14 +460,17 @@
 
     // ─── 바로 결제하기 ───────────────────────────────────────
     function submitBuy() {
-      const total   = parseInt(document.getElementById('buy-total')?.value || 32000000, 10);
+      const total   = parseInt(document.getElementById('buy-total')?.value || BASE_PRICE, 10);
       const options = document.getElementById('buy-options')?.value || '';
-      requestKakaoPay({
-        item_name:        '모던 레지던스',
+      const itemName = document.querySelector('#buy-form [name="product_name"]')?.value || '상품';
+
+      sessionStorage.setItem('checklistPayData', JSON.stringify({
+        item_name:        itemName,
         total_amount:     total,
         quantity:         1,
         selected_options: options || null,
-      });
+      }));
+      location.href = '/checklist.html';
     }
   </script>
   <script src="/js/payment.js"></script>
