@@ -167,7 +167,7 @@
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5">
-                    <button class="button button-2" aria-label="건축 신고서 제출 완료" onclick="markItem(1, true, this)">
+                    <button class="button button-2" aria-label="건축 신고서 제출 완료" onclick="openModal1(this)">
                       <div class="icon">
                         <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
                         <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
@@ -616,6 +616,272 @@
   </script>
   <script src="/js/payment.js"></script>
   <script src="/js/navbar.js"></script>
+
+<!-- =============================================
+     건축 신고서 모달
+     ============================================= -->
+<div id="modal-1" style="display:none;" class="cl-modal-overlay" onclick="closeModal1(event)">
+  <div class="cl-modal" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+
+    <!-- 헤더 -->
+    <div class="cl-modal-header">
+      <div class="cl-modal-icon">📋</div>
+      <div>
+        <h2 id="modal-1-title" class="cl-modal-title">건축 신고서</h2>
+        <p class="cl-modal-subtitle">컨테이너하우스 설치를 위한 건축 신고서를 작성해 주세요</p>
+      </div>
+      <button class="cl-modal-close" onclick="closeModal1()" aria-label="닫기">✕</button>
+    </div>
+
+    <!-- 법적 근거 안내 -->
+    <div class="cl-modal-notice">
+      <span class="cl-notice-icon">ℹ️</span>
+      <span>건축법 제14조에 따라 연면적 100㎡ 이하 컨테이너하우스는 착공 전 건축 신고를 해야 합니다.</span>
+    </div>
+
+    <!-- 폼 -->
+    <form id="form-1" class="cl-modal-form" onsubmit="submitModal1(event)" novalidate>
+
+      <div class="cl-form-row">
+        <div class="cl-field">
+          <label class="cl-label" for="f1-owner">건축주 이름 <span class="cl-required">*</span></label>
+          <input class="cl-input" id="f1-owner" type="text" placeholder="홍길동" required />
+        </div>
+        <div class="cl-field">
+          <label class="cl-label" for="f1-date">신고 날짜 <span class="cl-required">*</span></label>
+          <input class="cl-input" id="f1-date" type="date" required />
+        </div>
+      </div>
+
+      <div class="cl-field">
+        <label class="cl-label" for="f1-address">건축물 주소 <span class="cl-required">*</span></label>
+        <input class="cl-input" id="f1-address" type="text" placeholder="예) 서울시 강남구 테헤란로 123" required />
+      </div>
+
+      <div class="cl-form-row">
+        <div class="cl-field">
+          <label class="cl-label" for="f1-purpose">건축 용도 <span class="cl-required">*</span></label>
+          <select class="cl-input" id="f1-purpose" required>
+            <option value="">선택하세요</option>
+            <option>단독주택</option>
+            <option>근린생활시설</option>
+            <option>창고</option>
+            <option>사무소</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="cl-field">
+          <label class="cl-label" for="f1-area">연면적 (㎡) <span class="cl-required">*</span></label>
+          <input class="cl-input" id="f1-area" type="number" placeholder="36" min="1" max="1000" required />
+        </div>
+      </div>
+
+      <div class="cl-field">
+        <label class="cl-label" for="f1-file">신고서 파일 첨부 <span class="cl-optional">(선택)</span></label>
+        <div class="cl-file-wrap">
+          <label class="cl-file-btn" for="f1-file">파일 선택</label>
+          <input id="f1-file" type="file" accept=".pdf,.jpg,.png,.doc,.docx" style="display:none"
+                 onchange="showFileName('f1-file','f1-filename')" />
+          <span class="cl-file-name" id="f1-filename">첨부된 파일 없음</span>
+        </div>
+        <p class="cl-file-hint">PDF, JPG, PNG, DOC 형식 지원</p>
+      </div>
+
+      <div class="cl-field">
+        <label class="cl-label" for="f1-memo">비고</label>
+        <textarea class="cl-input cl-textarea" id="f1-memo" placeholder="추가 사항이 있으면 입력하세요" rows="3"></textarea>
+      </div>
+
+      <!-- 확인 체크 -->
+      <label class="cl-confirm-check">
+        <input type="checkbox" id="f1-confirm" required />
+        <span>작성한 내용이 사실임을 확인하며, 허위 기재 시 법적 책임이 있음을 인지합니다.</span>
+      </label>
+
+      <!-- 액션 버튼 -->
+      <div class="cl-modal-actions">
+        <button type="button" class="cl-btn-cancel" onclick="closeModal1()">취소</button>
+        <button type="submit" class="cl-btn-submit">제출하기 →</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<style>
+  /* ── 모달 오버레이 ── */
+  .cl-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(16, 24, 40, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .cl-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+    animation: cl-modal-in .22s ease;
+  }
+  @keyframes cl-modal-in {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+
+  /* ── 헤더 ── */
+  .cl-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 32px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+  }
+  .cl-modal-icon { font-size: 36px; line-height: 1; flex-shrink: 0; }
+  .cl-modal-title {
+    font-size: 22px; font-weight: 700; color: #101828;
+    margin: 0 0 4px; font-family: "Arial-Bold", Helvetica;
+  }
+  .cl-modal-subtitle { font-size: 14px; color: #6b7280; margin: 0; }
+  .cl-modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none; font-size: 18px;
+    color: #9ca3af; cursor: pointer; padding: 4px 8px;
+    border-radius: 6px; transition: background .15s, color .15s;
+  }
+  .cl-modal-close:hover { background: #f3f4f6; color: #374151; }
+
+  /* ── 안내 배너 ── */
+  .cl-modal-notice {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: #eff6ff; border-left: 4px solid #3b82f6;
+    padding: 14px 20px; margin: 0 32px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px; color: #1e40af; line-height: 1.5;
+  }
+  .cl-notice-icon { flex-shrink: 0; }
+
+  /* ── 폼 ── */
+  .cl-modal-form { padding: 0 32px 32px; }
+  .cl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cl-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  .cl-label { font-size: 14px; font-weight: 600; color: #374151; }
+  .cl-required { color: #ef4444; }
+  .cl-optional { color: #9ca3af; font-weight: 400; font-size: 12px; }
+  .cl-input {
+    padding: 10px 14px; border: 1.5px solid #d1d5db; border-radius: 10px;
+    font-size: 15px; color: #111827; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    font-family: inherit; background: #fff;
+  }
+  .cl-input:focus { border-color: #1a4f85; box-shadow: 0 0 0 3px rgba(26,79,133,0.12); }
+  .cl-input.invalid { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+  .cl-textarea { resize: vertical; min-height: 80px; }
+
+  /* ── 파일 첨부 ── */
+  .cl-file-wrap { display: flex; align-items: center; gap: 12px; }
+  .cl-file-btn {
+    padding: 9px 18px; background: #f3f4f6; border: 1.5px solid #d1d5db;
+    border-radius: 8px; font-size: 14px; font-weight: 600; color: #374151;
+    cursor: pointer; transition: background .15s;
+  }
+  .cl-file-btn:hover { background: #e5e7eb; }
+  .cl-file-name { font-size: 13px; color: #9ca3af; }
+  .cl-file-hint { font-size: 12px; color: #9ca3af; margin: 4px 0 0; }
+
+  /* ── 확인 체크 ── */
+  .cl-confirm-check {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 16px; background: #fafafa; border-radius: 10px;
+    border: 1.5px solid #e5e7eb; cursor: pointer;
+    font-size: 13px; color: #374151; line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .cl-confirm-check input { flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px; accent-color: #1a4f85; }
+
+  /* ── 하단 버튼 ── */
+  .cl-modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+  .cl-btn-cancel {
+    padding: 12px 28px; background: #f3f4f6; border: none;
+    border-radius: 10px; font-size: 15px; font-weight: 600;
+    color: #374151; cursor: pointer; transition: background .15s;
+  }
+  .cl-btn-cancel:hover { background: #e5e7eb; }
+  .cl-btn-submit {
+    padding: 12px 32px; background: #1a4f85; border: none;
+    border-radius: 10px; font-size: 15px; font-weight: 700;
+    color: #fff; cursor: pointer; transition: background .15s, transform .15s;
+  }
+  .cl-btn-submit:hover { background: #163f6e; transform: translateY(-1px); }
+</style>
+
+<script>
+  // ── 건축 신고서 모달 ────────────────────────────────────
+  let _modal1Btn = null; // 호출한 버튼 참조 (완료 처리에 사용)
+
+  function openModal1(btn) {
+    _modal1Btn = btn;
+    document.getElementById('form-1').reset();
+    document.getElementById('f1-filename').textContent = '첨부된 파일 없음';
+    document.getElementById('f1-date').value = new Date().toISOString().slice(0, 10);
+    // 기존 invalid 클래스 제거
+    document.querySelectorAll('#form-1 .cl-input').forEach(el => el.classList.remove('invalid'));
+    document.getElementById('modal-1').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal1(e) {
+    // 오버레이 직접 클릭 시만 닫힘 (모달 내부 클릭은 무시)
+    if (e && e.target !== document.getElementById('modal-1')) return;
+    document.getElementById('modal-1').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function submitModal1(e) {
+    e.preventDefault();
+    const form = document.getElementById('form-1');
+
+    // 유효성 검사
+    let valid = true;
+    form.querySelectorAll('[required]').forEach(el => {
+      if (!el.value.trim() || (el.type === 'checkbox' && !el.checked)) {
+        el.classList.add('invalid');
+        valid = false;
+      } else {
+        el.classList.remove('invalid');
+      }
+    });
+    if (!valid) {
+      form.querySelector('.invalid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // 제출 완료 처리
+    document.getElementById('modal-1').style.display = 'none';
+    document.body.style.overflow = '';
+    markItem(1, true, _modal1Btn);
+  }
+
+  function showFileName(inputId, spanId) {
+    const file = document.getElementById(inputId).files[0];
+    document.getElementById(spanId).textContent = file ? file.name : '첨부된 파일 없음';
+  }
+
+  // invalid 클래스 실시간 제거 (입력 시)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#form-1 .cl-input').forEach(el => {
+      el.addEventListener('input', () => el.classList.remove('invalid'));
+      el.addEventListener('change', () => el.classList.remove('invalid'));
+    });
+  });
+</script>
 
   </body>
 </html>
