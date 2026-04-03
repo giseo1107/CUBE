@@ -360,25 +360,31 @@ async function checkUserLogin() {
 
   function showUserInfo(user) {
     currentUser = user;
-    document.getElementById('userLoggedOut').style.display = 'none';   // ✅ 올바른 ID
-    document.getElementById('userLoggedIn').style.display = 'flex';    // ✅ 올바른 ID
-    document.getElementById('userName').textContent = user.nickname || '사용자';
-    document.getElementById('userEmail').textContent = user.email || '';  // ✅ 이메일 추가
-    
+    const elOut  = document.getElementById('userLoggedOut');
+    const elIn   = document.getElementById('userLoggedIn');
+    const elName = document.getElementById('userName');
+    const elMail = document.getElementById('userEmail');
+    const elImg  = document.getElementById('userProfileImage');
+    const elPh   = document.getElementById('userProfilePlaceholder');
+    if (elOut)  elOut.style.display  = 'none';
+    if (elIn)   elIn.style.display   = 'flex';
+    if (elName) elName.textContent   = user.nickname || '사용자';
+    if (elMail) elMail.textContent   = user.email || '';
     if (user.profile_image) {
-        document.getElementById('userProfileImage').src = user.profile_image;
-        document.getElementById('userProfileImage').style.display = 'block';
-        document.getElementById('userProfilePlaceholder').style.display = 'none';
+        if (elImg) { elImg.src = user.profile_image; elImg.style.display = 'block'; }
+        if (elPh)  elPh.style.display = 'none';
     } else {
-        document.getElementById('userProfileImage').style.display = 'none';
-        document.getElementById('userProfilePlaceholder').style.display = 'block';
+        if (elImg) elImg.style.display = 'none';
+        if (elPh)  elPh.style.display  = 'block';
     }
 }
 
   function showLoggedOutState() {
     currentUser = null;
-    document.getElementById('userLoggedOut').style.display = 'flex';   
-    document.getElementById('userLoggedIn').style.display = 'none';    
+    const elOut = document.getElementById('userLoggedOut');
+    const elIn  = document.getElementById('userLoggedIn');
+    if (elOut) elOut.style.display = 'flex';
+    if (elIn)  elIn.style.display  = 'none';
 }
 
   async function logoutUser() {
