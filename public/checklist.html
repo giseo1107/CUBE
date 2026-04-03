@@ -74,6 +74,36 @@
       #cl-pay-btn:not(:disabled):hover { transform: translateY(-2px); }
       #cl-pay-btn img { height: 22px; }
 
+      /* ── 제출하기 / 수정하기 버튼 ── */
+      .cl-submit-btn {
+        padding: 10px 24px;
+        background: #1a4f85;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background .15s, transform .15s;
+        font-family: "Arial-Bold", Helvetica;
+        white-space: nowrap;
+      }
+      .cl-submit-btn:hover { background: #163f6e; transform: translateY(-1px); }
+      .cl-edit-btn {
+        padding: 10px 20px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 600;
+        border: 1.5px solid #d1d5db;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background .15s;
+        font-family: "Arial-Bold", Helvetica;
+        white-space: nowrap;
+      }
+      .cl-edit-btn:hover { background: #e5e7eb; }
+
       /* ── 프로그레스 바 동적 제어 ── */
       .checklist .container-13 {
         padding: 0 !important;
@@ -166,22 +196,8 @@
                 </div>
                 <div class="container-4">
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
-                  <div class="container-5">
-                    <button class="button button-2" aria-label="건축 신고서 제출 완료" onclick="openModal1(this)">
-                      <div class="icon">
-                        <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
-                        <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
-                      </div>
-                      <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
-                    </button>
-                    <button class="button-1 button-2" aria-label="건축 신고서 미제출" onclick="markItem(1, false, this)">
-                      <div class="icon">
-                        <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
-                        <img class="vector-2" src="imgs/vector-13.svg" alt="" role="presentation" />
-                        <img class="vector-2" src="imgs/vector-14.svg" alt="" role="presentation" />
-                      </div>
-                      <div class="text-5 arial-bold-oxford-blue-18px">미제출</div>
-                    </button>
+                  <div class="container-5" id="item-1-btns">
+                    <button class="cl-submit-btn" onclick="openModal1(false)">제출하기</button>
                   </div>
                 </div>
               </div>
@@ -546,23 +562,19 @@
     const checked = new Set(); // 제출 완료된 항목 번호
 
     function markItem(itemNum, isSubmit, clickedBtn) {
-      const li     = document.querySelector(`[data-item="${itemNum}"]`);
-      const btns   = li.querySelectorAll('.button-2');
-      const submitBtn  = li.querySelector('.button.button-2');
-      const missingBtn = li.querySelector('.button-1.button-2');
-
-      // 활성 클래스 초기화
-      submitBtn.classList.remove('is-active-submit');
-      missingBtn.classList.remove('is-active-missing');
-
       if (isSubmit) {
         checked.add(itemNum);
-        submitBtn.classList.add('is-active-submit');
       } else {
         checked.delete(itemNum);
-        missingBtn.classList.add('is-active-missing');
+        // 기존 2버튼 구조인 경우에만 시각 처리
+        if (clickedBtn) {
+          const li = document.querySelector(`[data-item="${itemNum}"]`);
+          const submitBtn  = li.querySelector('.button.button-2');
+          const missingBtn = li.querySelector('.button-1.button-2');
+          if (submitBtn)  submitBtn.classList.remove('is-active-submit');
+          if (missingBtn) missingBtn.classList.add('is-active-missing');
+        }
       }
-
       updateProgress();
     }
 
@@ -824,21 +836,38 @@
 
 <script>
   // ── 건축 신고서 모달 ────────────────────────────────────
-  let _modal1Btn = null; // 호출한 버튼 참조 (완료 처리에 사용)
+  let item1Data = null; // 제출된 폼 데이터 저장
 
-  function openModal1(btn) {
-    _modal1Btn = btn;
-    document.getElementById('form-1').reset();
-    document.getElementById('f1-filename').textContent = '첨부된 파일 없음';
-    document.getElementById('f1-date').value = new Date().toISOString().slice(0, 10);
-    // 기존 invalid 클래스 제거
+  function openModal1(isEdit) {
+    const form = document.getElementById('form-1');
     document.querySelectorAll('#form-1 .cl-input').forEach(el => el.classList.remove('invalid'));
+
+    if (isEdit && item1Data) {
+      // 수정 모드: 기존 데이터 복원
+      document.getElementById('f1-owner').value   = item1Data.owner;
+      document.getElementById('f1-date').value    = item1Data.date;
+      document.getElementById('f1-address').value = item1Data.address;
+      document.getElementById('f1-purpose').value = item1Data.purpose;
+      document.getElementById('f1-area').value    = item1Data.area;
+      document.getElementById('f1-memo').value    = item1Data.memo;
+      document.getElementById('f1-filename').textContent = item1Data.filename || '첨부된 파일 없음';
+      document.getElementById('f1-confirm').checked = true;
+      document.querySelector('#modal-1 .cl-modal-title').textContent = '건축 신고서 수정';
+      document.querySelector('#modal-1 .cl-btn-submit').textContent  = '수정 완료 →';
+    } else {
+      // 신규 제출 모드
+      form.reset();
+      document.getElementById('f1-filename').textContent = '첨부된 파일 없음';
+      document.getElementById('f1-date').value = new Date().toISOString().slice(0, 10);
+      document.querySelector('#modal-1 .cl-modal-title').textContent = '건축 신고서';
+      document.querySelector('#modal-1 .cl-btn-submit').textContent  = '제출하기 →';
+    }
+
     document.getElementById('modal-1').style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal1(e) {
-    // 오버레이 직접 클릭 시만 닫힘 (모달 내부 클릭은 무시)
     if (e && e.target !== document.getElementById('modal-1')) return;
     document.getElementById('modal-1').style.display = 'none';
     document.body.style.overflow = '';
@@ -851,22 +880,42 @@
     // 유효성 검사
     let valid = true;
     form.querySelectorAll('[required]').forEach(el => {
-      if (!el.value.trim() || (el.type === 'checkbox' && !el.checked)) {
-        el.classList.add('invalid');
-        valid = false;
-      } else {
-        el.classList.remove('invalid');
-      }
+      const empty = el.type === 'checkbox' ? !el.checked : !el.value.trim();
+      el.classList.toggle('invalid', empty);
+      if (empty) valid = false;
     });
     if (!valid) {
       form.querySelector('.invalid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    // 제출 완료 처리
+    // 폼 데이터 저장
+    item1Data = {
+      owner:    document.getElementById('f1-owner').value.trim(),
+      date:     document.getElementById('f1-date').value,
+      address:  document.getElementById('f1-address').value.trim(),
+      purpose:  document.getElementById('f1-purpose').value,
+      area:     document.getElementById('f1-area').value,
+      memo:     document.getElementById('f1-memo').value.trim(),
+      filename: document.getElementById('f1-filename').textContent,
+    };
+
     document.getElementById('modal-1').style.display = 'none';
     document.body.style.overflow = '';
-    markItem(1, true, _modal1Btn);
+
+    // 버튼 상태: 제출 완료 + 수정하기
+    document.getElementById('item-1-btns').innerHTML = `
+      <button class="button button-2 is-active-submit" style="cursor:default;" disabled>
+        <div class="icon">
+          <img class="vector" src="imgs/vector-10.svg" alt="" role="presentation" />
+          <img class="vector-1" src="imgs/vector-11.svg" alt="" role="presentation" />
+        </div>
+        <div class="text-4 arial-bold-oxford-blue-18px">제출 완료</div>
+      </button>
+      <button class="cl-edit-btn" onclick="openModal1(true)">수정하기</button>
+    `;
+
+    markItem(1, true, null);
   }
 
   function showFileName(inputId, spanId) {
@@ -874,10 +923,9 @@
     document.getElementById(spanId).textContent = file ? file.name : '첨부된 파일 없음';
   }
 
-  // invalid 클래스 실시간 제거 (입력 시)
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#form-1 .cl-input').forEach(el => {
-      el.addEventListener('input', () => el.classList.remove('invalid'));
+      el.addEventListener('input',  () => el.classList.remove('invalid'));
       el.addEventListener('change', () => el.classList.remove('invalid'));
     });
   });
