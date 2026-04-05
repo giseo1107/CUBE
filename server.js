@@ -89,8 +89,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 // 미들웨어 설정
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // 세션 설정
 app.use(session({
