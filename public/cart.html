@@ -39,16 +39,10 @@
            ============================================= -->
       <main class="p-k">
 
-        <!-- 페이지 타이틀 영역 -->
-        <div class="container-3">
-          <div class="container-4">
-            <button class="button-1">
-              <div class="icon-2"><img class="vector" src="imgs/vector.svg" alt="" role="presentation" /></div>
-              <div class="text-4"><div class="text-1-1">쇼핑 계속하기</div></div>
-            </button>
-            <div class="heading-1"><h1 class="text-2-1 arial-bold-mirage-28px">장바구니</h1></div>
-            <div class="container-5"></div>
-          </div>
+        <!-- 장바구니 헤더 -->
+        <div class="cart-page-header">
+          <h1 class="cart-page-title">🛒 장바구니</h1>
+          <div class="cart-page-count" id="cart-count-badge"></div>
         </div>
 
         <!-- 상품 목록 -->
@@ -268,9 +262,11 @@
         </div>` : '';
 
       const cartImgHtml = isCustomCube
-        ? `<div class="cartimg cartimg-custom-cube" role="img" aria-label="커스텀 큐브 디자인">
+        ? `<div class="cartimg cartimg-custom-cube" role="img" aria-label="커스텀 큐브 디자인"
+               onclick="openInEditor('${customDesignId}')" title="클릭하여 에디터에서 열기">
              <span style="font-size:36px;">🏠</span>
              <span style="font-size:11px;margin-top:6px;font-weight:600;letter-spacing:0.5px;">CUSTOM CUBE</span>
+             <span style="font-size:10px;margin-top:4px;opacity:0.8;">클릭하여 열기</span>
            </div>`
         : `<div class="cartimg" role="img" aria-label="${item.product_name} 상품 이미지"
                style="background-image:url('${imgSrc}');"></div>`;
@@ -352,6 +348,8 @@
 
         cartItems = data.items;
         document.getElementById('cart-count-label').textContent = `상품 목록 (${cartItems.length}개)`;
+        const badge = document.getElementById('cart-count-badge');
+        if (badge) badge.textContent = `총 ${cartItems.length}개 상품`;
         document.getElementById('cart-items').style.display = 'block';
         document.getElementById('cart-items').innerHTML = cartItems.map(renderItem).join('');
         updateSummary(cartItems);

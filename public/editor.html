@@ -2023,16 +2023,19 @@ async function addToCart() {
                 quantity: 1,
                 total_amount: total,
                 selected_options: (function() {
-                    const names = [];
+                    const items = [];
                     canvas.getObjects().forEach(obj => {
                         if (obj.type === 'rect' && obj.userData) {
                             const typeName = (obj.userData.name || '').split('_')[0];
                             if (!EXTERIOR_TYPES.includes(typeName)) {
-                                names.push(obj.userData.name || typeName);
+                                const cost = calculateFurnitureCost(obj);
+                                if (cost > 0) {
+                                    items.push((obj.userData.name || typeName) + ':' + cost);
+                                }
                             }
                         }
                     });
-                    return '커스텀큐브:' + designId + (names.length ? ',' + names.join(',') : '');
+                    return '커스텀큐브:' + designId + (items.length ? ',' + items.join(',') : '');
                 })()
             })
         });
