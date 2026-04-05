@@ -1989,12 +1989,12 @@ async function addToCart() {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({
-                product_id: designId,
+                product_id: 0,
                 product_name: '커스텀 큐브 - ' + title,
                 base_price: total,
                 quantity: 1,
                 total_amount: total,
-                selected_options: '커스텀큐브'
+                selected_options: '커스텀큐브:' + designId
             })
         });
         const cartResult = await cartRes.json();
