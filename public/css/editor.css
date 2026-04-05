@@ -736,6 +736,52 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+.btn-checkout {
+    width: 100%;
+    margin-top: 8px;
+    padding: 11px 0;
+    background: #f0c040;
+    border: none;
+    color: #3b2a00;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.btn-checkout:hover {
+    background: #e6b420;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-add-cart {
+    width: 100%;
+    margin-top: 8px;
+    padding: 11px 0;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.4);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.btn-add-cart:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 .divider { 
     width: 1px; 
     height: 30px; 

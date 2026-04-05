@@ -216,9 +216,14 @@
     }
 
     // ── 상품 카드 HTML 생성 ───────────────────────────────
+    function openInEditor(designId) {
+      location.href = '/editor.html?design=' + encodeURIComponent(designId);
+    }
+
     function renderItem(item) {
       const totalAmt = Number(item.total_amount) * Number(item.quantity);
-      const imgSrc   = PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png';
+      const isCustomCube = item.selected_options && item.selected_options.includes('커스텀큐브');
+      const imgSrc = isCustomCube ? '/main_img/editor-thumb.png' : (PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png');
 
       // 추가 옵션 파싱 ("이름:가격" 또는 "이름" 콤마 구분)
       let optionRowsHtml = '';
@@ -265,8 +270,9 @@
                   <div class="text-4-1 arial-bold-mirage-22px">${item.product_name}</div>
                 </div>
                 <div class="paragraph-3">
-                  <div class="text notosanskr-normal-pale-sky-16px">럭셔리 디자인의 컨테이너 하우스</div>
+                  <div class="text notosanskr-normal-pale-sky-16px">${isCustomCube ? '직접 디자인한 커스텀 큐브' : '럭셔리 디자인의 컨테이너 하우스'}</div>
                 </div>
+                ${isCustomCube ? `<button class="btn-open-editor" onclick="openInEditor('${item.product_id}')">🎨 커스텀큐브로 열기</button>` : ''}
               </div>
               <button class="button-2" aria-label="상품 삭제" onclick="deleteItem(${item.cart_id})">
                 <div class="icon-3"><img class="vector-1" src="imgs/vector-1.svg" alt="" role="presentation" /></div>

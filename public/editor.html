@@ -195,6 +195,8 @@
             </div>
 
             <button class="btn-export-estimate" onclick="exportEstimate()">📄 견적서 내보내기</button>
+            <button class="btn-checkout" onclick="goCheckout()">💳 결제하기</button>
+            <button class="btn-add-cart" onclick="addToCart()">🛒 장바구니 담기</button>
         </div>
 
         <!-- 속성 편집 -->
@@ -403,9 +405,15 @@ async function checkUserLogin() {
       }
   }
 
-  checkUserLogin();
+  checkUserLogin().then(() => {
+      const params = new URLSearchParams(location.search);
+      const designParam = params.get('design');
+      if (designParam) {
+          setTimeout(() => loadDesign(designParam), 300);
+      }
+  });
 
-    
+
 // ============ 설정 ============
 const CONFIG = {
     API_URL: '/api',
@@ -1894,6 +1902,110 @@ ${discount?`<tr style="color:#e74c3c"><td>할인</td><td class="right">-${format
     a.download = `견적서_${title}_${new Date().toISOString().slice(0,10)}.html`;
     a.click();
     showToast('📄 견적서 다운로드됨');
+}
+
+// ============ 결제하기 ============
+function goCheckout() {
+    if (!currentUser) {
+        if (confirm('결제하려면 로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+            location.href = '/login.html';
+        }
+        return;
+    }
+    const furnitureCost = getTotalFurnitureCost();
+    const discount = Math.round(furnitureCost * state.currentDiscount);
+    const total = furnitureCost - discount;
+    if (total <= 0) {
+        showToast('⚠️ 견적 금액이 0원입니다. 가구를 추가해주세요.');
+        return;
+    }
+    const title = sanitizeInput(document.getElementById('design-title').value.trim() || '커스텀 큐브');
+    sessionStorage.setItem('checklistPayData', JSON.stringify({
+        item_name: '커스텀 큐브 - ' + title,
+        total_amount: total,
+        quantity: 1
+    }));
+    location.href = '/checklist.html';
+}
+
+// ============ 장바구니 담기 ============
+async function addToCart() {
+    if (!currentUser) {
+        if (confirm('장바구니를 이용하려면 로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
+            location.href = '/login.html';
+        }
+        return;
+    }
+    const furnitureCost = getTotalFurnitureCost();
+    const discount = Math.round(furnitureCost * state.currentDiscount);
+    const total = furnitureCost - discount;
+    if (total <= 0) {
+        showToast('⚠️ 견적 금액이 0원입니다. 가구를 추가해주세요.');
+        return;
+    }
+    const title = sanitizeInput(document.getElementById('design-title').value.trim() || '나의 디자인');
+    const designData = {
+        canvas: canvas.toJSON(['userData']),
+        settings: {
+            canvasWidth: canvas.getWidth(),
+            canvasHeight: canvas.getHeight(),
+            gridSize: state.gridSize
+        },
+        templateKey: state.currentTemplateKey,
+        savedAt: new Date().toISOString()
+    };
+
+    showToast('⏳ 디자인 저장 중...');
+    let designId = state.currentDesignId;
+    try {
+        const saveRes = await fetch(`${CONFIG.API_URL}/designs/save`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+                user_id: currentUser.id || currentUser.email,
+                title: title,
+                design_data: JSON.stringify(designData),
+                is_public: 0,
+                custom_id: designId || null
+            })
+        });
+        const saveResult = await saveRes.json();
+        if (saveResult.success) {
+            designId = saveResult.custom_id;
+            state.currentDesignId = designId;
+        } else {
+            showToast('⚠️ 디자인 저장 실패');
+            return;
+        }
+    } catch (e) {
+        showToast('⚠️ 디자인 저장 실패');
+        return;
+    }
+
+    try {
+        const cartRes = await fetch(`${CONFIG.API_URL}/cart/add`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+                product_id: designId,
+                product_name: '커스텀 큐브 - ' + title,
+                base_price: total,
+                quantity: 1,
+                total_amount: total,
+                selected_options: '커스텀큐브'
+            })
+        });
+        const cartResult = await cartRes.json();
+        if (cartResult.success) {
+            showToast('✅ 장바구니에 추가됐습니다!');
+        } else {
+            showToast('⚠️ 장바구니 추가 실패');
+        }
+    } catch (e) {
+        showToast('⚠️ 장바구니 추가 실패');
+    }
 }
 
 // ============ 3D 뷰어 전송 ============
