@@ -223,13 +223,20 @@
     function renderItem(item) {
       const totalAmt = Number(item.total_amount) * Number(item.quantity);
       const isCustomCube = item.selected_options && item.selected_options.startsWith('커스텀큐브:');
-      const customDesignId = isCustomCube ? item.selected_options.split('커스텀큐브:')[1] : null;
-      const imgSrc = isCustomCube ? '/curationimg/image-8.png' : (PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png');
+      // 커스텀큐브:design_xxx,가구1,가구2 형식에서 designId 추출
+      let customDesignId = null;
+      if (isCustomCube) {
+        const firstComma = item.selected_options.indexOf(',');
+        const header = firstComma === -1 ? item.selected_options : item.selected_options.slice(0, firstComma);
+        customDesignId = header.replace('커스텀큐브:', '');
+      }
+      const imgSrc = isCustomCube ? null : (PRODUCT_IMG[item.product_id] || '/curationimg/image-8.png');
 
-      // 추가 옵션 파싱 ("이름:가격" 또는 "이름" 콤마 구분)
+      // 추가 옵션 파싱 - 커스텀큐브는 첫 항목(커스텀큐브:id) 제거 후 가구 목록만 표시
       let optionRowsHtml = '';
       if (item.selected_options) {
-        const opts = item.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+        let opts = item.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+        if (isCustomCube) opts = opts.slice(1); // 첫 항목(커스텀큐브:id) 제거
         if (opts.length > 0) {
           optionRowsHtml = opts.map(opt => {
             const colonIdx = opt.lastIndexOf(':');
@@ -260,10 +267,17 @@
           ${optionRowsHtml}
         </div>` : '';
 
+      const cartImgHtml = isCustomCube
+        ? `<div class="cartimg cartimg-custom-cube" role="img" aria-label="커스텀 큐브 디자인">
+             <span style="font-size:36px;">🏠</span>
+             <span style="font-size:11px;margin-top:6px;font-weight:600;letter-spacing:0.5px;">CUSTOM CUBE</span>
+           </div>`
+        : `<div class="cartimg" role="img" aria-label="${item.product_name} 상품 이미지"
+               style="background-image:url('${imgSrc}');"></div>`;
+
       return `
         <article class="container-10" data-cart-id="${item.cart_id}">
-          <div class="cartimg" role="img" aria-label="${item.product_name} 상품 이미지"
-               style="background-image:url('${imgSrc}');"></div>
+          ${cartImgHtml}
           <div class="container-11">
             <div class="container-12">
               <div class="container-13">

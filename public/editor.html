@@ -409,9 +409,37 @@ async function checkUserLogin() {
       const params = new URLSearchParams(location.search);
       const designParam = params.get('design');
       if (designParam) {
-          setTimeout(() => loadDesign(designParam), 300);
+          setTimeout(() => loadDesignSilent(designParam), 300);
       }
   });
+
+  async function loadDesignSilent(customId) {
+      try {
+          const response = await fetch(`${CONFIG.API_URL}/designs/${customId}`);
+          const data = await response.json();
+          const designData = JSON.parse(data.design_data);
+          canvas.loadFromJSON(designData.canvas, () => {
+              if (designData.settings) {
+                  canvas.setWidth(designData.settings.canvasWidth);
+                  canvas.setHeight(designData.settings.canvasHeight);
+                  state.gridSize = designData.settings.gridSize || 20;
+                  document.getElementById('canvasW').value = designData.settings.canvasWidth;
+                  document.getElementById('canvasH').value = designData.settings.canvasHeight;
+                  document.getElementById('gridSizeInput').value = state.gridSize;
+              }
+              if (designData.templateKey) state.currentTemplateKey = designData.templateKey;
+              if (state.gridVisible) createGrid();
+              canvas.renderAll();
+              updateLayerList();
+              updateEstimate();
+              state.currentDesignId = customId;
+              document.getElementById('design-title').value = sanitizeInput(data.title || '나의 디자인');
+              showToast('✅ 디자인을 불러왔습니다!');
+          });
+      } catch (e) {
+          showToast('❌ 디자인 불러오기 실패');
+      }
+  }
 
 
 // ============ 설정 ============
@@ -1994,7 +2022,18 @@ async function addToCart() {
                 base_price: total,
                 quantity: 1,
                 total_amount: total,
-                selected_options: '커스텀큐브:' + designId
+                selected_options: (function() {
+                    const names = [];
+                    canvas.getObjects().forEach(obj => {
+                        if (obj.type === 'rect' && obj.userData) {
+                            const typeName = (obj.userData.name || '').split('_')[0];
+                            if (!EXTERIOR_TYPES.includes(typeName)) {
+                                names.push(obj.userData.name || typeName);
+                            }
+                        }
+                    });
+                    return '커스텀큐브:' + designId + (names.length ? ',' + names.join(',') : '');
+                })()
             })
         });
         const cartResult = await cartRes.json();

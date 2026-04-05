@@ -1548,6 +1548,15 @@
   color: var(--chathams-blue);
 }
 
+.cart .cartimg-custom-cube {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5487 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
 .cart .btn-open-editor {
   margin-top: 8px;
   padding: 7px 14px;
