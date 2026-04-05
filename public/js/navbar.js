@@ -243,7 +243,7 @@
       border-radius: 8px;
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
       font-size: 15px;
-      font-weight: 400;
+      font-weight: 100;
       cursor: pointer;
       transition: all .2s;
       white-space: nowrap;
