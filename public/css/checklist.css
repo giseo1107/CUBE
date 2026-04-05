@@ -982,13 +982,16 @@
 }
 
 .checklist .container-31 {
-  align-items: flex-start;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  height: 80px;
+  height: auto;
+  min-height: 80px;
   position: relative;
-  width: 69.86px;
+  width: auto;
+  min-width: 110px;
+  flex-shrink: 0;
 }
 
 .checklist .container-32 {
@@ -1003,12 +1006,11 @@
   font-family: var(--font-family-arial-bold);
   font-size: 48px;
   font-weight: 700;
-  left: 0;
   letter-spacing: 0;
   line-height: 48px;
-  position: absolute;
+  position: relative;
   text-align: right;
-  top: -5px;
+  top: 0;
   white-space: nowrap;
 }
 
@@ -1025,12 +1027,10 @@
   font-family: var(--font-family-arial-regular);
   font-size: var(--font-size-m);
   font-weight: 400;
-  left: 36px;
   letter-spacing: 0;
   line-height: 28px;
-  position: absolute;
+  position: relative;
   text-align: right;
-  top: -1px;
   white-space: nowrap;
 }
 
