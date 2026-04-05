@@ -5,19 +5,22 @@
 
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2/promise');
 const { v4: uuidv4 } = require('uuid');
+const pool = require('../config/db');
 
-// DB 연결 풀 (기존 연결 설정 사용)
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'your_database',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
+// designs 테이블 자동 생성
+pool.execute(`
+    CREATE TABLE IF NOT EXISTS designs (
+        custom_id   VARCHAR(100)  PRIMARY KEY,
+        user_id     VARCHAR(255)  NOT NULL,
+        title       VARCHAR(255)  NOT NULL DEFAULT '나의 디자인',
+        design_data LONGTEXT      NOT NULL,
+        is_public   TINYINT(1)    NOT NULL DEFAULT 1,
+        created_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_user_id (user_id)
+    )
+`).catch(e => console.error('[designs] 테이블 생성 실패:', e));
 
 // ============================================
 // POST /api/designs/save
