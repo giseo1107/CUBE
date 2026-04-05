@@ -8,7 +8,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/db');
 
-// designs 테이블 자동 생성
+// designs 테이블 자동 생성 및 컬럼 타입 보정
 pool.execute(`
     CREATE TABLE IF NOT EXISTS designs (
         custom_id   VARCHAR(100)  PRIMARY KEY,
@@ -21,6 +21,10 @@ pool.execute(`
         INDEX idx_user_id (user_id)
     )
 `).catch(e => console.error('[designs] 테이블 생성 실패:', e));
+
+// design_data 컬럼이 TEXT 등 작은 타입으로 생성된 경우 LONGTEXT로 변경
+pool.execute(`ALTER TABLE designs MODIFY COLUMN design_data LONGTEXT NOT NULL`)
+    .catch(() => {});
 
 // ============================================
 // POST /api/designs/save
