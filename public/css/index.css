@@ -1136,9 +1136,9 @@
 
 .index .button-1 {
   height: 60px;
-  left: calc(50.00% + 254px);
+  left: calc(50% - 103px);
   position: absolute;
-  top: calc(50.00% - 248px);
+  top: 672px;
   width: 206px;
 }
 
@@ -1163,7 +1163,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 546px;
+  top: 90px;
   white-space: nowrap;
 }
 
@@ -1177,7 +1177,7 @@
   line-height: 48px;
   position: absolute;
   text-align: center;
-  top: 586px;
+  top: 40px;
   white-space: nowrap;
 }
 
@@ -1187,7 +1187,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 14px;
+  top: 154px;
   white-space: nowrap;
 }
 
@@ -1197,7 +1197,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 496px;
+  top: 636px;
   white-space: nowrap;
 }
 
@@ -1207,7 +1207,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 307px;
+  top: 447px;
   white-space: nowrap;
 }
 
@@ -1217,7 +1217,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 307px;
+  top: 447px;
   white-space: nowrap;
 }
 
@@ -1227,7 +1227,7 @@
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 14px;
+  top: 154px;
   white-space: nowrap;
 }
 
@@ -1235,7 +1235,7 @@
   height: 330px;
   left: 793px;
   position: absolute;
-  top: 81px;
+  top: 221px;
   width: 330px;
 }
 
