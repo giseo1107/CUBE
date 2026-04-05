@@ -201,6 +201,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-1-btns">
                     <button class="cl-submit-btn" onclick="openModal1(false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(1)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -224,6 +225,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-2-btns">
                     <button class="cl-submit-btn" onclick="openModalN(2,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(2)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -247,6 +249,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-3-btns">
                     <button class="cl-submit-btn" onclick="openModalN(3,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(3)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -270,6 +273,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-4-btns">
                     <button class="cl-submit-btn" onclick="openModalN(4,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(4)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -293,6 +297,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-5-btns">
                     <button class="cl-submit-btn" onclick="openModalN(5,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(5)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -316,6 +321,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-6-btns">
                     <button class="cl-submit-btn" onclick="openModalN(6,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(6)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -339,6 +345,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-7-btns">
                     <button class="cl-submit-btn" onclick="openModalN(7,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(7)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -362,6 +369,7 @@
                   <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
                   <div class="container-5" id="item-8-btns">
                     <button class="cl-submit-btn" onclick="openModalN(8,false)">제출하기</button>
+                    <button class="cl-pending-btn" onclick="setPending(8)">작성 예정</button>
                   </div>
                 </div>
               </div>
@@ -379,7 +387,6 @@
             </div>
             <div class="container-31">
               <div class="container-32"><div class="percent" id="cl-percent">0%</div></div>
-              <div class="container-33"><div class="text-91">완료</div></div>
             </div>
           </div>
         </div>
@@ -465,6 +472,32 @@
     // ── 체크리스트 상태 관리 ────────────────────────────────
     const TOTAL   = 8;
     const checked = new Set(); // 제출 완료된 항목 번호
+    const pending = new Set(); // 작성 예정으로 표시된 항목 번호
+
+    function setPending(itemNum) {
+      // 이미 제출 완료된 항목이면 무시
+      if (checked.has(itemNum)) return;
+
+      if (pending.has(itemNum)) {
+        // 이미 작성 예정 → 취소 (토글)
+        pending.delete(itemNum);
+        const btns = document.getElementById(`item-${itemNum}-btns`);
+        if (btns) {
+          btns.innerHTML = `
+            <button class="cl-submit-btn" onclick="${itemNum === 1 ? 'openModal1(false)' : `openModalN(${itemNum},false)`}">제출하기</button>
+            <button class="cl-pending-btn" onclick="setPending(${itemNum})">작성 예정</button>`;
+        }
+      } else {
+        pending.add(itemNum);
+        const btns = document.getElementById(`item-${itemNum}-btns`);
+        if (btns) {
+          btns.innerHTML = `
+            <span class="cl-pending-badge">📋 작성 예정</span>
+            <button class="cl-edit-btn" onclick="setPending(${itemNum})">취소</button>`;
+        }
+      }
+      updateProgress();
+    }
 
     function markItem(itemNum, isSubmit, clickedBtn) {
       if (isSubmit) {
