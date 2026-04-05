@@ -74,9 +74,11 @@ router.post('/save', async (req, res) => {
 
     } catch (error) {
         console.error('디자인 저장 실패:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: '서버 오류가 발생했습니다.' 
+        res.status(500).json({
+            success: false,
+            message: '서버 오류가 발생했습니다.',
+            debug: error.message,
+            code: error.code
         });
     }
 });
