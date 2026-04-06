@@ -2,10 +2,10 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=1920, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="og:type" content="website" />
     <meta name="twitter:card" content="photo" />
-    <title>설치 체크리스트 | Container House</title>
+    <title>건축 절차 자가진단 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/checklist.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" />
     <style>
@@ -152,6 +152,443 @@
         margin-right: 0 !important;
         align-self: unset !important;
       }
+
+      /* ============================================================
+         반응형 레이아웃 오버라이드
+         ============================================================ */
+      .checklist {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      .checklist .top {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+      .logo-nav {
+        width: 100% !important;
+        margin-left: 0 !important;
+        display: flex !important;
+        align-items: center;
+        gap: 16px;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .navigation {
+        margin-left: auto !important;
+        width: auto !important;
+        gap: 20px;
+        display: flex;
+        align-items: center;
+      }
+      .checklist .paragraph-4,
+      .checklist .paragraph,
+      .checklist .paragraph-5,
+      .checklist .paragraph-6 {
+        margin-left: 0 !important;
+        width: auto !important;
+      }
+      .login {
+        margin-left: 32px !important;
+        width: auto !important;
+        gap: 16px;
+      }
+      .checklist .paragraph-7,
+      .checklist .paragraph-8 {
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        width: auto !important;
+        display: flex;
+        align-items: center;
+      }
+      .checklist .container-9 { height: auto !important; }
+      .checklist .container-10 {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0 clamp(24px, 5vw, 80px);
+        box-sizing: border-box;
+        height: auto !important;
+      }
+      .checklist .heading-1 { height: auto !important; }
+      .checklist .text-45 {
+        position: static !important;
+        display: block;
+        text-align: center;
+        font-size: clamp(28px, 4vw, 48px) !important;
+        line-height: 1.3 !important;
+        white-space: normal !important;
+      }
+      .checklist .paragraph-9 { height: auto !important; }
+      .checklist .text-46 {
+        white-space: normal !important;
+        font-size: clamp(14px, 2vw, 20px) !important;
+      }
+      .checklist .container-11 {
+        margin-left: clamp(16px, 3vw, 64px) !important;
+        margin-right: clamp(16px, 3vw, 64px) !important;
+        width: auto !important;
+        box-sizing: border-box;
+      }
+      .checklist .container-15 {
+        margin-left: clamp(16px, 3vw, 64px) !important;
+        margin-right: clamp(16px, 3vw, 64px);
+        width: auto !important;
+        height: auto !important;
+      }
+      .checklist .container {
+        height: auto !important;
+        padding-bottom: 24px !important;
+      }
+      .checklist .container-1 { height: auto !important; flex-wrap: wrap; }
+      .checklist .container-3 { height: auto !important; }
+      .checklist .container-4 { height: auto !important; flex-wrap: wrap; }
+      .checklist .container-5 { width: auto !important; flex-wrap: wrap; }
+      .checklist .container-16,
+      .checklist .container-18,
+      .checklist .container-20,
+      .checklist .container-22,
+      .checklist .container-24,
+      .checklist .container-26 {
+        padding: 0 !important;
+        height: auto !important;
+        justify-content: flex-start !important;
+      }
+      .checklist .container-17,
+      .checklist .container-19,
+      .checklist .container-21,
+      .checklist .container-23,
+      .checklist .container-25,
+      .checklist .container-27,
+      .checklist .container-6,
+      .checklist .container-7 {
+        width: auto !important;
+        height: auto !important;
+      }
+      .checklist .container-28 {
+        margin-left: clamp(16px, 3vw, 64px) !important;
+        margin-right: clamp(16px, 3vw, 64px) !important;
+        width: auto !important;
+        box-sizing: border-box;
+        height: auto !important;
+        min-height: auto !important;
+      }
+      .checklist .container-29 { height: auto !important; flex-wrap: wrap; }
+      .checklist .container-30 { min-height: auto !important; }
+      .checklist .text-90 { position: static !important; white-space: normal !important; }
+      .checklist .container-31 { min-width: 80px !important; }
+      .checklist .percent { font-size: clamp(28px, 4vw, 48px) !important; }
+      .checklist .footer {
+        width: 100% !important;
+        height: auto !important;
+        margin-top: 48px;
+      }
+      .footer-content {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 40px clamp(24px, 5vw, 80px) 0;
+        box-sizing: border-box;
+        height: auto !important;
+      }
+      .footer-bottom {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 0 clamp(24px, 5vw, 80px);
+        box-sizing: border-box;
+      }
+      .checklist .container-36 { width: 100% !important; }
+      .checklist .container-37 {
+        width: 100% !important;
+        gap: 0 !important;
+        justify-content: space-between;
+      }
+      #cl-pay-banner {
+        margin: 48px clamp(16px, 3vw, 64px) 32px !important;
+      }
+      #cl-pay-section {
+        margin: 32px clamp(16px, 3vw, 64px) 0 !important;
+      }
+
+      /* ── 태블릿 (≤1024px) ── */
+      @media (max-width: 1024px) {
+        .navigation { gap: 12px; }
+        .checklist .paragraph { margin-left: 0 !important; }
+        .login { gap: 12px; }
+        .footer-content { grid-template-columns: repeat(2, 1fr) !important; height: auto !important; }
+        .checklist .container-35 { position: static !important; width: auto !important; }
+        .checklist .container-34 { min-height: 160px; }
+      }
+
+      /* ── 모바일 (≤768px) ── */
+      @media (max-width: 768px) {
+        .navigation { display: none !important; }
+        .login { margin-left: auto !important; }
+        .checklist .container-10 { padding: 0 20px; }
+        .checklist .container-11 { padding: 20px !important; }
+        .checklist .container { padding: 16px 16px 16px !important; }
+        .checklist .container-1 { flex-direction: column; gap: 12px; }
+        .checklist .container-2 { width: 48px !important; height: 48px !important; }
+        .checklist .container-5 { width: 100% !important; }
+        .cl-submit-btn { font-size: 14px !important; }
+        .cl-edit-btn { width: auto !important; flex: 1; }
+        .checklist .text-2.arial-bold-mirage-24px { font-size: 18px !important; line-height: 1.3 !important; }
+        .checklist .text-1.arial-regular-normal-scarpa-flow-18px { font-size: 14px !important; }
+        .checklist .text-1.arial-bold-oxford-blue-18px { font-size: 14px !important; white-space: nowrap; }
+        #cl-pay-section { flex-direction: column !important; align-items: flex-start !important; }
+        #cl-pay-btn { width: 100%; justify-content: center; }
+        .footer-content {
+          grid-template-columns: 1fr !important;
+          height: auto !important;
+          gap: 32px !important;
+          padding-top: 24px;
+        }
+        .checklist .container-37 { flex-wrap: wrap; gap: 12px !important; }
+        .checklist .container-38 { width: auto !important; }
+
+        /* 모달 반응형 */
+        .cl-modal-overlay { padding: 12px !important; align-items: flex-end !important; }
+        .cl-modal { max-height: 95vh !important; border-radius: 20px 20px 0 0 !important; }
+        .cl-modal-header { padding: 20px 20px 16px !important; }
+        .cl-modal-title { font-size: 20px !important; }
+        .cl-modal-notice { margin: 0 20px 20px !important; padding: 12px 16px !important; font-size: 13px !important; }
+        .cl-modal-form { padding: 0 20px 24px !important; }
+        .cl-form-row { grid-template-columns: 1fr !important; gap: 0; }
+        .cl-modal-actions { flex-direction: column-reverse !important; }
+        .cl-btn-cancel, .cl-btn-submit { width: 100%; text-align: center; }
+      }
+
+      /* ── 소형 모바일 (≤480px) ── */
+      @media (max-width: 480px) {
+        .logo { width: 52px !important; height: 52px !important; }
+        .checklist .text-45 { font-size: 22px !important; }
+        .checklist .text-46 { font-size: 13px !important; }
+      }
+
+      /* ============================================================
+         Phase 1 — 기본 정보 판별 섹션
+         ============================================================ */
+      .cl-phase1-wrap {
+        margin: 32px clamp(16px, 3vw, 64px) 0;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px -4px #0000001a, 0 10px 15px -3px #0000001a;
+        overflow: hidden;
+      }
+      .cl-phase1-header {
+        background: linear-gradient(135deg, #1a4f85 0%, #2d6ba8 100%);
+        padding: 28px 40px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .cl-step-badge {
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.4);
+        flex-shrink: 0;
+        font-family: "Arial-Bold", Helvetica;
+      }
+      .cl-phase1-title {
+        color: #fff;
+        font-size: clamp(18px, 2.5vw, 26px);
+        font-weight: 700;
+        margin: 0;
+        font-family: "Noto Serif KR", serif;
+      }
+      .cl-phase1-desc {
+        color: rgba(255,255,255,0.85);
+        font-size: clamp(13px, 1.5vw, 16px);
+        margin: 0 0 0 auto;
+        font-family: "Noto Serif KR", serif;
+      }
+      .cl-phase1-body {
+        padding: 32px 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      .cl-q-block { display: flex; flex-direction: column; gap: 12px; }
+      .cl-q-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #1e2939;
+        font-family: "Noto Serif KR", serif;
+      }
+      .cl-q-num {
+        background: #1a4f85;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 20px;
+        font-family: "Arial-Bold", Helvetica;
+      }
+      .cl-choices {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .cl-choice {
+        flex: 1;
+        min-width: 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 18px 20px;
+        background: #f9fafb;
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all .18s;
+        font-family: "Noto Serif KR", serif;
+      }
+      .cl-choice:hover { border-color: #1a4f85; background: #eff6ff; }
+      .cl-choice.active {
+        border-color: #1a4f85;
+        background: #eff6ff;
+        box-shadow: 0 0 0 3px rgba(26,79,133,0.15);
+      }
+      .cl-choice-icon { font-size: 28px; line-height: 1; }
+      .cl-choice-text { font-size: 15px; font-weight: 700; color: #101828; }
+      .cl-choice-sub { font-size: 12px; color: #6b7280; font-weight: 400; }
+      .cl-area-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .cl-area-input {
+        width: 140px;
+        padding: 12px 16px;
+        border: 2px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #101828;
+        outline: none;
+        transition: border-color .15s, box-shadow .15s;
+        font-family: "Noto Serif KR", serif;
+        text-align: center;
+      }
+      .cl-area-input:focus { border-color: #1a4f85; box-shadow: 0 0 0 3px rgba(26,79,133,0.12); }
+      .cl-area-unit { font-size: 18px; font-weight: 700; color: #374151; font-family: "Arial-Bold", Helvetica; }
+      .cl-area-hint { font-size: 13px; color: #9ca3af; font-family: "Noto Serif KR", serif; }
+      .cl-diagnose-btn {
+        align-self: flex-start;
+        padding: 16px 40px;
+        background: #1a4f85;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background .15s, transform .15s;
+        font-family: "Noto Serif KR", serif;
+        letter-spacing: 0.3px;
+      }
+      .cl-diagnose-btn:hover { background: #163f6e; transform: translateY(-2px); }
+
+      /* 결과 패널 */
+      .cl-result-wrap {
+        margin: 0 40px 40px;
+        padding: 28px 32px;
+        background: #f0f7ff;
+        border: 2px solid #bfdbfe;
+        border-radius: 16px;
+        animation: cl-modal-in .3s ease;
+      }
+      .cl-result-badge-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .cl-result-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: "Noto Serif KR", serif;
+        flex-shrink: 0;
+      }
+      .cl-result-badge.permit {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1.5px solid #fbbf24;
+      }
+      .cl-result-badge.report {
+        background: #dcfce7;
+        color: #15803d;
+        border: 1.5px solid #86efac;
+      }
+      .cl-result-reason {
+        font-size: 14px;
+        color: #374151;
+        font-family: "Noto Serif KR", serif;
+        line-height: 1.7;
+        padding-top: 6px;
+      }
+      .cl-result-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .cl-result-item {
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px 20px;
+        border: 1px solid #dbeafe;
+      }
+      .cl-result-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #1a4f85;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+        font-family: "Arial-Bold", Helvetica;
+        text-transform: uppercase;
+      }
+      .cl-result-val {
+        font-size: 14px;
+        color: #1e2939;
+        font-family: "Noto Serif KR", serif;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+      .cl-result-next {
+        text-align: center;
+        font-size: 14px;
+        color: #1a4f85;
+        font-weight: 700;
+        font-family: "Noto Serif KR", serif;
+        padding-top: 4px;
+      }
+
+      @media (max-width: 768px) {
+        .cl-phase1-header { padding: 20px 20px; gap: 10px; }
+        .cl-phase1-desc { margin-left: 0; }
+        .cl-phase1-body { padding: 20px 20px; gap: 20px; }
+        .cl-choice { min-width: 120px; padding: 14px 12px; }
+        .cl-diagnose-btn { width: 100%; text-align: center; }
+        .cl-result-wrap { margin: 0 16px 24px; padding: 20px; }
+        .cl-area-hint { width: 100%; }
+      }
     </style>
   </head>
   <body style="margin: 0">
@@ -196,9 +633,104 @@
 
         <!-- 페이지 헤더 -->
         <div class="container-10">
-          <div class="heading-1 heading"><h1 class="text-45">컨테이너하우스 설치 체크리스트</h1></div>
-          <div class="paragraph-9"><p class="text-46">설치에 필요한 모든 서류와 공문을 확인하고 제출하세요</p></div>
+          <div class="heading-1 heading"><h1 class="text-45">컨테이너하우스 건축 절차 자가진단</h1></div>
+          <div class="paragraph-9"><p class="text-46">내 상황에 맞는 건축 절차를 확인하고 단계별로 자가진단하세요</p></div>
         </div>
+
+        <!-- =============================================
+             PHASE 1: 기본 정보 판별 섹션
+             ============================================= -->
+        <section id="cl-phase1" class="cl-phase1-wrap" aria-label="건축 절차 판별">
+          <div class="cl-phase1-header">
+            <span class="cl-step-badge">STEP 1</span>
+            <h2 class="cl-phase1-title">내 상황 파악하기</h2>
+            <p class="cl-phase1-desc">3가지 질문에 답하면 건축허가·건축신고 여부를 자동으로 판별합니다</p>
+          </div>
+
+          <div class="cl-phase1-body">
+            <!-- Q1: 지역 유형 -->
+            <div class="cl-q-block">
+              <div class="cl-q-label">
+                <span class="cl-q-num">Q1</span>
+                설치 예정 지역 유형
+              </div>
+              <div class="cl-choices">
+                <button class="cl-choice" data-q="zone" data-v="urban" onclick="selectQ(this)">
+                  <span class="cl-choice-icon">🏙️</span>
+                  <span class="cl-choice-text">도시지역</span>
+                  <span class="cl-choice-sub">주거·상업·공업·녹지지역</span>
+                </button>
+                <button class="cl-choice" data-q="zone" data-v="rural" onclick="selectQ(this)">
+                  <span class="cl-choice-icon">🌾</span>
+                  <span class="cl-choice-text">비도시지역</span>
+                  <span class="cl-choice-sub">관리·농림·자연환경보전지역</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Q2: 연면적 -->
+            <div class="cl-q-block">
+              <div class="cl-q-label">
+                <span class="cl-q-num">Q2</span>
+                예정 연면적
+              </div>
+              <div class="cl-area-wrap">
+                <input class="cl-area-input" id="q-floorarea" type="number" placeholder="예) 66" min="1" max="9999" />
+                <span class="cl-area-unit">㎡</span>
+                <span class="cl-area-hint">도시 기준 30평 ≈ 99㎡ · 비도시 기준 60평 ≈ 198㎡</span>
+              </div>
+            </div>
+
+            <!-- Q3: 층수 -->
+            <div class="cl-q-block">
+              <div class="cl-q-label">
+                <span class="cl-q-num">Q3</span>
+                건물 층수
+              </div>
+              <div class="cl-choices">
+                <button class="cl-choice" data-q="floors" data-v="low" onclick="selectQ(this)">
+                  <span class="cl-choice-icon">🏠</span>
+                  <span class="cl-choice-text">3층 이하</span>
+                  <span class="cl-choice-sub">일반적인 컨테이너하우스</span>
+                </button>
+                <button class="cl-choice" data-q="floors" data-v="high" onclick="selectQ(this)">
+                  <span class="cl-choice-icon">🏢</span>
+                  <span class="cl-choice-text">3층 초과</span>
+                  <span class="cl-choice-sub">고층 복합 구조</span>
+                </button>
+              </div>
+            </div>
+
+            <button class="cl-diagnose-btn" onclick="runDiagnose()">내 상황 판별하기 →</button>
+          </div>
+
+          <!-- 판별 결과 패널 -->
+          <div id="cl-phase1-result" class="cl-result-wrap" style="display:none;" aria-live="polite">
+            <div class="cl-result-badge-row">
+              <span class="cl-result-badge" id="cl-result-badge-text"></span>
+              <span class="cl-result-reason" id="cl-result-reason"></span>
+            </div>
+            <div class="cl-result-grid">
+              <div class="cl-result-item">
+                <div class="cl-result-label">소관 부서</div>
+                <div class="cl-result-val" id="r-dept"></div>
+              </div>
+              <div class="cl-result-item">
+                <div class="cl-result-label">제출 서류</div>
+                <div class="cl-result-val" id="r-docs"></div>
+              </div>
+              <div class="cl-result-item">
+                <div class="cl-result-label">착공 시 서류</div>
+                <div class="cl-result-val" id="r-constr"></div>
+              </div>
+              <div class="cl-result-item">
+                <div class="cl-result-label">사용 승인</div>
+                <div class="cl-result-val" id="r-approval"></div>
+              </div>
+            </div>
+            <div class="cl-result-next">아래 자가진단 체크리스트에서 각 항목을 확인하세요 ↓</div>
+          </div>
+        </section>
 
         <!-- 진행률 표시 -->
         <div class="container-11">
@@ -228,7 +760,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-1-btns">
                     <button class="cl-submit-btn" onclick="openModal1(false)">제출하기</button>
                   
@@ -252,7 +784,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-2-btns">
                     <button class="cl-submit-btn" onclick="openModalN(2,false)">제출하기</button>
                     
@@ -276,7 +808,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-3-btns">
                     <button class="cl-submit-btn" onclick="openModalN(3,false)">제출하기</button>
                     
@@ -300,7 +832,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-4-btns">
                     <button class="cl-submit-btn" onclick="openModalN(4,false)">제출하기</button>
                     
@@ -324,7 +856,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-5-btns">
                     <button class="cl-submit-btn" onclick="openModalN(5,false)">제출하기</button>
                    
@@ -348,7 +880,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-6-btns">
                     <button class="cl-submit-btn" onclick="openModalN(6,false)">제출하기</button>
                     
@@ -372,7 +904,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-7-btns">
                     <button class="cl-submit-btn" onclick="openModalN(7,false)">제출하기</button>
                     
@@ -396,7 +928,7 @@
                   </div>
                 </div>
                 <div class="container-4">
-                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">제출 상태:</div></div>
+                  <div class="text-3"><div class="text-1 arial-bold-oxford-blue-18px">진행 상태:</div></div>
                   <div class="container-5" id="item-8-btns">
                     <button class="cl-submit-btn" onclick="openModalN(8,false)">제출하기</button>
                    
@@ -485,6 +1017,82 @@
       </main>
 
     </div><!-- /.checklist.screen -->
+
+  <!-- =============================================
+       Phase 1 판별 스크립트
+       ============================================= -->
+  <script>
+    // ── Q 선택 ──────────────────────────────────────────────
+    const diagChoices = {};
+
+    function selectQ(btn) {
+      const q = btn.dataset.q;
+      btn.closest('.cl-choices').querySelectorAll('.cl-choice').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      diagChoices[q] = btn.dataset.v;
+    }
+
+    // ── 판별 실행 ────────────────────────────────────────────
+    function runDiagnose() {
+      const zone   = diagChoices['zone'];
+      const floors = diagChoices['floors'];
+      const area   = parseFloat(document.getElementById('q-floorarea').value) || 0;
+
+      if (!zone || !floors || !area) {
+        alert('세 가지 항목을 모두 입력해주세요.');
+        return;
+      }
+
+      // 판별 로직 (건축법 기준)
+      let needPermit = false;
+      let reason = '';
+
+      if (floors === 'high') {
+        needPermit = true;
+        reason = '3층 초과 건물은 건축허가 대상입니다.';
+      } else if (area >= 200) {
+        needPermit = true;
+        reason = `연면적 ${area}㎡(약 ${Math.round(area / 3.3)}평)는 200㎡ 이상이므로 건축허가 대상입니다.`;
+      } else if (zone === 'urban' && area >= 99) {
+        needPermit = true;
+        reason = `도시지역에서 연면적 ${area}㎡(약 ${Math.round(area / 3.3)}평)는 30평(99㎡) 이상이므로 건축허가 대상입니다.`;
+      } else if (zone === 'rural' && area >= 198) {
+        needPermit = true;
+        reason = `비도시지역에서 연면적 ${area}㎡(약 ${Math.round(area / 3.3)}평)는 60평(198㎡) 이상이므로 건축허가 대상입니다.`;
+      } else {
+        reason = `${zone === 'urban' ? '도시지역' : '비도시지역'} · 연면적 ${area}㎡(약 ${Math.round(area / 3.3)}평) · 3층 이하로 건축신고 대상입니다.`;
+      }
+
+      const info = needPermit ? {
+        badge:     '🏗️ 건축허가 필요',
+        badgeClass: 'permit',
+        dept:      '건축과 건축민원팀',
+        docs:      '건축계획서, 법정기본도면, 배치도, 기계·전기·통신도면',
+        constr:    '면허세 국민주택채권영수증, 설계계약서 사본, 착공신고서, 감리계약서',
+        approval:  '사용승인신청서, 최종건축도면(허가필증)',
+      } : {
+        badge:     '📋 건축신고 대상',
+        badgeClass: 'report',
+        dept:      '읍면사무소 건설팀 / 건축과 건축관리팀',
+        docs:      '건축계획서, 법정기본도면, 배치도',
+        constr:    '면허세 국민주택채권영수증, 설계계약서 사본, 착공신고서',
+        approval:  '사용승인신청서, 최종 건축도면(신고필증)',
+      };
+
+      const badgeEl = document.getElementById('cl-result-badge-text');
+      badgeEl.textContent = info.badge;
+      badgeEl.className   = 'cl-result-badge ' + info.badgeClass;
+      document.getElementById('cl-result-reason').textContent = reason;
+      document.getElementById('r-dept').textContent    = info.dept;
+      document.getElementById('r-docs').textContent    = info.docs;
+      document.getElementById('r-constr').textContent  = info.constr;
+      document.getElementById('r-approval').textContent = info.approval;
+
+      const resultEl = document.getElementById('cl-phase1-result');
+      resultEl.style.display = 'block';
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
 
   <script>
     // ── sessionStorage에서 결제 데이터 읽기 ─────────────────
