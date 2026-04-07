@@ -293,17 +293,42 @@
         height: auto !important;
       }
       .footer-bottom {
+        position: static !important;
         width: 100% !important;
+        height: auto !important;
         margin-left: 0 !important;
-        padding: 0 clamp(24px, 5vw, 80px);
+        padding: 0 clamp(24px, 5vw, 80px) 20px !important;
         box-sizing: border-box;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
       }
-      .checklist .container-36 { width: 100% !important; }
-      .checklist .container-37 {
+      .checklist .container-36 {
+        position: static !important;
         width: 100% !important;
-        gap: 0 !important;
-        justify-content: space-between;
+        height: 1px !important;
+        border-top: 1px solid #1e2939 !important;
       }
+      .checklist .container-37 {
+        position: static !important;
+        width: 100% !important;
+        top: auto !important;
+        gap: 16px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+      }
+      .checklist .paragraph-11 { position: static !important; width: auto !important; }
+      .checklist .paragraph-12 { position: static !important; width: auto !important; }
+      .checklist .container-8  { position: static !important; top: auto !important; left: auto !important; width: auto !important; height: auto !important; }
+      .checklist .container-35 { position: static !important; top: auto !important; left: auto !important; width: auto !important; height: auto !important; }
+      .checklist .paragraph-14, .checklist .paragraph-15 { width: auto !important; margin-top: 0 !important; }
+      .checklist .text-101, .checklist .text-102 { white-space: normal !important; }
+      .group-10 { position: static !important; top: auto !important; left: auto !important; }
+      .footer-column   { grid-column: auto !important; }
+      .footer-column-1 { grid-column: auto !important; }
+      .footer-content  { grid-template-columns: repeat(3, auto) !important; align-items: start !important; }
       #cl-pay-banner {
         margin: 48px clamp(16px, 3vw, 64px) 32px !important;
       }
@@ -317,7 +342,6 @@
         .checklist .paragraph { margin-left: 0 !important; }
         .login { gap: 12px; }
         .footer-content { grid-template-columns: repeat(2, 1fr) !important; height: auto !important; }
-        .checklist .container-35 { position: static !important; width: auto !important; }
         .checklist .container-34 { min-height: 160px; }
       }
 
