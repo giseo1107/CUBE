@@ -293,42 +293,17 @@
         height: auto !important;
       }
       .footer-bottom {
-        position: static !important;
         width: 100% !important;
-        height: auto !important;
         margin-left: 0 !important;
-        padding: 0 clamp(24px, 5vw, 80px) 20px !important;
+        padding: 0 clamp(24px, 5vw, 80px);
         box-sizing: border-box;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 16px !important;
       }
-      .checklist .container-36 {
-        position: static !important;
-        width: 100% !important;
-        height: 1px !important;
-        border-top: 1px solid #1e2939 !important;
-      }
+      .checklist .container-36 { width: 100% !important; }
       .checklist .container-37 {
-        position: static !important;
         width: 100% !important;
-        top: auto !important;
-        gap: 16px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
+        gap: 0 !important;
+        justify-content: space-between;
       }
-      .checklist .paragraph-11 { position: static !important; width: auto !important; }
-      .checklist .paragraph-12 { position: static !important; width: auto !important; }
-      .checklist .container-8  { position: static !important; top: auto !important; left: auto !important; width: auto !important; height: auto !important; }
-      .checklist .container-35 { position: static !important; top: auto !important; left: auto !important; width: auto !important; height: auto !important; }
-      .checklist .paragraph-14, .checklist .paragraph-15 { width: auto !important; margin-top: 0 !important; }
-      .checklist .text-101, .checklist .text-102 { white-space: normal !important; }
-      .group-10 { position: static !important; top: auto !important; left: auto !important; }
-      .footer-column   { grid-column: auto !important; }
-      .footer-column-1 { grid-column: auto !important; }
-      .footer-content  { grid-template-columns: repeat(3, auto) !important; align-items: start !important; }
       #cl-pay-banner {
         margin: 48px clamp(16px, 3vw, 64px) 32px !important;
       }
@@ -342,6 +317,7 @@
         .checklist .paragraph { margin-left: 0 !important; }
         .login { gap: 12px; }
         .footer-content { grid-template-columns: repeat(2, 1fr) !important; height: auto !important; }
+        .checklist .container-35 { position: static !important; width: auto !important; }
         .checklist .container-34 { min-height: 160px; }
       }
 
@@ -1175,8 +1151,9 @@
   </script>
 
   <script>
-    // ── sessionStorage 결제 데이터 ──────────────────────────
+    // ── sessionStorage에서 결제 데이터 읽기 ─────────────────
     const payData = JSON.parse(sessionStorage.getItem('checklistPayData') || 'null');
+
     if (payData) {
       const banner = document.getElementById('cl-pay-banner');
       if (banner) banner.style.display = 'flex';
@@ -1186,103 +1163,101 @@
       if (amountEl) amountEl.textContent = Number(payData.total_amount).toLocaleString('ko-KR') + '원';
     }
 
-    // ── Phase 2: 9단계 상태 관리 ────────────────────────────
-    const TOTAL = 9;
-    const stepStatuses = {};
-    for (let i = 1; i <= TOTAL; i++) stepStatuses[i] = 'todo';
+    // ── 체크리스트 상태 관리 ────────────────────────────────
+    const TOTAL   = 8;
+    const checked = new Set(); // 제출 완료된 항목 번호
+    const pending = new Set(); // 작성 예정으로 표시된 항목 번호
 
-    const STATUS_LABELS = { done: '완료', ongoing: '진행중', todo: '미착수', na: '해당없음' };
+    function setPending(itemNum) {
+      // 이미 제출 완료된 항목이면 무시
+      if (checked.has(itemNum)) return;
 
-    function toggleStep(n) {
-      const body  = document.getElementById('s' + n + '-body');
-      const arrow = document.getElementById('s' + n + '-arrow');
-      const isOpen = body.classList.contains('open');
-      // 아코디언: 다른 열린 패널 닫기
-      document.querySelectorAll('.cl2-card-body.open').forEach(el => el.classList.remove('open'));
-      document.querySelectorAll('.cl2-arrow.open').forEach(el => el.classList.remove('open'));
-      if (!isOpen) {
-        body.classList.add('open');
-        arrow.classList.add('open');
+      if (pending.has(itemNum)) {
+        // 이미 작성 예정 → 취소 (토글)
+        pending.delete(itemNum);
+        const btns = document.getElementById(`item-${itemNum}-btns`);
+        if (btns) {
+          btns.innerHTML = `
+            <button class="cl-submit-btn" onclick="${itemNum === 1 ? 'openModal1(false)' : `openModalN(${itemNum},false)`}">제출하기</button>
+            <button class="cl-pending-btn" onclick="setPending(${itemNum})">작성 예정</button>`;
+        }
+      } else {
+        pending.add(itemNum);
+        const btns = document.getElementById(`item-${itemNum}-btns`);
+        if (btns) {
+          btns.innerHTML = `
+            <span class="cl-pending-badge">📋 작성 예정</span>
+            <button class="cl-edit-btn" onclick="setPending(${itemNum})">취소</button>`;
+        }
       }
+      updateProgress();
     }
 
-    function setStatus(n, status, e) {
-      if (e) e.stopPropagation();
-      stepStatuses[n] = status;
-
-      // 뱃지 업데이트
-      const badge = document.getElementById('s' + n + '-badge');
-      if (badge) { badge.textContent = STATUS_LABELS[status]; badge.dataset.status = status; }
-
-      // 카드 data-status 업데이트 (번호 아이콘 색상 변경용)
-      const card = document.querySelector('[data-step="' + n + '"]');
-      if (card) card.dataset.status = status;
-
-      // 버튼 active 상태 업데이트
-      const body = document.getElementById('s' + n + '-body');
-      if (body) {
-        body.querySelectorAll('.cl2-sb').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = body.querySelector('.cl2-sb.' + status);
-        if (activeBtn) activeBtn.classList.add('active');
+    function markItem(itemNum, isSubmit, clickedBtn) {
+      if (isSubmit) {
+        checked.add(itemNum);
+      } else {
+        checked.delete(itemNum);
+        // 기존 2버튼 구조인 경우에만 시각 처리
+        if (clickedBtn) {
+          const li = document.querySelector(`[data-item="${itemNum}"]`);
+          const submitBtn  = li.querySelector('.button.button-2');
+          const missingBtn = li.querySelector('.button-1.button-2');
+          if (submitBtn)  submitBtn.classList.remove('is-active-submit');
+          if (missingBtn) missingBtn.classList.add('is-active-missing');
+        }
       }
-
       updateProgress();
     }
 
     function updateProgress() {
-      const doneCount    = Object.values(stepStatuses).filter(s => s === 'done').length;
-      const ongoingCount = Object.values(stepStatuses).filter(s => s === 'ongoing').length;
-      const naCount      = Object.values(stepStatuses).filter(s => s === 'na').length;
-      const pct = Math.round(doneCount / TOTAL * 100);
+      const submittedCount = checked.size;
+      const count = checked.size + pending.size; // 제출완료 + 작성예정 합산
+      const pct   = Math.round(count / TOTAL * 100);
 
       // 진행률 텍스트
       const counterEl = document.querySelector('.text-2.arial-bold-chathams-blue-24px');
-      if (counterEl) counterEl.textContent = `${doneCount} / ${TOTAL}`;
+      if (counterEl) counterEl.textContent = `${count} / ${TOTAL}`;
 
       // 프로그레스 바
       const bar = document.querySelector('.container-14');
       if (bar) bar.style.width = pct + '%';
-      const bar13 = document.querySelector('.container-13');
-      if (bar13) bar13.setAttribute('aria-valuenow', doneCount);
 
       // % 텍스트
       const pctEl = document.getElementById('cl-percent');
       if (pctEl) pctEl.textContent = pct + '%';
 
-      // 결제 버튼
+      // 결제 버튼 활성화 (실제 제출 완료된 것만 카운트)
       const btn    = document.getElementById('cl-pay-btn');
       const msgEl  = document.getElementById('cl-pay-msg');
       const sumMsg = document.getElementById('cl-summary-msg');
 
-      if (doneCount === TOTAL) {
-        if (btn) btn.disabled = false;
-        if (msgEl) { msgEl.textContent = '모든 절차 완료! 카카오페이로 결제를 진행하세요.'; msgEl.classList.add('complete'); }
-        if (sumMsg) sumMsg.textContent = '모든 건축 절차가 완료되었습니다. 결제를 진행하세요.';
-      } else {
-        if (btn) btn.disabled = true;
+      if (submittedCount === TOTAL) {
+        btn.disabled = false;
         if (msgEl) {
-          msgEl.textContent = `모든 절차(9/9)를 완료로 표시하면 결제 버튼이 활성화됩니다. (현재 ${doneCount}/9 완료)`;
+          msgEl.textContent = '모든 서류 제출이 완료되었습니다. 카카오페이로 결제를 진행하세요.';
+          msgEl.classList.add('complete');
+        }
+        if (sumMsg) sumMsg.textContent = '모든 서류 제출이 완료되었습니다. 결제를 진행하세요.';
+      } else {
+        btn.disabled = true;
+        if (msgEl) {
+          msgEl.textContent = `모든 서류(8/8)를 제출 완료로 표시하면 결제 버튼이 활성화됩니다. (현재 ${submittedCount}/8)`;
           msgEl.classList.remove('complete');
         }
-        if (sumMsg) {
-          if (doneCount + ongoingCount > 0) {
-            sumMsg.textContent = `완료 ${doneCount}단계 · 진행중 ${ongoingCount}단계 · 해당없음 ${naCount}단계`;
-          } else {
-            sumMsg.textContent = '각 절차의 진행 상황을 선택해 주세요';
-          }
-        }
+        if (sumMsg) sumMsg.textContent = '모든 서류가 제출되면 설치 절차를 진행할 수 있습니다';
       }
     }
 
-    // ── 카카오페이 결제 ─────────────────────────────────────
+    // ── 카카오페이 결제 실행 ────────────────────────────────
     function doPay() {
-      if (!payData) { alert('결제 정보가 없습니다. 장바구니 또는 상품 페이지로 돌아가 주세요.'); return; }
+      if (!payData) {
+        alert('결제 정보가 없습니다. 장바구니 또는 상품 페이지로 돌아가 주세요.');
+        return;
+      }
       sessionStorage.removeItem('checklistPayData');
       requestKakaoPay(payData);
     }
-
-    // ── 하위 호환 (모달 코드가 참조하는 빈 함수) ─────────────
-    function markItem() {}
   </script>
 <!-- =============================================
      모달 2~8 + 공통 JS 엔진
@@ -1986,153 +1961,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   </div>
 </div>
-
-<style>
-  /* ============================================================
-     Phase 2 — 9단계 건축 절차 카드
-     ============================================================ */
-  .cl2-steps-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 24px clamp(16px, 3vw, 64px) 0;
-  }
-  .cl2-card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -4px #0000001a, 0 10px 15px -3px #0000001a;
-    overflow: hidden;
-    border: 2px solid transparent;
-    transition: border-color .2s;
-  }
-  .cl2-card[data-status="done"]    { border-color: #86efac; }
-  .cl2-card[data-status="ongoing"] { border-color: #93c5fd; }
-  .cl2-card[data-status="na"]      { border-color: #e5e7eb; opacity: .75; }
-
-  .cl2-card-head {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 24px;
-    cursor: pointer;
-    user-select: none;
-    transition: background .15s;
-  }
-  .cl2-card-head:hover { background: #f9fafb; }
-
-  .cl2-num {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: #1a4f85;
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700;
-    flex-shrink: 0;
-    font-family: "Arial-Bold", Helvetica;
-    transition: background .2s;
-  }
-  .cl2-card[data-status="done"]    .cl2-num { background: #16a34a; }
-  .cl2-card[data-status="ongoing"] .cl2-num { background: #2563eb; }
-  .cl2-card[data-status="na"]      .cl2-num { background: #9ca3af; }
-
-  .cl2-info { flex: 1; min-width: 0; }
-  .cl2-title {
-    font-size: clamp(15px, 1.8vw, 20px);
-    font-weight: 700; color: #101828;
-    font-family: "Arial-Bold", Helvetica;
-    margin-bottom: 3px;
-  }
-  .cl2-desc {
-    font-size: clamp(12px, 1.3vw, 14px);
-    color: #6b7280;
-    font-family: "Noto Serif KR", serif;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-
-  .cl2-badge {
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 13px; font-weight: 700;
-    flex-shrink: 0;
-    font-family: "Arial-Bold", Helvetica;
-    transition: all .2s;
-  }
-  .cl2-badge[data-status="done"]    { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
-  .cl2-badge[data-status="ongoing"] { background: #dbeafe; color: #1d4ed8; border: 1.5px solid #93c5fd; }
-  .cl2-badge[data-status="todo"]    { background: #f3f4f6; color: #6b7280; border: 1.5px solid #d1d5db; }
-  .cl2-badge[data-status="na"]      { background: #f9fafb; color: #9ca3af; border: 1.5px solid #e5e7eb; }
-
-  .cl2-arrow {
-    color: #9ca3af; font-size: 11px;
-    transition: transform .22s; flex-shrink: 0;
-  }
-  .cl2-arrow.open { transform: rotate(180deg); }
-
-  .cl2-card-body {
-    display: none;
-    padding: 0 24px 24px;
-    border-top: 1px solid #f3f4f6;
-  }
-  .cl2-card-body.open { display: block; }
-
-  .cl2-notice {
-    display: flex; gap: 10px; align-items: flex-start;
-    background: #eff6ff; border-left: 4px solid #3b82f6;
-    padding: 13px 18px; margin: 16px 0;
-    border-radius: 0 8px 8px 0;
-    font-size: 13px; color: #1e40af; line-height: 1.7;
-    font-family: "Noto Serif KR", serif;
-  }
-  .cl2-notice span:first-child { flex-shrink: 0; }
-
-  .cl2-checks {
-    list-style: none; padding: 0; margin: 0 0 20px;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .cl2-checks li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; color: #374151; line-height: 1.6;
-    font-family: "Noto Serif KR", serif;
-  }
-  .cl2-checks li::before {
-    content: "□"; color: #1a4f85; font-weight: 700;
-    flex-shrink: 0; margin-top: 1px;
-  }
-
-  .cl2-status-row {
-    display: flex; gap: 8px; flex-wrap: wrap;
-  }
-  .cl2-sb {
-    flex: 1; min-width: 80px;
-    padding: 11px 14px;
-    border-radius: 10px;
-    font-size: 13px; font-weight: 700;
-    border: 2px solid; cursor: pointer;
-    transition: all .15s;
-    font-family: "Noto Serif KR", serif;
-  }
-  .cl2-sb.done    { background: #f0fdf4; color: #16a34a; border-color: #86efac; }
-  .cl2-sb.ongoing { background: #eff6ff; color: #2563eb; border-color: #93c5fd; }
-  .cl2-sb.todo    { background: #f9fafb; color: #6b7280; border-color: #d1d5db; }
-  .cl2-sb.na      { background: #f9fafb; color: #9ca3af; border-color: #e5e7eb; }
-  .cl2-sb.done.active    { background: #dcfce7; border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
-  .cl2-sb.ongoing.active { background: #dbeafe; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
-  .cl2-sb.todo.active    { background: #f3f4f6; border-color: #6b7280; box-shadow: 0 0 0 3px rgba(107,114,128,.15); }
-  .cl2-sb.na.active      { background: #f3f4f6; border-color: #9ca3af; box-shadow: 0 0 0 3px rgba(156,163,175,.15); }
-  .cl2-sb:hover { filter: brightness(0.96); transform: translateY(-1px); }
-
-  @media (max-width: 768px) {
-    .cl2-card-head  { padding: 14px 16px; gap: 12px; }
-    .cl2-num        { width: 32px; height: 32px; font-size: 14px; }
-    .cl2-desc       { white-space: normal; }
-    .cl2-badge      { display: none; }
-    .cl2-card-body  { padding: 0 16px 20px; }
-    .cl2-sb         { min-width: calc(50% - 4px); font-size: 12px; padding: 10px 10px; }
-  }
-  @media (max-width: 480px) {
-    .cl2-title { font-size: 14px; }
-  }
-</style>
 
 <style>
   /* ── 모달 공통 폰트 변수 ── */
