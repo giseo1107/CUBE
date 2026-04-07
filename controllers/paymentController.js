@@ -175,11 +175,11 @@ exports.approve = async (req, res) => {
             );
         }
 
-        // 결제 상세 정보 저장 (payments 테이블에 item_name 등 상세 저장)
+        // 결제 상세 정보 저장 (payments 테이블에 item_name, selected_options 등 상세 저장)
         await db.query(
             `INSERT INTO payments
-               (order_id, tid, payment_method_type, item_name, total_amount, approved_at)
-             VALUES (?, ?, ?, ?, ?, ?)`,
+               (order_id, tid, payment_method_type, item_name, total_amount, approved_at, selected_options)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
                 orderId,
                 kakaoData.tid,
@@ -187,6 +187,7 @@ exports.approve = async (req, res) => {
                 pending.item_name,
                 pending.total_amount,
                 kakaoData.approved_at || new Date(),
+                pending.selected_options || null,
             ]
         );
 
@@ -262,7 +263,7 @@ exports.history = async (req, res) => {
 
         const [rows] = await db.query(
             `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
-                    p.tid, p.payment_method_type, p.item_name, p.approved_at
+                    p.tid, p.payment_method_type, p.item_name, p.approved_at, p.selected_options
              FROM orders o
              LEFT JOIN payments p ON o.order_id = p.order_id
              WHERE o.user_id = ?

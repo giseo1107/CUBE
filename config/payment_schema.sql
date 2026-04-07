@@ -22,7 +22,11 @@ CREATE TABLE IF NOT EXISTS payments (
     payment_method_type VARCHAR(50),
     item_name           VARCHAR(255),
     total_amount        INT          NOT NULL,
+    selected_options    TEXT,
     approved_at         DATETIME,
     created_at          DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
+-- 기존 테이블에 컬럼 추가 (이미 있으면 에러 무시)
+-- ALTER TABLE payments ADD COLUMN IF NOT EXISTS selected_options TEXT;

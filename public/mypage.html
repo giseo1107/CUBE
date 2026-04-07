@@ -370,6 +370,16 @@
           const approvedAt = fmtDate(p.approved_at || p.ordered_at);
           const itemName = p.item_name || '상품';
 
+          // 선택 옵션 태그 렌더링
+          let optionsHtml = '';
+          if (p.selected_options) {
+            const opts = p.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+            if (opts.length > 0) {
+              const tags = opts.map(opt => `<span class="pay-option-tag">${opt}</span>`).join('');
+              optionsHtml = `<tr><td class="pay-label">선택 옵션</td><td class="pay-value"><div class="pay-options-wrap">${tags}</div></td></tr>`;
+            }
+          }
+
           html += `
             <div class="pay-card">
               <div class="pay-card-header">
@@ -378,6 +388,7 @@
               </div>
               <table class="pay-card-table">
                 <tr><td class="pay-label">상품명</td><td class="pay-value">${itemName}</td></tr>
+                ${optionsHtml}
                 <tr><td class="pay-label">결제 방법</td><td class="pay-value">${method}</td></tr>
                 <tr><td class="pay-label">결제 일시</td><td class="pay-value">${approvedAt}</td></tr>
               </table>
