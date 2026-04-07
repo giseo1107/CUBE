@@ -135,13 +135,13 @@
     #g-nav .gn-auth {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 12px;
       flex-shrink: 0;
     }
     #g-nav .gn-auth a,
     #g-nav .gn-auth button {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 24px;
+      font-size: 14px;
       font-weight: 700;
       color: #fff;
       text-decoration: none;
@@ -238,11 +238,11 @@
       white-space: nowrap;
     }
     #g-nav .gn-btn-logout {
-      padding: 4px 10px;
+      padding: 3px 8px;
       background: rgba(255, 255, 255, 0.15);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 6px;
+      border-radius: 5px;
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
       font-size: 11px;
       font-weight: 400;
