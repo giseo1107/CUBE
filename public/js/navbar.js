@@ -158,7 +158,8 @@
     #g-nav .gn-user-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 7px;
+      margin-right: -24px;   /* navbar 오른쪽으로 더 붙이기 */
     }
 
     /* 아바타 래퍼 — 링크로 감싸기 */
@@ -172,17 +173,17 @@
     }
 
     #g-nav .gn-user-avatar {
-      width: 44px;
-      height: 44px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 22px;
+      font-size: 14px;
       flex-shrink: 0;
-      border: 2px solid rgba(175, 249, 245, 0.4);
+      border: 1.5px solid rgba(175, 249, 245, 0.4);
       transition: border-color 0.2s, opacity 0.2s;
     }
     #g-nav .gn-user-avatar img {
@@ -206,11 +207,11 @@
       background: rgba(16, 24, 40, 0.92);
       color: #fff;
       font-family: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       white-space: nowrap;
-      padding: 6px 12px;
-      border-radius: 8px;
+      padding: 5px 10px;
+      border-radius: 7px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.2s;
@@ -231,20 +232,20 @@
     }
     #g-nav .gn-user-name {
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
     }
     #g-nav .gn-btn-logout {
-      padding: 6px 16px;
+      padding: 4px 10px;
       background: rgba(255, 255, 255, 0.15);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
+      border-radius: 6px;
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
-      font-size: 12px;
-      font-weight: 100;
+      font-size: 11px;
+      font-weight: 400;
       cursor: pointer;
       transition: all .2s;
       white-space: nowrap;
