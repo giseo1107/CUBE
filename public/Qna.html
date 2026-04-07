@@ -340,6 +340,41 @@
       </div>
     </div>
   
+  <style>
+    /* ── 고정 높이 해제 — 아코디언 펼칠 때 아래로 밀리도록 ── */
+    .qu38a .p-k        { height: auto !important; min-height: 100vh; }
+    .qu38a .section-1  { height: auto !important; }
+    .qu38a .container-10 { height: auto !important; }
+    .qu38a .container-2  { height: auto !important; }
+    .qu38a .primitivediv-1 { height: auto !important; margin-bottom: 0 !important; }
+    .qu38a .primitivediv   { height: auto !important; }
+
+    /* ── 답변 패널 슬라이드 애니메이션 ── */
+    .faq-answer-panel {
+      overflow: hidden;
+      max-height: 0;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      opacity: 0;
+      transition: max-height 0.35s ease, padding 0.25s ease, opacity 0.25s ease;
+      display: block !important; /* display:none 대신 max-height로 제어 */
+    }
+    .faq-answer-panel.open {
+      max-height: 400px;
+      padding-top: 16px !important;
+      padding-bottom: 20px !important;
+      opacity: 1;
+    }
+
+    /* 열린 버튼 화살표 */
+    .primitivebutton.open .vector {
+      transform: rotate(180deg);
+      transition: transform 0.25s ease;
+    }
+    .primitivebutton .vector {
+      transition: transform 0.25s ease;
+    }
+  </style>
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -367,27 +402,20 @@
     // ── FAQ 아코디언 ─────────────────────────────────────────
     document.querySelectorAll('.primitivebutton[data-faq]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const faqKey   = btn.dataset.faq;
-        const panel    = btn.closest('.container-1').querySelector('.faq-answer-panel');
-        const arrow    = btn.querySelector('.vector');
-        const isOpen   = panel && panel.style.display === 'block';
+        const panel  = btn.closest('.container-1').querySelector('.faq-answer-panel');
+        const isOpen = panel && panel.classList.contains('open');
 
-        // 같은 primitivediv 내의 다른 답변 모두 닫기
+        // 같은 섹션(primitivediv) 내 다른 항목 모두 닫기
         const group = btn.closest('.primitivediv, .primitivediv-1');
         if (group) {
-          group.querySelectorAll('.faq-answer-panel').forEach(p => {
-            p.style.display = 'none';
-          });
-          group.querySelectorAll('.primitivebutton[data-faq]').forEach(b => {
-            const a = b.querySelector('.vector');
-            if (a) a.style.transform = '';
-          });
+          group.querySelectorAll('.faq-answer-panel').forEach(p => p.classList.remove('open'));
+          group.querySelectorAll('.primitivebutton[data-faq]').forEach(b => b.classList.remove('open'));
         }
 
         // 현재 항목 토글
         if (!isOpen && panel) {
-          panel.style.display = 'block';
-          if (arrow) arrow.style.transform = 'rotate(180deg)';
+          panel.classList.add('open');
+          btn.classList.add('open');
         }
       });
     });
