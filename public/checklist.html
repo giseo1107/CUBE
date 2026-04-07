@@ -7,8 +7,41 @@
     <meta name="twitter:card" content="photo" />
     <title>건축 절차 자가진단 | Container House</title>
     <link rel="stylesheet" type="text/css" href="css/checklist.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700&family=Baloo+Da+2:wght@700&display=swap" />
     <style>
+      /* ── 전역 한글 폰트 폴백 ── */
+      body, .checklist, .checklist * {
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      }
+      /* Arial-Bold 계열 — 한글 폴백 보강 */
+      .arial-bold-oxford-blue-18px,
+      .arial-bold-white-18px,
+      .arial-bold-mirage-24px,
+      .arial-bold-chathams-blue-24px,
+      .arial-bold-mirage-22px,
+      .arial-bold-mirage-20px,
+      [class*="arial-bold"] {
+        font-family: "Arial-Bold", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, sans-serif;
+      }
+      /* Arial-Regular 계열 */
+      .arial-regular-normal-santas-gray-16px,
+      .arial-regular-normal-scarpa-flow-18px,
+      [class*="arial-regular"] {
+        font-family: "Arial-Regular", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, sans-serif;
+      }
+      /* Baloo Da 2 계열 */
+      .balooda2-bold-eerie-black-14px,
+      [class*="balooda2"] {
+        font-family: "Baloo Da 2", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Helvetica, sans-serif;
+      }
+      /* Noto Sans KR */
+      .notosanskr-normal-pale-sky-16px,
+      [class*="notosanskr"] {
+        font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      }
+
       /* ── 결제 금액 배너 ── */
       #cl-pay-banner {
         display: flex;
