@@ -48,7 +48,11 @@
         <!-- 상품 목록 -->
         <div class="container-6">
           <div class="container-7">
-            <div class="container-8">
+            <div class="container-8" style="display:flex;align-items:center;gap:16px;">
+              <label class="cart-select-all-wrap" title="전체 선택/해제">
+                <input type="checkbox" id="select-all-chk" onchange="toggleSelectAll(this)" />
+                <span class="cart-chk-box"></span>
+              </label>
               <div class="heading-2"><div class="text-3-1" id="cart-count-label">상품 목록 (0개)</div></div>
             </div>
             <!-- 로딩 상태 -->
@@ -195,17 +199,55 @@
       return Number(n).toLocaleString('ko-KR') + '원';
     }
 
+    // ── 선택된 항목 반환 ──────────────────────────────────
+    function getSelectedItems() {
+      const checked = [...document.querySelectorAll('.cart-item-chk:checked')];
+      const ids = checked.map(el => Number(el.dataset.cartId));
+      return cartItems.filter(item => ids.includes(item.cart_id));
+    }
+
+    // ── 전체선택 토글 ─────────────────────────────────────
+    function toggleSelectAll(allChk) {
+      document.querySelectorAll('.cart-item-chk').forEach(chk => {
+        chk.checked = allChk.checked;
+        updateRowStyle(chk);
+      });
+      updateSummary();
+    }
+
+    // ── 개별 체크 시 전체선택 동기화 ─────────────────────
+    function onItemCheck() {
+      const all   = document.querySelectorAll('.cart-item-chk');
+      const allChk = document.getElementById('select-all-chk');
+      if (allChk) allChk.checked = [...all].every(c => c.checked);
+      document.querySelectorAll('.cart-item-chk').forEach(updateRowStyle);
+      updateSummary();
+    }
+
+    // ── 선택 해제 행 흐리게 ──────────────────────────────
+    function updateRowStyle(chk) {
+      const article = chk.closest('article');
+      if (article) article.style.opacity = chk.checked ? '1' : '0.4';
+    }
+
     // ── 요약 사이드바 업데이트 ────────────────────────────
-    function updateSummary(items) {
-      const total = items.reduce((sum, item) => sum + Number(item.total_amount) * Number(item.quantity), 0);
+    function updateSummary() {
+      const selected = getSelectedItems();
+      const total = selected.reduce((sum, item) => sum + Number(item.total_amount) * Number(item.quantity), 0);
       document.getElementById('summary-product').textContent = fmt(total);
       document.getElementById('summary-total').textContent   = fmt(total);
 
       const btn = document.getElementById('checkout-btn');
-      if (items.length > 0) {
+      if (selected.length > 0) {
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
+        btn.querySelector('.text-29').textContent = `결제하기 (${selected.length}개)`;
+      } else {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor  = 'not-allowed';
+        btn.querySelector('.text-29').textContent = '결제하기';
       }
     }
 
@@ -273,6 +315,10 @@
 
       return `
         <article class="container-10" data-cart-id="${item.cart_id}">
+          <label class="cart-chk-wrap" title="선택">
+            <input type="checkbox" class="cart-item-chk" data-cart-id="${item.cart_id}" checked onchange="onItemCheck()" />
+            <span class="cart-chk-box"></span>
+          </label>
           ${cartImgHtml}
           <div class="container-11">
             <div class="container-12">
@@ -352,7 +398,10 @@
         if (badge) badge.textContent = `총 ${cartItems.length}개 상품`;
         document.getElementById('cart-items').style.display = 'block';
         document.getElementById('cart-items').innerHTML = cartItems.map(renderItem).join('');
-        updateSummary(cartItems);
+        // 전체선택 기본 체크
+        const allChk = document.getElementById('select-all-chk');
+        if (allChk) allChk.checked = true;
+        updateSummary();
 
       } catch (err) {
         document.getElementById('cart-loading').textContent = '장바구니를 불러오지 못했습니다.';
@@ -396,18 +445,19 @@
 
     // ── 결제하기 ───────────────────────────────────────────
     function goCheckout() {
-      if (!cartItems || cartItems.length === 0) return;
+      const selected = getSelectedItems();
+      if (selected.length === 0) { alert('결제할 상품을 선택해주세요.'); return; }
 
-      const total    = cartItems.reduce((sum, item) => sum + Number(item.total_amount) * Number(item.quantity), 0);
-      const cartIds  = cartItems.map(item => item.cart_id);
-      const itemName = cartItems.length === 1
-        ? cartItems[0].product_name
-        : `${cartItems[0].product_name} 외 ${cartItems.length - 1}건`;
+      const total    = selected.reduce((sum, item) => sum + Number(item.total_amount) * Number(item.quantity), 0);
+      const cartIds  = selected.map(item => item.cart_id);
+      const itemName = selected.length === 1
+        ? selected[0].product_name
+        : `${selected[0].product_name} 외 ${selected.length - 1}건`;
 
       sessionStorage.setItem('checklistPayData', JSON.stringify({
         item_name:    itemName,
         total_amount: total,
-        quantity:     cartItems.reduce((sum, item) => sum + Number(item.quantity), 0),
+        quantity:     selected.reduce((sum, item) => sum + Number(item.quantity), 0),
         cart_ids:     cartIds,
       }));
       location.href = '/checklist.html';
@@ -416,12 +466,76 @@
     // ── 초기 로드 ─────────────────────────────────────────
     loadCart();
 
+
     // 결제 결과 알림 (카카오 리다이렉트 후)
     const params = new URLSearchParams(location.search);
     if (params.get('payment') === 'cancel') alert('결제가 취소되었습니다.');
     if (params.get('payment') === 'fail')   alert('결제에 실패했습니다. 다시 시도해 주세요.');
   </script>
   <script src="/js/payment.js"></script>
+  <style>
+    /* ── 장바구니 체크박스 ── */
+    .cart-chk-wrap,
+    .cart-select-all-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .cart-chk-wrap {
+      align-self: center;
+      margin-right: 12px;
+    }
+    /* 실제 input 숨김 */
+    .cart-chk-wrap input,
+    .cart-select-all-wrap input {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    /* 커스텀 체크박스 */
+    .cart-chk-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #d1d5db;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .15s, background .15s;
+      flex-shrink: 0;
+    }
+    .cart-chk-box::after {
+      content: '';
+      display: none;
+      width: 6px;
+      height: 11px;
+      border: 2.5px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+    /* checked 상태 */
+    input:checked + .cart-chk-box {
+      background: #1a4f85;
+      border-color: #1a4f85;
+    }
+    input:checked + .cart-chk-box::after {
+      display: block;
+    }
+    /* hover */
+    .cart-chk-wrap:hover .cart-chk-box,
+    .cart-select-all-wrap:hover .cart-chk-box {
+      border-color: #1a4f85;
+    }
+    /* 카드 행에 체크박스 포함되도록 flex 정렬 */
+    .container-10 {
+      display: flex !important;
+      align-items: center !important;
+    }
+  </style>
 
   </body>
 </html>
