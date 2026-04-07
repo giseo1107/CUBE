@@ -342,6 +342,22 @@
     <style>
       /* 구 Anima 정적 navbar 숨김 — navbar.js가 대체 */
       .top-2 { display: none !important; }
+
+      /* 예약하기 버튼 hover / active */
+      .visit-reservation .button-42 {
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+      }
+      .visit-reservation .button-42:hover {
+        background-color: #7a72a8cc !important;
+        box-shadow: 0 6px 20px rgba(89, 83, 123, 0.45);
+        transform: translateY(-2px);
+      }
+      .visit-reservation .button-42:active {
+        background-color: #4a4570ee !important;
+        transform: translateY(0px);
+        box-shadow: 0 2px 8px rgba(89, 83, 123, 0.35);
+      }
     </style>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/js/navbar.js"></script>
     <script>
