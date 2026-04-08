@@ -399,7 +399,7 @@
   background-color: var(--white);
   display: flex;
   flex-direction: column;
-  gap: 47px;
+  gap: 25px;
   height: 994px;
   left: calc(50.00% - 958px);
   position: absolute;
