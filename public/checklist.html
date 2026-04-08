@@ -667,9 +667,7 @@
         border: 2px solid transparent;
         transition: border-color .2s;
       }
-      .cl2-card[data-status="done"]    { border-color: #86efac; }
-      .cl2-card[data-status="ongoing"] { border-color: #93c5fd; }
-      .cl2-card[data-status="na"]      { border-color: #e5e7eb; opacity: .75; }
+      .cl2-card[data-status="done"] { border-color: #86efac; }
 
       .cl2-card-head {
         display: flex;
@@ -693,9 +691,7 @@
         font-family: "Arial-Bold", "Noto Sans KR", Helvetica, sans-serif;
         transition: background .2s;
       }
-      .cl2-card[data-status="done"]    .cl2-num { background: #16a34a; }
-      .cl2-card[data-status="ongoing"] .cl2-num { background: #2563eb; }
-      .cl2-card[data-status="na"]      .cl2-num { background: #9ca3af; }
+      .cl2-card[data-status="done"] .cl2-num { background: #16a34a; }
 
       .cl2-info { flex: 1; min-width: 0; }
       .cl2-title {
@@ -719,10 +715,8 @@
         font-family: "Noto Sans KR", sans-serif;
         transition: all .2s;
       }
-      .cl2-badge[data-status="done"]    { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
-      .cl2-badge[data-status="ongoing"] { background: #dbeafe; color: #1d4ed8; border: 1.5px solid #93c5fd; }
-      .cl2-badge[data-status="todo"]    { background: #f3f4f6; color: #6b7280; border: 1.5px solid #d1d5db; }
-      .cl2-badge[data-status="na"]      { background: #f9fafb; color: #9ca3af; border: 1.5px solid #e5e7eb; }
+      .cl2-badge[data-status="done"] { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+      .cl2-badge[data-status="todo"] { background: #f3f4f6; color: #6b7280; border: 1.5px solid #d1d5db; }
 
       .cl2-arrow {
         color: #9ca3af; font-size: 11px;
@@ -762,25 +756,49 @@
         flex-shrink: 0; margin-top: 1px;
       }
 
-      .cl2-status-row { display: flex; gap: 8px; flex-wrap: wrap; }
-      .cl2-sb {
-        flex: 1; min-width: 80px;
-        padding: 11px 14px;
-        border-radius: 10px;
-        font-size: 13px; font-weight: 700;
-        border: 2px solid; cursor: pointer;
-        transition: all .15s;
+      /* 확인 완료 토글 버튼 */
+      .cl2-status-row { display: flex; margin-top: 16px; }
+      .cl2-confirm-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 12px 28px;
+        border-radius: 12px;
+        border: 2px solid #d1d5db;
+        background: #f9fafb;
+        color: #6b7280;
+        font-size: 14px; font-weight: 700;
         font-family: "Noto Sans KR", sans-serif;
+        cursor: pointer;
+        transition: all .2s;
+        user-select: none;
       }
-      .cl2-sb.done    { background: #f0fdf4; color: #16a34a; border-color: #86efac; }
-      .cl2-sb.ongoing { background: #eff6ff; color: #2563eb; border-color: #93c5fd; }
-      .cl2-sb.todo    { background: #f9fafb; color: #6b7280; border-color: #d1d5db; }
-      .cl2-sb.na      { background: #f9fafb; color: #9ca3af; border-color: #e5e7eb; }
-      .cl2-sb.done.active    { background: #dcfce7; border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
-      .cl2-sb.ongoing.active { background: #dbeafe; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
-      .cl2-sb.todo.active    { background: #f3f4f6; border-color: #6b7280; box-shadow: 0 0 0 3px rgba(107,114,128,.15); }
-      .cl2-sb.na.active      { background: #f3f4f6; border-color: #9ca3af; box-shadow: 0 0 0 3px rgba(156,163,175,.15); }
-      .cl2-sb:hover { filter: brightness(0.96); transform: translateY(-1px); }
+      .cl2-confirm-btn .cl2-chk-icon {
+        width: 22px; height: 22px;
+        border-radius: 50%;
+        border: 2px solid #d1d5db;
+        background: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px;
+        transition: all .2s;
+        flex-shrink: 0;
+      }
+      .cl2-confirm-btn:hover {
+        border-color: #16a34a;
+        background: #f0fdf4;
+        color: #16a34a;
+      }
+      .cl2-confirm-btn:hover .cl2-chk-icon { border-color: #16a34a; }
+      .cl2-confirm-btn.is-done {
+        border-color: #16a34a;
+        background: #dcfce7;
+        color: #15803d;
+        box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+      }
+      .cl2-confirm-btn.is-done .cl2-chk-icon {
+        border-color: #16a34a;
+        background: #16a34a;
+        color: #fff;
+      }
+      .cl2-confirm-btn.is-done:hover { background: #bbf7d0; }
 
       @media (max-width: 768px) {
         .cl2-card-head  { padding: 14px 16px; gap: 12px; }
@@ -788,7 +806,7 @@
         .cl2-desc       { white-space: normal; }
         .cl2-badge      { display: none; }
         .cl2-card-body  { padding: 0 16px 20px; }
-        .cl2-sb         { min-width: calc(50% - 4px); font-size: 12px; padding: 10px; }
+        .cl2-confirm-btn { width: 100%; justify-content: center; }
       }
     </style>
   </head>
@@ -957,7 +975,7 @@
                 <div class="cl2-title">건축계획심의</div>
                 <div class="cl2-desc">대규모 건물 해당 여부 확인 · 일반 컨테이너하우스는 대부분 해당없음</div>
               </div>
-              <span class="cl2-badge" id="s1-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s1-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s1-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s1-body">
@@ -967,10 +985,9 @@
                 <li>일반 컨테이너하우스(3층 이하, 200㎡ 미만)는 대부분 해당 없음 → 해당없음 선택</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(1,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(1,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(1,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(1,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s1-confirm" onclick="toggleDone(1,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -983,7 +1000,7 @@
                 <div class="cl2-title">건축허가 / 신고 신청</div>
                 <div class="cl2-desc">관할 구청·읍면사무소에 건축허가 또는 건축신고 접수</div>
               </div>
-              <span class="cl2-badge" id="s2-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s2-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s2-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s2-body">
@@ -995,10 +1012,9 @@
                 <li>설계도서 첨부 (건축법 시행규칙 별표4의2)</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(2,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(2,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(2,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(2,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s2-confirm" onclick="toggleDone(2,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1011,7 +1027,7 @@
                 <div class="cl2-title">건축허가서 / 신고필증 교부</div>
                 <div class="cl2-desc">허가서 또는 신고필증 수령 · 면허세·도로점용료 등 납부</div>
               </div>
-              <span class="cl2-badge" id="s3-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s3-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s3-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s3-body">
@@ -1022,10 +1038,9 @@
                 <li>허가서 또는 신고필증 수령 확인</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(3,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(3,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(3,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(3,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s3-confirm" onclick="toggleDone(3,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1038,7 +1053,7 @@
                 <div class="cl2-title">건축물 철거·멸실 신고</div>
                 <div class="cl2-desc">기존 건물 철거 시 해당 · 신규 부지이면 해당없음 선택</div>
               </div>
-              <span class="cl2-badge" id="s4-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s4-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s4-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s4-body">
@@ -1049,10 +1064,9 @@
                 <li>철거 완료 후 멸실 확인서 수령</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(4,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(4,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(4,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(4,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s4-confirm" onclick="toggleDone(4,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1065,7 +1079,7 @@
                 <div class="cl2-title">착공신고</div>
                 <div class="cl2-desc">공사 시작 전 관할 구청에 착공신고서 및 계약서 제출</div>
               </div>
-              <span class="cl2-badge" id="s5-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s5-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s5-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s5-body">
@@ -1077,10 +1091,9 @@
                 <li>건축허가 대상인 경우 감리계약서 추가 첨부</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(5,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(5,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(5,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(5,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s5-confirm" onclick="toggleDone(5,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1093,7 +1106,7 @@
                 <div class="cl2-title">사용승인 신청 및 확인</div>
                 <div class="cl2-desc">공사 완료 후 사용승인 신청 · 허가조건 이행 및 부담금 납부</div>
               </div>
-              <span class="cl2-badge" id="s6-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s6-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s6-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s6-body">
@@ -1106,10 +1119,9 @@
                 <li>사용승인 신청서 제출 및 현장 확인</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(6,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(6,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(6,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(6,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s6-confirm" onclick="toggleDone(6,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1122,7 +1134,7 @@
                 <div class="cl2-title">사용승인서 교부</div>
                 <div class="cl2-desc">사용승인서 수령 · 취득세·등록세 납부</div>
               </div>
-              <span class="cl2-badge" id="s7-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s7-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s7-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s7-body">
@@ -1133,10 +1145,9 @@
                 <li>등록세 납부 (자치구 세무부서)</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(7,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(7,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(7,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(7,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s7-confirm" onclick="toggleDone(7,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1149,7 +1160,7 @@
                 <div class="cl2-title">건축물대장 작성</div>
                 <div class="cl2-desc">구청 지적과·건축과에 건축물대장 등록 신청</div>
               </div>
-              <span class="cl2-badge" id="s8-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s8-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s8-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s8-body">
@@ -1160,10 +1171,9 @@
                 <li>건축물대장 등본 발급 (필요 시)</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(8,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(8,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(8,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(8,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s8-confirm" onclick="toggleDone(8,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1176,7 +1186,7 @@
                 <div class="cl2-title">등기신청</div>
                 <div class="cl2-desc">법원 등기소에 건물 소유권 보존 등기 신청 · 최종 완료</div>
               </div>
-              <span class="cl2-badge" id="s9-badge" data-status="todo">미착수</span>
+              <span class="cl2-badge" id="s9-badge" data-status="todo">미확인</span>
               <span class="cl2-arrow" id="s9-arrow">▼</span>
             </div>
             <div class="cl2-card-body" id="s9-body">
@@ -1187,10 +1197,9 @@
                 <li>등기 완료 후 등기사항증명서 발급 확인</li>
               </ul>
               <div class="cl2-status-row">
-                <button class="cl2-sb done"    onclick="setStatus(9,'done',event)">✓ 완료</button>
-                <button class="cl2-sb ongoing" onclick="setStatus(9,'ongoing',event)">⏳ 진행중</button>
-                <button class="cl2-sb todo active" onclick="setStatus(9,'todo',event)">○ 미착수</button>
-                <button class="cl2-sb na"      onclick="setStatus(9,'na',event)">— 해당없음</button>
+                <button class="cl2-confirm-btn" id="s9-confirm" onclick="toggleDone(9,event)">
+                  <span class="cl2-chk-icon"></span>확인 완료
+                </button>
               </div>
             </div>
           </div>
@@ -1310,7 +1319,6 @@
     const TOTAL = 9;
     const stepStatuses = {};
     for (let i = 1; i <= TOTAL; i++) stepStatuses[i] = 'todo';
-    const STATUS_LABELS = { done: '완료', ongoing: '진행중', todo: '미착수', na: '해당없음' };
 
     function toggleStep(n) {
       const body  = document.getElementById('s' + n + '-body');
@@ -1322,33 +1330,43 @@
       if (!isOpen) { body.classList.add('open'); arrow.classList.add('open'); }
     }
 
-    function setStatus(n, status, e) {
+    function toggleDone(n, e) {
       if (e) e.stopPropagation();
-      stepStatuses[n] = status;
+      const isDone = stepStatuses[n] === 'done';
+      const newStatus = isDone ? 'todo' : 'done';
+      stepStatuses[n] = newStatus;
 
-      // 뱃지 업데이트
+      // 뱃지
       const badge = document.getElementById('s' + n + '-badge');
-      if (badge) { badge.textContent = STATUS_LABELS[status]; badge.dataset.status = status; }
+      if (badge) {
+        badge.textContent = newStatus === 'done' ? '확인 완료' : '미확인';
+        badge.dataset.status = newStatus;
+      }
 
-      // 카드 data-status 업데이트
+      // 카드 테두리
       const card = document.querySelector('[data-step="' + n + '"]');
-      if (card) card.dataset.status = status;
+      if (card) card.dataset.status = newStatus;
 
-      // 버튼 active 업데이트
-      const body = document.getElementById('s' + n + '-body');
-      if (body) {
-        body.querySelectorAll('.cl2-sb').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = body.querySelector('.cl2-sb.' + status);
-        if (activeBtn) activeBtn.classList.add('active');
+      // 버튼 스타일
+      const btn = document.getElementById('s' + n + '-confirm');
+      if (btn) {
+        const icon = btn.querySelector('.cl2-chk-icon');
+        if (newStatus === 'done') {
+          btn.classList.add('is-done');
+          if (icon) icon.textContent = '✓';
+        } else {
+          btn.classList.remove('is-done');
+          if (icon) icon.textContent = '';
+        }
       }
 
       updateProgress();
     }
 
+    function setStatus(n, status, e) { toggleDone(n, e); }
+
     function updateProgress() {
-      const doneCount    = Object.values(stepStatuses).filter(s => s === 'done').length;
-      const ongoingCount = Object.values(stepStatuses).filter(s => s === 'ongoing').length;
-      const naCount      = Object.values(stepStatuses).filter(s => s === 'na').length;
+      const doneCount = Object.values(stepStatuses).filter(s => s === 'done').length;
       const pct = Math.round(doneCount / TOTAL * 100);
 
       const counterEl = document.querySelector('.text-2.arial-bold-chathams-blue-24px');
@@ -1372,11 +1390,11 @@
         if (sumMsg) sumMsg.textContent = '모든 건축 절차가 완료되었습니다. 결제를 진행하세요.';
       } else {
         if (btn) btn.disabled = true;
-        if (msgEl) { msgEl.textContent = '모든 절차(9/9)를 완료로 표시하면 결제 버튼이 활성화됩니다. (현재 ' + doneCount + '/9 완료)'; msgEl.classList.remove('complete'); }
+        if (msgEl) { msgEl.textContent = '모든 절차(9/9)를 확인 완료하면 결제 버튼이 활성화됩니다. (현재 ' + doneCount + '/9 완료)'; msgEl.classList.remove('complete'); }
         if (sumMsg) {
-          sumMsg.textContent = (doneCount + ongoingCount > 0)
-            ? '완료 ' + doneCount + '단계 · 진행중 ' + ongoingCount + '단계 · 해당없음 ' + naCount + '단계'
-            : '각 절차의 진행 상황을 선택해 주세요';
+          sumMsg.textContent = doneCount > 0
+            ? '확인 완료 ' + doneCount + '단계 · 미확인 ' + (TOTAL - doneCount) + '단계'
+            : '각 절차를 확인하고 확인 완료 버튼을 눌러주세요';
         }
       }
     }
