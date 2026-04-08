@@ -725,6 +725,14 @@ body {
   padding: 3px 9px;
   border-radius: 20px;
 }
+/* 거래번호 — 길어서 줄바꿈 허용 */
+.pay-tid {
+  font-size: 11px;
+  color: #9ca3af;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
 .pay-opts-toggle {
   display: flex;
   align-items: center;

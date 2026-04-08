@@ -404,6 +404,9 @@
             }
           }
 
+          const orderedAt = fmtDate(p.ordered_at);
+          const qty = p.quantity || 1;
+
           html += `
             <div class="pay-card">
               <div class="pay-card-header">
@@ -412,9 +415,12 @@
               </div>
               <table class="pay-card-table">
                 <tr><td class="pay-label">상품명</td><td class="pay-value">${itemName}</td></tr>
+                <tr><td class="pay-label">수량</td><td class="pay-value">${qty}개</td></tr>
                 ${optionsHtml}
                 <tr><td class="pay-label">결제 방법</td><td class="pay-value">${method}</td></tr>
-                <tr><td class="pay-label">결제 일시</td><td class="pay-value">${approvedAt}</td></tr>
+                <tr><td class="pay-label">주문 일시</td><td class="pay-value">${orderedAt}</td></tr>
+                <tr><td class="pay-label">결제 승인 일시</td><td class="pay-value">${approvedAt}</td></tr>
+                <tr><td class="pay-label">거래 번호</td><td class="pay-value pay-tid">${p.tid || '-'}</td></tr>
               </table>
               <div class="pay-total-row">
                 <span class="pay-total-label">결제 금액</span>

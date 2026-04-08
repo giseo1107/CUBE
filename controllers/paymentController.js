@@ -283,7 +283,7 @@ exports.history = async (req, res) => {
         try {
             // selected_options 컬럼이 존재하는 경우
             [rows] = await db.query(
-                `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
+                `SELECT o.order_id, o.total_amount, o.status, o.ordered_at, o.quantity,
                         p.tid, p.payment_method_type, p.item_name, p.approved_at, p.selected_options
                  FROM orders o
                  LEFT JOIN payments p ON o.order_id = p.order_id
