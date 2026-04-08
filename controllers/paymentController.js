@@ -261,15 +261,32 @@ exports.history = async (req, res) => {
             return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
         }
 
-        const [rows] = await db.query(
-            `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
-                    p.tid, p.payment_method_type, p.item_name, p.approved_at, p.selected_options
-             FROM orders o
-             LEFT JOIN payments p ON o.order_id = p.order_id
-             WHERE o.user_id = ?
-             ORDER BY o.ordered_at DESC`,
-            [userId]
-        );
+        let rows;
+        try {
+            // selected_options 컬럼이 존재하는 경우
+            [rows] = await db.query(
+                `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
+                        p.tid, p.payment_method_type, p.item_name, p.approved_at, p.selected_options
+                 FROM orders o
+                 LEFT JOIN payments p ON o.order_id = p.order_id
+                 WHERE o.user_id = ?
+                 ORDER BY o.ordered_at DESC`,
+                [userId]
+            );
+        } catch (colErr) {
+            // selected_options 컬럼이 아직 없는 경우 — 컬럼 없이 재시도
+            console.warn('[history] selected_options 컬럼 없음, 폴백 쿼리 실행:', colErr.message);
+            [rows] = await db.query(
+                `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
+                        p.tid, p.payment_method_type, p.item_name, p.approved_at
+                 FROM orders o
+                 LEFT JOIN payments p ON o.order_id = p.order_id
+                 WHERE o.user_id = ?
+                 ORDER BY o.ordered_at DESC`,
+                [userId]
+            );
+            rows = rows.map(r => ({ ...r, selected_options: null }));
+        }
 
         return res.json({ success: true, payments: rows });
 
