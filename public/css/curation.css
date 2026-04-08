@@ -1013,10 +1013,8 @@
   width: 100%;
 }
 
-/* Badge overlays (할인, 신규) — base */
-.curation-shop .container-7,
-.curation-shop .container-19,
-.curation-shop .container-22 {
+/* Badge overlays (할인, 신규) */
+.curation-shop .container-7 {
   align-items: center;
   justify-content: center;
   background-color: var(--chathams-blue);
@@ -1028,27 +1026,9 @@
   width: auto;
   min-width: 52px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-}
-
-/* absolute 배지 (container-7: 카페형·일반 주거형) */
-.curation-shop .container-7 {
   position: absolute;
   left: 16px;
   top: 16px;
-}
-
-/* container-19: cs_4(절대위치 배경) 안에서 margin으로 위치 조정 */
-.curation-shop .container-19 {
-  position: relative;
-  margin-left: 16px;
-  margin-top: 16px;
-}
-
-/* container-22: cs_6(절대위치 배경) 안에서 margin으로 위치 조정 */
-.curation-shop .container-22 {
-  position: relative;
-  margin-left: 16px;
-  margin-top: 16px;
 }
 
 /* 할인 배지 — 빨간색 */
