@@ -327,15 +327,42 @@
       }
       .footer-bottom {
         width: 100% !important;
+        height: auto !important;
         margin-left: 0 !important;
-        padding: 0 clamp(24px, 5vw, 80px);
-        box-sizing: border-box;
-      }
-      .checklist .container-36 { width: 100% !important; }
-      .checklist .container-37 {
-        width: 100% !important;
+        padding: 0 clamp(24px, 5vw, 80px) 24px !important;
+        box-sizing: border-box !important;
+        position: static !important;
+        display: flex !important;
+        flex-direction: column !important;
         gap: 0 !important;
-        justify-content: space-between;
+      }
+      .checklist .container-36 {
+        position: static !important;
+        width: 100% !important;
+        height: 1px !important;
+        border-top: 1px solid var(--ebony-clay, #1e2939) !important;
+        border-top-style: solid !important;
+      }
+      .checklist .container-37 {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        gap: 0 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        padding-top: 20px !important;
+        top: auto !important;
+        left: auto !important;
+      }
+      .checklist .container-38 {
+        width: auto !important;
+        height: auto !important;
+      }
+      .checklist .container-39 {
+        width: auto !important;
+        height: auto !important;
       }
       #cl-pay-banner {
         margin: 48px clamp(16px, 3vw, 64px) 32px !important;
