@@ -725,6 +725,57 @@ body {
   padding: 3px 9px;
   border-radius: 20px;
 }
+.pay-opts-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1a4f85;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pay-opts-toggle:hover {
+  background: #dbeafe;
+}
+.pay-opts-arrow {
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+.pay-opts-list {
+  display: none;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.pay-opt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+.pay-opt-row:last-child {
+  border-bottom: none;
+}
+.pay-opt-name {
+  color: #374151;
+}
+.pay-opt-price {
+  color: #1a4f85;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
 .pay-empty {
   text-align: center;
   padding: 48px 20px;

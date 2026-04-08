@@ -370,13 +370,37 @@
           const approvedAt = fmtDate(p.approved_at || p.ordered_at);
           const itemName = p.item_name || '상품';
 
-          // 선택 옵션 태그 렌더링
+          // 선택 옵션 토글 렌더링 (cart와 동일한 방식)
           let optionsHtml = '';
           if (p.selected_options) {
-            const opts = p.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+            let opts = p.selected_options.split(',').map(s => s.trim()).filter(Boolean);
+            // 커스텀큐브: 첫 항목(커스텀큐브:id) 제거
+            if (opts.length > 0 && opts[0].startsWith('커스텀큐브:')) opts = opts.slice(1);
             if (opts.length > 0) {
-              const tags = opts.map(opt => `<span class="pay-option-tag">${opt}</span>`).join('');
-              optionsHtml = `<tr><td class="pay-label">선택 옵션</td><td class="pay-value"><div class="pay-options-wrap">${tags}</div></td></tr>`;
+              const rows = opts.map(opt => {
+                const colonIdx = opt.lastIndexOf(':');
+                let name, priceHtml;
+                if (colonIdx > 0 && /^\d+$/.test(opt.slice(colonIdx + 1))) {
+                  name      = opt.slice(0, colonIdx).trim();
+                  const pr  = parseInt(opt.slice(colonIdx + 1), 10);
+                  priceHtml = `<span class="pay-opt-price">+${pr.toLocaleString('ko-KR')}원</span>`;
+                } else {
+                  name      = opt;
+                  priceHtml = '';
+                }
+                return `<div class="pay-opt-row"><span class="pay-opt-name">${name}</span>${priceHtml}</div>`;
+              }).join('');
+              optionsHtml = `
+                <tr>
+                  <td class="pay-label" style="vertical-align:top;padding-top:14px;">선택 옵션</td>
+                  <td class="pay-value" style="padding:10px 0;">
+                    <button class="pay-opts-toggle" onclick="togglePayOpts(this)" aria-expanded="false">
+                      <span class="pay-opts-arrow">▼</span>
+                      <span>옵션 보기</span>
+                    </button>
+                    <div class="pay-opts-list">${rows}</div>
+                  </td>
+                </tr>`;
             }
           }
 
@@ -409,6 +433,16 @@
             <p class="pay-empty-text">결제 내역을 불러올 수 없습니다.</p>
           </div>`;
       }
+    }
+
+    function togglePayOpts(btn) {
+      const list   = btn.nextElementSibling;
+      const arrow  = btn.querySelector('.pay-opts-arrow');
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      list.style.display = isOpen ? 'none' : 'block';
+      arrow.textContent  = isOpen ? '▼' : '▲';
+      btn.querySelector('span:last-child').textContent = isOpen ? '옵션 보기' : '옵션 닫기';
     }
 
     // ========================================

@@ -176,20 +176,38 @@ exports.approve = async (req, res) => {
         }
 
         // 결제 상세 정보 저장 (payments 테이블에 item_name, selected_options 등 상세 저장)
-        await db.query(
-            `INSERT INTO payments
-               (order_id, tid, payment_method_type, item_name, total_amount, approved_at, selected_options)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [
-                orderId,
-                kakaoData.tid,
-                kakaoData.payment_method_type || 'CARD',
-                pending.item_name,
-                pending.total_amount,
-                kakaoData.approved_at || new Date(),
-                pending.selected_options || null,
-            ]
-        );
+        try {
+            await db.query(
+                `INSERT INTO payments
+                   (order_id, tid, payment_method_type, item_name, total_amount, approved_at, selected_options)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    orderId,
+                    kakaoData.tid,
+                    kakaoData.payment_method_type || 'CARD',
+                    pending.item_name,
+                    pending.total_amount,
+                    kakaoData.approved_at || new Date(),
+                    pending.selected_options || null,
+                ]
+            );
+        } catch (colErr) {
+            // selected_options 컬럼이 아직 없는 경우 — 컬럼 제외하고 재시도
+            console.warn('[approve] selected_options 컬럼 없음, 폴백 INSERT:', colErr.message);
+            await db.query(
+                `INSERT INTO payments
+                   (order_id, tid, payment_method_type, item_name, total_amount, approved_at)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                [
+                    orderId,
+                    kakaoData.tid,
+                    kakaoData.payment_method_type || 'CARD',
+                    pending.item_name,
+                    pending.total_amount,
+                    kakaoData.approved_at || new Date(),
+                ]
+            );
+        }
 
         // 결제 완료 정보를 세션에 저장 (success.html에서 표시용)
         req.session.lastPayment = {
