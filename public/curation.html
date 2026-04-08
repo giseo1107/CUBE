@@ -502,6 +502,14 @@
     </div><!-- /.curation-shop.screen -->
     <script src="js/navbar.js"></script>
     <script>
+      // 배지 텍스트에 따라 할인/신규 클래스 분리
+      document.querySelectorAll('.container-7, .container-19, .container-22').forEach(function(badge) {
+        var text = badge.textContent.trim();
+        if (text === '할인') badge.classList.add('badge--discount');
+        else if (text === '신규') badge.classList.add('badge--new');
+      });
+    </script>
+    <script>
       (function () {
         var grid = document.querySelector('.container-18');
         var currentFilter = '전체';

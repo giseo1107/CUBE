@@ -1013,39 +1013,76 @@
   width: 100%;
 }
 
-/* Badge overlays (할인, 신규) */
-.curation-shop .container-7 {
-  align-items: flex-start;
+/* Badge overlays (할인, 신규) — base */
+.curation-shop .container-7,
+.curation-shop .container-19,
+.curation-shop .container-22 {
+  align-items: center;
+  justify-content: center;
   background-color: var(--chathams-blue);
-  border-radius: 8px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  height: 40px;
-  left: 20px;
-  padding: 13px 16px 0;
+  height: auto;
+  padding: 6px 16px;
+  width: auto;
+  min-width: 52px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* absolute 배지 (container-7: 카페형·일반 주거형) */
+.curation-shop .container-7 {
   position: absolute;
-  top: 20px;
-  width: 58px;
+  left: 16px;
+  top: 16px;
+}
+
+/* container-19: cs_4(절대위치 배경) 안에서 margin으로 위치 조정 */
+.curation-shop .container-19 {
+  position: relative;
+  margin-left: 16px;
+  margin-top: 16px;
+}
+
+/* container-22: cs_6(절대위치 배경) 안에서 margin으로 위치 조정 */
+.curation-shop .container-22 {
+  position: relative;
+  margin-left: 16px;
+  margin-top: 16px;
+}
+
+/* 할인 배지 — 빨간색 */
+.curation-shop .badge--discount {
+  background: linear-gradient(135deg, #e03131 0%, #c92a2a 100%) !important;
+  box-shadow: 0 3px 14px rgba(224,49,49,0.5) !important;
+}
+
+/* 신규 배지 — 초록색 */
+.curation-shop .badge--new {
+  background: linear-gradient(135deg, #2f9e44 0%, #237032 100%) !important;
+  box-shadow: 0 3px 14px rgba(47,158,68,0.5) !important;
 }
 
 .curation-shop .text-16 {
-  align-items: flex-start;
+  align-items: center;
   align-self: stretch;
   display: flex;
-  height: 16px;
+  height: auto;
   position: relative;
   width: 100%;
+  justify-content: center;
 }
 
 .curation-shop .text-17 {
-  letter-spacing: 0;
-  line-height: 21px;
-  margin-bottom: -4px;
-  margin-right: -0.23px;
-  margin-top: -1px;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin: 0;
   position: relative;
   white-space: nowrap;
   width: fit-content;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
 }
 
 /* Thumbnail icon (bottom-right of card image) */
