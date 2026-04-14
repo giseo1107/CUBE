@@ -185,23 +185,13 @@
         bodyChild = bodyChild.parentElement;
       }
 
-      if (bodyChild !== document.body) {
-        // ── Anima 페이지 ────────────────────────────────
-        // footer의 절대 Y 위치를 구해 래퍼 높이를 줄인다 (빈 공간 제거).
-        // offsetTop 체인 대신 getBoundingClientRect 로 정확히 계산.
-        const wrapperRect = bodyChild.getBoundingClientRect();
-        const footerRect  = existing.getBoundingClientRect();
-        const footerTop   = (footerRect.top - wrapperRect.top) + window.scrollY;
+      // 기존 footer 숨기기 (래퍼 높이는 건드리지 않음 — 조작 시 다른 absolute 요소 레이아웃 파괴)
+      existing.style.display = 'none';
 
-        if (footerTop > 0) {
-          bodyChild.style.height = footerTop + 'px';
-        }
-        existing.style.display = 'none';
-        // body 레벨(래퍼 바로 뒤)에 새 footer 삽입
+      // body 레벨 래퍼 바로 뒤에 새 footer 삽입 (Anima 래퍼 밖, normal-flow)
+      if (bodyChild !== document.body) {
         bodyChild.after(footer);
       } else {
-        // ── 커스텀 페이지(body 직속 footer) ─────────────
-        existing.style.display = 'none';
         document.body.appendChild(footer);
       }
     } else {
