@@ -154,7 +154,6 @@
           <li><a href="/editor.html">커스텀 큐브</a></li>
           <li><a href="/cubegallery.html">큐브 갤러리</a></li>
           <li><a href="/curation.html">큐레이션 샵</a></li>
-          <li><a href="/usedItems.html">중고 큐브마켓</a></li>
         </ul>
       </div>
 
@@ -179,24 +178,27 @@
     const existing = document.querySelector('footer');
 
     if (existing) {
-      const parent = existing.parentElement;
+      // body의 직접 자식 조상(Anima 최상위 래퍼)을 찾는다.
+      // footer가 여러 단계 중첩돼 있어도 body 레벨 div를 기준으로 처리.
+      let bodyChild = existing;
+      while (bodyChild.parentElement && bodyChild.parentElement !== document.body) {
+        bodyChild = bodyChild.parentElement;
+      }
 
-      if (parent && parent !== document.body) {
+      if (bodyChild !== document.body) {
         // ── Anima 페이지 ────────────────────────────────
-        // Anima 래퍼(position:relative, 고정 height) 안에 footer가
-        // position:absolute 로 박혀있는 구조.
-        //
-        // 처리 순서:
-        //   1) 기존 footer의 offsetTop(= 콘텐츠 끝)까지 래퍼 높이를 줄인다
-        //      → 아래 빈 공간(옛 footer 자리) 제거
-        //   2) 기존 footer 숨기기
-        //   3) 새 footer를 래퍼 바로 뒤에 삽입(body 레벨, normal-flow)
-        const footerTop = existing.offsetTop;
+        // footer의 절대 Y 위치를 구해 래퍼 높이를 줄인다 (빈 공간 제거).
+        // offsetTop 체인 대신 getBoundingClientRect 로 정확히 계산.
+        const wrapperRect = bodyChild.getBoundingClientRect();
+        const footerRect  = existing.getBoundingClientRect();
+        const footerTop   = (footerRect.top - wrapperRect.top) + window.scrollY;
+
         if (footerTop > 0) {
-          parent.style.height = footerTop + 'px';
+          bodyChild.style.height = footerTop + 'px';
         }
         existing.style.display = 'none';
-        parent.after(footer);
+        // body 레벨(래퍼 바로 뒤)에 새 footer 삽입
+        bodyChild.after(footer);
       } else {
         // ── 커스텀 페이지(body 직속 footer) ─────────────
         existing.style.display = 'none';
