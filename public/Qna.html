@@ -343,11 +343,18 @@
   <style>
     /* ── 고정 높이 해제 — 아코디언 펼칠 때 아래로 밀리도록 ── */
     .qu38a .p-k        { height: auto !important; min-height: 100vh; }
-    .qu38a .section-1  { height: auto !important; }
+    .qu38a .section-1  { height: auto !important; margin-bottom: 80px !important; }
     .qu38a .container-10 { height: auto !important; }
     .qu38a .container-2  { height: auto !important; }
     .qu38a .primitivediv-1 { height: auto !important; margin-bottom: 0 !important; }
     .qu38a .primitivediv   { height: auto !important; }
+
+    /* ── footer 절대 위치 해제 ── */
+    .qu38a .footer {
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
+    }
 
     /* ── 답변 패널 슬라이드 애니메이션 ── */
     .faq-answer-panel {
