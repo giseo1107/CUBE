@@ -174,14 +174,16 @@
     </div>
   `;
 
-  // ── 기존 <footer> 교체 or body 끝에 추가 ───────────────
+  // ── 기존 <footer> 숨기고 body 끝에 추가 ───────────────
   function mount() {
+    // Anima 페이지들은 footer가 position:absolute 로 부모 컨테이너 안에 갇혀있어서
+    // replaceWith() 하면 동일 위치에 갇혀 보이지 않음.
+    // 대신 기존 footer를 숨기고 body 최하단에 새 footer를 직접 붙인다.
     const existing = document.querySelector('footer');
     if (existing) {
-      existing.replaceWith(footer);
-    } else {
-      document.body.appendChild(footer);
+      existing.style.display = 'none';
     }
+    document.body.appendChild(footer);
   }
 
   document.readyState === 'loading'
