@@ -16,7 +16,7 @@
       flex-direction: column;
       width: 100%;
       box-sizing: border-box;
-      margin-top: 80px;
+      margin-top: 20px;
     }
 
     #g-footer * { box-sizing: border-box; }
