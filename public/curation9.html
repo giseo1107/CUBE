@@ -457,13 +457,12 @@
       const options = document.getElementById('buy-options')?.value || '';
       const itemName = document.querySelector('#buy-form [name="product_name"]')?.value || '상품';
 
-      sessionStorage.setItem('checklistPayData', JSON.stringify({
+      requestKakaoPay({
         item_name:        itemName,
         total_amount:     total,
         quantity:         1,
         selected_options: options || null,
-      }));
-      location.href = '/checklist.html';
+      });
     }
   </script>
   <script src="/js/payment.js"></script>

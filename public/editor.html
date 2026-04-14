@@ -1948,12 +1948,11 @@ function goCheckout() {
         return;
     }
     const title = sanitizeInput(document.getElementById('design-title').value.trim() || '커스텀 큐브');
-    sessionStorage.setItem('checklistPayData', JSON.stringify({
+    requestKakaoPay({
         item_name: '커스텀 큐브 - ' + title,
         total_amount: total,
-        quantity: 1
-    }));
-    location.href = '/checklist.html';
+        quantity: 1,
+    });
 }
 
 // ============ 장바구니 담기 ============

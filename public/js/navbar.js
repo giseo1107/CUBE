@@ -11,7 +11,6 @@
     { label: '큐브 갤러리',   href: 'cubegallery.html' },
     { label: '큐레이션 샵',   href: 'curation.html' },
     { label: '방문 예약',     href: 'visit-reservation.html' },
-    { label: '장바구니',     href: 'cart.html' },
     { label: 'QnA 및 후기',  href: 'Qna.html' },
     
   ];
@@ -257,6 +256,64 @@
       transform: translateY(-1px);
     }
 
+    /* 장바구니 버튼 */
+    #g-nav .gn-cart-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    #g-nav .gn-cart-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border: 1.5px solid rgba(175, 249, 245, 0.4);
+      transition: border-color 0.2s, opacity 0.2s;
+      text-decoration: none;
+    }
+    #g-nav .gn-cart-wrap:hover .gn-cart-btn {
+      border-color: #aff9f5;
+      opacity: 0.75;
+    }
+    #g-nav .gn-cart-tooltip {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 24, 40, 0.92);
+      color: #fff;
+      font-family: "Baloo Da 2", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 7px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10000;
+    }
+    #g-nav .gn-cart-tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-bottom-color: rgba(16, 24, 40, 0.92);
+    }
+    #g-nav .gn-cart-wrap:hover .gn-cart-tooltip {
+      opacity: 1;
+    }
+
     /* 바디 여백 제거 (히어로 이미지와 자연스럽게 연동) */
     body { padding-top: 0 !important; }
   `;
@@ -278,6 +335,10 @@
       </a>
       <ul class="gn-menu">${menuHTML}</ul>
       <div class="gn-auth" id="gn-auth">
+        <a href="/cart.html" class="gn-cart-wrap">
+          <div class="gn-cart-btn">🛒</div>
+          <span class="gn-cart-tooltip">장바구니로 이동합니다</span>
+        </a>
         <a href="/login.html">로그인</a>
         <a href="/signup.html">회원가입</a>
       </div>
@@ -339,6 +400,10 @@
 
         authEl.innerHTML = `
           <div class="gn-user-info">
+            <a href="/cart.html" class="gn-cart-wrap">
+              <div class="gn-cart-btn">🛒</div>
+              <span class="gn-cart-tooltip">장바구니로 이동합니다</span>
+            </a>
             <a href="/mypage.html" class="gn-avatar-wrap">
               <div class="gn-user-avatar">${avatarHTML}</div>
               <span class="gn-avatar-tooltip">프로필 이미지를 클릭하면 마이페이지로 이동합니다</span>
