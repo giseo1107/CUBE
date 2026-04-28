@@ -2304,10 +2304,10 @@ input[type="number"] {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: #f8f9fa;
+    background: transparent;
     padding: 6px 12px;
     border-radius: 12px;
-    border: 1px solid #eef0f5;
+    border: none;
 }
 
 /* 두 줄 묶음 컨테이너 */
