@@ -369,7 +369,7 @@
       const TIME_SLOTS = ['10:00', '11:30', '13:00', '14:30', '16:00'];
 
       // ── 상태 ──────────────────────────────────────────────
-      let currentMonth = 0;
+      let currentMonth = new Date().getMonth(); // 현재 달로 초기화
       let selectedDate  = null; // "2026-01-15" 형식
       let selectedTime  = null; // "10:00" 형식
       let peopleCount   = 1;
