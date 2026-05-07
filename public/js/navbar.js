@@ -231,6 +231,7 @@
       opacity: 1;
     }
     #g-nav .gn-user-name {
+      display: none;
       font-family: "Baloo Da 2", "Arial-Regular", Helvetica;
       font-size: 14px;
       font-weight: 700;
