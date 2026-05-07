@@ -158,7 +158,7 @@
     #g-nav .gn-user-info {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 10px;
       margin-right: -24px;   /* navbar 오른쪽으로 더 붙이기 */
     }
 
