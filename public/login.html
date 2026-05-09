@@ -47,9 +47,29 @@ function showAlert(message, type) {
 // 로그인 처리
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
-  const email = document.getElementById('email').value;
+
+  const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
+
+  // 관리자 로그인 분기
+  if (email === 'admin' && password === 'admin') {
+    try {
+      const res  = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: 'admin', password: 'admin' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/admin.html';
+      } else {
+        showAlert('관리자 로그인에 실패했습니다.', 'error');
+      }
+    } catch {
+      showAlert('서버 오류가 발생했습니다.', 'error');
+    }
+    return;
+  }
 
   try {
     const response = await fetch('/api/auth/login', {
