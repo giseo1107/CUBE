@@ -1,0 +1,150 @@
+const db = require('../config/db');
+
+// answer 컬럼 없으면 자동 추가
+db.execute(`ALTER TABLE qna_inquiries ADD COLUMN answer TEXT DEFAULT NULL`).catch(() => {});
+db.execute(`ALTER TABLE qna_inquiries ADD COLUMN status VARCHAR(20) DEFAULT 'pending'`).catch(() => {});
+
+const ADMIN_ID = 'admin';
+const ADMIN_PW = 'admin';
+
+// [POST] /api/admin/login
+exports.login = (req, res) => {
+  const { id, password } = req.body;
+  if (id === ADMIN_ID && password === ADMIN_PW) {
+    req.session.isAdmin = true;
+    return res.json({ success: true });
+  }
+  res.status(401).json({ success: false, message: '아이디 또는 비밀번호가 틀렸습니다.' });
+};
+
+// [POST] /api/admin/logout
+exports.logout = (req, res) => {
+  req.session.isAdmin = false;
+  res.json({ success: true });
+};
+
+// [GET] /api/admin/check
+exports.check = (req, res) => {
+  res.json({ isAdmin: !!req.session.isAdmin });
+};
+
+// [GET] /api/admin/users
+exports.getUsers = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT user_id, email, nickname, created_at, is_verified
+       FROM user ORDER BY created_at DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [DELETE] /api/admin/users/:id
+exports.deleteUser = async (req, res) => {
+  try {
+    await db.execute('DELETE FROM user WHERE user_id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [GET] /api/admin/orders
+exports.getOrders = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT o.order_id, o.total_amount, o.status, o.ordered_at,
+              u.email, u.nickname,
+              p.item_name, p.payment_method_type, p.approved_at, p.tid
+       FROM orders o
+       LEFT JOIN user u ON o.user_id = u.user_id
+       LEFT JOIN payments p ON o.order_id = p.order_id
+       ORDER BY o.ordered_at DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [GET] /api/admin/reservations
+exports.getReservations = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT r.res_id, r.visit_date, r.visit_time, r.people_count,
+              r.status, r.created_at, r.name, r.phone, r.email
+       FROM reservations r
+       ORDER BY r.visit_date DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [PATCH] /api/admin/reservations/:id
+exports.updateReservation = async (req, res) => {
+  try {
+    const { status } = req.body;
+    await db.execute('UPDATE reservations SET status = ? WHERE res_id = ?', [status, req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [GET] /api/admin/inquiries
+exports.getInquiries = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT inquiry_id, type, name, email, phone, title, content, status, answer, created_at
+       FROM qna_inquiries ORDER BY created_at DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [POST] /api/admin/inquiries/:id/reply
+exports.replyInquiry = async (req, res) => {
+  try {
+    const { answer } = req.body;
+    if (!answer?.trim()) return res.status(400).json({ success: false, message: '답변 내용을 입력해주세요.' });
+    await db.execute(
+      `UPDATE qna_inquiries SET answer = ?, status = 'answered' WHERE inquiry_id = ?`,
+      [answer.trim(), req.params.id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [GET] /api/admin/gallery
+exports.getGallery = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT gp.post_id, gp.title, gp.like_count, gp.view_count, gp.created_at,
+              COALESCE(gp.author_name, u.nickname) AS author_name
+       FROM gallery_posts gp
+       LEFT JOIN user u ON gp.user_id = u.user_id
+       ORDER BY gp.created_at DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [DELETE] /api/admin/gallery/:id
+exports.deleteGallery = async (req, res) => {
+  try {
+    await db.execute('DELETE FROM gallery_posts WHERE post_id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

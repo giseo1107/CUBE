@@ -16,6 +16,7 @@ const reviewRoutes = require('./routes/review');
 const cartRoutes = require('./routes/cart');
 const paymentRoutes = require('./routes/payment');
 const qnaRoutes = require('./routes/Qna');
+const adminRoutes = require('./routes/admin');
 const pool = require('./config/db');  // ← 기존 SSL 적용된 pool 가져오기
 
 const sessionStore = new MySQLStore({}, pool);  // ← pool 직접 전달 (SSL 옵션 불필요)
@@ -33,6 +34,8 @@ const NAV_EXCLUDE = new Set([
     '/login.html',
     '/signup.html',
     '/verify-email.html',
+    '/admin-login.html',
+    '/admin.html',
 ]);
 
 // ── 페이지별 제거할 선택자를 직접 지정 ──────────────────────
@@ -117,6 +120,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/qna', qnaRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 // 중고 큐브 상세 페이지 (깔끔한 URL)

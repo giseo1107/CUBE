@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 로그인</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+    }
+    .login-card {
+      background: #1e2939;
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo h1 {
+      color: #aff9f5;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .login-logo p {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      color: #9ca3af;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      color: #f9fafb;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #aff9f5; }
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-login:hover { opacity: 0.9; }
+    .error-msg {
+      color: #f87171;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <h1>🔐 관리자 로그인</h1>
+      <p>Container House 관리 시스템</p>
+    </div>
+    <div class="form-group">
+      <label>아이디</label>
+      <input type="text" id="adminId" placeholder="관리자 아이디" autocomplete="off" />
+    </div>
+    <div class="form-group">
+      <label>비밀번호</label>
+      <input type="password" id="adminPw" placeholder="비밀번호" />
+    </div>
+    <button class="btn-login" id="loginBtn">로그인</button>
+    <p class="error-msg" id="errorMsg">아이디 또는 비밀번호가 틀렸습니다.</p>
+  </div>
+
+  <script>
+    async function doLogin() {
+      const id  = document.getElementById('adminId').value.trim();
+      const pw  = document.getElementById('adminPw').value;
+      const err = document.getElementById('errorMsg');
+      err.style.display = 'none';
+      try {
+        const res  = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, password: pw })
+        });
+        const data = await res.json();
+        if (data.success) {
+          location.href = '/admin.html';
+        } else {
+          err.style.display = 'block';
+        }
+      } catch {
+        err.textContent = '서버 오류가 발생했습니다.';
+        err.style.display = 'block';
+      }
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', doLogin);
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  </script>
+</body>
+</html>
