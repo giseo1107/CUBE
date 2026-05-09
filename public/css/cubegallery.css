@@ -1394,6 +1394,32 @@
   transition: transform 0.15s;
 }
 .gallery-modal-like-btn.liked .like-heart { transform: scale(1.2); }
+
+/* 수정/삭제 버튼 */
+.gallery-modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+.gallery-action-btn {
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+.gallery-action-btn:hover { opacity: 0.85; }
+.gallery-edit-btn {
+  background: #667eea;
+  color: #fff;
+}
+.gallery-delete-btn {
+  background: #e74c3c;
+  color: #fff;
+}
 .gallery-modal-views {
   display: flex;
   align-items: center;

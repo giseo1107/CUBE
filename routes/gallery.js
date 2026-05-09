@@ -19,6 +19,7 @@ router.get('/',        controller.getPosts);
 router.get('/:id',     controller.getPostDetail);
 router.post('/',       upload.single('image'), controller.createPost);
 router.post('/:id/like', controller.toggleLike);
+router.put('/:id',     upload.single('image'), controller.updatePost);
 router.delete('/:id',  controller.deletePost);
 
 module.exports = router;

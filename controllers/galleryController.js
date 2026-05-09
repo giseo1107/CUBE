@@ -150,10 +150,51 @@ exports.createPost = async (req, res) => {
 // [DELETE] /api/gallery/:id
 exports.deletePost = async (req, res) => {
   try {
+    const userId = req.session?.userId;
+    if (!userId) return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+
+    const [rows] = await db.execute('SELECT user_id FROM gallery_posts WHERE post_id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
+    if (rows[0].user_id !== userId) return res.status(403).json({ success: false, message: '본인 게시글만 삭제할 수 있습니다.' });
+
     await db.execute('DELETE FROM gallery_posts WHERE post_id = ?', [req.params.id]);
     res.json({ success: true });
   } catch (err) {
     console.error('[gallery] 삭제 실패:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [PUT] /api/gallery/:id
+exports.updatePost = async (req, res) => {
+  try {
+    const userId = req.session?.userId;
+    if (!userId) return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+
+    const [rows] = await db.execute('SELECT user_id FROM gallery_posts WHERE post_id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
+    if (rows[0].user_id !== userId) return res.status(403).json({ success: false, message: '본인 게시글만 수정할 수 있습니다.' });
+
+    const { title, content, short_intro } = req.body;
+    if (!title || !content) return res.status(400).json({ success: false, message: '제목과 내용을 입력해주세요.' });
+
+    let imageUrl = req.file ? req.file.path : null;
+
+    if (imageUrl) {
+      await db.execute(
+        'UPDATE gallery_posts SET title=?, content=?, short_intro=?, image_url=? WHERE post_id=?',
+        [title, content, short_intro || null, imageUrl, req.params.id]
+      );
+    } else {
+      await db.execute(
+        'UPDATE gallery_posts SET title=?, content=?, short_intro=? WHERE post_id=?',
+        [title, content, short_intro || null, req.params.id]
+      );
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('[gallery] 수정 실패:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 };

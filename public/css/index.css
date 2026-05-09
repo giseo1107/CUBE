@@ -1,12 +1,12 @@
-/* =============================================
-   globals.css
-   ============================================= */
+/* ============================================================
+   MERGED CSS — globals + styleguide + index
+   ============================================================ */
 
+/* ── 1. External imports (must be first) ─────────────────── */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Baloo+Da+2:700");
-/* The following line is used to measure usage of this code. You can remove it if you want. */
-@import url("https://px.animaapp.com/6913699eb81481978075a3cc.6913699fb81481978075a3cf.0oZBW2v.hcp.png");
 
+/* ── 2. Custom Fonts ─────────────────────────────────────── */
 @font-face {
   font-family: "Arial-Regular";
   font-style: normal;
@@ -20,6 +20,7 @@
   src: url("../fonts/ariblk.ttf") format("truetype");
 }
 
+/* ── 3. Global Resets ────────────────────────────────────── */
 .screen a {
   display: contents;
   text-decoration: none;
@@ -29,30 +30,35 @@
   box-sizing: border-box;
 }
 
-
-/* =============================================
-   styleguide.css
-   ============================================= */
-
-:root { 
+/* ── 4. CSS Variables ────────────────────────────────────── */
+:root {
   --black: #000000;
   --chathams-blue: #1a4f85;
   --mirage: #101828;
   --santas-gray: #99a1af;
   --scarpa-flow: #4a5565;
   --white: #ffffff;
- 
+
   --font-size-l: 22px;
   --font-size-m: 20px;
   --font-size-s: 18px;
   --font-size-xl: 24px;
   --font-size-xs: 16px;
   --font-size-xxl: 32px;
-  --font-size-xxxl: 48px;
- 
+  --font-size-xxs: 14px;
+
   --font-family-arial-bold: "Arial-Bold", Helvetica;
   --font-family-arial-regular: "Arial-Regular", Helvetica;
   --font-family-baloo_da_2: "Baloo Da 2", Helvetica;
+}
+
+/* ── 5. Utility / Styleguide Classes ─────────────────────── */
+.balooda2-bold-white-20px {
+  color: var(--white);
+  font-family: var(--font-family-baloo_da_2);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
 }
 
 .arial-regular-normal-white-18px {
@@ -79,22 +85,6 @@
   font-weight: 700;
 }
 
-.balooda2-bold-white-20px {
-  color: var(--white);
-  font-family: var(--font-family-baloo_da_2);
-  font-size: var(--font-size-m);
-  font-style: normal;
-  font-weight: 700;
-}
-
-.arial-regular-normal-black-20px {
-  color: var(--black);
-  font-family: var(--font-family-arial-regular);
-  font-size: var(--font-size-m);
-  font-style: normal;
-  font-weight: 400;
-}
-
 .arial-bold-mirage-32px {
   color: var(--mirage);
   font-family: var(--font-family-arial-bold);
@@ -111,16 +101,13 @@
   font-weight: 400;
 }
 
-
-/* =============================================
-   index.css
-   ============================================= */
+/* ── 6. Component Styles (index) ─────────────────────────── */
 
 /* screen - index */
 
 .index {
   background-color: var(--white);
-  height: 4846px;
+  height: 4380px;
   overflow: hidden;
   position: relative;
   width: 1920px;
@@ -131,7 +118,7 @@
   height: 1285px;
   left: 0;
   position: absolute;
-  top: 478px;
+  top: 530px;
   width: 1920px;
 }
 
@@ -143,6 +130,15 @@
 }
 
 .index .paragraph-4 {
+  display: flex;
+  flex: 1;
+  margin-right: 412.0px;
+  margin-top: -5px;
+  max-height: 48px;
+}
+
+/* Legacy alias — Figma export uses paragraph-9 */
+.index .paragraph-9 {
   display: flex;
   flex: 1;
   margin-right: 412.0px;
@@ -164,6 +160,14 @@
 }
 
 .index .paragraph-5 {
+  display: flex;
+  flex: 1;
+  margin-right: 412.0px;
+  max-height: 48px;
+}
+
+/* Legacy alias */
+.index .paragraph-10 {
   display: flex;
   flex: 1;
   margin-right: 412.0px;
@@ -201,7 +205,8 @@
   width: 25px;
 }
 
-.index .paragraph-6 {
+.index .paragraph-6,
+.index .paragraph-11 {
   display: flex;
   margin-top: -1px;
   width: 314.45px;
@@ -214,7 +219,8 @@
   width: 315px;
 }
 
-.index .paragraph-7 {
+.index .paragraph-7,
+.index .paragraph-12 {
   display: flex;
   margin-top: -1px;
   width: 324.55px;
@@ -234,7 +240,8 @@
   width: 25px;
 }
 
-.index .paragraph-8 {
+.index .paragraph-8,
+.index .paragraph-13 {
   display: flex;
   margin-top: -1px;
   width: 283.42px;
@@ -249,7 +256,8 @@
   width: 284px;
 }
 
-.index .paragraph-9 {
+.index .paragraph-9-inner,
+.index .paragraph-14 {
   display: flex;
   margin-top: -1px;
   width: 251.86px;
@@ -264,12 +272,14 @@
   width: 252px;
 }
 
-.index .paragraph-10 {
+.index .paragraph-10-inner,
+.index .paragraph-15 {
   display: flex;
   margin-top: -1px;
   width: 243.75px;
 }
 
+.index .text-4-1,
 .index .text-4 {
   height: 28px;
   letter-spacing: 0;
@@ -279,21 +289,22 @@
   width: 244px;
 }
 
-.index .paragraph-11 {
+.index .paragraph-11-inner,
+.index .paragraph-16 {
   display: flex;
   margin-top: -1px;
   width: 235.3px;
 }
 
+.index .text-5-2,
 .index .text-5-1 {
   height: 28px;
-  letter-spacing: 0;
   line-height: 28px;
   margin-top: 1px;
-  white-space: nowrap;
   width: 236px;
 }
 
+/* wording1 — "고객님의 라이프스타일…" */
 .index .wording1 {
   height: 65px;
   left: 111px;
@@ -302,7 +313,8 @@
   width: 734px;
 }
 
-.index .paragraph-12 {
+.index .paragraph-12-inner,
+.index .paragraph-17 {
   display: flex;
   height: 32.5px;
   margin-top: -3px;
@@ -321,7 +333,8 @@
   width: 374px;
 }
 
-.index .paragraph-13 {
+.index .paragraph-13-inner,
+.index .paragraph-18 {
   display: flex;
   height: 32.5px;
   width: 438.14px;
@@ -339,6 +352,7 @@
   width: 526px;
 }
 
+/* CTA button — "커스텀 시작하기" */
 .index .button {
   align-items: flex-start;
   flex-direction: column;
@@ -350,7 +364,8 @@
   width: 185px;
 }
 
-.index .paragraph-14 {
+.index .paragraph-14-inner,
+.index .paragraph-19 {
   align-self: stretch;
   height: 56px;
   margin-bottom: -11.00px;
@@ -395,16 +410,17 @@
   width: 645px;
 }
 
+/* ── Products Section ─────────────────────────────────────── */
 .index .products-section {
   background-color: var(--white);
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 47px;
   height: 994px;
   left: calc(50.00% - 958px);
   position: absolute;
-  top: calc(50.00% - 573px);
-  width: 1320px;
+  top: calc(50.00% - 375px);
+  width: 1920px;
 }
 
 .index .wording {
@@ -414,7 +430,8 @@
   margin-top: 99px;
 }
 
-.index .paragraph-15 {
+.index .paragraph-15-inner,
+.index .paragraph-20 {
   display: flex;
   margin-left: 576.6px;
   margin-top: -5px;
@@ -424,7 +441,7 @@
 .index .text-11 {
   color: var(--mirage);
   font-family: var(--font-family-arial-bold);
-  font-size: var(--font-size-xxxl);
+  font-size: 48px;
   font-weight: 700;
   height: 48px;
   letter-spacing: 0;
@@ -623,7 +640,8 @@
   white-space: nowrap;
 }
 
-.index .paragraph-16 {
+.index .paragraph-16-inner,
+.index .paragraph-21 {
   display: flex;
   height: 26px;
   left: 100px;
@@ -690,23 +708,24 @@
   white-space: nowrap;
 }
 
+/* ── Footer ───────────────────────────────────────────────── */
 .index .footer {
   background-color: var(--mirage);
   display: flex;
   flex-direction: column;
   gap: 28px;
   height: 381px;
-  left: 0;
+  left: 1px;
   position: absolute;
-  top: 4465px;
+  top: 3999px;
   width: 1920px;
 }
 
 .index .footer-content {
   display: grid;
   gap: 48px;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  grid-template-rows: repeat(1,minmax(0,1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
   height: 164px;
   margin-left: 167px;
   margin-top: 58px;
@@ -722,7 +741,8 @@
   width: 100%;
 }
 
-.index .paragraph-17 {
+.index .paragraph-17-inner,
+.index .paragraph-22 {
   display: flex;
   height: 28px;
   left: 0;
@@ -806,7 +826,8 @@
   width: 100%;
 }
 
-.index .paragraph-18 {
+.index .paragraph-18-inner,
+.index .paragraph-23 {
   display: flex;
   height: 28px;
   left: 0;
@@ -836,6 +857,7 @@
   width: 79px;
 }
 
+.index .text-33,
 .index .text-34 {
   height: 24px;
   letter-spacing: 0;
@@ -845,18 +867,10 @@
   width: 79px;
 }
 
-.index .paragraph-19 {
-  display: flex;
-  margin-left: 0.2px;
-  width: 347.25px;
-}
-
-.index .text-33 {
+.index .paragraph-19-inner,
+.index .paragraph-24 {
   height: 24px;
-  letter-spacing: 0;
-  line-height: 24px;
-  white-space: nowrap;
-  width: 93px;
+  width: 347.25px;
 }
 
 .index .container-1 {
@@ -877,7 +891,8 @@
   width: 347px;
 }
 
-.index .paragraph-20 {
+.index .paragraph-20-inner,
+.index .paragraph-25 {
   display: flex;
   margin-top: -2px;
   width: 185.53px;
@@ -891,7 +906,8 @@
   width: 186px;
 }
 
-.index .paragraph-21 {
+.index .paragraph-21-inner,
+.index .paragraph-26 {
   display: flex;
   width: 219.42px;
 }
@@ -951,7 +967,8 @@
   width: 286.88px;
 }
 
-.index .paragraph-22 {
+.index .paragraph-22-inner,
+.index .paragraph-27 {
   align-self: stretch;
   height: 20px;
   position: relative;
@@ -961,7 +978,7 @@
 .index .x2026-container-hou {
   color: var(--santas-gray);
   font-family: var(--font-family-arial-regular);
-  font-size: 14px;
+  font-size: var(--font-size-xxs);
   font-weight: 400;
   left: 0;
   letter-spacing: 0;
@@ -976,6 +993,7 @@
   width: 152px;
 }
 
+/* ── Custom CTA Section ───────────────────────────────────── */
 .index .custom-cta-section {
   background-image: url(../main_img/customctasection.svg);
   background-position: 50% 50%;
@@ -984,7 +1002,7 @@
   left: calc(50.00% - 960px);
   overflow: hidden;
   position: absolute;
-  top: calc(50.00% + 457px);
+  top: calc(50.00% + 640px);
   width: 1920px;
 }
 
@@ -1002,7 +1020,7 @@
 .index .effect1 {
   background-color: var(--white);
   border-radius: 33554400px;
-  filter: blur(64px);;
+  filter: blur(64px);
   height: 384px;
   width: 384px;
 }
@@ -1010,7 +1028,7 @@
 .index .effect2 {
   background-color: var(--white);
   border-radius: 33554400px;
-  filter: blur(64px);;
+  filter: blur(64px);
   height: 384px;
   margin-top: 775px;
   width: 384px;
@@ -1090,17 +1108,34 @@
   top: 57px;
 }
 
-.index .paragraph-23 {
+.index .paragraph-23-inner,
+.index .paragraph-28 {
   display: flex;
   margin-left: 555.1px;
   margin-top: -5px;
   width: 424.12px;
 }
 
+/* 큐브 갤러리 heading */
 .index .text-37 {
   color: var(--white);
   font-family: var(--font-family-arial-bold);
-  font-size: var(--font-size-xxxl);
+  font-size: 48px;
+  font-weight: 700;
+  height: 48px;
+  letter-spacing: 0;
+  line-height: 48px;
+  margin-left: 95px;
+  text-align: center;
+  white-space: nowrap;
+  width: 235px;
+}
+
+/* Figma export legacy alias */
+.index .text-36-legacy {
+  color: var(--white);
+  font-family: var(--font-family-arial-bold);
+  font-size: 48px;
   font-weight: 700;
   height: 48px;
   letter-spacing: 0;
@@ -1119,181 +1154,126 @@
   height: 28px;
   letter-spacing: 0;
   line-height: 28px;
-  margin-left: 159.1px;
+  margin-left: 138.1px;
   text-align: center;
   white-space: nowrap;
-  width: 354px;
+  width: 260px;
 }
 
+/* ── Frame 20 — Cube Recommendation Section ───────────────── */
 .index .frame-20 {
-  background-color: var(--white);
-  height: 766px;
+  background-image: url(../main_img/frame-20.png);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 300px;
   left: 0;
+  overflow: hidden;
   position: absolute;
   top: 3699px;
+  transform: rotate(180deg);
   width: 1920px;
 }
 
 .index .button-1 {
   height: 60px;
-  left: calc(50% - 103px);
+  left: calc(50.00% + 254px);
   position: absolute;
-  top: 672px;
+  top: calc(50.00% + 188px);
   width: 206px;
 }
 
 .index .text-39 {
-  height: 28px;
+  color: var(--black);
+  font-family: var(--font-family-arial-bold);
+  font-size: 40px;
+  font-weight: 700;
+  left: 320px;
   letter-spacing: 0;
-  line-height: 28px;
-  margin-left: 34px;
-  margin-top: 16px;
+  line-height: 48px;
+  position: absolute;
   text-align: center;
+  top: 86px;
+  transform: rotate(-180deg);
   white-space: nowrap;
-  width: 138px;
+}
+
+/* 사용자 맞춤 큐브추천 heading */
+.index .text-41 {
+  color: var(--black);
+  font-family: var(--font-family-arial-bold);
+  font-size: 40px;
+  font-weight: 700;
+  left: 320px;
+  letter-spacing: 0;
+  line-height: 48px;
+  position: absolute;
+  text-align: center;
+  top: 86px;
+  transform: rotate(-180deg);
+  white-space: nowrap;
 }
 
 .index .text-40 {
   color: #000000e6;
   font-family: var(--font-family-arial-regular);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-m);
   font-weight: 400;
-  left: 652px;
+  left: 353px;
   letter-spacing: 0;
   line-height: 28px;
   position: absolute;
   text-align: center;
-  top: 90px;
-  white-space: nowrap;
-}
-
-.index .text-41 {
-  color: var(--black);
-  font-family: var(--font-family-arial-bold);
-  font-size: var(--font-size-xxxl);
-  font-weight: 700;
-  left: 746px;
-  letter-spacing: 0;
-  line-height: 48px;
-  position: absolute;
-  text-align: center;
-  top: 40px;
-  white-space: nowrap;
-}
-
-.index .text-42 {
-  left: 710px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: right;
-  top: 127px;
-  white-space: nowrap;
-}
-
-.index .text-43 {
-  left: 900px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: center;
-  top: 588px;
-  white-space: nowrap;
-}
-
-.index .text-44 {
-  left: 1198px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: left;
-  top: 400px;
-  white-space: nowrap;
-}
-
-.index .text-45 {
-  left: 655px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: right;
-  top: 400px;
-  white-space: nowrap;
-}
-
-.index .text-46 {
-  left: 1105px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: left;
-  top: 127px;
-  white-space: nowrap;
-}
-
-.index .frame-17 {
-  height: 330px;
-  left: 793px;
-  position: absolute;
-  top: 221px;
-  width: 330px;
-}
-
-.index .polygon-24 {
-  aspect-ratio: 1;
-  height: 443px;
-  left: -68px;
-  position: absolute;
-  top: -80px;
-  width: 465px;
-}
-
-.index .polygon-22 {
-  aspect-ratio: 1;
-  height: 351px;
-  left: -20px;
-  position: absolute;
-  top: -29px;
-  width: 369px;
-}
-
-.index .polygon-21 {
-  aspect-ratio: 1;
-  height: 263px;
-  left: 27px;
-  position: absolute;
-  top: 20px;
-  width: 276px;
-}
-
-.index .polygon-10 {
-  aspect-ratio: 1;
-  height: 182px;
-  left: 69px;
-  position: absolute;
-  top: 65px;
-  width: 191px;
-}
-
-.index .polygon-23-1 {
-  aspect-ratio: 1;
-  height: 115px;
-  left: 105px;
-  position: absolute;
-  top: 102px;
-  width: 121px;
-}
-
-.index .polygon-25 {
-  aspect-ratio: 1.32;
-  height: 240px;
-  left: 35px;
-  position: absolute;
-  top: 63px;
-  width: 316px;
+  top: 140px;
+  transform: rotate(-180deg);
 }
 
 .index .button-2 {
+  height: 44px;
+  left: calc(50.00% - 566px);
+  position: absolute;
+  top: calc(50.00% + 63px);
+  transform: rotate(-180deg);
+  width: 206px;
+}
+
+/* frame-17 polygon decorations */
+.index .frame-17 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.index .polygon-24 {
+  position: absolute;
+}
+
+.index .polygon-22 {
+  position: absolute;
+}
+
+.index .polygon-21 {
+  position: absolute;
+}
+
+.index .polygon-10 {
+  position: absolute;
+}
+
+.index .polygon-23-1 {
+  position: absolute;
+}
+
+.index .polygon-25 {
+  position: absolute;
+}
+
+/* ── Gallery & Hero Buttons ───────────────────────────────── */
+
+/* "큐브 갤러리 둘러보기" button */
+.index .button-2-gallery {
   align-items: flex-start;
   flex-direction: column;
   height: 60px;
@@ -1304,13 +1284,27 @@
   width: 206px;
 }
 
-.index .paragraph-24 {
+/* Figma export had button-3 for this */
+.index .button-3 {
+  align-items: flex-start;
+  flex-direction: column;
+  height: 60px;
+  left: calc(50.00% + 663px);
+  padding: 16px 0px 0px;
+  position: absolute;
+  top: calc(50.00% + 1195px);
+  width: 206px;
+}
+
+.index .paragraph-24-inner,
+.index .paragraph-29 {
   align-self: stretch;
   height: 28px;
   position: relative;
   width: 100%;
 }
 
+.index .text-42,
 .index .text-47 {
   left: 23px;
   letter-spacing: 0;
@@ -1337,6 +1331,7 @@
   width: 1270px;
 }
 
+/* ── Hero Main Wording ────────────────────────────────────── */
 .index .main_-wording {
   gap: 24px;
   height: 376px;
@@ -1349,12 +1344,15 @@
   height: 180px;
 }
 
-.index .paragraph-25 {
+.index .paragraph-25-inner,
+.index .paragraph-30 {
   display: flex;
   margin-top: -7px;
   width: 351.22px;
 }
 
+/* "미래를 담은" h1 */
+.index .text-47-h1,
 .index .text-52 {
   color: var(--white);
   font-family: var(--font-family-arial-bold);
@@ -1368,11 +1366,14 @@
   width: 352px;
 }
 
-.index .paragraph-26 {
+.index .paragraph-26-inner,
+.index .paragraph-31 {
   display: flex;
   width: 483.69px;
 }
 
+/* "컨테이너 하우스" */
+.index .text-48,
 .index .text-53 {
   color: var(--white);
   font-family: var(--font-family-arial-bold);
@@ -1390,12 +1391,14 @@
   height: 78px;
 }
 
-.index .paragraph-27 {
+.index .paragraph-27-inner,
+.index .paragraph-32 {
   display: flex;
   margin-top: -3px;
   width: 329.12px;
 }
 
+.index .text-45,
 .index .text-50 {
   color: #e5e7eb;
   font-family: var(--font-family-arial-regular);
@@ -1408,11 +1411,13 @@
   width: 330px;
 }
 
-.index .paragraph-28 {
+.index .paragraph-28-inner,
+.index .paragraph-33 {
   display: flex;
   width: 395.38px;
 }
 
+.index .text-46,
 .index .text-51 {
   color: #e5e7eb;
   font-family: var(--font-family-arial-regular);
@@ -1431,20 +1436,26 @@
   width: 789px;
 }
 
-.index .button-3 {
+/* "상담 신청하기" button — hero CTA */
+.index .button-4 {
+  background-color: var(--chathams-blue);
+  border-radius: 10px;
+  display: flex;
   gap: 12.6px;
   height: 62px;
   width: 206.31px;
 }
 
-.index .paragraph-29 {
+.index .paragraph-29-inner,
+.index .paragraph-34 {
   display: flex;
   margin-left: 37.3px;
   margin-top: 16px;
   width: 104.38px;
 }
 
-.index .text-48 {
+.index .text-43,
+.index .text-48-btn {
   height: 28px;
   letter-spacing: 0;
   line-height: 28px;
@@ -1476,7 +1487,7 @@
   left: 20.83%;
   position: relative;
   top: 20.83%;
-  width: 58.34%;
+  width: 58.33%;
 }
 
 .index .vector {
@@ -1489,12 +1500,13 @@
 
 .index .vector_2 {
   height: 114.29%;
-  left: 42.85%;
+  left: 42.86%;
   position: absolute;
   top: -7.15%;
-  width: 64.28%;
+  width: 64.29%;
 }
 
+/* "제품 둘러보기" button — ghost style */
 .index .button1 {
   background-color: #ffffff1a;
   border-radius: 10px;
@@ -1526,7 +1538,8 @@
   width: 180px;
 }
 
-.index .paragraph-30 {
+.index .paragraph-30-inner,
+.index .paragraph-35 {
   align-self: stretch;
   height: 56px;
   margin-bottom: -10.00px;
@@ -1534,6 +1547,7 @@
   width: 100%;
 }
 
+.index .text-44,
 .index .text-49 {
   left: -13px;
   letter-spacing: 0;
@@ -1544,13 +1558,10 @@
   width: 116px;
 }
 
+/* ── Navigation Bar ───────────────────────────────────────── */
 .index .top {
-  display: flex;
-  height: 80px;
   left: calc(50.00% - 910px);
-  position: absolute;
   top: calc(50.00% - 2353px);
-  width: 1821px;
 }
 
 .index .logo-nav {
@@ -1565,18 +1576,28 @@
   width: 78.42px;
 }
 
-.index .navigation {
-  display: flex;
-  margin-left: 452.6px;
-  margin-top: 30px;
-  width: 685.16px;
+/* Figma export had large negative margins — corrected */
+.index .logo-3 {
+  height: 80px;
+  margin-left: 31px;
+  width: 78.42px;
 }
 
-.index .paragraph-31 {
+.index .navigation {
+  margin-left: 452.6px;
+}
+
+.index .navigation-1 {
+  margin-left: 452.6px;
+}
+
+.index .paragraph-3 {
   display: flex;
   width: 68.3px;
 }
 
+/* nav link label */
+.index .text,
 .index .text-5 {
   height: 20px;
   letter-spacing: 0;
@@ -1585,13 +1606,21 @@
   width: 96px;
 }
 
+.index .paragraph-31-inner,
 .index .paragraph-3 {
+  display: flex;
+  width: 68.3px;
+}
+
+.index .paragraph-32-inner,
+.index .paragraph-4 {
   display: flex;
   margin-left: 78.7px;
   width: 68.3px;
 }
 
-.index .paragraph-32 {
+.index .paragraph-33-inner,
+.index .paragraph-5 {
   display: flex;
   margin-left: 78.7px;
   width: 73.67px;
@@ -1605,18 +1634,11 @@
   width: 102px;
 }
 
-.index .paragraph-33 {
+.index .paragraph-34-inner,
+.index .paragraph-6 {
   display: flex;
   margin-left: 79.3px;
   width: 55.42px;
-}
-
-.index .text-57 {
-  height: 20px;
-  letter-spacing: 0;
-  line-height: 20px;
-  white-space: nowrap;
-  width: 78px;
 }
 
 .index .login {
@@ -1628,36 +1650,29 @@
   width: 180px;
 }
 
-.index .paragraph-34 {
+.index .paragraph-7 {
   display: flex;
   margin-left: 31.9px;
   margin-top: 21.5px;
   width: 38.64px;
 }
 
-.index .text-58 {
+.index .text-5-1-nav {
   height: 20px;
-  letter-spacing: 0;
   line-height: 20px;
-  white-space: nowrap;
   width: 56px;
 }
 
-.index .paragraph-35 {
+.index .paragraph-8 {
   display: flex;
   margin-top: 21.5px;
   width: 51.53px;
 }
 
-.index .text-59 {
-  height: 20px;
-  letter-spacing: 0;
-  line-height: 20px;
-  white-space: nowrap;
-  width: 74px;
-}
+/* ── Shared / Modifier Classes ────────────────────────────── */
 
-.index .button-4 {
+/* Blue filled button — shared style */
+.index .button-5 {
   background-color: var(--chathams-blue);
   border-radius: 10px;
   display: flex;
@@ -1669,6 +1684,12 @@
   position: absolute;
 }
 
+.index .navigation-2 {
+  display: flex;
+  margin-top: 30px;
+  width: 685.16px;
+}
+
 .index .sub {
   object-fit: cover;
   position: absolute;
@@ -1678,6 +1699,18 @@
 .index .text-1-3 {
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+.index .text-5-3 {
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.index .top-2 {
+  display: flex;
+  height: 80px;
+  position: absolute;
+  width: 1821px;
 }
 
 .index .wording-2 {
@@ -1694,4 +1727,15 @@
 .index .wording2-2 {
   display: flex;
   flex-direction: column;
+}
+
+/* nav text widths — from updated file */
+.index .text-57,
+.index .text-58,
+.index .text-59 {
+  height: 20px;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  width: 78px;
 }

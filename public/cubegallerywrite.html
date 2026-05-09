@@ -288,31 +288,53 @@
         }
       }
 
+      // 수정 모드: ?edit=POST_ID 파라미터 감지
+      const editPostId = new URLSearchParams(location.search).get('edit');
+      if (editPostId) {
+        document.title = '수정하기 | Container House';
+        // 기존 데이터 불러와서 폼 채우기
+        fetch(`/api/gallery/${editPostId}`)
+          .then(r => r.json())
+          .then(d => {
+            if (!d.success) return;
+            const p = d.data;
+            document.getElementById('input-title').value   = p.title   || '';
+            document.getElementById('input-content').value = p.content || '';
+            const shortIntro = document.getElementById('input-short-intro');
+            if (shortIntro) shortIntro.value = p.short_intro || '';
+          })
+          .catch(() => {});
+        // 버튼 텍스트 변경
+        const submitTextEl = document.querySelector('.text-10');
+        if (submitTextEl) submitTextEl.textContent = '수정하기';
+      }
+
       // 폼 제출
       document.getElementById('write-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const submitBtn = this.querySelector('[type="submit"]');
         submitBtn.disabled = true;
-        submitBtn.querySelector('.text-10').textContent = '게시 중...';
+        const submitTextEl = submitBtn.querySelector('.text-10');
+        if (submitTextEl) submitTextEl.textContent = editPostId ? '수정 중...' : '게시 중...';
 
-        fetch('/api/gallery', {
-          method: 'POST',
-          body: new FormData(this)
-        })
+        const url    = editPostId ? `/api/gallery/${editPostId}` : '/api/gallery';
+        const method = editPostId ? 'PUT' : 'POST';
+
+        fetch(url, { method, body: new FormData(this) })
         .then(res => res.json())
         .then(result => {
           if (result.success) {
             window.location.href = 'cubegallery.html';
           } else {
-            alert(result.message || '게시 중 오류가 발생했습니다.');
+            alert(result.message || '오류가 발생했습니다.');
             submitBtn.disabled = false;
-            submitBtn.querySelector('.text-10').textContent = '게시하기';
+            if (submitTextEl) submitTextEl.textContent = editPostId ? '수정하기' : '게시하기';
           }
         })
         .catch(() => {
           alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
           submitBtn.disabled = false;
-          submitBtn.querySelector('.text-10').textContent = '게시하기';
+          if (submitTextEl) submitTextEl.textContent = editPostId ? '수정하기' : '게시하기';
         });
       });
     </script>
