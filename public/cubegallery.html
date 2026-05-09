@@ -95,6 +95,10 @@
         <div class="container-17" id="post-list">
           <div class="gallery-loading">불러오는 중...</div>
         </div><!-- /#post-list -->
+
+        <!-- 페이지네이션 -->
+        <div id="gallery-pagination" style="display:none; justify-content:center; align-items:center; gap:6px; margin-top:32px; flex-wrap:wrap;"></div>
+
       </div><!-- /.container-16 -->
 
       <!-- =============================================
@@ -233,11 +237,16 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     });
 
+    let _currentPage = 1;
+    let _currentQ    = '';
+
     async function loadPosts(page = 1, q = '') {
+      _currentPage = page;
+      _currentQ    = q;
       const list = document.getElementById('post-list');
       list.innerHTML = '<div class="gallery-loading">불러오는 중...</div>';
       try {
-        const res  = await fetch(`/api/gallery?page=${page}&limit=6&q=${encodeURIComponent(q)}`);
+        const res  = await fetch(`/api/gallery?page=${page}&limit=8&q=${encodeURIComponent(q)}`);
         const data = await res.json();
         if (!data.success) throw new Error(data.message);
 
@@ -245,6 +254,7 @@
 
         if (data.data.length === 0) {
           list.innerHTML = '<div class="gallery-empty">등록된 게시물이 없습니다.</div>';
+          renderPagination(data.pagination);
           return;
         }
 
@@ -252,10 +262,46 @@
         list.querySelectorAll('[data-post-id]').forEach(card => {
           card.addEventListener('click', () => openModal(card.dataset.postId));
         });
+        renderPagination(data.pagination);
       } catch (err) {
         list.innerHTML = '<div class="gallery-empty">게시물을 불러오지 못했습니다.</div>';
         console.error('[gallery] loadPosts:', err);
       }
+    }
+
+    function renderPagination({ page, totalPages }) {
+      const nav = document.getElementById('gallery-pagination');
+      if (totalPages <= 1) { nav.style.display = 'none'; return; }
+      nav.style.display = 'flex';
+
+      const btn = (label, targetPage, disabled, active) => {
+        const el = document.createElement('button');
+        el.textContent  = label;
+        el.disabled     = disabled;
+        el.style.cssText = `
+          min-width:36px; height:36px; padding:0 10px;
+          border-radius:8px; border:1px solid ${active ? '#667eea' : '#d1d5db'};
+          background:${active ? '#667eea' : '#fff'}; color:${active ? '#fff' : '#374151'};
+          font-size:14px; font-weight:${active ? '700' : '400'};
+          cursor:${disabled ? 'default' : 'pointer'}; opacity:${disabled ? '0.35' : '1'};
+          transition:all 0.15s;
+        `;
+        if (!disabled && !active) {
+          el.addEventListener('mouseover', () => { el.style.borderColor='#667eea'; el.style.color='#667eea'; });
+          el.addEventListener('mouseout',  () => { el.style.borderColor='#d1d5db'; el.style.color='#374151'; });
+        }
+        if (!disabled) el.addEventListener('click', () => loadPosts(targetPage, _currentQ));
+        return el;
+      };
+
+      nav.innerHTML = '';
+      nav.appendChild(btn('〈', page - 1, page === 1, false));
+
+      for (let i = 1; i <= totalPages; i++) {
+        nav.appendChild(btn(String(i), i, false, i === page));
+      }
+
+      nav.appendChild(btn('〉', page + 1, page === totalPages, false));
     }
 
     function renderCard(post) {

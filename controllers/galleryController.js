@@ -25,7 +25,7 @@ db.execute(`ALTER TABLE gallery_posts ADD COLUMN short_intro VARCHAR(500) DEFAUL
 exports.getPosts = async (req, res) => {
   try {
     const page   = Math.max(1, parseInt(req.query.page) || 1);
-    const limit  = Math.min(20, parseInt(req.query.limit) || 6);
+    const limit  = Math.min(20, parseInt(req.query.limit) || 8);
     const offset = (page - 1) * limit;
     const search = (req.query.q || '').trim();
 
@@ -46,7 +46,7 @@ exports.getPosts = async (req, res) => {
       `SELECT gp.*, COALESCE(gp.author_name, u.nickname) AS author_name
        FROM gallery_posts gp
        LEFT JOIN user u ON gp.user_id = u.user_id
-       ${where} ORDER BY gp.created_at DESC LIMIT ${limit} OFFSET ${offset}`,
+       ${where} ORDER BY gp.created_at ASC LIMIT ${limit} OFFSET ${offset}`,
       params
     );
 
