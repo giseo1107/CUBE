@@ -60,6 +60,22 @@
       box-shadow: 0 2px 24px rgba(0, 0, 0, 0.3);
     }
 
+    /* data-nav="light" 페이지: 흰 배경 + 어두운 텍스트 */
+    #g-nav.light {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+    #g-nav.light .gn-menu li a  { color: #2d3436; }
+    #g-nav.light .gn-menu li a:hover { color: #667eea; }
+    #g-nav.light .gn-auth button { color: #2d3436; }
+    #g-nav.light .gn-auth button:hover { color: #667eea; }
+    #g-nav.light .gn-user-name  { color: #2d3436; }
+    #g-nav.light .gn-cart-btn   { color: #2d3436; }
+    #g-nav.light .gn-logo-text  { color: #2d3436; }
+
     #g-nav * { box-sizing: border-box; }
 
     /* 내부 래퍼 */
@@ -352,10 +368,16 @@
   function initScroll() {
     // data-nav="hero" 가 있는 페이지만 투명 시작 → 스크롤 시 frosted glass
     // 그 외 페이지는 항상 불투명 (밝은 배경에서도 navbar가 보이도록)
-    const isHero = document.body.dataset.nav === 'hero';
+    const navMode = document.body.dataset.nav;
 
-    if (!isHero) {
-      // 비히어로 페이지: 처음부터 scrolled 상태 고정
+    if (navMode === 'light') {
+      // 밝은 배경 페이지: 흰 배경 + 어두운 텍스트 고정
+      nav.classList.add('light');
+      return;
+    }
+
+    if (navMode !== 'hero') {
+      // 일반 페이지: 처음부터 scrolled(어두운) 상태 고정
       nav.classList.add('scrolled');
       return;
     }
