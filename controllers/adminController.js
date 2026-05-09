@@ -32,7 +32,7 @@ exports.check = (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const [rows] = await db.execute(
-      `SELECT user_id, email, nickname, created_at, is_verified
+      `SELECT user_id, email, nickname, created_at, email_verified
        FROM user ORDER BY created_at DESC`
     );
     res.json({ success: true, data: rows });
@@ -74,8 +74,8 @@ exports.getReservations = async (req, res) => {
   try {
     const [rows] = await db.execute(
       `SELECT r.res_id, r.visit_date, r.visit_time, r.people_count,
-              r.status, r.created_at, r.name, r.phone, r.email
-       FROM reservations r
+              r.status, r.created_at, r.visitor_name AS name, r.phone, r.email
+       FROM reservation r
        ORDER BY r.visit_date DESC`
     );
     res.json({ success: true, data: rows });

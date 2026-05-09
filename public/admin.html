@@ -218,7 +218,7 @@ async function loadUsers() {
               <td>${u.email}</td>
               <td>${u.nickname || '-'}</td>
               <td>${fmtDate(u.created_at)}</td>
-              <td>${u.is_verified ? '<span class="badge badge-done">인증</span>' : '<span class="badge badge-wait">미인증</span>'}</td>
+              <td>${u.email_verified ? '<span class="badge badge-done">인증</span>' : '<span class="badge badge-wait">미인증</span>'}</td>
               <td><button class="btn btn-danger" onclick="deleteUser(${u.user_id}, '${u.email}')">삭제</button></td>
             </tr>`).join('')}
         </tbody>
