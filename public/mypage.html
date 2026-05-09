@@ -35,6 +35,7 @@
         <button class="tab-btn is-active" data-tab="tabProfile" onclick="switchTab('tabProfile')">회원정보</button>
         <button class="tab-btn" data-tab="tabReservation" onclick="switchTab('tabReservation')">예약관리</button>
         <button class="tab-btn" data-tab="tabPayment" onclick="switchTab('tabPayment')">주문내역</button>
+        <button class="tab-btn" data-tab="tabInquiry" onclick="switchTab('tabInquiry')">문의내역</button>
       </div>
 
       <!-- ===== 탭1: 회원정보 ===== -->
@@ -147,6 +148,16 @@
         </div>
       </div><!-- /tabPayment -->
 
+      <!-- ===== 탭4: 문의내역 ===== -->
+      <div class="tab-content" id="tabInquiry">
+        <div class="section" style="background: transparent; padding: 0;">
+          <h3>문의 내역</h3>
+          <div id="inquiryList">
+            <div class="reservation-loading">문의 내역을 불러오는 중...</div>
+          </div>
+        </div>
+      </div><!-- /tabInquiry -->
+
     </div>
   </div>
 
@@ -200,7 +211,7 @@
     // URL hash로 탭 직접 이동 (#tabReservation 등)
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash === 'tabReservation' || hash === 'tabPayment' || hash === 'tabProfile') {
+      if (hash === 'tabReservation' || hash === 'tabPayment' || hash === 'tabProfile' || hash === 'tabInquiry') {
         switchTab(hash);
       }
     });
@@ -217,6 +228,9 @@
       }
       if (tabId === 'tabPayment') {
         loadPayments();
+      }
+      if (tabId === 'tabInquiry') {
+        loadInquiries();
       }
     }
 
@@ -615,6 +629,52 @@
         showAlert('이미지 업로드 중 오류가 발생했습니다.', 'error');
       }
     });
+
+    // ========================================
+    // 문의 내역
+    // ========================================
+    const INQ_TYPE_MAP = { product: '제품 문의', order: '구매/결제 문의', install: '설치/시공 문의', as: 'A/S 문의' };
+    const INQ_STATUS_MAP = { pending: '답변 대기', answered: '답변 완료', closed: '종료' };
+
+    async function loadInquiries() {
+      const container = document.getElementById('inquiryList');
+      container.innerHTML = '<div class="reservation-loading">문의 내역을 불러오는 중...</div>';
+      try {
+        const res  = await fetch('/api/qna/inquiries');
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+
+        if (!data.data.length) {
+          container.innerHTML = `
+            <div class="reservation-empty">
+              <p class="reservation-empty-text">문의 내역이 없습니다.</p>
+              <a href="/Question.html" class="btn btn-primary reservation-goto-btn">1:1 문의하기</a>
+            </div>`;
+          return;
+        }
+
+        container.innerHTML = data.data.map(inq => {
+          const typeLabel   = INQ_TYPE_MAP[inq.type]   || inq.type;
+          const statusLabel = INQ_STATUS_MAP[inq.status] || inq.status || '답변 대기';
+          const statusClass = inq.status === 'answered' ? 'inq-status--done' : 'inq-status--wait';
+          const date = inq.created_at ? new Date(inq.created_at).toLocaleDateString('ko-KR') : '';
+          const preview = (inq.content || '').slice(0, 60) + ((inq.content || '').length > 60 ? '…' : '');
+          return `
+            <div class="inq-card">
+              <div class="inq-card-header">
+                <span class="inq-type-badge">${typeLabel}</span>
+                <span class="inq-status ${statusClass}">${statusLabel}</span>
+                <span class="inq-date">${date}</span>
+              </div>
+              <div class="inq-title">${inq.title}</div>
+              <div class="inq-preview">${preview}</div>
+            </div>`;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<div class="reservation-loading">문의 내역을 불러오지 못했습니다.</div>`;
+        console.error('[inquiry]', err);
+      }
+    }
 
     // ========================================
     // 사용자 정보 로드

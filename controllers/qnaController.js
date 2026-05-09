@@ -19,7 +19,7 @@ exports.createInquiry = async (req, res) => {
       return res.status(400).json({ success: false, message: '올바른 이메일 형식이 아닙니다.' });
     }
 
-    const userId = req.session?.user?.id || null;
+    const userId = req.session?.userId || null;
 
     const [result] = await db.execute(
       `INSERT INTO qna_inquiries (user_id, type, name, phone, email, title, content)
@@ -39,16 +39,17 @@ exports.createInquiry = async (req, res) => {
 // ─────────────────────────────────────────
 exports.getMyInquiries = async (req, res) => {
   try {
-    if (!req.session?.user) {
+    const userId = req.session?.userId;
+    if (!userId) {
       return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
     }
 
     const [rows] = await db.execute(
-      `SELECT inquiry_id, type, title, status, created_at
+      `SELECT inquiry_id, type, title, content, status, created_at
        FROM qna_inquiries
        WHERE user_id = ?
        ORDER BY created_at DESC`,
-      [req.session.user.id]
+      [userId]
     );
 
     res.json({ success: true, data: rows });

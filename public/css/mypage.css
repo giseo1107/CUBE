@@ -806,3 +806,53 @@ body {
   text-decoration: none;
   font-size: 14px !important;
 }
+
+/* ── 문의 내역 ─────────────────────────────────────── */
+.inq-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.15s;
+}
+.inq-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+
+.inq-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.inq-type-badge {
+  background: #f0f4ff;
+  color: #667eea;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.inq-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.inq-status--wait { background: #fff7ed; color: #f59e0b; }
+.inq-status--done { background: #f0fdf4; color: #22c55e; }
+.inq-date {
+  margin-left: auto;
+  font-size: 13px;
+  color: #9ca3af;
+}
+.inq-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e2939;
+  margin-bottom: 6px;
+}
+.inq-preview {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
