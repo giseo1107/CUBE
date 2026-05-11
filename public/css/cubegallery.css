@@ -439,13 +439,14 @@
   background-color: var(--white);
   display: flex;
   flex-direction: column;
-  height: 2505px;
+  height: auto;
   width: 1920px;
 }
 
 .cubeu95gallery1-1 .top {
   height: 536px;
   position: relative;
+  overflow: hidden;
 }
 
 .cubeu95gallery1-1 .container-11 {
