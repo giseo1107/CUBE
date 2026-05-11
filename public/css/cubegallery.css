@@ -675,7 +675,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  height: 1320px;
+  height: auto;
   margin-left: 193px;
   position: relative;
   width: 1534px;
@@ -685,7 +685,7 @@
   background-color: var(--cararra);
   border-radius: 10px;
   box-shadow: 0px 4px 6px -4px #0000001a , 0px 10px 15px -3px #0000001a;
-  height: 200px;
+  height: 240px;
   overflow: hidden;
   position: relative;
   width: 1534px;
@@ -695,10 +695,10 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 240px;
   justify-content: space-between;
   left: 380px;
-  padding: 24px 0px 0px 24px;
+  padding: 24px 24px 20px 24px;
   position: absolute;
   top: 0;
   width: 1154px;
@@ -872,7 +872,7 @@
   background-image: url(../galleryimg/cg-main1@2x.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -901,7 +901,7 @@
   background-image: url(../galleryimg/cg-main2@2x.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -930,7 +930,7 @@
   background-image: url(../galleryimg/cg-main3@2x.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -959,7 +959,7 @@
   background-image: url(../galleryimg/cg-main4.svg);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -988,7 +988,7 @@
   background-image: url(../galleryimg/cg-main5@2x.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -1028,7 +1028,7 @@
   background-image: url(../galleryimg/cg-main6@2x.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 200px;
+  height: 240px;
   left: 0;
   position: absolute;
   top: 0;
@@ -1446,7 +1446,7 @@
   left: 0;
   top: 0;
   width: 380px;
-  height: 200px;
+  height: 240px;
   background-color: #e5e7eb;
   background-size: cover;
   background-position: center;
