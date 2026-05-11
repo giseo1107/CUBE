@@ -1076,7 +1076,7 @@
 
 /* cs_1 — 카페형 큐브 background */
 .curation-shop .cs_1 {
-  background-image: url(../curationimg/cs-1-1.png);
+  background-image: url(../curationimg/main1-1.jpg);
   background-position: 50% 50%;
   background-size: cover;
   height: 600px;
@@ -1088,7 +1088,7 @@
 
 /* cs_4 — 대여식 2단 컨테이너 background */
 .curation-shop .cs_4 {
-  background-image: url(../curationimg/main7-1.png);
+  background-image: url(../curationimg/main7-1.jpg);
   background-position: 50% 50%;
   background-size: cover;
   display: flex;
@@ -1115,7 +1115,7 @@
 
 /* cs_6 — 멀티 유닛 background */
 .curation-shop .cs_6 {
-  background-image: url(../curationimg/main9-1.png);
+  background-image: url(../curationimg/main9-1.jpg);
   background-position: 50% 50%;
   background-size: cover;
   display: flex;
