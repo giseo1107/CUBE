@@ -87,9 +87,6 @@
         }
 
         var currentUserId = null;
-        fetch('/api/auth/check').then(function(r){ return r.json(); })
-          .then(function(d){ if (d.loggedIn) currentUserId = d.userId; })
-          .catch(function(){});
 
         function buildCard(r) {
           var initial  = (r.author_name || '?').charAt(0);
@@ -151,22 +148,31 @@
             .catch(function(){ alert('서버 오류가 발생했습니다.'); });
         }
 
-        fetch('/api/reviews?limit=20')
-          .then(function (res) { return res.json(); })
-          .then(function (json) {
-            var grid  = document.getElementById('review-grid');
-            var count = document.getElementById('review-count');
-            if (!json.success || !json.data.length) {
-              grid.innerHTML = '<div class="review-empty">등록된 후기가 없습니다.</div>';
-              if (count) count.textContent = '전체 후기 0개';
-              return;
-            }
-            if (count) count.textContent = '전체 후기 ' + json.pagination.total + '개';
-            grid.innerHTML = json.data.map(buildCard).join('');
+        // auth 확인 후 리뷰 로드 (순서 보장)
+        fetch('/api/auth/check')
+          .then(function(r){ return r.json(); })
+          .then(function(d){
+            if (d.authenticated) currentUserId = d.userId;
           })
-          .catch(function () {
-            document.getElementById('review-grid').innerHTML =
-              '<div class="review-empty">후기를 불러오지 못했습니다.</div>';
+          .catch(function(){})
+          .finally(function(){
+            fetch('/api/reviews?limit=20')
+              .then(function (res) { return res.json(); })
+              .then(function (json) {
+                var grid  = document.getElementById('review-grid');
+                var count = document.getElementById('review-count');
+                if (!json.success || !json.data.length) {
+                  grid.innerHTML = '<div class="review-empty">등록된 후기가 없습니다.</div>';
+                  if (count) count.textContent = '전체 후기 0개';
+                  return;
+                }
+                if (count) count.textContent = '전체 후기 ' + json.pagination.total + '개';
+                grid.innerHTML = json.data.map(buildCard).join('');
+              })
+              .catch(function () {
+                document.getElementById('review-grid').innerHTML =
+                  '<div class="review-empty">후기를 불러오지 못했습니다.</div>';
+              });
           });
       })();
       </script>

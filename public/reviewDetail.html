@@ -71,7 +71,7 @@
           <button class="btn-to-list" onclick="location.href='review.html'">
             ← 후기 목록으로 돌아가기
           </button>
-          <div id="ownerActions" style="display:none; gap:8px; display:none;">
+          <div id="ownerActions" style="display:none;">
             <button class="btn-edit-review" id="btnEditReview">수정</button>
             <button class="btn-delete-review" id="btnDeleteReview">삭제</button>
           </div>
@@ -129,7 +129,7 @@
     let currentUserId = null;
     try {
       const authData = await fetch('/api/auth/check').then(r => r.json());
-      if (authData.loggedIn) currentUserId = authData.userId;
+      if (authData.authenticated) currentUserId = authData.userId;
     } catch {}
 
     try {
