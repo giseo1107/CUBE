@@ -196,7 +196,6 @@
 
             <button class="btn-checkout" onclick="goCheckout()">💳 결제하기</button>
             <button class="btn-add-cart" onclick="addToCart()">🛒 장바구니 담기</button>
-            <button class="btn-export-estimate" onclick="exportEstimate()">📄 견적서 내보내기</button>
         </div>
 
         <!-- 속성 편집 -->
@@ -245,6 +244,15 @@
             </div>
 
             <div class="prop-group">
+                <label>수직 위치 (cm)</label>
+                <input type="number" id="objElev" min="0" max="500" step="5" oninput="updateProperties()" style="width: 100%;">
+                <div class="elev-desc">
+                    <span class="elev-important">⚠️ 중요</span> 바닥으로부터 오브젝트가 떨어진 거리입니다.<br>
+                    블록을 쌓을 경우 아래 오브젝트의 높이값을 입력하세요.
+                </div>
+            </div>
+
+            <div class="prop-group">
                 <label>회전 & 잠금</label>
                 <div class="row">
                     <button onclick="rotateObject(-45)" style="flex:1;">↺ 45°</button>
@@ -254,11 +262,6 @@
                 </div>
             </div>
 
-            <div class="prop-group elevation-box">
-                <label>🎈 공중 부양 (cm)</label>
-                <input type="number" id="objElev" min="0" max="500" step="5" oninput="updateProperties()" style="width: 100%;">
-                <span class="hint">블록 쌓기: 아래 블록 높이만큼 입력</span>
-            </div>
         </div>
 
         <!-- 레이어 목록 (탭 분리) -->
