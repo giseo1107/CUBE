@@ -1,5 +1,23 @@
 const db = require('../config/db');
 
+// qna_inquiries 테이블 자동 생성
+db.execute(`
+  CREATE TABLE IF NOT EXISTS qna_inquiries (
+    inquiry_id  INT          NOT NULL AUTO_INCREMENT,
+    user_id     INT          DEFAULT NULL,
+    type        VARCHAR(50)  NOT NULL,
+    name        VARCHAR(100) NOT NULL,
+    phone       VARCHAR(30)  NOT NULL,
+    email       VARCHAR(200) NOT NULL,
+    title       VARCHAR(300) NOT NULL,
+    content     TEXT         NOT NULL,
+    answer      TEXT         DEFAULT NULL,
+    status      VARCHAR(20)  DEFAULT 'pending',
+    created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (inquiry_id)
+  )
+`).catch(e => console.error('[qna] 테이블 생성 실패:', e));
+
 // ─────────────────────────────────────────
 // [POST] /api/qna/inquiries  — 1:1 문의 접수
 // ─────────────────────────────────────────
