@@ -162,6 +162,46 @@ exports.uploadImages = async (req, res) => {
 };
 
 // ─────────────────────────────────────────
+// [PUT] /api/reviews/:id  — 후기 수정 (본인만)
+// ─────────────────────────────────────────
+exports.updateReview = async (req, res) => {
+  try {
+    if (!req.session?.userId) {
+      return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+    }
+    const [[row]] = await db.execute(
+      `SELECT user_id FROM reviews WHERE review_id = ?`, [req.params.id]
+    );
+    if (!row) return res.status(404).json({ success: false, message: '후기를 찾을 수 없습니다.' });
+    if (row.user_id !== req.session.userId) {
+      return res.status(403).json({ success: false, message: '수정 권한이 없습니다.' });
+    }
+
+    const {
+      name, region, model_name, title, summary, content,
+      rating_quality, rating_durability, rating_interior,
+      rating_custom, rating_maintenance, rating_service,
+    } = req.body;
+
+    await db.execute(
+      `UPDATE reviews SET
+         author_name=?, region=?, model_name=?, title=?, summary=?, content=?,
+         rating_quality=?, rating_durability=?, rating_interior=?,
+         rating_custom=?, rating_maintenance=?, rating_service=?
+       WHERE review_id=?`,
+      [name, region, model_name, title, summary, content,
+       rating_quality, rating_durability, rating_interior,
+       rating_custom, rating_maintenance, rating_service,
+       req.params.id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error('[reviews] 수정 실패:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// ─────────────────────────────────────────
 // [DELETE] /api/reviews/:id  — 후기 삭제 (본인만)
 // ─────────────────────────────────────────
 exports.deleteReview = async (req, res) => {

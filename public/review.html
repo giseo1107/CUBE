@@ -86,12 +86,24 @@
           return d.innerHTML;
         }
 
+        var currentUserId = null;
+        fetch('/api/auth/check').then(function(r){ return r.json(); })
+          .then(function(d){ if (d.loggedIn) currentUserId = d.userId; })
+          .catch(function(){});
+
         function buildCard(r) {
           var initial  = (r.author_name || '?').charAt(0);
           var rating   = avgRating(r);
           var date     = formatDate(r.created_at);
           var thumbStyle = r.image_url
             ? 'background-image:url(' + r.image_url + ');'
+            : '';
+          var isMine = currentUserId && r.user_id === currentUserId;
+          var actionBtns = isMine
+            ? '<div class="rv-actions" onclick="event.stopPropagation()">'
+              + '<button class="rv-btn-edit" onclick="editReview(' + r.review_id + ')">수정</button>'
+              + '<button class="rv-btn-delete" onclick="deleteReview(' + r.review_id + ')">삭제</button>'
+              + '</div>'
             : '';
 
           return '<div class="rv-card" onclick="location.href=\'reviewDetail.html?id=' + r.review_id + '\'">'
@@ -119,8 +131,24 @@
             + '<hr class="rv-divider" />'
             + '<div class="rv-title">' + esc(r.title) + '</div>'
             + '<p class="rv-summary">' + esc(r.summary) + '</p>'
+            + actionBtns
             + '</div>'
             + '</div>';
+        }
+
+        function editReview(id) {
+          location.href = 'reviewWrite.html?edit=' + id;
+        }
+
+        function deleteReview(id) {
+          if (!confirm('후기를 삭제하시겠습니까?')) return;
+          fetch('/api/reviews/' + id, { method: 'DELETE' })
+            .then(function(r){ return r.json(); })
+            .then(function(d){
+              if (d.success) location.reload();
+              else alert(d.message || '삭제에 실패했습니다.');
+            })
+            .catch(function(){ alert('서버 오류가 발생했습니다.'); });
         }
 
         fetch('/api/reviews?limit=20')

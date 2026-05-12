@@ -1559,3 +1559,22 @@
   font-size: 15px;
   text-align: center;
 }
+/* ── 후기 수정/삭제 버튼 ── */
+.rv-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.rv-btn-edit, .rv-btn-delete {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+.rv-btn-edit  { background: #667eea; color: #fff; }
+.rv-btn-delete{ background: #ef4444; color: #fff; }
+.rv-btn-edit:hover, .rv-btn-delete:hover { opacity: 0.8; }

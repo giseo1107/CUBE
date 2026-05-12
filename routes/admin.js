@@ -23,6 +23,9 @@ router.patch ('/reservations/:id',     adminAuth, controller.updateReservation);
 router.get   ('/inquiries',            adminAuth, controller.getInquiries);
 router.post  ('/inquiries/:id/reply',  adminAuth, controller.replyInquiry);
 
+router.get   ('/reviews',              adminAuth, controller.getReviews);
+router.delete('/reviews/:id',          adminAuth, controller.deleteReview);
+
 router.get   ('/gallery',              adminAuth, controller.getGallery);
 router.delete('/gallery/:id',          adminAuth, controller.deleteGallery);
 

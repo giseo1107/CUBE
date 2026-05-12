@@ -17,6 +17,7 @@ router.get ('/',           controller.getReviews);
 router.get ('/:id',        controller.getReviewById);
 router.post('/',           controller.createReview);
 router.post('/upload',     upload.array('images', 3), controller.uploadImages);
+router.put   ('/:id',      controller.updateReview);
 router.delete('/:id',      controller.deleteReview);
 
 module.exports = router;

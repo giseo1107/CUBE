@@ -123,6 +123,32 @@ exports.replyInquiry = async (req, res) => {
   }
 };
 
+// [GET] /api/admin/reviews
+exports.getReviews = async (req, res) => {
+  try {
+    const [rows] = await db.execute(
+      `SELECT r.review_id, r.user_id, r.author_name, r.region, r.model_name,
+              r.title, r.summary, r.rating_quality, r.rating_durability,
+              r.rating_interior, r.rating_custom, r.rating_maintenance,
+              r.rating_service, r.created_at, r.is_public
+       FROM reviews r ORDER BY r.created_at DESC`
+    );
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// [DELETE] /api/admin/reviews/:id
+exports.deleteReview = async (req, res) => {
+  try {
+    await db.execute('DELETE FROM reviews WHERE review_id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 // [GET] /api/admin/gallery
 exports.getGallery = async (req, res) => {
   try {

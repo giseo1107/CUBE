@@ -107,6 +107,7 @@
     <button class="tab-btn" onclick="switchTab('tabOrders')">주문 내역</button>
     <button class="tab-btn" onclick="switchTab('tabReservations')">예약 관리</button>
     <button class="tab-btn" onclick="switchTab('tabInquiries')">문의 관리</button>
+    <button class="tab-btn" onclick="switchTab('tabReviews')">후기 관리</button>
     <button class="tab-btn" onclick="switchTab('tabGallery')">갤러리 관리</button>
   </div>
 
@@ -142,6 +143,14 @@
     </div>
   </div>
 
+  <!-- 후기 관리 -->
+  <div class="tab-content" id="tabReviews">
+    <div class="admin-section">
+      <h2>고객 후기 목록</h2>
+      <div id="reviewTable"><div class="loading">불러오는 중...</div></div>
+    </div>
+  </div>
+
   <!-- 갤러리 관리 -->
   <div class="tab-content" id="tabGallery">
     <div class="admin-section">
@@ -170,6 +179,7 @@ const tabLoaders = {
   tabOrders:       loadOrders,
   tabReservations: loadReservations,
   tabInquiries:    loadInquiries,
+  tabReviews:      loadReviews,
   tabGallery:      loadGallery,
 };
 const loaded = {};
@@ -341,6 +351,51 @@ async function replyInquiry(id) {
     body: JSON.stringify({ answer })
   }).then(r => r.json());
   if (res.success) { loaded['tabInquiries'] = false; loadInquiries(); loaded['tabInquiries'] = true; }
+  else alert(res.message);
+}
+
+// ── 후기 관리 ────────────────────────────────────────
+function avgRating(r) {
+  const vals = [r.rating_quality, r.rating_durability, r.rating_interior,
+                r.rating_custom, r.rating_maintenance, r.rating_service];
+  const sum = vals.reduce((a, b) => a + (parseFloat(b) || 0), 0);
+  return (sum / vals.length).toFixed(1);
+}
+
+async function loadReviews() {
+  const el = document.getElementById('reviewTable');
+  try {
+    const data = await fetch('/api/admin/reviews').then(r => r.json());
+    if (!data.data.length) { el.innerHTML = '<div class="empty-state">후기가 없습니다.</div>'; return; }
+    el.innerHTML = `
+      <table class="admin-table">
+        <thead><tr>
+          <th>ID</th><th>작성자</th><th>지역</th><th>모델</th><th>제목</th><th>평점</th><th>등록일</th><th>관리</th>
+        </tr></thead>
+        <tbody>
+          ${data.data.map(r => `
+            <tr>
+              <td>${r.review_id}</td>
+              <td>${r.author_name || '-'}</td>
+              <td>${r.region || '-'}</td>
+              <td>${r.model_name || '-'}</td>
+              <td>${r.title}</td>
+              <td>⭐ ${avgRating(r)}</td>
+              <td>${fmtDate(r.created_at)}</td>
+              <td style="display:flex;gap:6px;">
+                <button class="btn btn-primary" onclick="location.href='/reviewWrite.html?edit=${r.review_id}'">수정</button>
+                <button class="btn btn-danger"  onclick="adminDeleteReview(${r.review_id})">삭제</button>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch { el.innerHTML = '<div class="empty-state">불러오기 실패</div>'; }
+}
+
+async function adminDeleteReview(id) {
+  if (!confirm('후기를 삭제하시겠습니까?')) return;
+  const res = await fetch(`/api/admin/reviews/${id}`, { method: 'DELETE' }).then(r => r.json());
+  if (res.success) { loaded['tabReviews'] = false; loadReviews(); loaded['tabReviews'] = true; }
   else alert(res.message);
 }
 

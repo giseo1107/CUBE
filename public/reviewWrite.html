@@ -415,6 +415,36 @@
       document.getElementById('f-model').classList.remove('invalid')
     );
 
+    // ── 수정 모드: ?edit=REVIEW_ID ───────────────────────────
+    const editReviewId = new URLSearchParams(location.search).get('edit');
+    if (editReviewId) {
+      document.title = '후기 수정 | Container House';
+      document.getElementById('submitBtn').textContent = '수정하기';
+      fetch(`/api/reviews/${editReviewId}`)
+        .then(r => r.json())
+        .then(d => {
+          if (!d.success) return;
+          const p = d.data;
+          document.getElementById('rName').value    = p.author_name || '';
+          document.getElementById('rRegion').value  = p.region      || '';
+          document.getElementById('rModel').value   = p.model_name  || '';
+          document.getElementById('rTitle').value   = p.title       || '';
+          document.getElementById('rSummary').value = p.summary     || '';
+          document.getElementById('rContent').value = p.content     || '';
+          // 별점 복원
+          const ratingFields = ['quality','durability','interior','custom','maintenance','service'];
+          ratingFields.forEach(key => {
+            const val = p['rating_' + key];
+            if (val) {
+              ratings['rating_' + key] = val;
+              const stars = document.querySelectorAll(`.star-group[data-key="rating_${key}"] .star`);
+              stars.forEach((s, i) => s.classList.toggle('active', i < val));
+            }
+          });
+        })
+        .catch(() => {});
+    }
+
     // ── 폼 제출 ─────────────────────────────────────────────
     document.getElementById('reviewForm').addEventListener('submit', async e => {
       e.preventDefault();
@@ -422,7 +452,7 @@
 
       const btn = document.getElementById('submitBtn');
       btn.disabled    = true;
-      btn.textContent = '등록 중...';
+      btn.textContent = editReviewId ? '수정 중...' : '등록 중...';
 
       try {
         let imageUrls = [];
@@ -453,19 +483,21 @@
           rating_service:     ratings.rating_service,
         };
 
-        const res  = await fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const url    = editReviewId ? `/api/reviews/${editReviewId}` : '/api/reviews';
+        const method = editReviewId ? 'PUT' : 'POST';
+        const res  = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         const json = await res.json();
 
         if (json.success) {
-          alert('후기가 성공적으로 등록되었습니다!');
+          alert(editReviewId ? '후기가 수정되었습니다!' : '후기가 성공적으로 등록되었습니다!');
           location.href = '/review.html';
         } else {
-          throw new Error(json.message || '등록 실패');
+          throw new Error(json.message || (editReviewId ? '수정 실패' : '등록 실패'));
         }
       } catch (err) {
         alert(err.message || '오류가 발생했습니다. 다시 시도해주세요.');
         btn.disabled    = false;
-        btn.textContent = '후기 등록';
+        btn.textContent = editReviewId ? '수정하기' : '후기 등록';
       }
     });
 
