@@ -63,7 +63,7 @@ exports.getMyInquiries = async (req, res) => {
     }
 
     const [rows] = await db.execute(
-      `SELECT inquiry_id, type, title, content, status, created_at
+      `SELECT inquiry_id, type, title, content, status, answer, created_at
        FROM qna_inquiries
        WHERE user_id = ?
        ORDER BY created_at DESC`,
