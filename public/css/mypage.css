@@ -856,3 +856,40 @@ body {
   color: #6b7280;
   line-height: 1.5;
 }
+
+/* ── 문의 상세 토글 ── */
+.inq-toggle-arrow {
+  margin-left: auto;
+  font-size: 11px;
+  color: #9ca3af;
+}
+.inq-detail-body {
+  margin-top: 12px;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 12px;
+}
+.inq-full-content {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.inq-answer-block {
+  margin-top: 14px;
+  background: #f0fdf4;
+  border-left: 3px solid #22c55e;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+}
+.inq-answer-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 6px;
+}
+.inq-answer-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}

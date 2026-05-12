@@ -636,6 +636,16 @@
     const INQ_TYPE_MAP = { product: '제품 문의', order: '구매/결제 문의', install: '설치/시공 문의', as: 'A/S 문의' };
     const INQ_STATUS_MAP = { pending: '답변 대기', answered: '답변 완료', closed: '종료' };
 
+    function toggleInqDetail(card) {
+      const detail  = card.querySelector('.inq-detail-body');
+      const preview = card.querySelector('.inq-preview-collapsed');
+      const arrow   = card.querySelector('.inq-toggle-arrow');
+      const isOpen  = detail.style.display !== 'none';
+      detail.style.display  = isOpen ? 'none' : 'block';
+      preview.style.display = isOpen ? 'block' : 'none';
+      arrow.textContent     = isOpen ? '▼' : '▲';
+    }
+
     async function loadInquiries() {
       const container = document.getElementById('inquiryList');
       container.innerHTML = '<div class="reservation-loading">문의 내역을 불러오는 중...</div>';
@@ -659,15 +669,26 @@
           const statusClass = inq.status === 'answered' ? 'inq-status--done' : 'inq-status--wait';
           const date = inq.created_at ? new Date(inq.created_at).toLocaleDateString('ko-KR') : '';
           const preview = (inq.content || '').slice(0, 60) + ((inq.content || '').length > 60 ? '…' : '');
+          const answerBlock = inq.status === 'answered' && inq.answer
+            ? `<div class="inq-answer-block">
+                <div class="inq-answer-label">💬 관리자 답변</div>
+                <div class="inq-answer-text">${inq.answer}</div>
+               </div>`
+            : '';
           return `
-            <div class="inq-card">
+            <div class="inq-card" onclick="toggleInqDetail(this)" style="cursor:pointer;">
               <div class="inq-card-header">
                 <span class="inq-type-badge">${typeLabel}</span>
                 <span class="inq-status ${statusClass}">${statusLabel}</span>
                 <span class="inq-date">${date}</span>
+                <span class="inq-toggle-arrow">▼</span>
               </div>
               <div class="inq-title">${inq.title}</div>
-              <div class="inq-preview">${preview}</div>
+              <div class="inq-detail-body" style="display:none;">
+                <div class="inq-full-content">${inq.content || ''}</div>
+                ${answerBlock}
+              </div>
+              <div class="inq-preview inq-preview-collapsed">${preview}</div>
             </div>`;
         }).join('');
       } catch (err) {
