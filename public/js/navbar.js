@@ -284,20 +284,17 @@
       flex-shrink: 0;
     }
     #g-nav .gn-cart-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      border: 1.5px solid rgba(175, 249, 245, 0.4);
-      transition: border-color 0.2s, opacity 0.2s;
+      font-size: 18px;
+      background: none;
+      border: none;
+      border-radius: 0;
+      transition: opacity 0.2s;
       text-decoration: none;
     }
     #g-nav .gn-cart-wrap:hover .gn-cart-btn {
-      border-color: #aff9f5;
       opacity: 0.75;
     }
     #g-nav .gn-cart-tooltip {
