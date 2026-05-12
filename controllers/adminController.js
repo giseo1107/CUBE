@@ -88,7 +88,7 @@ exports.getReservations = async (req, res) => {
 exports.updateReservation = async (req, res) => {
   try {
     const { status } = req.body;
-    await db.execute('UPDATE reservations SET status = ? WHERE res_id = ?', [status, req.params.id]);
+    await db.execute('UPDATE reservation SET status = ? WHERE res_id = ?', [status, req.params.id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
