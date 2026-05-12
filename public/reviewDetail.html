@@ -66,10 +66,16 @@
           <div class="photo-grid" id="photoGrid"></div>
         </div>
 
-        <!-- 목록으로 -->
-        <button class="btn-to-list" onclick="location.href='review.html'">
-          ← 후기 목록으로 돌아가기
-        </button>
+        <!-- 목록으로 + 수정/삭제 -->
+        <div class="detail-actions">
+          <button class="btn-to-list" onclick="location.href='review.html'">
+            ← 후기 목록으로 돌아가기
+          </button>
+          <div id="ownerActions" style="display:none; gap:8px; display:none;">
+            <button class="btn-edit-review" id="btnEditReview">수정</button>
+            <button class="btn-delete-review" id="btnDeleteReview">삭제</button>
+          </div>
+        </div>
       </div>
 
       <!-- 오른쪽 사이드바 -->
@@ -119,6 +125,13 @@
       return;
     }
 
+    // ── 현재 로그인 유저 확인 ─────────────────────────────
+    let currentUserId = null;
+    try {
+      const authData = await fetch('/api/auth/check').then(r => r.json());
+      if (authData.loggedIn) currentUserId = authData.userId;
+    } catch {}
+
     try {
       // ── 현재 후기 + 다른 후기 동시 로드 ───────────────
       const [detailRes, listRes] = await Promise.all([
@@ -132,6 +145,32 @@
 
       const r = detailJson.data;
       render(r);
+
+      // ── 본인 글이면 수정/삭제 버튼 표시 ─────────────
+      if (currentUserId && r.user_id === currentUserId) {
+        const ownerActions = document.getElementById('ownerActions');
+        ownerActions.style.display = 'flex';
+
+        document.getElementById('btnEditReview').addEventListener('click', () => {
+          location.href = `reviewWrite.html?edit=${reviewId}`;
+        });
+
+        document.getElementById('btnDeleteReview').addEventListener('click', async () => {
+          if (!confirm('후기를 삭제하시겠습니까?')) return;
+          try {
+            const res = await fetch(`/api/reviews/${reviewId}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) {
+              alert('삭제되었습니다.');
+              location.href = 'review.html';
+            } else {
+              alert(data.message || '삭제에 실패했습니다.');
+            }
+          } catch {
+            alert('서버 오류가 발생했습니다.');
+          }
+        });
+      }
 
       // 다른 후기 (현재 것 제외, 최대 3개)
       const others = (listJson.data || []).filter(x => x.review_id != reviewId).slice(0, 3);

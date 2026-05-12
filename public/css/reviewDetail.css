@@ -173,6 +173,34 @@ a    { text-decoration: none; color: inherit; }
 }
 .btn-to-list:hover { opacity: .85; }
 
+/* 목록으로 + 수정/삭제 버튼 행 */
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+#ownerActions {
+  display: flex;
+  gap: 8px;
+}
+.btn-edit-review,
+.btn-delete-review {
+  height: 52px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-edit-review   { background: #667eea; color: #fff; }
+.btn-delete-review { background: #ef4444; color: #fff; }
+.btn-edit-review:hover,
+.btn-delete-review:hover { opacity: .85; }
+
 /* ════════════════════════════
    오른쪽 사이드바
 ════════════════════════════ */

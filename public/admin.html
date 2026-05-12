@@ -382,10 +382,7 @@ async function loadReviews() {
               <td>${r.title}</td>
               <td>⭐ ${avgRating(r)}</td>
               <td>${fmtDate(r.created_at)}</td>
-              <td style="display:flex;gap:6px;">
-                <button class="btn btn-primary" onclick="location.href='/reviewWrite.html?edit=${r.review_id}'">수정</button>
-                <button class="btn btn-danger"  onclick="adminDeleteReview(${r.review_id})">삭제</button>
-              </td>
+              <td><button class="btn btn-danger" onclick="adminDeleteReview(${r.review_id})">삭제</button></td>
             </tr>`).join('')}
         </tbody>
       </table>`;
