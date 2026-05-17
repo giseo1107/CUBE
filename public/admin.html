@@ -295,9 +295,9 @@ async function loadReservations() {
               <td>${r.name || '-'}</td>
               <td>${r.phone || '-'}</td>
               <td>${fmtDate(r.visit_date)}</td>
-              <td>${r.visit_time || '-'}</td>
+              <td>${r.visit_time ? r.visit_time.slice(0, 5) : '-'}</td>
               <td>${r.people_count || '-'}명</td>
-              <td><span class="badge ${r.status === 'confirmed' ? 'badge-done' : r.status === 'cancelled' ? 'badge-cancel' : 'badge-wait'}">${RES_STATUS[r.status] || r.status}</span></td>
+              <td><span class="badge ${r.status === 'confirmed' ? 'badge-done' : r.status === 'cancelled' ? 'badge-cancel' : 'badge-wait'}">${RES_STATUS[r.status] || '알 수 없음'}</span></td>
               <td style="display:flex;gap:6px;">
                 <button class="btn btn-success" onclick="updateRes(${r.res_id},'confirmed')">확정</button>
                 <button class="btn btn-danger"  onclick="updateRes(${r.res_id},'cancelled')">취소</button>
