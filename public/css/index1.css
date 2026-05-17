@@ -944,7 +944,7 @@
 }
 
 .index .custom-cta-section {
-  background-image: url(../main_img2customctasection.svg);
+  background-image: url(../main_img2/customctasection.svg);
   background-position: 50% 50%;
   background-size: cover;
   height: 869px;
@@ -1064,7 +1064,7 @@
 }
 
 .index .frame-20 {
-  background-image: url(../main_img2frame-20-2.png);
+  background-image: url(../main_img2/frame-20-2.png);
   background-position: 50% 50%;
   background-size: cover;
   height: 355px;
