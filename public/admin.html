@@ -204,11 +204,16 @@ loadUsers();
 // ── 유틸 ─────────────────────────────────────────────
 function fmtDate(str) {
   if (!str) return '-';
-  return new Date(str).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  return new Date(str).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '');
 }
 function fmtMoney(n) {
   return n ? Number(n).toLocaleString() + '원' : '-';
 }
+function fmtPayment(method) {
+  const map = { money: '카카오페이', MONEY: '카카오페이', kakaopay: '카카오페이', KAKAOPAY: '카카오페이', kakao: '카카오페이' };
+  return map[method] || method || '-';
+}
+const ORDER_STATUS = { paid: '결제 완료', pending: '결제 대기', cancelled: '취소됨', refunded: '환불됨' };
 
 // ── 사용자 관리 ──────────────────────────────────────
 async function loadUsers() {
@@ -261,9 +266,9 @@ async function loadOrders() {
               <td>${o.email || '-'}<br><span style="color:#6b7280;font-size:11px;">${o.nickname || ''}</span></td>
               <td>${o.item_name || '-'}</td>
               <td>${fmtMoney(o.total_amount)}</td>
-              <td>${o.payment_method_type || '-'}</td>
+              <td>${fmtPayment(o.payment_method_type)}</td>
               <td>${fmtDate(o.ordered_at)}</td>
-              <td><span class="badge ${o.status === 'paid' ? 'badge-done' : 'badge-wait'}">${o.status || '-'}</span></td>
+              <td><span class="badge ${o.status === 'paid' ? 'badge-done' : 'badge-wait'}">${ORDER_STATUS[o.status] || o.status || '-'}</span></td>
             </tr>`).join('')}
         </tbody>
       </table>`;
@@ -271,7 +276,7 @@ async function loadOrders() {
 }
 
 // ── 예약 관리 ────────────────────────────────────────
-const RES_STATUS = { confirmed: '예약 확정', cancelled: '취소됨', pending: '대기 중' };
+const RES_STATUS = { confirmed: '예약 확정', cancelled: '취소됨', pending: '예약 신청' };
 
 async function loadReservations() {
   const el = document.getElementById('reservationTable');
@@ -289,7 +294,7 @@ async function loadReservations() {
               <td>${r.res_id}</td>
               <td>${r.name || '-'}</td>
               <td>${r.phone || '-'}</td>
-              <td>${r.visit_date || '-'}</td>
+              <td>${fmtDate(r.visit_date)}</td>
               <td>${r.visit_time || '-'}</td>
               <td>${r.people_count || '-'}명</td>
               <td><span class="badge ${r.status === 'confirmed' ? 'badge-done' : r.status === 'cancelled' ? 'badge-cancel' : 'badge-wait'}">${RES_STATUS[r.status] || r.status}</span></td>
