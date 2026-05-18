@@ -257,7 +257,7 @@ async function loadOrders() {
     el.innerHTML = `
       <table class="admin-table">
         <thead><tr>
-          <th>주문ID</th><th>회원</th><th>상품명</th><th>금액</th><th>결제수단</th><th>주문일</th><th>상태</th>
+          <th>주문ID</th><th>회원</th><th>상품명</th><th>금액</th><th>결제수단</th><th>주문일</th><th>상태</th><th>관리</th>
         </tr></thead>
         <tbody>
           ${data.data.map(o => `
@@ -269,10 +269,21 @@ async function loadOrders() {
               <td>${fmtPayment(o.payment_method_type)}</td>
               <td>${fmtDate(o.ordered_at)}</td>
               <td><span class="badge ${o.status === 'paid' ? 'badge-done' : 'badge-wait'}">${ORDER_STATUS[o.status] || o.status || '-'}</span></td>
+              <td>${o.status !== 'paid' ? `<button class="btn btn-success" onclick="updateOrderStatus(${o.order_id},'paid')">결제 완료</button>` : '<span style="color:#4b5563;font-size:12px;">-</span>'}</td>
             </tr>`).join('')}
         </tbody>
       </table>`;
   } catch { el.innerHTML = '<div class="empty-state">불러오기 실패</div>'; }
+}
+
+async function updateOrderStatus(id, status) {
+  const res = await fetch(`/api/admin/orders/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  }).then(r => r.json());
+  if (res.success) { loaded['tabOrders'] = false; loadOrders(); loaded['tabOrders'] = true; }
+  else alert(res.message || '상태 변경에 실패했습니다.');
 }
 
 // ── 예약 관리 ────────────────────────────────────────
