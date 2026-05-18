@@ -213,7 +213,7 @@ function fmtPayment(method) {
   const map = { money: '카카오페이', MONEY: '카카오페이', kakaopay: '카카오페이', KAKAOPAY: '카카오페이', kakao: '카카오페이' };
   return map[method] || method || '-';
 }
-const ORDER_STATUS = { paid: '결제 완료', pending: '결제 대기', cancelled: '취소됨', refunded: '환불됨' };
+const ORDER_STATUS = { paid: '결제 완료', PAID: '결제 완료', pending: '결제 대기', cancelled: '취소됨', refunded: '환불됨' };
 
 // ── 사용자 관리 ──────────────────────────────────────
 async function loadUsers() {
@@ -257,7 +257,7 @@ async function loadOrders() {
     el.innerHTML = `
       <table class="admin-table">
         <thead><tr>
-          <th>주문ID</th><th>회원</th><th>상품명</th><th>금액</th><th>결제수단</th><th>주문일</th><th>상태</th><th>관리</th>
+          <th>주문ID</th><th>회원</th><th>상품명</th><th>금액</th><th>결제수단</th><th>주문일</th><th>상태</th>
         </tr></thead>
         <tbody>
           ${data.data.map(o => `
@@ -268,8 +268,7 @@ async function loadOrders() {
               <td>${fmtMoney(o.total_amount)}</td>
               <td>${fmtPayment(o.payment_method_type)}</td>
               <td>${fmtDate(o.ordered_at)}</td>
-              <td><span class="badge ${o.status === 'paid' ? 'badge-done' : 'badge-wait'}">${ORDER_STATUS[o.status] || o.status || '-'}</span></td>
-              <td>${o.status !== 'paid' ? `<button class="btn btn-success" onclick="updateOrderStatus(${o.order_id},'paid')">결제 완료</button>` : '<span style="color:#4b5563;font-size:12px;">-</span>'}</td>
+              <td><span class="badge ${['paid','PAID'].includes(o.status) ? 'badge-done' : 'badge-wait'}">${ORDER_STATUS[o.status] || o.status || '-'}</span></td>
             </tr>`).join('')}
         </tbody>
       </table>`;
