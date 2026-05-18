@@ -19,12 +19,15 @@
   font-weight: 400;
   src: url("../fonts/Satoshi-Regular.ttf") format("truetype");
 }
-/* AbhayaLibre-SemiBold.ttf 파일 없음 → Noto Sans KR로 대체 */
+/* AbhayaLibre-SemiBold.ttf 파일 없음 → 각 OS 기본 한글 폰트로 대체 */
 @font-face {
   font-family: "Abhaya Libre SemiBold-Regular";
   font-style: normal;
   font-weight: 400;
-  src: local("Noto Sans KR");
+  src: local("Apple SD Gothic Neo"),
+       local("Malgun Gothic"),
+       local("Noto Sans KR"),
+       local("NotoSansKR-Regular");
 }
 
 .screen a {
