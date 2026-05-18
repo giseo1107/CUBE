@@ -95,13 +95,7 @@
           var thumbStyle = r.image_url
             ? 'background-image:url(' + r.image_url + ');'
             : '';
-          var isMine = currentUserId && r.user_id === currentUserId;
-          var actionBtns = isMine
-            ? '<div class="rv-actions" onclick="event.stopPropagation()">'
-              + '<button class="rv-btn-edit" onclick="editReview(' + r.review_id + ')">수정</button>'
-              + '<button class="rv-btn-delete" onclick="deleteReview(' + r.review_id + ')">삭제</button>'
-              + '</div>'
-            : '';
+          var actionBtns = '';
 
           return '<div class="rv-card" onclick="location.href=\'reviewDetail.html?id=' + r.review_id + '\'">'
             + '<div class="rv-thumb" style="' + thumbStyle + '">'
