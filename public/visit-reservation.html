@@ -1296,15 +1296,12 @@ src="image1/container.svg" alt="Container"
 (function () {
   'use strict';
 
-  /* ---------- 캘린더 셀의 그리드 순서 (행 1 좌→우, ... , 행 5 좌→우) ----------
-     기존 HTML/CSS의 absolute 위치를 변경하지 않으므로,
-     클래스명 → 시간순 슬롯 인덱스 매핑을 수동으로 정의한다. */
   var SLOT_SELECTORS = [
-    /* row 1 (top:0)   */ '.button-2', '.button-3', '.button-4', '.button-5', '.button-6', '.button-7', '.button-8',
-    /* row 2 (top:70)  */ '.button-9', '.button-10', '.button-11', '.button-12', '.button-13', '.button-14', '.button-15',
-    /* row 3 (top:139) */ '.button-16', '.button-17', '.button-18', '.button-19', '.button-20', '.button-21', '.button-22',
-    /* row 4 (top:209) */ '.button-23', '.button-25', '.button-27', '.button-29', '.button-31', '.button-33', '.button-35',
-    /* row 5 (top:279) */ '.button-24', '.button-26', '.button-28', '.button-30', '.button-32', '.button-34', '.button-36'
+    /* row 1 */ '.button-2',  '.button-3',  '.button-4',  '.button-5',  '.button-6',  '.button-7',  '.button-8',
+    /* row 2 */ '.button-9',  '.button-10', '.button-11', '.button-12', '.button-13', '.button-14', '.button-15',
+    /* row 3 */ '.button-16', '.button-17', '.button-18', '.button-19', '.button-20', '.button-21', '.button-22',
+    /* row 4 */ '.button-23', '.button-25', '.button-27', '.button-29', '.button-31', '.button-33', '.button-35',
+    /* row 5 */ '.button-24', '.button-26', '.button-28', '.button-30', '.button-32', '.button-34', '.button-36'
   ];
 
   var COLOR_CLASSES = [
@@ -1313,19 +1310,16 @@ src="image1/container.svg" alt="Container"
     'abhayalibresemibold-regular-normal-pink-swan-14px'
   ];
 
-  /* ---------- 상태 ---------- */
   var today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  var viewYear  = today.getFullYear();
-  var viewMonth = today.getMonth();      // 0-indexed
-  var selectedDate = null;               // Date | null
-  var selectedTime = null;               // string | null
+  var viewYear     = today.getFullYear();
+  var viewMonth    = today.getMonth();
+  var selectedDate = null;
+  var selectedTime = null;
   var personCount  = 1;
 
-  /* ---------- DOM 참조 ---------- */
-  var slots = SLOT_SELECTORS.map(function (sel) { return document.querySelector(sel); });
-
+  var slots      = SLOT_SELECTORS.map(function (sel) { return document.querySelector(sel); });
   var monthLabel = document.querySelector('.text-6-1');
   var navBtns    = document.querySelectorAll('.container-8 > .button');
   var prevBtn    = navBtns[0];
@@ -1343,10 +1337,64 @@ src="image1/container.svg" alt="Container"
   var minusBtn    = counterBtns[0];
   var plusBtn     = counterBtns[1];
   var countLabel  = document.querySelector('.text-22');
-
   var reserveBtn  = document.querySelector('.button-42');
 
-  /* ---------- 캘린더 렌더 ---------- */
+  /* ── 날짜 포맷 헬퍼 ───────────────────────────────── */
+  function toDateStr(date) {
+    return date.getFullYear() + '-'
+      + String(date.getMonth() + 1).padStart(2, '0') + '-'
+      + String(date.getDate()).padStart(2, '0');
+  }
+
+  /* ── 잔여석 조회 ──────────────────────────────────── */
+  async function fetchCapacity(dateStr) {
+    try {
+      var res  = await fetch('/api/reservation/capacity?date=' + dateStr);
+      var data = await res.json();
+      return data.success ? data.slots : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* ── 시간 버튼 UI 업데이트 ───────────────────────── */
+  function updateTimeButtons(slotsData) {
+    timeButtons.forEach(function (item) {
+      if (!item.btn) return;
+      var remain     = slotsData ? (slotsData[item.time] !== undefined ? slotsData[item.time] : 0) : null;
+      var textEl     = item.btn.querySelector('[class*="abhayalibresemibold"]');
+      var isSelected = item.time === selectedTime;
+
+      if (slotsData === null) {
+        item.btn.style.opacity       = '0.5';
+        item.btn.style.pointerEvents = 'none';
+        item.btn.style.background    = '';
+        item.btn.title               = '';
+        if (textEl) textEl.style.color = '';
+        return;
+      }
+      if (remain <= 0) {
+        item.btn.style.opacity       = '0.35';
+        item.btn.style.pointerEvents = 'none';
+        item.btn.style.background    = '#f0f0f0';
+        item.btn.title               = '예약 마감';
+        if (textEl) textEl.style.color = '#aaa';
+      } else {
+        item.btn.style.opacity       = '1';
+        item.btn.style.pointerEvents = 'auto';
+        item.btn.title               = '잔여 ' + remain + '석';
+        if (isSelected) {
+          item.btn.style.background = '#3b4a7a';
+          if (textEl) textEl.style.color = '#fff';
+        } else {
+          item.btn.style.background = '';
+          if (textEl) textEl.style.color = '';
+        }
+      }
+    });
+  }
+
+  /* ── 캘린더 렌더 ──────────────────────────────────── */
   function isSameDay(a, b) {
     return a && b &&
       a.getFullYear() === b.getFullYear() &&
@@ -1355,12 +1403,9 @@ src="image1/container.svg" alt="Container"
   }
 
   function renderCalendar() {
-    var firstDay     = new Date(viewYear, viewMonth, 1).getDay();          // 0(일)~6(토)
+    var firstDay     = new Date(viewYear, viewMonth, 1).getDay();
     var daysInMonth  = new Date(viewYear, viewMonth + 1, 0).getDate();
     var daysInPrev   = new Date(viewYear, viewMonth, 0).getDate();
-
-    /* 5행 × 7열 = 35칸 고정. 한 달이 35칸을 넘으면 말일 일부가 잘릴 수 있음
-       (예: 5월처럼 금요일 시작 + 31일 → 36칸 필요 → 31일이 비표시). */
     var currMonthMax = Math.min(daysInMonth, 35 - firstDay);
 
     monthLabel.textContent = viewYear + '년 ' + (viewMonth + 1) + '월';
@@ -1368,53 +1413,45 @@ src="image1/container.svg" alt="Container"
     for (var i = 0; i < 35; i++) {
       var slot = slots[i];
       if (!slot) continue;
-
       var numEl = slot.querySelector('.text-2 > div');
       if (!numEl) continue;
 
       var day, monthOffset, isCurrentMonth;
       if (i < firstDay) {
-        // 이전 달
         day = daysInPrev - firstDay + i + 1;
-        monthOffset = -1;
-        isCurrentMonth = false;
+        monthOffset = -1; isCurrentMonth = false;
       } else if (i < firstDay + currMonthMax) {
-        // 현재 달
         day = i - firstDay + 1;
-        monthOffset = 0;
-        isCurrentMonth = true;
+        monthOffset = 0;  isCurrentMonth = true;
       } else {
-        // 다음 달
         day = i - firstDay - currMonthMax + 1;
-        monthOffset = 1;
-        isCurrentMonth = false;
+        monthOffset = 1;  isCurrentMonth = false;
       }
 
       var slotDate = new Date(viewYear, viewMonth + monthOffset, day);
       slotDate.setHours(0, 0, 0, 0);
 
       var isPast       = slotDate < today;
-      var isSelectable = isCurrentMonth && !isPast;
+      var isMonday     = isCurrentMonth && slotDate.getDay() === 1;
+      var isSelectable = isCurrentMonth && !isPast && !isMonday;
       var isSelected   = isSameDay(slotDate, selectedDate);
 
       numEl.textContent = day;
 
-      // 색상 클래스 갱신
       for (var c = 0; c < COLOR_CLASSES.length; c++) {
         numEl.classList.remove(COLOR_CLASSES[c]);
       }
-      if (!isCurrentMonth || isPast) {
+      if (!isCurrentMonth || isPast || isMonday) {
         numEl.classList.add('abhayalibresemibold-regular-normal-pink-swan-14px');
       } else {
         numEl.classList.add('abhayalibresemibold-regular-normal-cod-gray-14px');
       }
 
-      // 선택/선택가능 상태 클래스
       slot.classList.toggle('day-active',     isSelected);
       slot.classList.toggle('day-selectable', isSelectable);
-      slot.classList.toggle('day-disabled',   !isSelectable);
+      slot.classList.toggle('day-disabled',   !isSelectable && !isMonday);
+      slot.classList.toggle('day-monday',     isMonday);
 
-      // 클릭 핸들러용 메타데이터
       slot.dataset.year       = String(slotDate.getFullYear());
       slot.dataset.month      = String(slotDate.getMonth());
       slot.dataset.day        = String(day);
@@ -1422,10 +1459,10 @@ src="image1/container.svg" alt="Container"
     }
   }
 
-  /* ---------- 캘린더 셀 클릭 ---------- */
+  /* ── 캘린더 셀 클릭 ───────────────────────────────── */
   slots.forEach(function (slot) {
     if (!slot) return;
-    slot.addEventListener('click', function () {
+    slot.addEventListener('click', async function () {
       if (slot.dataset.selectable !== '1') return;
       selectedDate = new Date(
         parseInt(slot.dataset.year, 10),
@@ -1433,11 +1470,21 @@ src="image1/container.svg" alt="Container"
         parseInt(slot.dataset.day, 10)
       );
       selectedDate.setHours(0, 0, 0, 0);
+      selectedTime = null;
+
+      timeButtons.forEach(function (t) {
+        if (t.btn) t.btn.classList.remove('time-active');
+      });
+
       renderCalendar();
+      updateTimeButtons(null);
+
+      var slotsData = await fetchCapacity(toDateStr(selectedDate));
+      updateTimeButtons(slotsData);
     });
   });
 
-  /* ---------- 이전 달 / 다음 달 ---------- */
+  /* ── 이전 달 / 다음 달 ────────────────────────────── */
   if (prevBtn) {
     prevBtn.addEventListener('click', function () {
       viewMonth--;
@@ -1453,19 +1500,21 @@ src="image1/container.svg" alt="Container"
     });
   }
 
-  /* ---------- 시간 선택 ---------- */
+  /* ── 시간 선택 ────────────────────────────────────── */
   timeButtons.forEach(function (item) {
     if (!item.btn) return;
     item.btn.addEventListener('click', function () {
+      if (!selectedDate) { alert('먼저 날짜를 선택해주세요.'); return; }
       timeButtons.forEach(function (t) {
         if (t.btn) t.btn.classList.remove('time-active');
       });
       item.btn.classList.add('time-active');
       selectedTime = item.time;
+      fetchCapacity(toDateStr(selectedDate)).then(updateTimeButtons);
     });
   });
 
-  /* ---------- 인원 카운터 ---------- */
+  /* ── 인원 카운터 ──────────────────────────────────── */
   function renderCount() {
     countLabel.textContent = personCount + '명';
     if (minusBtn) minusBtn.classList.toggle('counter-disabled', personCount <= 1);
@@ -1474,45 +1523,52 @@ src="image1/container.svg" alt="Container"
 
   if (minusBtn) {
     minusBtn.addEventListener('click', function () {
-      if (personCount > 1) {
-        personCount--;
-        renderCount();
-      }
+      if (personCount > 1) { personCount--; renderCount(); }
     });
   }
   if (plusBtn) {
     plusBtn.addEventListener('click', function () {
-      if (personCount < 10) {
-        personCount++;
-        renderCount();
-      }
+      if (personCount < 10) { personCount++; renderCount(); }
     });
   }
 
-  /* ---------- 예약 버튼 ---------- */
+  /* ── 예약하기 버튼 ────────────────────────────────── */
   if (reserveBtn) {
-    reserveBtn.addEventListener('click', function () {
-      if (!selectedDate) {
-        alert('날짜를 선택해주세요.');
-        return;
-      }
-      if (!selectedTime) {
-        alert('시간을 선택해주세요.');
-        return;
-      }
+    reserveBtn.addEventListener('click', async function () {
+      if (!selectedDate) { alert('날짜를 선택해주세요.'); return; }
+      if (!selectedTime) { alert('시간을 선택해주세요.'); return; }
 
-      var dateStr =
-        selectedDate.getFullYear() + '년 ' +
-        (selectedDate.getMonth() + 1) + '월 ' +
-        selectedDate.getDate() + '일';
+      reserveBtn.style.opacity       = '0.6';
+      reserveBtn.style.pointerEvents = 'none';
 
-      console.log('선택 날짜:', dateStr);
-      console.log('선택 시간:', selectedTime);
-      console.log('선택 인원:', personCount + '명');
+      try {
+        var res  = await fetch('/api/reservation/create', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            visit_date:   toDateStr(selectedDate),
+            visit_time:   selectedTime,
+            people_count: personCount
+          })
+        });
+        var data = await res.json();
+
+        if (data.success) {
+          location.href = '/reservation-completion.html?res_id=' + data.res_id;
+        } else {
+          alert('❌ ' + (data.message || '예약에 실패했습니다.'));
+        }
+      } catch (e) {
+        alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+      } finally {
+        reserveBtn.style.opacity       = '1';
+        reserveBtn.style.pointerEvents = 'auto';
+      }
     });
   }
 
-  /* ---------- 초기 렌더 ---------- */
+  /* ── 초기화 ───────────────────────────────────────── */
+  updateTimeButtons(null);
   renderCalendar();
   renderCount();
 })();
