@@ -1867,6 +1867,7 @@
   display: flex;
   margin-top: 24px;
   width: 658.25px;
+  min-height: 84px;
 }
 
 .visit-reservation .text-44 {
