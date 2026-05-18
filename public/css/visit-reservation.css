@@ -2350,7 +2350,6 @@
 
 .visit-reservation .day-monday {
   cursor: not-allowed;
-  position: relative;
 }
 
 .visit-reservation .day-monday:hover::after {

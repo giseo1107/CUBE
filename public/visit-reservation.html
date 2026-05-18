@@ -1518,7 +1518,7 @@ src="image1/container.svg" alt="Container"
   function renderCount() {
     countLabel.textContent = personCount + '명';
     if (minusBtn) minusBtn.classList.toggle('counter-disabled', personCount <= 1);
-    if (plusBtn)  plusBtn.classList.toggle('counter-disabled',  personCount >= 10);
+    if (plusBtn)  plusBtn.classList.toggle('counter-disabled',  personCount >= 4);
   }
 
   if (minusBtn) {
@@ -1528,7 +1528,7 @@ src="image1/container.svg" alt="Container"
   }
   if (plusBtn) {
     plusBtn.addEventListener('click', function () {
-      if (personCount < 10) { personCount++; renderCount(); }
+      if (personCount < 4) { personCount++; renderCount(); }
     });
   }
 
