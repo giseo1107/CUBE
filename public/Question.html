@@ -248,6 +248,12 @@
     const charCount = document.getElementById('charCount');
     contentEl.addEventListener('input', () => {
       charCount.textContent = contentEl.value.length;
+      if (contentEl.value.trim().length >= 10) clearError('inqContent');
+    });
+    contentEl.addEventListener('blur', () => {
+      if (contentEl.value.trim().length > 0 && contentEl.value.trim().length < 10) {
+        showError('inqContent', '10자 이상 적어주세요.');
+      }
     });
 
     // ── 에러 표시 헬퍼 ───────────────────────────────────
@@ -255,7 +261,7 @@
     function showError(inputId, msg) {
       const input = document.getElementById(inputId);
       if (!input) return;
-      let errEl = input.closest('.x-input, select, textarea, div')
+      let errEl = input.closest('.x-input, .text-area, select')
                        ?.parentElement
                        ?.querySelector('.error-msg');
       // select의 경우 sibling을 직접 탐색
@@ -306,7 +312,7 @@
     }
 
     // 실시간 에러 해제
-    ['inqType','inqName','inqPhone','inqEmail','inqTitle','inqContent'].forEach(id => {
+    ['inqType','inqName','inqPhone','inqEmail','inqTitle'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener('input',  () => clearError(id));
