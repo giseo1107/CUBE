@@ -43,8 +43,25 @@ exports.getUsers = async (req, res) => {
 
 // [DELETE] /api/admin/users/:id
 exports.deleteUser = async (req, res) => {
+  const id = req.params.id;
   try {
-    await db.execute('DELETE FROM user WHERE user_id = ?', [req.params.id]);
+    // 자식 테이블의 자식부터 삭제
+    await db.execute(
+      'DELETE ri FROM review_images ri JOIN reviews r ON ri.review_id = r.review_id WHERE r.user_id = ?', [id]
+    );
+    await db.execute(
+      'DELETE p FROM payments p JOIN orders o ON p.order_id = o.order_id WHERE o.user_id = ?', [id]
+    );
+    // user_id 직접 참조 테이블 삭제
+    await db.execute('DELETE FROM gallery_likes WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM reviews WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM orders WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM gallery_posts WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM cart WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM qna_inquiries WHERE user_id = ?', [id]);
+    await db.execute('DELETE FROM reservation WHERE user_id = ?', [id]);
+    // 최종 유저 삭제
+    await db.execute('DELETE FROM user WHERE user_id = ?', [id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
