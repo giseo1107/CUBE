@@ -82,20 +82,27 @@ exports.getMyInquiries = async (req, res) => {
 // ─────────────────────────────────────────
 exports.getReviews = async (req, res) => {
   try {
-    const page   = Math.max(1, parseInt(req.query.page) || 1);
-    const limit  = Math.min(20, parseInt(req.query.limit) || 10);
-    const offset = (page - 1) * limit;
+    const page    = Math.max(1, parseInt(req.query.page) || 1);
+    const limit   = Math.min(20, parseInt(req.query.limit) || 10);
+    const offset  = (page - 1) * limit;
+    const keyword = (req.query.keyword || '').trim();
+
+    const where  = keyword
+      ? `WHERE is_public = 1 AND (title LIKE ? OR content LIKE ? OR author_name LIKE ?)`
+      : `WHERE is_public = 1`;
+    const params = keyword ? [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`] : [];
 
     const [[{ total }]] = await db.execute(
-      `SELECT COUNT(*) AS total FROM qna_reviews WHERE is_public = 1`
+      `SELECT COUNT(*) AS total FROM qna_reviews ${where}`, params
     );
 
     const [rows] = await db.execute(
       `SELECT review_id, title, content, rating, author_name, created_at
        FROM qna_reviews
-       WHERE is_public = 1
+       ${where}
        ORDER BY created_at DESC
-       LIMIT ${limit} OFFSET ${offset}`
+       LIMIT ${limit} OFFSET ${offset}`,
+      [...params]
     );
 
     res.json({
