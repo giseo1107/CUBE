@@ -142,14 +142,14 @@
 
 .visit-reservation {
   background-color: var(--white);
-  height: 2349px;
+  height: 1968px;
   position: relative;
   width: 1920px;
 }
 
 .visit-reservation .app {
   background-color: #f7f5fa;
-  height: 2349px;
+  height: 1968px;
   left: 0;
   position: absolute;
   top: 0;
