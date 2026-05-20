@@ -34,6 +34,7 @@
           <div class="container-12" id="review-grid">
             <div class="review-loading">후기를 불러오는 중...</div>
           </div>
+          <div id="review-pagination" style="display:none; justify-content:center; align-items:center; gap:6px; margin-top:32px; flex-wrap:wrap;"></div>
         </div>
       </div>
       <div class="container-21">
@@ -150,32 +151,68 @@
             .catch(function(){ alert('서버 오류가 발생했습니다.'); });
         }
 
-        // auth 확인 후 리뷰 로드 (순서 보장)
+        function loadReviews(page, keyword) {
+          page    = page    || 1;
+          keyword = keyword || '';
+          var grid  = document.getElementById('review-grid');
+          var count = document.getElementById('review-count');
+          grid.innerHTML = '<div class="review-loading">후기를 불러오는 중...</div>';
+
+          var url = '/api/reviews?limit=12&page=' + page;
+          if (keyword) url += '&keyword=' + encodeURIComponent(keyword);
+
+          fetch(url)
+            .then(function (res) { return res.json(); })
+            .then(function (json) {
+              if (!json.success || !json.data.length) {
+                grid.innerHTML = '<div class="review-empty">'
+                  + (keyword ? '검색 결과가 없습니다.' : '등록된 후기가 없습니다.')
+                  + '</div>';
+                if (count) count.textContent = '전체 후기 0개';
+                renderPagination(1, 1, page, keyword);
+                return;
+              }
+              if (count) count.textContent = '전체 후기 ' + json.pagination.total + '개';
+              grid.innerHTML = json.data.map(buildCard).join('');
+              renderPagination(json.pagination.totalPages, json.pagination.total, page, keyword);
+            })
+            .catch(function () {
+              grid.innerHTML = '<div class="review-empty">후기를 불러오지 못했습니다.</div>';
+            });
+        }
+
+        function renderPagination(totalPages, total, currentPage, keyword) {
+          var wrap = document.getElementById('review-pagination');
+          if (!wrap) return;
+          if (totalPages <= 1) { wrap.style.display = 'none'; return; }
+          wrap.style.display = 'flex';
+          var html = '';
+          for (var i = 1; i <= totalPages; i++) {
+            var active = i === currentPage ? ' rv-page-active' : '';
+            html += '<button class="rv-page-btn' + active + '" data-page="' + i + '">' + i + '</button>';
+          }
+          wrap.innerHTML = html;
+          wrap.querySelectorAll('.rv-page-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              loadReviews(parseInt(this.dataset.page), keyword);
+              document.querySelector('.section-1').scrollIntoView({ behavior: 'smooth' });
+            });
+          });
+        }
+
+        // auth 확인 후 리뷰 로드
         fetch('/api/auth/check')
           .then(function(r){ return r.json(); })
-          .then(function(d){
-            if (d.authenticated) currentUserId = d.userId;
-          })
+          .then(function(d){ if (d.authenticated) currentUserId = d.userId; })
           .catch(function(){})
-          .finally(function(){
-            fetch('/api/reviews?limit=20')
-              .then(function (res) { return res.json(); })
-              .then(function (json) {
-                var grid  = document.getElementById('review-grid');
-                var count = document.getElementById('review-count');
-                if (!json.success || !json.data.length) {
-                  grid.innerHTML = '<div class="review-empty">등록된 후기가 없습니다.</div>';
-                  if (count) count.textContent = '전체 후기 0개';
-                  return;
-                }
-                if (count) count.textContent = '전체 후기 ' + json.pagination.total + '개';
-                grid.innerHTML = json.data.map(buildCard).join('');
-              })
-              .catch(function () {
-                document.getElementById('review-grid').innerHTML =
-                  '<div class="review-empty">후기를 불러오지 못했습니다.</div>';
-              });
-          });
+          .finally(function(){ loadReviews(1, ''); });
+
+        // 검색
+        var searchInput = document.getElementById('review-search');
+        var searchBtn   = document.getElementById('review-search-btn');
+        function doSearch() { loadReviews(1, searchInput.value.trim()); }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
       })();
       </script>
 

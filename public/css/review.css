@@ -361,18 +361,79 @@
 .reviewu95main .section-1 {
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  height: 1219px;
-  margin-left: 32px;
-  width: 1533px;
+  gap: 32px;
+  height: auto;
+  margin: 0 auto;
+  max-width: 1533px;
+  width: 100%;
+  padding: 0 32px;
+  box-sizing: border-box;
 }
 
 .reviewu95main .container-10 {
   display: flex;
-  gap: 986.2px;
-  margin-left: 32px;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-top: 64px;
-  width: 1469px;
+  width: 100%;
+}
+
+/* 검색바 */
+.reviewu95main .review-search-bar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.reviewu95main .review-search-wrap {
+  position: relative;
+  width: 560px;
+}
+.reviewu95main .review-search-wrap input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0 48px 0 20px;
+  font-family: var(--font-family-arial-regular), Arial, sans-serif;
+  font-size: 16px;
+  color: #374151;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.reviewu95main .review-search-wrap input:focus {
+  border-color: #325b83;
+}
+.reviewu95main .review-search-wrap button {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* 페이지네이션 */
+.rv-page-btn {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.rv-page-btn:hover { background: #f3f4f6; }
+.rv-page-btn.rv-page-active {
+  background: #325b83;
+  color: #fff;
+  border-color: #325b83;
 }
 
 .reviewu95main .container-11 {
@@ -427,7 +488,9 @@
   display: flex;
   height: 59px;
   margin-top: 10.5px;
+  margin-right: 40px;
   width: 200.38px;
+  flex-shrink: 0;
 }
 
 .reviewu95main .text-3-2 {
@@ -441,10 +504,10 @@
 }
 
 .reviewu95main .container-12 {
-  height: 963px;
-  margin-left: 32px;
+  height: auto;
+  min-height: 400px;
   position: relative;
-  width: 1469px;
+  width: 100%;
 }
 
 .reviewu95main .container-13 {
