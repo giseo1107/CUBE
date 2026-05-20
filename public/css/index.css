@@ -377,7 +377,7 @@
   display: flex;
   flex-direction: column;
   gap: 47px;
-  height: 994px;
+  height: 944px;
   left: calc(50.00% - 958px);
   position: absolute;
   top: calc(50.00% - 452px);
@@ -951,7 +951,7 @@
   height: 869px;
   left: calc(50.00% - 960px);
   position: absolute;
-  top: calc(50.00% + 482px);
+  top: calc(50.00% + 492px);
   width: 1920px;
 }
 
