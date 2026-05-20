@@ -139,7 +139,7 @@
       <div>
         <p class="gf-col-title">고객 지원</p>
         <ul class="gf-links">
-          <li><a href="/Qna.html">FAQ</a></li>
+          <li><a href="/Qna.html">Qna</a></li>
           <li><a href="/review.html">후기</a></li>
           <li><a href="/Question.html">1:1 문의</a></li>
           <li><a href="/visit-reservation.html">방문 예약</a></li>
