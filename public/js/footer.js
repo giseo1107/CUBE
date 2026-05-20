@@ -161,7 +161,7 @@
       <div class="gf-brand">
         <div class="gf-logo"></div>
         <p class="gf-brand-tagline">
-          혁신적인 컨테이너 하우스로<br>새로운 주거 문화를 만들어갑니다
+          혁신적인 CUBE로<br>새로운 주거 문화를 만들어갑니다
         </p>
       </div>
 
