@@ -6,12 +6,20 @@ const cloudinary = require('cloudinary').v2;
 // ─────────────────────────────────────────
 exports.getReviews = async (req, res) => {
   try {
-    const page   = Math.max(1, parseInt(req.query.page)  || 1);
-    const limit  = Math.min(20, parseInt(req.query.limit) || 6);
-    const offset = (page - 1) * limit;
+    const page    = Math.max(1, parseInt(req.query.page)    || 1);
+    const limit   = Math.min(20, parseInt(req.query.limit)  || 6);
+    const offset  = (page - 1) * limit;
+    const keyword = (req.query.keyword || '').trim();
+
+    const where  = keyword
+      ? `WHERE r.is_public = 1 AND (r.title LIKE ? OR r.summary LIKE ? OR r.content LIKE ? OR r.author_name LIKE ?)`
+      : `WHERE r.is_public = 1`;
+    const params = keyword
+      ? [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`]
+      : [];
 
     const [[{ total }]] = await db.execute(
-      `SELECT COUNT(*) AS total FROM reviews WHERE is_public = 1`
+      `SELECT COUNT(*) AS total FROM reviews r ${where}`, params
     );
 
     const [rows] = await db.execute(
@@ -23,9 +31,10 @@ exports.getReviews = async (req, res) => {
               (SELECT image_url FROM review_images
                WHERE review_id = r.review_id ORDER BY sort_order LIMIT 1) AS image_url
        FROM reviews r
-       WHERE r.is_public = 1
+       ${where}
        ORDER BY r.created_at DESC
-       LIMIT ${limit} OFFSET ${offset}`
+       LIMIT ${limit} OFFSET ${offset}`,
+      [...params]
     );
 
     res.json({
