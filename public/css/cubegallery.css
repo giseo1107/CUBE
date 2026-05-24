@@ -1431,6 +1431,25 @@
   color: #9ca3af;
 }
 
+/* 검색 버튼 */
+.search-text-btn {
+  background-color: var(--science-blue);
+  border: none;
+  border-radius: 10px;
+  color: var(--white);
+  cursor: pointer;
+  font-family: var(--font-family-arial-regular);
+  font-size: var(--font-size-l);
+  font-weight: 400;
+  height: 50px;
+  width: 80px;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+.search-text-btn:hover {
+  background-color: #0052a3;
+}
+
 /* 동적 로딩 상태 */
 .gallery-loading,
 .gallery-empty {

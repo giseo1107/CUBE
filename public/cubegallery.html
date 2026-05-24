@@ -65,6 +65,7 @@
             <img class="vector-10" src="galleryimg/vector-4.svg" alt="" role="presentation" />
           </div>
         </div>
+        <button id="gallery-search-btn" class="search-text-btn">검색</button>
         <a href="cubegallerywrite.html" style="text-decoration:none;">
           <div class="button"><div class="text-38 arial-regular-normal-white-16px">글쓰기</div></div>
         </a>
@@ -220,11 +221,20 @@
       });
 
       // 검색
-      const searchInput = document.getElementById('gallery-search');
-      const searchBtn   = document.getElementById('search-btn');
+      const searchInput   = document.getElementById('gallery-search');
+      const searchIconBtn = document.getElementById('search-btn');
+      const searchTextBtn = document.getElementById('gallery-search-btn');
       function doSearch() { loadPosts(1, searchInput.value.trim()); }
-      searchBtn.addEventListener('click', doSearch);
+      searchIconBtn.addEventListener('click', doSearch);
+      searchTextBtn.addEventListener('click', doSearch);
       searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+      // 실시간 입력 검색 (debounce 350ms)
+      let _debounceTimer = null;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(_debounceTimer);
+        _debounceTimer = setTimeout(doSearch, 350);
+      });
 
       // 모달 닫기
       document.getElementById('gallery-modal').addEventListener('click', function(e) {
