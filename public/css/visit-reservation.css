@@ -1835,7 +1835,7 @@
   border-radius: 8px;
   display: flex;
   height: 40px;
-  width: 180px;
+  width: 220px;
 }
 
 .visit-reservation .text-25 {
@@ -1845,7 +1845,7 @@
   margin-left: 20px;
   margin-top: 11px;
   position: relative;
-  width: 31px;
+  width: fit-content;
 }
 
 .visit-reservation .visit-reservation-1 {
@@ -1856,7 +1856,7 @@
   letter-spacing: 0;
   line-height: 21px;
   margin-bottom: -4.00px;
-  margin-right: -107.00px;
+  margin-right: 0;
   margin-top: -1.00px;
   position: relative;
   white-space: nowrap;
