@@ -1834,16 +1834,16 @@
   background-color: #ffffff33;
   border-radius: 8px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
   width: 220px;
 }
 
 .visit-reservation .text-25 {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   height: 16px;
-  margin-left: 20px;
-  margin-top: 11px;
   position: relative;
   width: fit-content;
 }
