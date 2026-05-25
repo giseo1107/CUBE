@@ -286,7 +286,7 @@ async function updateOrderStatus(id, status) {
 }
 
 // ── 예약 관리 ────────────────────────────────────────
-const RES_STATUS = { confirmed: '예약 확정', cancelled: '취소됨', pending: '예약 신청' };
+const RES_STATUS = { confirmed: '예약 확정', cancelled: '취소됨', pending: '예약 신청', BOOKED: '예약 신청', CANCELLED: '취소됨' };
 
 async function loadReservations() {
   const el = document.getElementById('reservationTable');
@@ -307,7 +307,7 @@ async function loadReservations() {
               <td>${fmtDate(r.visit_date)}</td>
               <td>${r.visit_time ? r.visit_time.slice(0, 5) : '-'}</td>
               <td>${r.people_count || '-'}명</td>
-              <td><span class="badge ${r.status === 'confirmed' ? 'badge-done' : r.status === 'cancelled' ? 'badge-cancel' : 'badge-wait'}">${RES_STATUS[r.status] || '예약 대기'}</span></td>
+              <td><span class="badge ${ ['confirmed'].includes(r.status) ? 'badge-done' : ['cancelled','CANCELLED'].includes(r.status) ? 'badge-cancel' : 'badge-wait' }">${RES_STATUS[r.status] || '예약 신청'}</span></td>
               <td style="display:flex;gap:6px;">
                 <button class="btn btn-success" onclick="updateRes(${r.res_id},'confirmed')">확정</button>
                 <button class="btn btn-danger"  onclick="updateRes(${r.res_id},'cancelled')">취소</button>

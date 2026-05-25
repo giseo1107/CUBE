@@ -272,13 +272,22 @@
           return;
         }
 
+        const RES_STATUS_MAP = {
+          'pending':   { text: '예약 신청', cls: 'rs-pending' },
+          'BOOKED':    { text: '예약 신청', cls: 'rs-pending' },
+          'confirmed': { text: '예약 확정', cls: 'rs-confirmed' },
+          'cancelled': { text: '취소됨',   cls: 'rs-cancelled' },
+          'CANCELLED': { text: '취소됨',   cls: 'rs-cancelled' },
+        };
+
         let html = '';
         data.reservations.forEach(r => {
           const dateStr = formatResDate(r.visit_date);
           const timeStr = formatResTime(r.visit_time);
-          const isCancelled = r.status !== 'BOOKED';
-          const statusClass = isCancelled ? 'rs-cancelled' : 'rs-booked';
-          const statusText = isCancelled ? '취소됨' : '예약 확정';
+          const statusInfo = RES_STATUS_MAP[r.status] || { text: r.status, cls: 'rs-pending' };
+          const isCancelled = r.status === 'cancelled' || r.status === 'CANCELLED';
+          const statusClass = statusInfo.cls;
+          const statusText = statusInfo.text;
 
           html += `
             <div class="res-card ${isCancelled ? 'is-cancelled' : ''}">

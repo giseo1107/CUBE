@@ -50,7 +50,7 @@ exports.checkCapacity = async (req, res) => {
         const [rows] = await db.query(
             `SELECT visit_time, COALESCE(SUM(people_count), 0) AS booked_count
              FROM reservation
-             WHERE visit_date = ? AND status = 'BOOKED'
+             WHERE visit_date = ? AND status IN ('BOOKED', 'pending', 'confirmed')
              GROUP BY visit_time`,
             [date]
         );
@@ -181,7 +181,7 @@ exports.createReservation = async (req, res) => {
         const [lockRows] = await conn.query(
             `SELECT COALESCE(SUM(people_count), 0) AS booked_count
              FROM reservation
-             WHERE visit_date = ? AND visit_time = ? AND status = 'BOOKED'
+             WHERE visit_date = ? AND visit_time = ? AND status IN ('BOOKED', 'pending', 'confirmed')
              FOR UPDATE`,
             [visit_date, visitTimeFull]
         );
@@ -201,7 +201,7 @@ exports.createReservation = async (req, res) => {
         const [result] = await conn.query(
             `INSERT INTO reservation 
                 (user_id, visit_date, visit_time, people_count, visitor_name, phone, email, status, memo)
-             VALUES (?, ?, ?, ?, ?, ?, ?, 'BOOKED', ?)`,
+             VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?)`,
             [userId, visit_date, visitTimeFull, count, finalVisitorName, finalPhone, finalEmail, memo || null]
         );
 
@@ -333,7 +333,7 @@ exports.cancelReservation = async (req, res) => {
 
         const reservation = rows[0];
 
-        if (reservation.status !== 'BOOKED') {
+        if (!['BOOKED', 'pending', 'confirmed'].includes(reservation.status)) {
             return res.status(400).json({ success: false, message: '이미 취소되었거나 완료된 예약입니다.' });
         }
 
@@ -348,7 +348,7 @@ exports.cancelReservation = async (req, res) => {
 
         // 상태 변경
         await db.query(
-            `UPDATE reservation SET status = 'CANCELLED' WHERE res_id = ?`,
+            `UPDATE reservation SET status = 'cancelled' WHERE res_id = ?`,
             [resId]
         );
 
